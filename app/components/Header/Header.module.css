@@ -1,0 +1,224 @@
+/* Header główny kontener */
+.header {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Górna sekcja - czerwona */
+.topSection {
+  background-color: #ca0000;
+  padding: 15px 0;
+}
+
+/* Dolna sekcja - ciemnoszara */
+.bottomSection {
+  background-color: #31393b;
+  padding: 20px 0;
+}
+
+/* Kontener dla zawartości */
+.container {
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Layout górnej sekcji */
+.topContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoLink {
+  display: block;
+}
+
+/* Środkowa sekcja z Journal i About */
+.middleSection {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-left: 5vw;
+  width: 100%;
+}
+
+/* Sekcja przełączania języków */
+.languageSection {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-self: flex-start;
+}
+
+.languageButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  overflow: hidden;
+  padding: 4px;
+}
+
+/* Kwadraty - czarne dla nieparzystych, złote dla parzystych */
+.blackSquare {
+  background-color: #000;
+  color: gold;
+}
+
+.goldSquare {
+  background-color: #ffd700;
+  color: #000;
+}
+
+/* Layout dolnej sekcji */
+.bottomContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Sekcja tytułu */
+.titleSection {
+  text-align: center;
+}
+
+/* Nawigacja regionów */
+.regionNav {
+  width: 100%;
+}
+
+.regionList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.regionItem {
+  list-style: none;
+}
+
+.regionLink {
+  display: block;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 25px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.regionLink:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.activeRegion {
+  background-color: #ca0000;
+  color: white;
+  text-decoration: underline;
+}
+
+.activeRegion:hover {
+  background-color: #b50000;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .topContent {
+    gap: 15px;
+  }
+
+  .middleSection {
+    gap: 20px;
+  }
+
+  .regionList {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .topContent {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .logoSection {
+    order: 1;
+    width: 100%;
+  }
+
+  .middleSection {
+    order: 2;
+    justify-content: center;
+  }
+
+  .languageSection {
+    order: 3;
+    justify-content: center;
+  }
+
+  .regionList {
+    gap: 10px;
+  }
+
+  .regionLink {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .topSection {
+    padding: 12px 0;
+  }
+
+  .bottomSection {
+    padding: 15px 0;
+  }
+
+  .middleSection {
+    gap: 15px;
+  }
+
+  .navSvg {
+    width: 80px;
+    height: auto;
+  }
+
+  .titleSvg {
+    width: 250px;
+    height: auto;
+  }
+
+  .regionList {
+    gap: 8px;
+  }
+
+  .regionLink {
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+
+  .languageButton {
+    width: 32px;
+    height: 32px;
+    font-size: 11px;
+  }
+}
