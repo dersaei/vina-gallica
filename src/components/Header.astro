@@ -1,0 +1,27 @@
+---
+import logo from "../assets/logo-vina-gallica-big.png";
+import { Image } from "astro:assets";
+---
+
+<header>
+  <div class="header-inner">
+    <a href="/" aria-label="Vina Gallica - Home Page">
+      <Image src={logo} alt="Vina Gallica" width={75} height={75} densities={[1, 2]} />
+    </a>
+  </div>
+</header>
+
+<style>
+  header {
+    background-color: var(--color-elegant-black);
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding-inline: var(--space-lg);
+    padding-block: var(--space-sm);
+  }
+</style>
