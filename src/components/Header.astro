@@ -1,6 +1,8 @@
 ---
 import logoMark from "../assets/logo-vina-gallica.png";
 import logoText from "../assets/vina-gallica-text.png";
+import img001 from "../assets/001.png";
+import img002 from "../assets/002.png";
 import { Image } from "astro:assets";
 ---
 
@@ -9,7 +11,7 @@ import { Image } from "astro:assets";
     <a href="/" aria-label="Vina Gallica - Home Page" class="logo-link">
       <Image
         src={logoMark}
-        alt=""
+        alt="Logo Vina Gallica"
         width={50}
         height={50}
         densities={[1, 2]}
@@ -18,7 +20,7 @@ import { Image } from "astro:assets";
       />
       <Image
         src={logoText}
-        alt="Vina Gallica"
+        alt="Vina Gallica Directory"
         width={336}
         height={58}
         densities={[1, 2]}
@@ -26,6 +28,26 @@ import { Image } from "astro:assets";
         fetchpriority="high"
       />
     </a>
+    <div class="header-right">
+      <Image
+        src={img001}
+        alt="Journal Vina Gallica"
+        width={168}
+        height={30}
+        densities={[1, 2]}
+        loading="eager"
+        fetchpriority="high"
+      />
+      <Image
+        src={img002}
+        alt="About Vina Gallica"
+        width={126}
+        height={30}
+        densities={[1, 2]}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
   </div>
 </header>
 
@@ -36,7 +58,7 @@ import { Image } from "astro:assets";
 
   .header-inner {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     padding-inline: var(--space-lg);
@@ -48,5 +70,12 @@ import { Image } from "astro:assets";
     align-items: center;
     gap: var(--space-sm);
     text-decoration: none;
+  }
+
+  .header-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-sm);
   }
 </style>
