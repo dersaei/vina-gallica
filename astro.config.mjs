@@ -38,9 +38,9 @@ export default defineConfig({
     },
     {
       provider: fontProviders.adobe({ id: ADOBE_FONTS_ID }),
-      name: "New Zen",
+      name: "Futura 100 Latin Ext",
       cssVariable: "--font-hero",
-      weights: [300, 400, 500],
+      weights: [400],
       styles: ["normal"],
       fallbacks: ["sans-serif"],
     },

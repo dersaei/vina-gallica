@@ -8,12 +8,9 @@ import Layout from "../layouts/Layout.astro";
       <div class="hero-content">
         <span class="hero-label">Gateway</span>
         <h2>Directory</h2>
-        <p>
-          A comprehensive directory of French wineries, wine festivals,
-          wine shops, and tasting experiences across the country.
-          Filter by wine region or search by town to find exactly
-          what you're looking for.
-        </p>
+        <h3>
+          French wineries, shops and wine experiences
+        </h3>
         <a href="/directory" class="hero-cta">Browse the Directory</a>
       </div>
     </div>
@@ -22,12 +19,9 @@ import Layout from "../layouts/Layout.astro";
       <div class="hero-content">
         <span class="hero-label">Journey</span>
         <h2>Map</h2>
-        <p>
-          See France's wine landscape on an interactive map.
-          Filter by region, category, or town to locate wineries,
-          festivals, and experiences — whether you're planning
-          a trip or exploring from home.
-        </p>
+        <h3>
+          France's wine landscape on an interactive map
+        </h3>
         <a href="/map" class="hero-cta">Open the Map</a>
       </div>
     </div>
@@ -90,7 +84,7 @@ import Layout from "../layouts/Layout.astro";
 
   /* Headings — light on dark backgrounds */
   h2 {
-    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-size: 3rem;
     font-weight: 700;
     line-height: 1.15;
     margin-bottom: var(--space-md);
@@ -103,19 +97,20 @@ text-shadow: 4px 4px 2px black;
 
 
   /* Body text */
-  p {
-    font-weight: 500;
-    font-size: 1rem;
+  h3 {
+    font-weight: 400;
+    font-size: 2rem;
+    text-transform: uppercase;
     line-height: 1.75;
     margin-bottom: var(--space-lg);
     font-family: var(--font-hero);
     text-shadow: 1px 2px 2px black;
   }
 
-  .hero-directory span, .hero-directory p {
+  .hero-directory span, .hero-directory h3 {
     color: beige;
   } 
-  .hero-map span, .hero-map p {
+  .hero-map span, .hero-map h3 {
     color: #f5deb3;
   }
 
@@ -158,7 +153,5 @@ text-shadow: 4px 4px 2px black;
       min-height: 50vh;
       padding: var(--space-xl) var(--space-lg);
     }
-
-   
   }
 </style>
