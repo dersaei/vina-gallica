@@ -1,12 +1,30 @@
 ---
-import logo from "../assets/vina-gallica-text.png";
+import logoMark from "../assets/logo-vina-gallica.png";
+import logoText from "../assets/vina-gallica-text.png";
 import { Image } from "astro:assets";
 ---
 
 <header>
   <div class="header-inner">
-    <a href="/" aria-label="Vina Gallica - Home Page">
-      <Image src={logo} alt="Vina Gallica" width={336} height={58} densities={[1, 2]} />
+    <a href="/" aria-label="Vina Gallica - Home Page" class="logo-link">
+      <Image
+        src={logoMark}
+        alt=""
+        width={50}
+        height={50}
+        densities={[1, 2]}
+        loading="eager"
+        fetchpriority="high"
+      />
+      <Image
+        src={logoText}
+        alt="Vina Gallica"
+        width={336}
+        height={58}
+        densities={[1, 2]}
+        loading="eager"
+        fetchpriority="high"
+      />
     </a>
   </div>
 </header>
@@ -23,5 +41,12 @@ import { Image } from "astro:assets";
     width: 100%;
     padding-inline: var(--space-lg);
     padding-block: var(--space-sm);
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
   }
 </style>
