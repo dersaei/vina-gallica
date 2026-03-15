@@ -1,0 +1,31 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="footer-inner">
+    <p>&copy; {year} Vina Gallica. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background-color: var(--color-gold);
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-inline: var(--space-lg);
+    padding-block: var(--space-xs);
+  }
+
+  footer p {
+    color: var(--color-elegant-black);
+    font-size: 0.7rem;
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+</style>
