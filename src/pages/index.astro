@@ -2,12 +2,12 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Vina Gallica — Discover French Wine Culture">
+<Layout title="Vina Gallica | Discover French Wine Culture">
   <main class="hero">
     <div class="hero-block hero-directory">
       <div class="hero-content">
         <span class="hero-label">Gateway</span>
-        <h1>Directory</h1>
+        <h2>Directory</h2>
         <p>
           A comprehensive directory of French wineries, wine festivals,
           wine shops, and tasting experiences across the country.
@@ -28,7 +28,7 @@ import Layout from "../layouts/Layout.astro";
           festivals, and experiences — whether you're planning
           a trip or exploring from home.
         </p>
-        <a href="/map" class="hero-cta hero-cta--outline">Open the Map</a>
+        <a href="/map" class="hero-cta">Open the Map</a>
       </div>
     </div>
   </main>
@@ -53,7 +53,7 @@ import Layout from "../layouts/Layout.astro";
 
   /* Directory — warm, earthy wine tones */
   .hero-directory {
-    background-color: firebrick;
+    background-color: #b22222;
       box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 310px inset;
 
   }
@@ -79,78 +79,69 @@ import Layout from "../layouts/Layout.astro";
   .hero-label {
     display: inline-block;
     font-size: 0.7rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     margin-bottom: var(--space-md);
+    font-family: var(--font-label);
   }
 
-  .hero-directory .hero-label {
-    color: #ffd700;
-  }
 
-  .hero-map .hero-label {
-    color: wheat;
-  }
 
   /* Headings — light on dark backgrounds */
-  h1, h2 {
+  h2 {
     font-size: clamp(2rem, 3.5vw, 2.8rem);
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.15;
     margin-bottom: var(--space-md);
     letter-spacing: -0.01em;
         color: #faf6f0;
-
+font-family: var(--font-heading);
+text-shadow: 4px 4px 2px black;
   }
 
 
 
   /* Body text */
   p {
-    font-weight: 400;
+    font-weight: 500;
     font-size: 1rem;
     line-height: 1.75;
     margin-bottom: var(--space-lg);
+    font-family: var(--font-hero);
   }
 
-  .hero-directory p, .hero-map p {
-    color: rgba(250, 246, 240, 1);
+  .hero-directory span, .hero-directory p {
+    color: beige;
+  } 
+  .hero-map span, .hero-map p {
+    color: #f5deb3;
   }
 
 
   /* CTA buttons */
   .hero-cta {
-    display: inline-block;
-    font-weight: 500;
+    display: block;
+    width: fit-content;
+    position: relative;
+    font-weight: 400;
     font-size: 0.8rem;
+    line-height: 1;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 0.85em 1.8em;
+    padding: 0.9em 1.8em 0.8em;
     border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
-  .hero-directory .hero-cta {
-    background: linear-gradient(135deg, #ffd700, #e6c200);
-    color: #1a0f0a;
-  }
-
-  .hero-directory .hero-cta:hover {
-    background: linear-gradient(135deg, #ffe033, #ffd700);
-    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.25);
-    transform: translateY(-1px);
-  }
-
-  .hero-cta--outline {
-    background: transparent;
+    font-family: var(--font-heading);
+    background-color: transparent;
     color: #e8eaed;
     border: 1px solid rgba(232, 234, 237, 0.25);
+    transition: all 0.4s ease;
   }
 
-  .hero-cta--outline:hover {
-    background: rgba(255, 255, 255, 0.05);
+
+  .hero-cta:hover {
+    background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(232, 234, 237, 0.5);
     transform: translateY(-1px);
   }
