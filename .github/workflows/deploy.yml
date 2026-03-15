@@ -37,7 +37,9 @@ jobs:
                   CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
             - name: Build
-              run: npm run build
+              run: doppler run -- npm run build
+              env:
+                  DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
 
             - name: Deploy
               uses: cloudflare/wrangler-action@v3
