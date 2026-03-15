@@ -4,6 +4,7 @@ import logoText from "../assets/vina-gallica-text.png";
 import img001 from "../assets/001.png";
 import img002 from "../assets/002.png";
 import { Image } from "astro:assets";
+import MobileMenu from "./MobileMenu.tsx";
 ---
 
 <header>
@@ -48,12 +49,15 @@ import { Image } from "astro:assets";
         fetchpriority="high"
       />
     </div>
+    <MobileMenu client:load />
   </div>
 </header>
 
 <style>
   header {
     background-color: var(--color-gold);
+    position: relative;
+    z-index: 200;
   }
 
   .header-inner {
@@ -77,5 +81,11 @@ import { Image } from "astro:assets";
     justify-content: flex-end;
     align-items: center;
     gap: var(--space-sm);
+  }
+
+  @media (max-width: 768px) {
+    .header-right {
+      display: none;
+    }
   }
 </style>
