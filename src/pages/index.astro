@@ -2,11 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Vina Gallica | Discover French Wine Culture">
+<Layout title="Vina Gallica | Discover French Wine Culture" headline="Discover French Wine">
   <main class="hero">
-    <h1 class="hero-headline">
-      Discover French Wine
-    </h1>
     <div class="hero-block hero-directory">
       <div class="hero-content">
         <span class="hero-label">Gateway</span>
@@ -39,24 +36,6 @@ import Layout from "../layouts/Layout.astro";
     position: relative;
   }
 
-  .hero-headline {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    text-align: center;
-    white-space: nowrap;
-    background-color: #f5deb3;
-    padding: 0.25em 1em 0.05em;
-    text-transform: uppercase;
-    font-family: var(--font-heading);
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: var(--color-elegant-black);
-          box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 10px inset;
-
-  }
 
   .hero-block {
     flex: 1;

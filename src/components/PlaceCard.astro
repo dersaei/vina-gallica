@@ -1,0 +1,175 @@
+---
+import type { Place, Category, Town, Department, AdministrativeRegion, WineRegion } from "../lib/directus.ts";
+
+interface Props {
+  place: Place;
+}
+
+const { place } = Astro.props;
+
+const category = typeof place.category === "object" ? place.category as Category : null;
+const town = typeof place.town === "object" ? place.town as Town : null;
+const dept = town && typeof town.department === "object" ? town.department as Department : null;
+const region = dept && typeof dept.administrative_region === "object" ? dept.administrative_region as AdministrativeRegion : null;
+const wineRegion = place.wine_region && typeof place.wine_region === "object" ? place.wine_region as WineRegion : null;
+
+const regionName = region?.name ?? wineRegion?.region ?? null;
+const regionColor = region?.color ?? null;
+const deptName = dept?.name ?? null;
+const deptColor = dept?.color ?? null;
+const townName = town?.name ?? null;
+
+---
+
+<article
+  class="place-card"
+  data-category={category?.slug}
+>
+
+  <div class="card-meta">
+    {category && (
+      <span class="tag tag-category" style={`--tag-color: ${category.color}`}>
+        {category.name}
+      </span>
+    )}
+  </div>
+
+  <h3 class="card-name">{place.Name}</h3>
+
+  <address class="card-address">
+    {place.address && <span>{place.address}</span>}
+    <span class="card-town">
+      {place.postal_code && <span>{place.postal_code}</span>}
+      {townName && <span>{townName}</span>}
+    </span>
+  </address>
+
+  <div class="card-regions">
+    
+    {deptName && (
+      <span class="tag-location" style={`--loc-color: ${deptColor ?? "#888"}`}>
+        {deptName}
+      </span>
+    )} 
+    {regionName && (
+      <span class="tag-location" style={`--loc-color: ${regionColor ?? "#888"}`}>
+        {regionName}
+      </span>
+    )}
+  </div>
+
+  {place.website && (
+    <a
+      href={place.website}
+      class="card-link"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Visit website
+    </a>
+  )}
+</article>
+
+<style>
+  .place-card {
+    background-color: #fffaf3;
+    border: 1px solid #42403c;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 30px inset;
+    position: relative;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: var(--font-label);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-shadow: 0.5px 0.5px 1px black;
+    padding: 0.45em 0.6em 0;
+    background-color: var(--tag-color);
+    color: #fffaf3;
+    border: 1px solid black;
+    border-radius: 3px;
+      box-shadow: 1px 1px 3px 2px rgba(0, 3, 0, 0.2);
+  }
+
+  .card-name {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-elegant-black);
+    line-height: 1.2;
+    margin: 1vh 0 0;
+  }
+
+  .card-regions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+    margin-top: var(--space-xs);
+  }
+
+  .tag-location {
+    display: inline-block;
+    font-family: var(--font-label);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-color: var(--loc-color);
+    color: var( --loc-color);
+    padding: 0.5em 0.6em 0;
+    text-shadow: 0.3px 0.3px 0.5px black;
+  }
+
+  .card-address {
+    font-style: normal;
+    font-family: var(--font-hero);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #666;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+    margin-top: var(--space-xs);
+  }
+
+  .card-town {
+    display: flex;
+    gap: 0.4em;
+  }
+
+  .card-link {
+    display: inline-block;
+    width: fit-content;
+    margin-top: var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.45em 1em 0.2em;
+    border-radius: 2px;
+    background-color: #f8f8ff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: var(--color-elegant-black);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .card-link:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.35);
+  }
+</style>

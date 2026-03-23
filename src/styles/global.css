@@ -2,7 +2,7 @@
 
 :root {
   /* Colors */
-  --color-sand: #ebe4de;
+  --color-sand: #f5deb3;
   --color-gold: #ffd700;
   --color-elegant-black: #0c0e0b;
 
@@ -21,8 +21,4 @@ body {
   font-family: var(--font-sans);
   color: var(--color-navy);
   background-color: var(--color-sand);
-}
-
-h2 {
-  font-family: var(--font-heading);
 }
