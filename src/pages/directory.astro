@@ -1,4 +1,5 @@
 ---
+export const prerender = false;
 import Layout from '../layouts/Layout.astro';
 import directus, { readItems } from '../lib/directus.ts';
 import type { Category, Place } from '../lib/directus.ts';
@@ -27,6 +28,7 @@ const [categories, places] = await Promise.all([
   ) as unknown as Promise<Place[]>,
 ]);
 ---
+export const prerender = false;
 
 <Layout title="Directory | Vina Gallica" headline="French Wine Directory" headlineStyle="light">
   <main class="directory">
