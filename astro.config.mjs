@@ -44,5 +44,13 @@ export default defineConfig({
       styles: ["normal"],
       fallbacks: ["sans-serif"],
     },
+    {
+      provider: fontProviders.adobe({ id: ADOBE_FONTS_ID }),
+      name: "New Zen",
+      cssVariable: "--font-extra",
+      weights: [400, 500],
+      styles: ["normal"],
+      fallbacks: ["sans-serif"],
+    },
   ],
 });

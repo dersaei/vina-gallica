@@ -36,6 +36,12 @@ const townName = town?.name ?? null;
 
   <h3 class="card-name">{place.Name}</h3>
 
+  {wineRegion && (
+    <span class="card-wine-region" style={`--wine-region-color: ${wineRegion.color}`}>
+      {wineRegion.region}
+    </span>
+  )}
+
   <address class="card-address">
     {place.address && <span>{place.address}</span>}
     <span class="card-town">
@@ -112,6 +118,15 @@ const townName = town?.name ?? null;
     margin: 1vh 0 0;
   }
 
+  .card-wine-region {
+    font-family: var(--font-extra);
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--wine-region-color);
+    letter-spacing: 0.05em;
+    text-shadow: 0.3px 0.5px 1px black;
+  }
+
   .card-regions {
     display: flex;
     flex-direction: row;
@@ -122,13 +137,13 @@ const townName = town?.name ?? null;
 
   .tag-location {
     display: inline-block;
-    font-family: var(--font-herp);
+    font-family: var(--font-extra);
     font-size: 0.65rem;
     font-weight: 400;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: black;
-    padding: 0.2vh 0.5vw;
+    padding: 0.1em 0.3em;
     text-shadow: 0.3px 0.3px 0.5px white;
     border: 1px solid black;
     background-color: color-mix(in srgb, var(--loc-color) 50%, transparent);
