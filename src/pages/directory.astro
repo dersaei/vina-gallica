@@ -155,7 +155,8 @@ const [categories, places] = await Promise.all([
 
   .filter-label {
     font-family: var(--font-heading);
-    font-size: 2rem;
+    font-size:clamp(2.1rem, 4vw, 3rem);
+    text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 0.2em;
     color: var(--color-elegant-black);
