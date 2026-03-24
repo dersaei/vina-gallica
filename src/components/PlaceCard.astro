@@ -24,6 +24,9 @@ const townName = town?.name ?? null;
 <article
   class="place-card"
   data-category={category?.slug}
+  data-wine-region={wineRegion?.slug ?? undefined}
+  data-dept={dept?.slug ?? undefined}
+  data-admin-region={region?.slug ?? undefined}
 >
 
   <div class="card-meta">

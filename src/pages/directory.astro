@@ -4,14 +4,21 @@ import Layout from '../layouts/Layout.astro';
 import directus, { readItems } from '../lib/directus.ts';
 import type { Category, Place } from '../lib/directus.ts';
 import PlaceCard from '../components/PlaceCard.astro';
+import RegionFilter from '../components/RegionFilter.tsx';
 
-const [categories, places] = await Promise.all([
+interface AdminRegion { id: string; name: string; slug: string; color: string; }
+interface Department { id: string; name: string; slug: string; color: string; administrative_region: string; }
+
+const [categories, wineRegions, adminRegions, departments, places] = await Promise.all([
   directus.request(
     readItems('categories_vg', {
       fields: ['id', 'name', 'slug', 'color'],
       sort: ['name'],
     })
   ) as Promise<Category[]>,
+  directus.request(readItems('wine_regions', { fields: ['id', 'region', 'slug', 'color'], sort: ['region'] })) as unknown as Promise<{ id: string; region: string; slug: string; color: string }[]>,
+  directus.request(readItems('administrative_regions', { fields: ['id', 'name', 'slug', 'color'], sort: ['name'] })) as unknown as Promise<AdminRegion[]>,
+  directus.request(readItems('departments', { fields: ['id', 'name', 'slug', 'color', 'administrative_region'], sort: ['name'] })) as unknown as Promise<Department[]>,
   directus.request(
     readItems('places_vg', {
       fields: [
@@ -72,6 +79,15 @@ const [categories, places] = await Promise.all([
   </g>
 </svg>
 
+    <div class="filter-by-wrap">
+      <RegionFilter
+        client:load
+        wineRegions={wineRegions}
+        adminRegions={adminRegions}
+        departments={departments}
+      />
+    </div>
+
     <div class="filters-bar">
       <div class="filter-group">
         <h2 class="filter-label">Categories</h2>
@@ -107,22 +123,41 @@ const [categories, places] = await Promise.all([
 </Layout>
 
 <script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>('#category-filters .filter-btn');
-  const cards = document.querySelectorAll<HTMLElement>('.place-card');
+  document.addEventListener('astro:page-load', () => {
+    const catButtons = document.querySelectorAll<HTMLButtonElement>('#category-filters .filter-btn');
+    const cards = document.querySelectorAll<HTMLElement>('.place-card');
 
-  buttons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
-      buttons.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
+    let activeCategory = 'all';
+    let activeWineRegion: string | null = null;
+    let activeAdminRegion: string | null = null;
+    let activeDept: string | null = null;
 
+    function applyFilters() {
       cards.forEach((card) => {
-        if (filter === 'all' || card.dataset.category === filter) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
+        const matchCat = activeCategory === 'all' || card.dataset.category === activeCategory;
+        const matchWine = !activeWineRegion || card.dataset.wineRegion === activeWineRegion;
+        const matchAdmin = !activeAdminRegion || card.dataset.adminRegion === activeAdminRegion;
+        const matchDept = !activeDept || card.dataset.dept === activeDept;
+        card.style.display = (matchCat && matchWine && matchAdmin && matchDept) ? '' : 'none';
       });
+    }
+
+    catButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeCategory = btn.dataset.filter ?? 'all';
+        catButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilters();
+      });
+    });
+
+    // Region filter events from RegionFilter React component
+    document.addEventListener('region-filter', (e) => {
+      const { wine, admin, dept } = (e as CustomEvent).detail;
+      activeWineRegion = wine;
+      activeAdminRegion = admin;
+      activeDept = dept;
+      applyFilters();
     });
   });
 </script>
@@ -133,6 +168,7 @@ const [categories, places] = await Promise.all([
     display: flex;
     flex-direction: column;
     background-color: var(--color-sand);
+    position: relative;
   }
 
   #flower {
@@ -205,11 +241,15 @@ const [categories, places] = await Promise.all([
     gap: var(--space-md);
     padding: var(--space-lg);
   }
-
-  @media (max-width: 540px) {
+.filter-by-wrap {
+    padding: 0 var(--space-lg);
+    position: relative;
+  }
+  @media (max-width: 450px) {
     .places-grid {
       padding: var(--space-md);
       grid-template-columns: 1fr;
     }
   }
+
 </style>
