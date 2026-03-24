@@ -29,7 +29,11 @@ interface Props {
   departments: Department[];
 }
 
-export default function RegionFilter({ wineRegions, adminRegions, departments }: Props) {
+export default function RegionFilter({
+  wineRegions,
+  adminRegions,
+  departments,
+}: Props) {
   const [openPanel, setOpenPanel] = useState<"wine" | "state" | null>(null);
   const [activeWine, setActiveWine] = useState<string | null>(null);
   const [activeAdmin, setActiveAdmin] = useState<string | null>(null);
@@ -58,9 +62,13 @@ export default function RegionFilter({ wineRegions, adminRegions, departments }:
   }, [openPanel]);
 
   // Dispatch custom event so the Astro page can react
-  function dispatchFilter(wine: string | null, admin: string | null, dept: string | null) {
+  function dispatchFilter(
+    wine: string | null,
+    admin: string | null,
+    dept: string | null,
+  ) {
     document.dispatchEvent(
-      new CustomEvent("region-filter", { detail: { wine, admin, dept } })
+      new CustomEvent("region-filter", { detail: { wine, admin, dept } }),
     );
   }
 
@@ -87,13 +95,21 @@ export default function RegionFilter({ wineRegions, adminRegions, departments }:
     setOpenPanel(null);
   }
 
-  const activeWineObj = activeWine ? wineRegions.find((w) => w.slug === activeWine) : null;
-  const activeAdminObj = activeAdmin ? adminRegions.find((a) => a.slug === activeAdmin) : null;
-  const activeDeptObj = activeDept ? departments.find((d) => d.slug === activeDept) : null;
+  const activeWineObj = activeWine
+    ? wineRegions.find((w) => w.slug === activeWine)
+    : null;
+  const activeAdminObj = activeAdmin
+    ? adminRegions.find((a) => a.slug === activeAdmin)
+    : null;
+  const activeDeptObj = activeDept
+    ? departments.find((d) => d.slug === activeDept)
+    : null;
 
   return (
     <div className="rf-wrap" ref={wrapRef}>
-      <span className="rf-label">Filter by</span>
+      <span className="rf-label">
+        Filter <small>by</small>
+      </span>
 
       <div className="rf-toggle">
         <button
@@ -104,7 +120,7 @@ export default function RegionFilter({ wineRegions, adminRegions, departments }:
           Wine Regions
         </button>
         <button
-          className={`rf-btn${openPanel === "state" ? " rf-btn--open" : ""}${(activeAdmin || activeDept) ? " rf-btn--active" : ""}`}
+          className={`rf-btn${openPanel === "state" ? " rf-btn--open" : ""}${activeAdmin || activeDept ? " rf-btn--active" : ""}`}
           onClick={() => setOpenPanel(openPanel === "state" ? null : "state")}
           type="button"
         >
@@ -117,7 +133,10 @@ export default function RegionFilter({ wineRegions, adminRegions, departments }:
           <button
             className="rf-clear"
             style={{ ["--clear-color" as string]: activeWineObj.color }}
-            onClick={() => { setActiveWine(null); dispatchFilter(null, activeAdmin, activeDept); }}
+            onClick={() => {
+              setActiveWine(null);
+              dispatchFilter(null, activeAdmin, activeDept);
+            }}
             type="button"
           >
             {activeWineObj.region} ×
@@ -127,7 +146,10 @@ export default function RegionFilter({ wineRegions, adminRegions, departments }:
           <button
             className="rf-clear"
             style={{ ["--clear-color" as string]: activeAdminObj.color }}
-            onClick={() => { setActiveAdmin(null); dispatchFilter(activeWine, null, null); }}
+            onClick={() => {
+              setActiveAdmin(null);
+              dispatchFilter(activeWine, null, null);
+            }}
             type="button"
           >
             {activeAdminObj.name} ×
@@ -137,7 +159,10 @@ export default function RegionFilter({ wineRegions, adminRegions, departments }:
           <button
             className="rf-clear"
             style={{ ["--clear-color" as string]: activeDeptObj.color }}
-            onClick={() => { setActiveDept(null); dispatchFilter(activeWine, null, null); }}
+            onClick={() => {
+              setActiveDept(null);
+              dispatchFilter(activeWine, null, null);
+            }}
             type="button"
           >
             {activeDeptObj.name} ×
@@ -146,7 +171,10 @@ export default function RegionFilter({ wineRegions, adminRegions, departments }:
       </div>
 
       {/* Wine Regions panel */}
-      <div className={`rf-panel${openPanel === "wine" ? " rf-panel--open" : ""}`} aria-hidden={openPanel !== "wine" ? "true" : "false"}>
+      <div
+        className={`rf-panel${openPanel === "wine" ? " rf-panel--open" : ""}`}
+        aria-hidden={openPanel !== "wine" ? "true" : "false"}
+      >
         <ul className="rf-list">
           {wineRegions.map((wr) => (
             <li key={wr.slug}>
@@ -166,10 +194,15 @@ export default function RegionFilter({ wineRegions, adminRegions, departments }:
       </div>
 
       {/* State Regions panel */}
-      <div className={`rf-panel${openPanel === "state" ? " rf-panel--open" : ""}`} aria-hidden={openPanel !== "state" ? "true" : "false"}>
+      <div
+        className={`rf-panel${openPanel === "state" ? " rf-panel--open" : ""}`}
+        aria-hidden={openPanel !== "state" ? "true" : "false"}
+      >
         <ul className="rf-list">
           {adminRegions.map((ar) => {
-            const depts = departments.filter((d) => d.administrative_region === ar.id);
+            const depts = departments.filter(
+              (d) => d.administrative_region === ar.id,
+            );
             return (
               <li key={ar.slug} className="rf-group">
                 <button

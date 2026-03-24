@@ -23,7 +23,7 @@
 
 .rf-btn {
   font-family: var(--font-label);
-  font-size: 0.7rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -57,7 +57,7 @@
 
 .rf-clear {
   font-family: var(--font-label);
-  font-size: 0.65rem;
+  font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -84,7 +84,7 @@
   z-index: 200;
   background-color: #fffaf3;
   border: 1px solid #42403c;
-  width: 260px;
+  width: 280px;
   max-height: 0;
   overflow: hidden;
   opacity: 0;
@@ -134,7 +134,7 @@
   border: none;
   cursor: pointer;
   font-family: var(--font-label);
-  font-size: 0.72rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -160,7 +160,7 @@
 }
 
 .rf-item--region {
-  font-size: 0.75rem;
+  font-size: 1rem;
 }
 
 /* Department sub-list */
@@ -172,7 +172,7 @@
 
 .rf-item--dept {
   padding-left: 2.2rem;
-  font-size: 0.67rem;
+  font-size: 0.85rem;
   font-weight: 400;
   opacity: 0.85;
 }
@@ -189,6 +189,6 @@
 .rf-active-tags {
   display: flex;
   justify-content: center;
-  align-items: stretch;
+  align-items: center;
   gap: 10px;
 }
