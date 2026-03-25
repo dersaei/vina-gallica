@@ -40,7 +40,7 @@ export default function Map({ geojsonData, categories }: Props) {
 
     mapRef.current = map;
 
-    map.addControl(new mapboxgl.NavigationControl(), "top-right");
+    map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
     popupRef.current = new mapboxgl.Popup({
       closeButton: false,
@@ -141,10 +141,7 @@ export default function Map({ geojsonData, categories }: Props) {
               ${p.categoryName ? `<span class="map-popup__category" style="background-color:${p.categoryColor || "#888"}">${p.categoryName}</span>` : ""}
             </div>
           </div>`;
-        popupRef
-          .current!.setLngLat(coords)
-          .setHTML(html)
-          .addTo(map);
+        popupRef.current!.setLngLat(coords).setHTML(html).addTo(map);
       });
 
       map.on("mouseenter", "unclustered-point", () => {

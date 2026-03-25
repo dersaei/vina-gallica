@@ -2,7 +2,7 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 750px) {
   .mobile-menu {
     display: block;
     position: relative;
@@ -31,7 +31,6 @@
     width: 20px;
     height: 2px;
     background-color: #000;
-    border-radius: 2px;
     transition:
       transform 0.3s ease,
       opacity 0.3s ease;

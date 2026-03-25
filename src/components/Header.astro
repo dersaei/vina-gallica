@@ -66,7 +66,7 @@ import MobileMenu from "./MobileMenu.tsx";
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-inline: var(--space-lg);
+    padding-inline: var(--space-md);
     padding-block: var(--space-sm);
   }
 
@@ -84,17 +84,12 @@ import MobileMenu from "./MobileMenu.tsx";
     gap: var(--space-sm);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 750px) {
     .header-right {
       display: none;
     }
   }
-  
-  @media (max-width: 540px) {
-.header-inner {
-  padding-inline: var(--space-sm);
-}
-  }
+
   @media (max-width: 490px){
     .logo-link {
   scale: calc(0.8);
@@ -109,9 +104,7 @@ import MobileMenu from "./MobileMenu.tsx";
             scale: calc(1);
 margin-left: 0;
    }
-   .header-inner {
-    padding-inline: var(--space-md);
-   }
+  
     
   }
 </style>
