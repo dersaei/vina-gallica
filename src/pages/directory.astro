@@ -8,8 +8,9 @@ import RegionFilter from '../components/RegionFilter.tsx';
 
 interface AdminRegion { id: string; name: string; slug: string; color: string; }
 interface Department { id: string; name: string; slug: string; color: string; administrative_region: string; }
+interface TownItem { id: string; name: string; slug: string; department: string; }
 
-const [categories, wineRegions, adminRegions, departments, places] = await Promise.all([
+const [categories, wineRegions, adminRegions, departments, towns, places] = await Promise.all([
   directus.request(
     readItems('categories_vg', {
       fields: ['id', 'name', 'slug', 'color'],
@@ -19,6 +20,7 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
   directus.request(readItems('wine_regions', { fields: ['id', 'region', 'slug', 'color'], sort: ['region'] })) as unknown as Promise<{ id: string; region: string; slug: string; color: string }[]>,
   directus.request(readItems('administrative_regions', { fields: ['id', 'name', 'slug', 'color'], sort: ['name'] })) as unknown as Promise<AdminRegion[]>,
   directus.request(readItems('departments', { fields: ['id', 'name', 'slug', 'color', 'administrative_region'], sort: ['name'] })) as unknown as Promise<Department[]>,
+  directus.request(readItems('towns', { fields: ['id', 'name', 'slug', 'department'], sort: ['name'] })) as unknown as Promise<TownItem[]>,
   directus.request(
     readItems('places_vg', {
       fields: [
@@ -85,6 +87,7 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
         wineRegions={wineRegions}
         adminRegions={adminRegions}
         departments={departments}
+        towns={towns}
       />
     </div>
 
@@ -131,6 +134,7 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
     let activeWineRegion: string | null = null;
     let activeAdminRegion: string | null = null;
     let activeDept: string | null = null;
+    let activeTown: string | null = null;
 
     function applyFilters() {
       cards.forEach((card) => {
@@ -138,7 +142,8 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
         const matchWine = !activeWineRegion || card.dataset.wineRegion === activeWineRegion;
         const matchAdmin = !activeAdminRegion || card.dataset.adminRegion === activeAdminRegion;
         const matchDept = !activeDept || card.dataset.dept === activeDept;
-        card.style.display = (matchCat && matchWine && matchAdmin && matchDept) ? '' : 'none';
+        const matchTown = !activeTown || card.dataset.town === activeTown;
+        card.style.display = (matchCat && matchWine && matchAdmin && matchDept && matchTown) ? '' : 'none';
       });
     }
 
@@ -153,10 +158,11 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
 
     // Region filter events from RegionFilter React component
     document.addEventListener('region-filter', (e) => {
-      const { wine, admin, dept } = (e as CustomEvent).detail;
+      const { wine, admin, dept, town } = (e as CustomEvent).detail;
       activeWineRegion = wine;
       activeAdminRegion = admin;
       activeDept = dept;
+      activeTown = town;
       applyFilters();
     });
   });
@@ -249,6 +255,11 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
     .places-grid {
       padding: var(--space-md);
       grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 365px) {
+    .filter-by-wrap {
+      padding: 0 var(--space-sm);
     }
   }
 

@@ -152,10 +152,10 @@
 }
 
 .rf-bullet {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background-color: var(--item-color, #888);
+  background-color: var(--item-color);
   flex-shrink: 0;
 }
 
@@ -185,6 +185,28 @@
 
 .rf-group + .rf-group {
   border-top: 1px solid rgba(66, 64, 60, 0.12);
+}
+
+/* Town sub-list */
+.rf-towns {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rf-item--town {
+  padding-left: 3.4rem;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  font-family: var(--font-extra);
+}
+
+.rf-item--town::before {
+  content: "·";
+  margin-right: 0.35em;
+  opacity: 0.5;
 }
 .rf-active-tags {
   display: flex;

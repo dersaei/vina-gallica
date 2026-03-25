@@ -23,21 +23,31 @@ interface Department {
   administrative_region: string;
 }
 
+interface Town {
+  id: string;
+  name: string;
+  slug: string;
+  department: string;
+}
+
 interface Props {
   wineRegions: WineRegion[];
   adminRegions: AdminRegion[];
   departments: Department[];
+  towns: Town[];
 }
 
 export default function RegionFilter({
   wineRegions,
   adminRegions,
   departments,
+  towns,
 }: Props) {
   const [openPanel, setOpenPanel] = useState<"wine" | "state" | null>(null);
   const [activeWine, setActiveWine] = useState<string | null>(null);
   const [activeAdmin, setActiveAdmin] = useState<string | null>(null);
   const [activeDept, setActiveDept] = useState<string | null>(null);
+  const [activeTown, setActiveTown] = useState<string | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   // Close on click outside or Escape
@@ -66,16 +76,17 @@ export default function RegionFilter({
     wine: string | null,
     admin: string | null,
     dept: string | null,
+    town: string | null,
   ) {
     document.dispatchEvent(
-      new CustomEvent("region-filter", { detail: { wine, admin, dept } }),
+      new CustomEvent("region-filter", { detail: { wine, admin, dept, town } }),
     );
   }
 
   function selectWine(slug: string | null) {
     const next = activeWine === slug ? null : slug;
     setActiveWine(next);
-    dispatchFilter(next, activeAdmin, activeDept);
+    dispatchFilter(next, activeAdmin, activeDept, activeTown);
     setOpenPanel(null);
   }
 
@@ -83,7 +94,8 @@ export default function RegionFilter({
     const next = activeAdmin === slug ? null : slug;
     setActiveAdmin(next);
     setActiveDept(null);
-    dispatchFilter(activeWine, next, null);
+    setActiveTown(null);
+    dispatchFilter(activeWine, next, null, null);
     setOpenPanel(null);
   }
 
@@ -91,7 +103,21 @@ export default function RegionFilter({
     const next = activeDept === slug ? null : slug;
     setActiveDept(next);
     setActiveAdmin(null);
-    dispatchFilter(activeWine, null, next);
+    setActiveTown(null);
+    dispatchFilter(activeWine, null, next, null);
+    setOpenPanel(null);
+  }
+
+  function selectTown(slug: string | null) {
+    const next = activeTown === slug ? null : slug;
+    setActiveTown(next);
+    setActiveAdmin(null);
+    // keep dept active (town is sub-dept)
+    const townObj = towns.find((t) => t.slug === slug);
+    const deptForTown = townObj ? departments.find((d) => d.id === townObj.department) : null;
+    const newDept = deptForTown ? deptForTown.slug : activeDept;
+    setActiveDept(next ? newDept : activeDept);
+    dispatchFilter(activeWine, null, next ? newDept : activeDept, next);
     setOpenPanel(null);
   }
 
@@ -103,6 +129,9 @@ export default function RegionFilter({
     : null;
   const activeDeptObj = activeDept
     ? departments.find((d) => d.slug === activeDept)
+    : null;
+  const activeTownObj = activeTown
+    ? towns.find((t) => t.slug === activeTown)
     : null;
 
   return (
@@ -120,11 +149,11 @@ export default function RegionFilter({
           Wine Regions
         </button>
         <button
-          className={`rf-btn${openPanel === "state" ? " rf-btn--open" : ""}${activeAdmin || activeDept ? " rf-btn--active" : ""}`}
+          className={`rf-btn${openPanel === "state" ? " rf-btn--open" : ""}${activeAdmin || activeDept || activeTown ? " rf-btn--active" : ""}`}
           onClick={() => setOpenPanel(openPanel === "state" ? null : "state")}
           type="button"
         >
-          State Regions
+          Country's Regions
         </button>
       </div>
 
@@ -135,7 +164,7 @@ export default function RegionFilter({
             style={{ ["--clear-color" as string]: activeWineObj.color }}
             onClick={() => {
               setActiveWine(null);
-              dispatchFilter(null, activeAdmin, activeDept);
+              dispatchFilter(null, activeAdmin, activeDept, activeTown);
             }}
             type="button"
           >
@@ -148,7 +177,8 @@ export default function RegionFilter({
             style={{ ["--clear-color" as string]: activeAdminObj.color }}
             onClick={() => {
               setActiveAdmin(null);
-              dispatchFilter(activeWine, null, null);
+              setActiveTown(null);
+              dispatchFilter(activeWine, null, null, null);
             }}
             type="button"
           >
@@ -161,11 +191,25 @@ export default function RegionFilter({
             style={{ ["--clear-color" as string]: activeDeptObj.color }}
             onClick={() => {
               setActiveDept(null);
-              dispatchFilter(activeWine, null, null);
+              setActiveTown(null);
+              dispatchFilter(activeWine, null, null, null);
             }}
             type="button"
           >
             {activeDeptObj.name} ×
+          </button>
+        )}
+        {activeTownObj && (
+          <button
+            className="rf-clear"
+            style={{ ["--clear-color" as string]: activeDeptObj?.color ?? "#888" }}
+            onClick={() => {
+              setActiveTown(null);
+              dispatchFilter(activeWine, activeAdmin, activeDept, null);
+            }}
+            type="button"
+          >
+            {activeTownObj.name} ×
           </button>
         )}
       </div>
@@ -193,7 +237,7 @@ export default function RegionFilter({
         </ul>
       </div>
 
-      {/* State Regions panel */}
+      {/* Country's Regions panel */}
       <div
         className={`rf-panel${openPanel === "state" ? " rf-panel--open" : ""}`}
         aria-hidden={openPanel !== "state" ? "true" : "false"}
@@ -216,18 +260,36 @@ export default function RegionFilter({
                 </button>
                 {depts.length > 0 && (
                   <ul className="rf-depts">
-                    {depts.map((d) => (
-                      <li key={d.slug}>
-                        <button
-                          className={`rf-item rf-item--dept${activeDept === d.slug ? " rf-item--active" : ""}`}
-                          style={{ ["--item-color" as string]: d.color }}
-                          onClick={() => selectDept(d.slug)}
-                          type="button"
-                        >
-                          {d.name}
-                        </button>
-                      </li>
-                    ))}
+                    {depts.map((d) => {
+                      const deptTowns = towns.filter((t) => t.department === d.id);
+                      return (
+                        <li key={d.slug}>
+                          <button
+                            className={`rf-item rf-item--dept${activeDept === d.slug ? " rf-item--active" : ""}`}
+                            style={{ ["--item-color" as string]: d.color }}
+                            onClick={() => selectDept(d.slug)}
+                            type="button"
+                          >
+                            {d.name}
+                          </button>
+                          {deptTowns.length > 0 && (
+                            <ul className="rf-towns">
+                              {deptTowns.map((t) => (
+                                <li key={t.slug}>
+                                  <button
+                                    className={`rf-item rf-item--town${activeTown === t.slug ? " rf-item--active" : ""}`}
+                                    onClick={() => selectTown(t.slug)}
+                                    type="button"
+                                  >
+                                    {t.name}
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
               </li>
