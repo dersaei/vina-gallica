@@ -1,0 +1,91 @@
+---
+export const prerender = false;
+import Layout from '../layouts/Layout.astro';
+import MapComponent from '../components/Map.tsx';
+import directus, { readItems } from '../lib/directus.ts';
+import type { Category, Place } from '../lib/directus.ts';
+
+const [categories, places] = await Promise.all([
+  directus.request(
+    readItems('categories_vg', {
+      fields: ['id', 'name', 'slug', 'color'],
+      sort: ['name'],
+    })
+  ) as Promise<Category[]>,
+  directus.request(
+    readItems('places_vg', {
+      fields: [
+        'id', 'Name', 'slug', 'location',
+        { category: ['id', 'name', 'slug', 'color'] },
+      ] as const,
+      filter: {
+        status: { _eq: 'published' },
+      },
+      limit: -1,
+    })
+  ) as unknown as Promise<Place[]>,
+]);
+
+const geojson = {
+  type: 'FeatureCollection' as const,
+  features: places
+    .filter(p => p.location !== null)
+    .map(p => {
+      const cat = typeof p.category === 'object' ? p.category as Category : null;
+      return {
+        type: 'Feature' as const,
+        geometry: {
+          type: 'Point' as const,
+          coordinates: p.location!.coordinates,
+        },
+        properties: {
+          id: p.id,
+          name: p.Name,
+          slug: p.slug,
+          categoryId: cat?.id ?? '',
+          categoryColor: cat?.color ?? '#888888',
+          categoryName: cat?.name ?? '',
+        },
+      };
+    }),
+};
+
+const geojsonString = JSON.stringify(geojson);
+const categoriesData = categories.map(c => ({
+  id: c.id,
+  name: c.name,
+  slug: c.slug,
+  color: c.color,
+}));
+---
+
+<Layout title="Map | Vina Gallica" headline="French Wine Map" headlineStyle="light">
+  <main class="map-page">
+    <MapComponent
+      geojsonData={geojsonString}
+      categories={categoriesData}
+      client:only="react"
+    />
+  </main>
+</Layout>
+
+<style is:global>
+  /* Override Layout.astro's mobile height:auto — map must always fill the viewport */
+  body:has(.map-page) {
+    height: 100dvh !important;
+  }
+
+  @media (max-width: 768px) {
+    html:has(.map-page),
+    body:has(.map-page) {
+      height: 100dvh !important;
+    }
+  }
+
+  .map-page {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+</style>

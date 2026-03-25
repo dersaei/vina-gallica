@@ -1,4 +1,94 @@
+.map-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .map-container {
   width: 100%;
-  height: 400px;
+  flex: 1;
+  min-height: 0; /* niezbędne — zapobiega overflow flex-child */
+}
+
+.cat-filter-bar {
+  background-color: var(--color-gold);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-sm) var(--space-xs);
+  flex-shrink: 0;
+}
+
+.cat-filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.cat-btn {
+  font-family: var(--font-label);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  position: relative;
+  text-transform: uppercase;
+  text-decoration: none #000000 solid;
+  text-decoration-thickness: auto;
+  padding: 0.6em 1em 0.2em;
+  border-radius: 2px;
+  border: 3px solid color-mix(in srgb, var(--btn-color) 40%, transparent);
+  background-color: antiquewhite;
+  color: var(--btn-color);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    text-shadow 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.3s ease;
+}
+
+.cat-btn:after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+}
+
+.cat-btn:hover {
+  background-color: color-mix(in srgb, var(--btn-color) 10%, transparent);
+  border-color: color-mix(in srgb, var(--btn-color) 70%, transparent);
+}
+
+.cat-btn.active {
+  background-color: var(--btn-color);
+  border-color: var(--color-elegant-black);
+  text-shadow: 0.5px 0.5px 1px black;
+  color: #fff;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.mapboxgl-popup-content {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--color-elegant-black);
+  padding: 0.6em 1em 0.4em;
+  border-radius: 3px;
+}
+
+.mapboxgl-popup-close-button {
+  color: var(--color-elegant-black);
+}
+
+@media (max-width: 515px) {
+  .cat-btn {
+    font-size: 0.8rem;
+  }
 }

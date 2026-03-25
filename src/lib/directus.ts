@@ -41,6 +41,7 @@ interface Place {
   Name: string;
   slug: string;
   status: string;
+  location: { type: 'Point'; coordinates: [number, number] } | null;
   address: string;
   postal_code: string;
   website: string | null;
