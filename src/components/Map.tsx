@@ -43,9 +43,9 @@ export default function Map({ geojsonData, categories }: Props) {
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
     popupRef.current = new mapboxgl.Popup({
-      closeButton: true,
-      closeOnClick: false,
-      maxWidth: "240px",
+      closeButton: false,
+      closeOnClick: true,
+      maxWidth: "300px",
     });
 
     map.on("load", () => {
@@ -124,10 +124,26 @@ export default function Map({ geojsonData, categories }: Props) {
         if (!feature) return;
         const geom = feature.geometry as GeoJSON.Point;
         const coords = geom.coordinates as [number, number];
-        const name = feature.properties?.name as string;
+        const p = feature.properties as {
+          name: string;
+          address: string;
+          categoryName: string;
+          categoryColor: string;
+          wineRegionName: string;
+          wineRegionColor: string;
+        };
+        const html = `
+          <div class="map-popup">
+            ${p.wineRegionName ? `<div class="map-popup__region" style="background-color:${p.wineRegionColor || "#888"}">${p.wineRegionName}</div>` : ""}
+            <div class="map-popup__body">
+              <p class="map-popup__name">${p.name}</p>
+              ${p.address ? `<p class="map-popup__address">${p.address}</p>` : ""}
+              ${p.categoryName ? `<span class="map-popup__category" style="background-color:${p.categoryColor || "#888"}">${p.categoryName}</span>` : ""}
+            </div>
+          </div>`;
         popupRef
           .current!.setLngLat(coords)
-          .setHTML(`<strong>${name}</strong>`)
+          .setHTML(html)
           .addTo(map);
       });
 

@@ -3,7 +3,7 @@ export const prerender = false;
 import Layout from '../layouts/Layout.astro';
 import MapComponent from '../components/Map.tsx';
 import directus, { readItems } from '../lib/directus.ts';
-import type { Category, Place } from '../lib/directus.ts';
+import type { Category, Place, WineRegion } from '../lib/directus.ts';
 
 const [categories, places] = await Promise.all([
   directus.request(
@@ -15,8 +15,9 @@ const [categories, places] = await Promise.all([
   directus.request(
     readItems('places_vg', {
       fields: [
-        'id', 'Name', 'slug', 'location',
+        'id', 'Name', 'slug', 'location', 'address',
         { category: ['id', 'name', 'slug', 'color'] },
+        { wine_region: ['id', 'region', 'color'] },
       ] as const,
       filter: {
         status: { _eq: 'published' },
@@ -32,6 +33,7 @@ const geojson = {
     .filter(p => p.location !== null)
     .map(p => {
       const cat = typeof p.category === 'object' ? p.category as Category : null;
+      const wr = typeof p.wine_region === 'object' && p.wine_region !== null ? p.wine_region as WineRegion : null;
       return {
         type: 'Feature' as const,
         geometry: {
@@ -42,9 +44,12 @@ const geojson = {
           id: p.id,
           name: p.Name,
           slug: p.slug,
+          address: p.address ?? '',
           categoryId: cat?.id ?? '',
           categoryColor: cat?.color ?? '#888888',
           categoryName: cat?.name ?? '',
+          wineRegionName: wr?.region ?? '',
+          wineRegionColor: wr?.color ?? '',
         },
       };
     }),
