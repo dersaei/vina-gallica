@@ -127,17 +127,27 @@ export default function Map({ geojsonData, categories }: Props) {
         const p = feature.properties as {
           name: string;
           address: string;
+          townName: string;
           categoryName: string;
           categoryColor: string;
           wineRegionName: string;
           wineRegionColor: string;
+          deptName: string;
+          deptColor: string;
+          adminRegionName: string;
+          adminRegionColor: string;
         };
+        const locationTags = [
+          p.deptName ? { name: p.deptName, color: p.deptColor || "#888" } : null,
+          p.adminRegionName ? { name: p.adminRegionName, color: p.adminRegionColor || "#888" } : null,
+        ].filter(Boolean) as { name: string; color: string }[];
         const html = `
           <div class="map-popup">
             ${p.wineRegionName ? `<div class="map-popup__region" style="background-color:${p.wineRegionColor || "#888"}">${p.wineRegionName}</div>` : ""}
             <div class="map-popup__body">
               <p class="map-popup__name">${p.name}</p>
-              ${p.address ? `<p class="map-popup__address">${p.address}</p>` : ""}
+              ${(p.address || p.townName) ? `<p class="map-popup__address">${[p.address, p.townName].filter(Boolean).join(", ")}</p>` : ""}
+              ${locationTags.length ? `<div class="map-popup__tags">${locationTags.map(t => `<span class="map-popup__tag-location" style="--loc-color:${t.color}">${t.name}</span>`).join("")}</div>` : ""}
               ${p.categoryName ? `<span class="map-popup__category" style="background-color:${p.categoryColor || "#888"}">${p.categoryName}</span>` : ""}
             </div>
           </div>`;

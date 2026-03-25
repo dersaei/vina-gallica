@@ -91,12 +91,12 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .map-popup__body {
   padding: 0.7em 0.9em 0.8em;
-  background: #fff;
+  background-color: #fffaf3;
   display: flex;
   flex-direction: column;
   gap: 0.3em;
@@ -120,10 +120,35 @@
   line-height: 1.4;
 }
 
+.map-popup__tags {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3em;
+  flex-wrap: wrap;
+  margin-top: 0.2em;
+}
+
+.map-popup__tag-location {
+  display: inline-block;
+  font-family: var(--font-extra);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: black;
+  padding: 0.2em 0.4em;
+  text-shadow: 0.3px 0.3px 0.5px white;
+  border-bottom: 4px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  background-color: color-mix(in srgb, var(--loc-color) 50%, transparent);
+}
+
 .map-popup__category {
   align-self: flex-start;
   margin-top: 0.3em;
-  padding: 0.25em 0.65em 0;
+  padding: 0.3em 0.65em 0;
   border-radius: 2px;
   font-family: var(--font-label);
   font-size: 0.65rem;
