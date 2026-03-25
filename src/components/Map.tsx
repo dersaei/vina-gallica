@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./Map.css";
 
-interface CategoryData {
+export interface CategoryData {
   id: string;
   name: string;
   slug: string;
@@ -13,9 +13,10 @@ interface CategoryData {
 interface Props {
   geojsonData: string;
   categories: CategoryData[];
+  onOpenPanel: (slug: string) => void;
 }
 
-export default function Map({ geojsonData, categories }: Props) {
+export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const popupRef = useRef<mapboxgl.Popup | null>(null);
@@ -105,20 +106,17 @@ export default function Map({ geojsonData, categories }: Props) {
       });
 
       map.on("click", "clusters", (e) => {
-        const features = map.queryRenderedFeatures(e.point, {
-          layers: ["clusters"],
-        });
-        const clusterId = features[0]?.properties?.cluster_id as
-          | number
-          | undefined;
+        const features = map.queryRenderedFeatures(e.point, { layers: ["clusters"] });
+        const clusterId = features[0]?.properties?.cluster_id as number | undefined;
         if (clusterId === undefined) return;
-        (
-          map.getSource("places") as mapboxgl.GeoJSONSource
-        ).getClusterExpansionZoom(clusterId, (err, zoom) => {
-          if (err || zoom === null) return;
-          const geom = features[0].geometry as GeoJSON.Point;
-          map.easeTo({ center: geom.coordinates as [number, number], zoom });
-        });
+        (map.getSource("places") as mapboxgl.GeoJSONSource).getClusterExpansionZoom(
+          clusterId,
+          (err, zoom) => {
+            if (err || zoom === null) return;
+            const geom = features[0].geometry as GeoJSON.Point;
+            map.easeTo({ center: geom.coordinates as [number, number], zoom });
+          },
+        );
       });
 
       map.on("click", "unclustered-point", (e) => {
@@ -150,7 +148,7 @@ export default function Map({ geojsonData, categories }: Props) {
             <div class="map-popup__body">
               <p class="map-popup__name">${p.name}</p>
               ${(p.address || p.townName) ? `<p class="map-popup__address">${[p.address, p.townName].filter(Boolean).join(", ")}</p>` : ""}
-              ${locationTags.length ? `<div class="map-popup__tags">${locationTags.map(t => `<span class="map-popup__tag-location" style="--loc-color:${t.color}">${t.name}</span>`).join("")}</div>` : ""}
+              ${locationTags.length ? `<div class="map-popup__tags">${locationTags.map((t) => `<span class="map-popup__tag-location" style="--loc-color:${t.color}">${t.name}</span>`).join("")}</div>` : ""}
               <div class="map-popup__footer">
                 ${p.categoryName ? `<span class="map-popup__category" style="background-color:${p.categoryColor || "#888"}">${p.categoryName}</span>` : ""}
                 <button class="map-popup__open-btn" type="button" aria-label="Open place panel" data-slug="${p.slug}">
@@ -173,6 +171,14 @@ export default function Map({ geojsonData, categories }: Props) {
       });
       map.on("mouseleave", "clusters", () => {
         map.getCanvas().style.cursor = "";
+      });
+
+      // Delegate clicks on popup open-btn (raw HTML, not React)
+      mapContainerRef.current!.addEventListener("click", (e) => {
+        const btn = (e.target as Element).closest<HTMLButtonElement>(".map-popup__open-btn");
+        if (!btn) return;
+        const slug = btn.dataset.slug;
+        if (slug) onOpenPanel(slug);
       });
     });
 

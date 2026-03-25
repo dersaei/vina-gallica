@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 import Layout from '../layouts/Layout.astro';
-import MapComponent from '../components/Map.tsx';
+import MapWithPanel from '../components/MapWithPanel.tsx';
 import directus, { readItems } from '../lib/directus.ts';
 import type { Category, Place, WineRegion, Department, AdministrativeRegion } from '../lib/directus.ts';
 
@@ -75,7 +75,7 @@ const categoriesData = categories.map(c => ({
 
 <Layout title="French Wine Map | Vina Gallica" headline="French Wine Map" headlineStyle="light">
   <main class="map-page">
-    <MapComponent
+    <MapWithPanel
       geojsonData={geojsonString}
       categories={categoriesData}
       client:only="react"

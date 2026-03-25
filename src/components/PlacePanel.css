@@ -1,0 +1,82 @@
+/* ── Baza ─────────────────────────────────────────────── */
+.place-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  max-width: 90vw;
+  height: 100%;
+  z-index: 250;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.place-panel--open {
+  transform: translateX(0);
+}
+
+/* ── Wnętrze ──────────────────────────────────────────── */
+.place-panel__inner {
+  height: 100%;
+  background-color: #fffaf3;
+  border-left: 2px solid var(--color-elegant-black);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  outline: none;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.18);
+}
+
+/* ── Przycisk zamknięcia ──────────────────────────────── */
+.place-panel__close {
+  align-self: flex-end;
+  margin: var(--space-sm);
+  padding: 0.3em 0.6em;
+  background: none;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--color-elegant-black);
+  transition: background-color 0.15s ease;
+}
+
+.place-panel__close:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+/* ── Zawartość ────────────────────────────────────────── */
+.place-panel__content {
+  padding: var(--space-md);
+  flex: 1;
+}
+
+.place-panel__slug {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* ── Mobile — wysuw z dołu ────────────────────────────── */
+@media (max-width: 660px) {
+  .place-panel {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100dvh;
+    transform: translateY(100%);
+  }
+
+  .place-panel--open {
+    transform: translateY(0);
+  }
+
+  .place-panel__inner {
+    border-left: none;
+  }
+}
