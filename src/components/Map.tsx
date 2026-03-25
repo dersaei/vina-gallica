@@ -40,7 +40,9 @@ export default function Map({ geojsonData, categories }: Props) {
 
     mapRef.current = map;
 
-    map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
+    if (window.innerWidth >= 600) {
+      map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
+    }
 
     popupRef.current = new mapboxgl.Popup({
       closeButton: false,
