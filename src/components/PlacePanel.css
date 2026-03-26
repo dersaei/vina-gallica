@@ -35,6 +35,44 @@
   padding: 0.6em 1.2em 0;
 }
 
+/* ── Lokalizacja ─────────────────────────────────────── */
+.panel-location {
+  display: flex;
+  flex-direction: column;
+  margin: 0.6em 0;
+}
+
+.panel-location__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.panel-location__label {
+  font-family: var(--font-extra);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #000;
+  line-height: 1;
+  margin-bottom: 0.2em;
+}
+
+.panel-location__label--region {
+  font-size: 0.6rem;
+}
+
+.panel-location__name {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--loc-color);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+  line-height: 1.2;
+}
+
 /* ── Zawartość ────────────────────────────────────────── */
 .place-panel__content {
   flex: 1;
@@ -73,7 +111,7 @@
 .place-label__name {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-align: center;
@@ -120,7 +158,7 @@
 .panel-region-bar {
   position: relative;
   background-color: var(--color-elegant-black);
-  padding: 1em 1.2em 0.7em;
+  padding: 1.2em 1.2em 0.8em;
   box-shadow: rgba(255, 255, 255, 0.4) 0px -3px 30px inset;
 }
 
@@ -128,8 +166,8 @@
   display: block;
   text-align: center;
   font-family: var(--font-heading);
-  font-size: 1.6rem;
-  font-weight: 400;
+  font-size: 1.2rem;
+  font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #fffaf3;

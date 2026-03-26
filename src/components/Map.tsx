@@ -21,6 +21,10 @@ export interface PlaceData {
   logoUrl: string;
   categoryName: string;
   categoryColor: string;
+  deptName: string;
+  deptColor: string;
+  adminRegionName: string;
+  adminRegionColor: string;
   wineRegionName: string;
   wineRegionColor: string;
 }
@@ -213,6 +217,10 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
           logoUrl: string;
           categoryName: string;
           categoryColor: string;
+          deptName: string;
+          deptColor: string;
+          adminRegionName: string;
+          adminRegionColor: string;
           wineRegionName: string;
           wineRegionColor: string;
         };
@@ -227,6 +235,10 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
           logoUrl: p.logoUrl ?? "",
           categoryName: p.categoryName ?? "",
           categoryColor: p.categoryColor ?? "",
+          deptName: p.deptName ?? "",
+          deptColor: p.deptColor ?? "",
+          adminRegionName: p.adminRegionName ?? "",
+          adminRegionColor: p.adminRegionColor ?? "",
           wineRegionName: p.wineRegionName ?? "",
           wineRegionColor: p.wineRegionColor ?? "",
         });

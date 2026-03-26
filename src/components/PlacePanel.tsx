@@ -98,6 +98,28 @@ export default function PlacePanel({ place, onClose }: Props) {
               {cityLine && (
                 <p className="place-label__row">{cityLine}</p>
               )}
+              {(place.deptName || place.adminRegionName) && (
+                <div className="panel-location">
+                  {place.deptName && (
+                    <div
+                      className="panel-location__block"
+                      style={{ "--loc-color": place.deptColor || "#888" } as CSSProperties}
+                    >
+                      <span className="panel-location__label">Department</span>
+                      <span className="panel-location__name">{place.deptName}</span>
+                    </div>
+                  )}
+                  {place.adminRegionName && (
+                    <div
+                      className="panel-location__block"
+                      style={{ "--loc-color": place.adminRegionColor || "#888" } as CSSProperties}
+                    >
+                      <span className="panel-location__label panel-location__label--region">Region</span>
+                      <span className="panel-location__name">{place.adminRegionName}</span>
+                    </div>
+                  )}
+                </div>
+              )}
               {place.phone && (
                 <a className="place-label__row place-label__link" href={`tel:${place.phone}`}>
                   {place.phone}
