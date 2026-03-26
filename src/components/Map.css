@@ -273,9 +273,16 @@
   opacity: 0.6;
 }
 
-/* przycisk clear — tło przezroczyste zamiast białego */
+/* przycisk clear */
 .map-search .mapboxgl-ctrl-geocoder--button {
-  background: transparent;
+  background-color: transparent;
+  border-radius: 50%;
+  padding: 0 0.2em 0.2em;
+  transition: background-color 0.15s ease;
+}
+
+.map-search .mapboxgl-ctrl-geocoder--button:hover {
+  background-color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .map-search .mapboxgl-ctrl-geocoder--suggestion {
