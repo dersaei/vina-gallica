@@ -14,6 +14,7 @@ export interface PlaceData {
   slug: string;
   name: string;
   address: string;
+  postalCode: string;
   townName: string;
   phone: string;
   website: string;
@@ -141,6 +142,7 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
           name: string;
           slug: string;
           address: string;
+          postalCode: string;
           townName: string;
           categoryId: string;
           categoryName: string;
@@ -161,7 +163,7 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
             ${p.wineRegionName ? `<div class="map-popup__region" style="background-color:${p.wineRegionColor || "#888"}">${p.wineRegionName}</div>` : ""}
             <div class="map-popup__body">
               <p class="map-popup__name">${p.name}</p>
-              ${(p.address || p.townName) ? `<p class="map-popup__address">${[p.address, p.townName].filter(Boolean).join(", ")}</p>` : ""}
+              ${(p.address || p.postalCode || p.townName) ? `<p class="map-popup__address">${[p.address, [p.postalCode, p.townName].filter(Boolean).join(" ")].filter(Boolean).join(", ")}</p>` : ""}
               ${locationTags.length ? `<div class="map-popup__tags">${locationTags.map((t) => `<span class="map-popup__tag-location" style="--loc-color:${t.color}">${t.name}</span>`).join("")}</div>` : ""}
               <div class="map-popup__footer">
                 ${p.categoryName ? `<span class="map-popup__category" style="background-color:${p.categoryColor || "#888"}">${p.categoryName}</span>` : ""}
@@ -202,6 +204,7 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
           slug: string;
           name: string;
           address: string;
+          postalCode: string;
           townName: string;
           phone: string;
           website: string;
@@ -213,6 +216,7 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
           slug: p.slug,
           name: p.name,
           address: p.address ?? "",
+          postalCode: p.postalCode ?? "",
           townName: p.townName ?? "",
           phone: p.phone ?? "",
           website: p.website ?? "",

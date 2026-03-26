@@ -121,7 +121,7 @@
   display: block;
   text-align: center;
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -135,7 +135,7 @@
   padding: 0.3em 1.1em 0.1em;
   background-color: var(--region-color, #888);
   font-family: var(--font-heading);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
   width: 100%;
   height: auto;

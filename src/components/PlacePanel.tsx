@@ -34,7 +34,7 @@ export default function PlacePanel({ place, onClose }: Props) {
     if (place) panelRef.current?.focus();
   }, [place]);
 
-  const addressLine = [place?.address, place?.townName].filter(Boolean).join(", ");
+  const cityLine = [place?.postalCode, place?.townName].filter(Boolean).join(" ");
 
   return (
     <div
@@ -80,8 +80,11 @@ export default function PlacePanel({ place, onClose }: Props) {
               )}
               <h2 className="place-label__name">{place.name}</h2>
               <hr className="place-label__divider" />
-              {addressLine && (
-                <p className="place-label__row">{addressLine}</p>
+              {place.address && (
+                <p className="place-label__row">{place.address}</p>
+              )}
+              {cityLine && (
+                <p className="place-label__row">{cityLine}</p>
               )}
               {place.phone && (
                 <a className="place-label__row place-label__link" href={`tel:${place.phone}`}>

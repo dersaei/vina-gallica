@@ -179,6 +179,7 @@
   align-self: flex-end;
   padding: 0.35em 0.65em 0;
   border-radius: 2px;
+  border: 2px ridge black;
   font-family: var(--font-label);
   font-size: 0.65rem;
   font-weight: 600;
