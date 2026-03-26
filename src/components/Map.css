@@ -1,13 +1,19 @@
 .map-root {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
+.map-container-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
 .map-container {
   width: 100%;
-  flex: 1;
-  min-height: 0; /* niezbędne — zapobiega overflow flex-child */
+  height: 100%;
 }
 
 .cat-filter-bar {
@@ -193,4 +199,95 @@
   .cat-btn {
     font-size: 0.8rem;
   }
+}
+
+/* ── Geocoder search ─────────────────────────────────── */
+.map-search {
+  position: absolute;
+  bottom: var(--space-sm);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(380px, 90%);
+  z-index: 10;
+  border-radius: 15px;
+  opacity: 1;
+}
+
+.map-search:focus-within {
+  opacity: 1;
+}
+
+.map-search .mapboxgl-ctrl-geocoder {
+  width: 100%;
+  max-width: 100%;
+  background-color: rgba(245, 222, 179, 0.35);
+  -webkit-backdrop-filter: blur(8px) saturate(1.4);
+  backdrop-filter: blur(8px) saturate(1.4);
+  border: 1px solid rgba(245, 222, 179, 0.5);
+  border-radius: 15px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  transition:
+    background-color 0.3s ease,
+    backdrop-filter 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  font-family: var(--font-heading);
+}
+
+.map-search:focus-within .mapboxgl-ctrl-geocoder {
+  background-color: rgba(245, 222, 179, 0.97);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-color: rgba(12, 14, 11, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* usuń outline dotted i box-shadow z biblioteki */
+.map-search .mapboxgl-ctrl-geocoder--input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* podpowiedzi — otwierają się do góry */
+.map-search .mapboxgl-ctrl-geocoder .suggestions {
+  top: auto;
+  bottom: calc(100% + 6px);
+  border-radius: 15px;
+  background-color: rgba(245, 222, 179, 0.97);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.map-search .mapboxgl-ctrl-geocoder--input {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--color-elegant-black);
+}
+
+.map-search .mapboxgl-ctrl-geocoder--input::placeholder {
+  color: rgba(12, 14, 11, 0.45);
+  letter-spacing: 0.06em;
+}
+
+.map-search .mapboxgl-ctrl-geocoder--icon {
+  fill: var(--color-elegant-black);
+  opacity: 0.6;
+}
+
+/* przycisk clear — tło przezroczyste zamiast białego */
+.map-search .mapboxgl-ctrl-geocoder--button {
+  background: transparent;
+}
+
+.map-search .mapboxgl-ctrl-geocoder--suggestion {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+}
+
+.map-search .mapboxgl-ctrl-geocoder--suggestion-title {
+  font-weight: 700;
+}
+
+.map-search .mapboxgl-ctrl-geocoder--suggestion-address {
+  font-weight: 300;
+  color: #666;
 }

@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState, type CSSProperties } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import "./Map.css";
 
 export interface CategoryData {
@@ -41,6 +43,7 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
   const popupRef = useRef<mapboxgl.Popup | null>(null);
   const popupCategoryRef = useRef<string | null>(null);
   const allFeaturesRef = useRef<GeoJSON.Feature[]>([]);
+  const geocoderContainerRef = useRef<HTMLDivElement | null>(null);
 
   const [activeCategories, setActiveCategories] = useState<Set<string>>(
     () => new Set(categories.map((c) => c.id)),
@@ -245,7 +248,21 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
       });
     });
 
+      const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl as never,
+        language: "en",
+        placeholder: "Search places…",
+        marker: false,
+        flyTo: { speed: 1.4, curve: 1 },
+      });
+
+      if (geocoderContainerRef.current) {
+        geocoderContainerRef.current.appendChild(geocoder.onAdd(map));
+      }
+
     return () => {
+      geocoder.onRemove();
       popupRef.current?.remove();
       mapRef.current?.remove();
     };
@@ -285,7 +302,10 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
 
   return (
     <div className="map-root">
-      <div ref={mapContainerRef} className="map-container" />
+      <div className="map-container-wrap">
+        <div ref={mapContainerRef} className="map-container" />
+        <div ref={geocoderContainerRef} className="map-search" />
+      </div>
       <div className="cat-filter-bar">
         <div className="cat-filter-buttons">
           {categories.map((cat) => (
