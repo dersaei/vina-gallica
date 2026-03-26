@@ -259,6 +259,25 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
 
       if (geocoderContainerRef.current) {
         geocoderContainerRef.current.appendChild(geocoder.onAdd(map));
+
+        const input = geocoderContainerRef.current.querySelector<HTMLInputElement>(
+          ".mapboxgl-ctrl-geocoder--input",
+        );
+
+        if (input) {
+          // po wyborze miejsca — przesuń kursor na koniec tekstu
+          geocoder.on("result", () => {
+            requestAnimationFrame(() => {
+              const len = input.value.length;
+              input.setSelectionRange(len, len);
+            });
+          });
+
+          // kliknięcie w input — zaznacz cały tekst żeby można go od razu nadpisać
+          input.addEventListener("click", () => {
+            input.select();
+          });
+        }
       }
 
     return () => {
