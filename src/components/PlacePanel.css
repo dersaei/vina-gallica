@@ -31,6 +31,76 @@
 /* ── Zawartość ────────────────────────────────────────── */
 .place-panel__content {
   flex: 1;
+  padding: 1.5em 1.2em;
+}
+
+/* ── Etykieta miejsca ─────────────────────────────────── */
+.place-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fffaf3;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 3px solid var(--color-elegant-black);
+  padding: 1.4em 1.4em 1.6em;
+  box-shadow:
+    rgba(0, 0, 0, 0.06) 0px 2px 8px,
+    rgba(0, 0, 0, 0.04) 0px 0px 0px 1px inset;
+}
+
+.place-label__logo-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.2em;
+  max-height: 120px;
+}
+
+.place-label__logo {
+  max-height: 120px;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.place-label__name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--color-elegant-black);
+  line-height: 1.2;
+}
+
+.place-label__divider {
+  width: 40%;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 0.9em auto 0.8em;
+}
+
+.place-label__row {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 300;
+  text-align: center;
+  color: #444;
+  line-height: 1.7;
+}
+
+.place-label__link {
+  display: block;
+  color: #444;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.place-label__link:hover {
+  color: var(--color-elegant-black);
+  text-decoration: underline;
 }
 
 /* ── Kontener nagłówka (kotwica dla przycisku) ────────── */
@@ -67,15 +137,14 @@
   font-family: var(--font-heading);
   font-size: 0.78rem;
   font-weight: 700;
-  width: fit-content;
+  width: 100%;
   height: auto;
-  margin: 0 auto;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
   white-space: nowrap;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 10px inset;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px -3px 30px inset;
 }
 
 /* ── Przycisk zamknięcia ──────────────────────────────── */

@@ -13,6 +13,11 @@ export interface CategoryData {
 export interface PlaceData {
   slug: string;
   name: string;
+  address: string;
+  townName: string;
+  phone: string;
+  website: string;
+  logoUrl: string;
   wineRegionName: string;
   wineRegionColor: string;
 }
@@ -27,6 +32,7 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const popupRef = useRef<mapboxgl.Popup | null>(null);
+  const popupCategoryRef = useRef<string | null>(null);
   const allFeaturesRef = useRef<GeoJSON.Feature[]>([]);
 
   const [activeCategories, setActiveCategories] = useState<Set<string>>(
@@ -136,6 +142,7 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
           slug: string;
           address: string;
           townName: string;
+          categoryId: string;
           categoryName: string;
           categoryColor: string;
           wineRegionName: string;
@@ -164,6 +171,7 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
               </div>
             </div>
           </div>`;
+        popupCategoryRef.current = p.categoryId ?? null;
         popupRef.current!.setLngLat(coords).setHTML(html).addTo(map);
       });
 
@@ -193,12 +201,22 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
         const p = feature.properties as {
           slug: string;
           name: string;
+          address: string;
+          townName: string;
+          phone: string;
+          website: string;
+          logoUrl: string;
           wineRegionName: string;
           wineRegionColor: string;
         };
         onOpenPanel({
           slug: p.slug,
           name: p.name,
+          address: p.address ?? "",
+          townName: p.townName ?? "",
+          phone: p.phone ?? "",
+          website: p.website ?? "",
+          logoUrl: p.logoUrl ?? "",
           wineRegionName: p.wineRegionName ?? "",
           wineRegionColor: p.wineRegionColor ?? "",
         });
@@ -228,6 +246,10 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
   }, [activeCategories]);
 
   function toggleCategory(id: string) {
+    if (popupCategoryRef.current === id) {
+      popupRef.current?.remove();
+      popupCategoryRef.current = null;
+    }
     setActiveCategories((prev) => {
       const next = new Set(prev);
       if (next.has(id)) {

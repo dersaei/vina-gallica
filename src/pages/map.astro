@@ -15,7 +15,7 @@ const [categories, places] = await Promise.all([
   directus.request(
     readItems('places_vg', {
       fields: [
-        'id', 'Name', 'slug', 'location', 'address',
+        'id', 'Name', 'slug', 'location', 'address', 'phone', 'website', 'logo',
         { category: ['id', 'name', 'slug', 'color'] },
         { wine_region: ['id', 'region', 'color'] },
         { town: ['id', 'name', { department: ['id', 'name', 'color', { administrative_region: ['id', 'name', 'color'] }] }] },
@@ -50,6 +50,9 @@ const geojson = {
           slug: p.slug,
           address: p.address ?? '',
           townName: town?.name ?? '',
+          phone: p.phone ?? '',
+          website: p.website ?? '',
+          logoUrl: p.logo ? `${import.meta.env.DIRECTUS_URL}/assets/${p.logo}` : '',
           categoryId: cat?.id ?? '',
           categoryColor: cat?.color ?? '#888888',
           categoryName: cat?.name ?? '',

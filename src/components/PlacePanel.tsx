@@ -34,6 +34,8 @@ export default function PlacePanel({ place, onClose }: Props) {
     if (place) panelRef.current?.focus();
   }, [place]);
 
+  const addressLine = [place?.address, place?.townName].filter(Boolean).join(", ");
+
   return (
     <div
       className={`place-panel${place ? " place-panel--open" : ""}`}
@@ -41,6 +43,8 @@ export default function PlacePanel({ place, onClose }: Props) {
       inert={!place || undefined}
     >
       <div className="place-panel__inner" ref={panelRef} tabIndex={-1}>
+
+        {/* ── Nagłówek z regionem winiarskim ── */}
         <div className="panel-region-bar">
           <span className="panel-region-bar__label">Wine Region</span>
           <button
@@ -61,7 +65,42 @@ export default function PlacePanel({ place, onClose }: Props) {
           </div>
         )}
 
-        {place && <div className="place-panel__content" />}
+        {/* ── Etykieta miejsca ── */}
+        {place && (
+          <div className="place-panel__content">
+            <div className="place-label">
+              {place.logoUrl && (
+                <div className="place-label__logo-wrap">
+                  <img
+                    className="place-label__logo"
+                    src={place.logoUrl}
+                    alt={`${place.name} logo`}
+                  />
+                </div>
+              )}
+              <h2 className="place-label__name">{place.name}</h2>
+              <hr className="place-label__divider" />
+              {addressLine && (
+                <p className="place-label__row">{addressLine}</p>
+              )}
+              {place.phone && (
+                <a className="place-label__row place-label__link" href={`tel:${place.phone}`}>
+                  {place.phone}
+                </a>
+              )}
+              {place.website && (
+                <a
+                  className="place-label__row place-label__link"
+                  href={place.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {place.website.replace(/^https?:\/\//, "")}
+                </a>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
