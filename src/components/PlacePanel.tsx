@@ -65,6 +65,18 @@ export default function PlacePanel({ place, onClose }: Props) {
           </div>
         )}
 
+        {/* ── Kategoria ── */}
+        {place?.categoryName && (
+          <div className="panel-category">
+            <span
+              className="map-popup__category"
+              style={{ backgroundColor: place.categoryColor || "#888" } as CSSProperties}
+            >
+              {place.categoryName}
+            </span>
+          </div>
+        )}
+
         {/* ── Etykieta miejsca ── */}
         {place && (
           <div className="place-panel__content">

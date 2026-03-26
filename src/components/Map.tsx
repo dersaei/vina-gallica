@@ -19,6 +19,8 @@ export interface PlaceData {
   phone: string;
   website: string;
   logoUrl: string;
+  categoryName: string;
+  categoryColor: string;
   wineRegionName: string;
   wineRegionColor: string;
 }
@@ -209,6 +211,8 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
           phone: string;
           website: string;
           logoUrl: string;
+          categoryName: string;
+          categoryColor: string;
           wineRegionName: string;
           wineRegionColor: string;
         };
@@ -221,6 +225,8 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
           phone: p.phone ?? "",
           website: p.website ?? "",
           logoUrl: p.logoUrl ?? "",
+          categoryName: p.categoryName ?? "",
+          categoryColor: p.categoryColor ?? "",
           wineRegionName: p.wineRegionName ?? "",
           wineRegionColor: p.wineRegionColor ?? "",
         });
