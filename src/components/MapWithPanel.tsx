@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import Map, { type CategoryData } from "./Map";
+import Map, { type CategoryData, type PlaceData } from "./Map";
 import PlacePanel from "./PlacePanel";
 import "./MapWithPanel.css";
 
@@ -9,14 +9,14 @@ interface Props {
 }
 
 export default function MapWithPanel({ geojsonData, categories }: Props) {
-  const [openSlug, setOpenSlug] = useState<string | null>(null);
+  const [openPlace, setOpenPlace] = useState<PlaceData | null>(null);
 
-  const handleOpenPanel = useCallback((slug: string) => {
-    setOpenSlug(slug);
+  const handleOpenPanel = useCallback((place: PlaceData) => {
+    setOpenPlace(place);
   }, []);
 
   const handleClosePanel = useCallback(() => {
-    setOpenSlug(null);
+    setOpenPlace(null);
   }, []);
 
   return (
@@ -26,7 +26,7 @@ export default function MapWithPanel({ geojsonData, categories }: Props) {
         categories={categories}
         onOpenPanel={handleOpenPanel}
       />
-      <PlacePanel slug={openSlug} onClose={handleClosePanel} />
+      <PlacePanel place={openPlace} onClose={handleClosePanel} />
     </div>
   );
 }

@@ -1,17 +1,18 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
+import type { PlaceData } from "./Map";
 import "./PlacePanel.css";
 
 interface Props {
-  slug: string | null;
+  place: PlaceData | null;
   onClose: () => void;
 }
 
-export default function PlacePanel({ slug, onClose }: Props) {
+export default function PlacePanel({ place, onClose }: Props) {
   const panelRef = useRef<HTMLDivElement | null>(null);
 
   // Close on Escape key or click outside
   useEffect(() => {
-    if (!slug) return;
+    if (!place) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -26,32 +27,41 @@ export default function PlacePanel({ slug, onClose }: Props) {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("pointerdown", onPointer);
     };
-  }, [slug, onClose]);
+  }, [place, onClose]);
 
-  // Trap focus when open (accessibility)
+  // Focus when opened
   useEffect(() => {
-    if (slug) panelRef.current?.focus();
-  }, [slug]);
+    if (place) panelRef.current?.focus();
+  }, [place]);
 
   return (
     <div
-      className={`place-panel${slug ? " place-panel--open" : ""}`}
+      className={`place-panel${place ? " place-panel--open" : ""}`}
       aria-label="Place details"
-      inert={!slug || undefined}
+      inert={!place || undefined}
     >
       <div className="place-panel__inner" ref={panelRef} tabIndex={-1}>
-        <button
-          className="place-panel__close"
-          type="button"
-          aria-label="Close panel"
-          onClick={onClose}
-        >
-          ✕
-        </button>
-        <div className="place-panel__content">
-          {/* Content will be built in the next step */}
-          {slug && <p className="place-panel__slug">{slug}</p>}
+        <div className="panel-region-bar">
+          <span className="panel-region-bar__label">Wine Region</span>
+          <button
+            className="place-panel__close"
+            type="button"
+            aria-label="Close panel"
+            onClick={onClose}
+          >
+            ✕
+          </button>
         </div>
+        {place?.wineRegionName && (
+          <div
+            className="panel-region-bar__tag"
+            style={{ "--region-color": place.wineRegionColor } as CSSProperties}
+          >
+            {place.wineRegionName}
+          </div>
+        )}
+
+        {place && <div className="place-panel__content" />}
       </div>
     </div>
   );

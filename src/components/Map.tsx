@@ -10,10 +10,17 @@ export interface CategoryData {
   color: string;
 }
 
+export interface PlaceData {
+  slug: string;
+  name: string;
+  wineRegionName: string;
+  wineRegionColor: string;
+}
+
 interface Props {
   geojsonData: string;
   categories: CategoryData[];
-  onOpenPanel: (slug: string) => void;
+  onOpenPanel: (place: PlaceData) => void;
 }
 
 export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
@@ -178,7 +185,23 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
         const btn = (e.target as Element).closest<HTMLButtonElement>(".map-popup__open-btn");
         if (!btn) return;
         const slug = btn.dataset.slug;
-        if (slug) onOpenPanel(slug);
+        if (!slug) return;
+        const feature = allFeaturesRef.current.find(
+          (f) => (f.properties as { slug: string }).slug === slug,
+        );
+        if (!feature) return;
+        const p = feature.properties as {
+          slug: string;
+          name: string;
+          wineRegionName: string;
+          wineRegionColor: string;
+        };
+        onOpenPanel({
+          slug: p.slug,
+          name: p.name,
+          wineRegionName: p.wineRegionName ?? "",
+          wineRegionColor: p.wineRegionColor ?? "",
+        });
       });
     });
 

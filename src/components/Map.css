@@ -176,7 +176,7 @@
 
 .map-popup__category {
   align-self: flex-end;
-  padding: 0.3em 0.65em 0;
+  padding: 0.35em 0.65em 0;
   border-radius: 2px;
   font-family: var(--font-label);
   font-size: 0.65rem;

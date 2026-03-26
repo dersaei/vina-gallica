@@ -8,7 +8,7 @@
   height: 100%;
   z-index: 250;
   transform: translateX(100%);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s cubic-bezier(0.5, 0, 0.2, 1);
   will-change: transform;
 }
 
@@ -28,39 +28,87 @@
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.18);
 }
 
-/* ── Przycisk zamknięcia ──────────────────────────────── */
-.place-panel__close {
-  align-self: flex-end;
-  margin: var(--space-sm);
-  padding: 0.3em 0.6em;
-  background: none;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  border-radius: 2px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  line-height: 1;
-  color: var(--color-elegant-black);
-  transition: background-color 0.15s ease;
-}
-
-.place-panel__close:hover {
-  background-color: rgba(0, 0, 0, 0.06);
-}
-
 /* ── Zawartość ────────────────────────────────────────── */
 .place-panel__content {
-  padding: var(--space-md);
   flex: 1;
 }
 
-.place-panel__slug {
+/* ── Kontener nagłówka (kotwica dla przycisku) ────────── */
+.panel-header {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* ── Listwa Wine Region ───────────────────────────────── */
+.panel-region-bar {
+  position: relative;
+  background-color: var(--color-elegant-black);
+  padding: 1em 1.2em 0.7em;
+  box-shadow: rgba(255, 255, 255, 0.4) 0px -3px 30px inset;
+}
+
+.panel-region-bar__label {
+  display: block;
+  text-align: center;
   font-family: var(--font-heading);
-  font-size: 0.8rem;
-  color: #888;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fffaf3;
+  line-height: 1;
+}
+
+.panel-region-bar__tag {
+  display: flex;
+  justify-content: center;
+  padding: 0.3em 1.1em 0.1em;
+  background-color: var(--region-color, #888);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  width: fit-content;
+  height: auto;
+  margin: 0 auto;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 10px inset;
+}
+
+/* ── Przycisk zamknięcia ──────────────────────────────── */
+.place-panel__close {
+  position: absolute;
+  top: 50%;
+  right: 0.5em;
+  border-radius: 50%;
+  translate: 0 -50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 250, 243, 0.7);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #000;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s,
+    transform-origin 0.2s;
+}
+
+.place-panel__close:hover {
+  background-color: #fffaf3;
+  transform: rotate(90deg);
+  transform-origin: 45% 45%;
 }
 
 /* ── Mobile — wysuw z dołu ────────────────────────────── */
-@media (max-width: 660px) {
+@media (max-width: 500px) {
   .place-panel {
     top: auto;
     bottom: 0;
