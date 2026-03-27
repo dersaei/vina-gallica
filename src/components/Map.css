@@ -335,6 +335,27 @@
   font-weight: 300;
   color: #666;
 }
+/* ── Directory bookmark link ─────────────────────────── */
+.map-directory-link {
+  position: absolute;
+  left: var(--space-lg);
+  top: -1.1em;
+  z-index: 100;
+  width: 120px;
+  height: auto;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+.map-directory-link:hover {
+  opacity: 1;
+}
+
+@media (max-width: 750px) {
+  .map-directory-link {
+    display: none;
+  }
+}
+
 @media (max-width: 560px) {
   .map-search {
     width: min(200px, 90%);
