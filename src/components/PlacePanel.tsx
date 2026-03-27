@@ -1,4 +1,4 @@
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, type CSSProperties } from "react";
 import type { PlaceData } from "./Map";
 import "./PlacePanel.css";
 
@@ -9,6 +9,7 @@ interface Props {
 
 export default function PlacePanel({ place, onClose }: Props) {
   const panelRef = useRef<HTMLDivElement | null>(null);
+  const prevPlaceRef = useRef<PlaceData | null>(null);
 
   // Close on Escape key or click outside
   useEffect(() => {
@@ -17,7 +18,9 @@ export default function PlacePanel({ place, onClose }: Props) {
       if (e.key === "Escape") onClose();
     };
     const onPointer = (e: PointerEvent) => {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+      const target = e.target as Element;
+      if (target.closest(".map-popup__open-btn")) return;
+      if (panelRef.current && !panelRef.current.contains(target)) {
         onClose();
       }
     };
@@ -29,9 +32,20 @@ export default function PlacePanel({ place, onClose }: Props) {
     };
   }, [place, onClose]);
 
-  // Focus when opened
-  useEffect(() => {
-    if (place) panelRef.current?.focus();
+  // Focus only on first open (not when switching between places)
+  // Preserve scroll position when switching between places
+  useLayoutEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    const isFirstOpen = place !== null && prevPlaceRef.current === null;
+    const scrollTop = isFirstOpen ? 0 : panel.scrollTop;
+    prevPlaceRef.current = place;
+    if (isFirstOpen) {
+      panel.focus();
+      panel.scrollTop = 0;
+    } else {
+      panel.scrollTop = scrollTop;
+    }
   }, [place]);
 
   const cityLine = [place?.postalCode, place?.townName].filter(Boolean).join(" ");
