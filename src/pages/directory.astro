@@ -1,9 +1,12 @@
 ---
+export const prerender = false;
 import Layout from '../layouts/Layout.astro';
 import directus, { readItems } from '../lib/directus.ts';
 import type { Category, Place } from '../lib/directus.ts';
 import PlaceCard from '../components/PlaceCard.astro';
 import RegionFilter from '../components/RegionFilter.tsx';
+
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
 
 interface AdminRegion { id: string; name: string; slug: string; color: string; }
 interface Department { id: string; name: string; slug: string; color: string; administrative_region: string; }
