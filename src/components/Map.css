@@ -294,6 +294,21 @@
 }
 @media (max-width: 560px) {
   .map-search {
-    bottom: 2.2rem;
+    width: min(200px, 90%);
+  }
+}
+@media (max-width: 530px) {
+  .cat-filter-bar {
+    padding: var(--space-sm) var(--space-xl);
+  }
+}
+@media (max-width: 415px) {
+  .cat-filter-bar {
+    padding: var(--space-sm) var(--space-md);
+  }
+}
+@media (max-width: 340px) {
+  .cat-filter-bar {
+    padding: var(--space-sm);
   }
 }
