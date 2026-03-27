@@ -12,6 +12,8 @@ const { ADOBE_FONTS_ID = "" } = loadEnv(
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://vinagallica.com",
+  trailingSlash: "never",
   adapter: cloudflare({
     imageService: {
       build: "compile",

@@ -8,11 +8,29 @@ import Footer from "../components/Footer.astro";
 
 interface Props {
   title: string;
+  description: string;
   headline: string;
   headlineStyle?: "light" | "dark";
+  canonical?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogType?: "website" | "article";
+  noindex?: boolean;
+  jsonLd?: object | object[];
 }
 
-const { title, headline, headlineStyle = "dark" } = Astro.props;
+const {
+  title,
+  description,
+  headline,
+  headlineStyle = "dark",
+  canonical = new URL(Astro.url.pathname, Astro.site).href,
+  ogTitle = title,
+  ogDescription = description,
+  ogType = "website",
+  noindex = false,
+  jsonLd,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -25,9 +43,23 @@ const { title, headline, headlineStyle = "dark" } = Astro.props;
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Vina Gallica" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <Font cssVariable="--font-heading" preload />
     <Font cssVariable="--font-label" />
-    <Font cssVariable="--font-hero" />
+    <Font cssVariable="--font-hero" preload />
+    <Font cssVariable="--font-extra" />
     <ClientRouter />
   </head>
   <body>

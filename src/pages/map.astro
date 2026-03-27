@@ -1,9 +1,12 @@
 ---
 export const prerender = false;
+// map.astro stays SSR — Mapbox requires window (client:only)
 import Layout from '../layouts/Layout.astro';
 import MapWithPanel from '../components/MapWithPanel.tsx';
 import directus, { readItems } from '../lib/directus.ts';
 import type { Category, Place, WineRegion, Department, AdministrativeRegion } from '../lib/directus.ts';
+
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
 
 const [categories, places] = await Promise.all([
   directus.request(
@@ -77,7 +80,13 @@ const categoriesData = categories.map(c => ({
 }));
 ---
 
-<Layout title="French Wine Map | Vina Gallica" headline="French Wine Map" headlineStyle="light">
+<Layout
+  title="French Wine Map | Vina Gallica"
+  description="Explore French wine venues on an interactive map — estates, cellars, and wine experiences by region."
+  headline="French Wine Map"
+  headlineStyle="light"
+  canonical={new URL('/map', Astro.site).href}
+>
   <main class="map-page">
     <MapWithPanel
       geojsonData={geojsonString}

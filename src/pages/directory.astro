@@ -1,5 +1,4 @@
 ---
-export const prerender = false;
 import Layout from '../layouts/Layout.astro';
 import directus, { readItems } from '../lib/directus.ts';
 import type { Category, Place } from '../lib/directus.ts';
@@ -39,7 +38,13 @@ const [categories, wineRegions, adminRegions, departments, towns, places] = awai
 ---
 
 
-<Layout title="French Wine Directory | Vina Gallica" headline="French Wine Directory" headlineStyle="light">
+<Layout
+  title="French Wine Directory | Vina Gallica"
+  description="Browse the complete directory of French wine estates, cellars, and shops by wine region, department, and category."
+  headline="French Wine Directory"
+  headlineStyle="light"
+  canonical={new URL('/directory', Astro.site).href}
+>
   <main class="directory">
     <svg id="flower" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63.37099375 63.37261089">
   <g data-name="flower">
