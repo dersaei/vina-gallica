@@ -245,7 +245,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: min(380px, 90%);
-  z-index: 10;
+  z-index: 400;
   border-radius: 15px;
   opacity: 1;
 }
