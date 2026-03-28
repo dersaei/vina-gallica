@@ -8,6 +8,7 @@ export const GET: APIRoute = async ({ site }) => {
     { url: "/", priority: "1.0", changefreq: "monthly" },
     { url: "/directory", priority: "0.8", changefreq: "weekly" },
     { url: "/map", priority: "0.8", changefreq: "weekly" },
+    { url: "/privacy-policy", priority: "0.2", changefreq: "monthly" },
   ];
 
   // Phase 3: extend with /places/[slug] and /journal/[slug] fetched from Directus

@@ -1,10 +1,9 @@
 ---
 layout: ../layouts/LayoutProse.astro
 title: "Privacy Policy | Vina Gallica"
-description: "Vina Gallica privacy policy — how we collect, use, and protect your data."
+description: "Vina Gallica privacy policy - how we collect, use, and protect your data."
 headline: "Privacy Policy"
 headlineStyle: "dark"
-noindex: true
 ---
 
 **Last updated:** March 28, 2026
