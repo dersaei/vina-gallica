@@ -1,0 +1,51 @@
+---
+import "../styles/prose.css";
+import Layout from "./Layout.astro";
+
+interface ProseProps {
+  title: string;
+  description: string;
+  headline: string;
+  headlineStyle?: "light" | "dark";
+  canonical?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogType?: "website" | "article";
+  noindex?: boolean;
+  jsonLd?: object | object[];
+}
+
+interface Props extends ProseProps {
+  frontmatter?: ProseProps;
+}
+
+const {
+  title,
+  description,
+  headline,
+  headlineStyle = "dark",
+  canonical,
+  ogTitle,
+  ogDescription,
+  ogType,
+  noindex,
+  jsonLd,
+} = Astro.props.frontmatter ?? Astro.props;
+---
+
+<Layout
+  title={title}
+  description={description}
+  headline={headline}
+  headlineStyle={headlineStyle}
+  canonical={canonical}
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
+  ogType={ogType}
+  noindex={noindex}
+  jsonLd={jsonLd}
+>
+  <main class="prose">
+    <slot />
+  </main>
+</Layout>

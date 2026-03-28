@@ -1,0 +1,116 @@
+/* Privacy Policy — prose styles */
+
+.prose {
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+  color: var(--color-elegant-black);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  padding: 5rem 1.5rem 2rem;
+}
+
+.prose h2 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin-top: 2.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid #daa520;
+}
+
+.prose h3 {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 1.75rem;
+  margin-bottom: 0.4rem;
+  color: #b22222;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.prose a {
+  color: #b22222;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: #daa520;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose li {
+  margin-bottom: 0.3rem;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  display: block;
+}
+
+.prose thead {
+  background-color: #b22222;
+  color: var(--color-sand);
+  border: 2px ridge black;
+}
+
+.prose th {
+  padding: 0.5rem 0.75rem 0.2rem;
+  text-align: left;
+  font-family: var(--font-label);
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px ridge black;
+}
+
+.prose td {
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px ridge #ddd;
+  vertical-align: top;
+}
+
+.prose tbody tr:nth-child(even) {
+  background-color: rgba(245, 222, 179, 0.3);
+}
+
+.prose code {
+  font-family: monospace;
+  font-size: 0.88em;
+  background-color: rgba(0, 0, 0, 0.06);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid #daa520;
+  margin: 2.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .prose {
+    padding: 4rem 1rem 3rem;
+    font-size: 0.9rem;
+  }
+
+  .prose h2 {
+    font-size: 1.05rem;
+  }
+}

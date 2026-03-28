@@ -7,7 +7,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
 
-interface Props {
+interface LayoutProps {
   title: string;
   description: string;
   headline: string;
@@ -20,6 +20,12 @@ interface Props {
   jsonLd?: object | object[];
 }
 
+interface Props extends LayoutProps {
+  frontmatter?: LayoutProps;
+}
+
+const props = Astro.props.frontmatter ?? Astro.props;
+
 const {
   title,
   description,
@@ -31,7 +37,7 @@ const {
   ogType = "website",
   noindex = false,
   jsonLd,
-} = Astro.props;
+} = props;
 ---
 
 <!doctype html>
