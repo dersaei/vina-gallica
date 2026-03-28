@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+import upIcon from "../assets/up.png";
+---
+
+<button id="scroll-to-top" aria-label="Scroll to top" title="Scroll to top">
+  <Image src={upIcon} alt="Scroll to top of Vina Gallica" width={50} height={53} densities={[1, 2]} loading="eager" />
+</button>
+
+<script>
+  function initScrollToTop() {
+    const btn = document.getElementById("scroll-to-top");
+    if (!btn) return;
+
+    const onScroll = () => {
+      btn.classList.toggle("visible", window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    btn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  initScrollToTop();
+  document.addEventListener("astro:page-load", initScrollToTop);
+</script>
+
+<style>
+  #scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 100;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  #scroll-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #scroll-to-top img {
+    display: block;
+    width: 53px;
+    height: auto;
+    transition: transform 0.2s ease;
+  }
+
+  #scroll-to-top:hover img {
+    transform: translateY(-3px);
+  }
+</style>
