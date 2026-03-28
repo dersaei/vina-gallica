@@ -6,6 +6,7 @@ const navItems = [
   { label: "About", href: "/about" },
   { label: "Directory", href: "/directory" },
   { label: "Map", href: "/map" },
+  { label: "Privacy", href: "/privacy-policy" },
 ];
 
 export default function MobileMenu() {

@@ -5,6 +5,7 @@ const year = new Date().getFullYear();
 <footer>
   <div class="footer-inner">
     <p>&copy; {year} Vina Gallica. All rights reserved.</p>
+    <a href="/privacy-policy" class="footer-link">Privacy Policy</a>
   </div>
 </footer>
 
@@ -18,7 +19,8 @@ const year = new Date().getFullYear();
   .footer-inner {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
+    position: relative;
     padding-inline: var(--space-lg);
     padding-block: var(--space-xs);
   }
@@ -30,5 +32,25 @@ const year = new Date().getFullYear();
     font-weight: 300;
     letter-spacing: 0.03em;
     font-family: var(--font-heading);
+  }
+
+  .footer-link {
+    color: var(--color-elegant-black);
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    font-family: var(--font-heading);
+    text-decoration: none;
+    opacity: 0.7;
+    padding-left: 1em;
+  }
+
+  .footer-link:hover {
+    opacity: 1;
+  }
+  @media (max-width: 750px){
+    .footer-link {
+      display: none;
+    }
   }
 </style>

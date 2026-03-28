@@ -84,11 +84,11 @@
 
   .mobile-nav li a {
     display: block;
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 2rem 0.65rem;
     text-decoration: none;
     color: var(--color-elegant-black);
     font-family: var(--font-label);
-    font-size: 0.85rem;
+    font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;

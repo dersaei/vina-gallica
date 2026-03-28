@@ -1,4 +1,4 @@
-import { createDirectus, rest, readItems } from "@directus/sdk";
+import { createDirectus, rest, readItems, readSingleton } from "@directus/sdk";
 
 interface WineRegion {
   id: number;
@@ -52,6 +52,11 @@ interface Place {
   town: string | Town;
 }
 
+interface PrivacyPolicy {
+  id: number;
+  Text: string;
+}
+
 interface Schema {
   wine_regions: WineRegion[];
   categories_vg: Category[];
@@ -59,6 +64,7 @@ interface Schema {
   departments: Department[];
   towns: Town[];
   places_vg: Place[];
+  privacy_policy_vg: PrivacyPolicy;
 }
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
@@ -66,5 +72,5 @@ const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 const directus = createDirectus<Schema>(DIRECTUS_URL).with(rest());
 
 export default directus;
-export { readItems };
-export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place };
+export { readItems, readSingleton };
+export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, PrivacyPolicy };
