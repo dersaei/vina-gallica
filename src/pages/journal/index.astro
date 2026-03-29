@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import directus, { readItems } from "../../lib/directus.ts";
 import type { ArticleCard } from "../../lib/directus.ts";
 import ArticleCardComponent from "../../components/ArticleCard.astro";
+import JournalBadges from "../../components/JournalBadges.astro";
 
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 
@@ -27,6 +28,7 @@ const articles = await directus.request(
   canonical={new URL("/journal", Astro.site).href}
 >
   <main class="journal">
+    <JournalBadges />
     <div class="article-grid">
       {articles.map((article) => (
         <ArticleCardComponent article={article} directusUrl={directusUrl} />
@@ -41,6 +43,7 @@ const articles = await directus.request(
     padding: var(--space-xl) var(--space-lg);
     margin: 0 auto;
     width: 100%;
+    position: relative;
   }
 
   .article-grid {

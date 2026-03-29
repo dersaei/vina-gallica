@@ -5,6 +5,7 @@ import Layout from "../../layouts/Layout.astro";
 import directus, { readItems } from "../../lib/directus.ts";
 import type { Article } from "../../lib/directus.ts";
 import "../../styles/journal-prose.css";
+import JournalBadges from "../../components/JournalBadges.astro";
 
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 
@@ -56,34 +57,43 @@ const jsonLd = {
   ogType="article"
   jsonLd={jsonLd}
 >
-  {mainImageUrl && (
-    <div class="article-hero">
-      <img
-        src={mainImageUrl}
-        alt={article.name}
-        class="article-hero-image"
-        loading="eager"
-        decoding="async"
-      />
-      <div class="article-title-wrap">
+  <div class="article-page">
+    <JournalBadges />
+
+    {mainImageUrl && (
+      <div class="article-hero">
+        <img
+          src={mainImageUrl}
+          alt={article.name}
+          class="article-hero-image"
+          loading="eager"
+          decoding="async"
+        />
+        <div class="article-title-wrap">
+          <h1 class="article-title">{article.name}</h1>
+        </div>
+      </div>
+    )}
+
+    {!mainImageUrl && (
+      <div class="article-title-wrap article-title-wrap--no-image">
         <h1 class="article-title">{article.name}</h1>
       </div>
-    </div>
-  )}
+    )}
 
-  {!mainImageUrl && (
-    <div class="article-title-wrap article-title-wrap--no-image">
-      <h1 class="article-title">{article.name}</h1>
-    </div>
-  )}
-
-  <main class="article-body">
-    <time class="article-date" datetime={article.date_created}>{formattedDate}</time>
-    <div class="prose" set:html={bodyHtml} />
-  </main>
+    <main class="article-body">
+      <time class="article-date" datetime={article.date_created}>{formattedDate}</time>
+      <div class="prose" set:html={bodyHtml} />
+    </main>
+  </div>
 </Layout>
 
 <style>
+  .article-page {
+    position: relative;
+    width: 100%;
+  }
+
   /* Hero image — full width, no padding */
   .article-hero {
     position: relative;
@@ -116,7 +126,7 @@ const jsonLd = {
 
   .article-title {
     font-family: var(--font-heading);
-    font-size: clamp(1.4rem, 3vw, 2.4rem);
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
     font-weight: 700;
     line-height: 1.2;
     color: var(--color-elegant-black);
