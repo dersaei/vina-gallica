@@ -6,9 +6,6 @@
   --color-gold: #ffd700;
   --color-elegant-black: #0c0e0b;
 
-  /* Typography */
-  --font-sans: system-ui, sans-serif;
-
   /* Spacing scale (optional, extend as needed) */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
@@ -18,8 +15,7 @@
 }
 
 body {
-  font-family: var(--font-sans);
-  color: var(--color-navy);
+  color: var(--color-elegant-black);
   background-color: var(--color-sand);
 }
 

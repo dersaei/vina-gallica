@@ -12,18 +12,22 @@
 }
 
 .prose h2 {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 400;
-  margin-top: 2.5rem;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.25rem;
+  font-family: var(--font-label);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
   border-bottom: 1px solid #daa520;
+  text-align: start;
+}
+
+.prose h2:first-of-type {
+  text-align: justify;
 }
 
 .prose h3 {
   font-family: var(--font-heading);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -35,9 +39,9 @@
 .prose p {
   margin-bottom: 1rem;
   text-align: justify;
+  font-size: 1rem;
   font-family: var(--font-extra);
   font-weight: 400;
-  font-size: 0.9rem;
 }
 
 .prose a {
@@ -55,7 +59,8 @@
   margin-bottom: 1rem;
   font-family: var(--font-extra);
   font-weight: 400;
-  font-size: 0.85rem;
+  font-size: 1rem;
+  color: #000;
 }
 
 .prose li {

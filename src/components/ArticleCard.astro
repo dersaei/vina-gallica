@@ -1,0 +1,179 @@
+---
+import type { ArticleCard } from "../lib/directus.ts";
+
+interface Props {
+  article: ArticleCard;
+  directusUrl: string;
+}
+
+const { article, directusUrl } = Astro.props;
+
+const imageUrl = article.image
+  ? `${directusUrl}/assets/${article.image}?width=512&format=webp&quality=80`
+  : null;
+
+const date = new Date(article.date_created);
+const formattedDate = date.toLocaleDateString("en-US", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<a href={`/journal/${article.slug}`} class="article-card">
+  <div class="card-image-wrap">
+    {imageUrl ? (
+      <img
+        src={imageUrl}
+        alt={article.name}
+        class="card-image"
+        loading="lazy"
+        decoding="async"
+        width="512"
+        height="512"
+      />
+    ) : (
+      <div class="card-image-placeholder" />
+    )}
+  </div>
+  <div class="card-body">
+    <h2 class="card-title">{article.name}</h2>
+    <time class="card-date" datetime={article.date_created}>{formattedDate}</time>
+    {article.preview && <p class="card-excerpt">{article.preview}</p>}
+  </div>
+</a>
+
+<style>
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    background-color: #4a4540;
+    border: 4px groove black;
+    padding: var(--space-xs);
+    overflow: hidden;
+    transition: transform 0.5s ease;
+    aspect-ratio: 4 / 5;
+  }
+
+  .article-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-image-wrap {
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+    border: 10px ridge black;
+  }
+
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .article-card:hover .card-image {
+    transform: scale(1.03);
+  }
+
+  .card-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #e8dcc8;
+  }
+
+  .card-body {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35em;
+    flex-shrink: 0;
+  }
+
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 1.5vw, 2.1rem);
+    font-weight: 700;
+    color: var(--color-sand);
+    line-height: 1.2;
+    margin: 0;
+    text-align: center;
+  }
+
+  .card-date {
+    font-family: var(--font-extra);
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    background-color: lightslategray;
+    color: #fdfbf7;
+    padding: 2px var(--space-sm) 1px;
+    width: fit-content;
+    border-radius: 3px;
+    border: 1px ridge black;
+    margin: 0 auto;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .card-excerpt {
+    font-family: var(--font-hero);
+    font-size: 0.81rem;
+    font-weight: 400;
+    color: #fdfbf7;
+    line-height: 1.5;
+    margin: 0.2em 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* Poziomy układ na małych ekranach */
+  @media (max-width: 1020px) {
+    .article-card {
+      aspect-ratio: unset;
+    }
+  }
+  @media (max-width: 700px) {
+    .article-card {
+      flex-direction: row;
+    }
+
+    .card-image-wrap {
+      flex: 0 0 40%;
+      aspect-ratio: 1 / 1;
+    }
+
+    .card-body {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 550px) {
+      
+  
+  .card-body {
+    flex-shrink: 0;
+    padding:var(--space-xs) ;
+  }
+    }
+    @media (max-width: 460px) {
+      .article-card {
+    flex-direction: column;
+    aspect-ratio: 4 / 5;
+  }
+  .card-image-wrap {
+    flex: 1;
+    aspect-ratio: unset;
+  }
+  .card-body {
+    flex-shrink: 0;
+    padding:var(--space-xs) ;
+  }
+    }
+</style>
