@@ -1,6 +1,7 @@
 ---
 import "../styles/prose.css";
 import Layout from "./Layout.astro";
+import JournalBadges from "../components/JournalBadges.astro";
 
 interface ProseProps {
   title: string;
@@ -45,7 +46,17 @@ const {
   noindex={noindex}
   jsonLd={jsonLd}
 >
-  <main class="prose">
-    <slot />
-  </main>
+  <div class="prose-page">
+    <JournalBadges />
+    <main class="prose">
+      <slot />
+    </main>
+  </div>
 </Layout>
+
+<style>
+  .prose-page {
+    position: relative;
+    width: 100%;
+  }
+</style>
