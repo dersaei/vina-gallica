@@ -6,7 +6,7 @@ const { fixed = false } = Astro.props;
 ---
 
 <div class:list={["journal-badges", { "journal-badges--fixed": fixed }]}>
-  <a href="/directory" aria-label="Wine Directory">
+  <a href="/directory" aria-label="Wine Directory" id="directory">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 206.722462455251843 53.300730757633573">
       <g>
         <path fill="aqua" d="M8.722462455251843,47.798072443680212h-3c-1-15,3-29,2-43,28-1,56,0,84,0,38,0,75,2,113,0,2,14,2,29,2,43,0,1-2,2-3,2-20,1-41,0-61,0-45,3-89-2-134-2h0Z"/>
@@ -24,7 +24,7 @@ const { fixed = false } = Astro.props;
     </svg>
   </a>
 
-  <a href="/map" aria-label="Wine Map">
+  <a href="/map" aria-label="Wine Map" id="map">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 207.168990233029945 52.981824910502837">
       <g>
         <path fill="#fff" d="M8.168990233029945,47.475912455251091h-3c0-14,4-29,3-43,40,1,79-1,119,1,26,0,52,1,78-1,2,14,1,29,2,43,0,1-2,2-3,2-19,1-39-1-58,1-46,2-92-3-138-3h0Z"/>
@@ -46,8 +46,6 @@ const { fixed = false } = Astro.props;
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    opacity: 0.8;
-    transition: opacity 0.3s;
   }
 
   .journal-badges--fixed {
@@ -61,8 +59,11 @@ const { fixed = false } = Astro.props;
     display: block;
     line-height: 0;
   }
-
-  .journal-badges a:hover {
+  #directory, #map {
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+  #directory:hover, #map:hover {
     opacity: 1;
   }
 
