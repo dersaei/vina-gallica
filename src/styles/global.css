@@ -17,6 +17,7 @@
 body {
   color: var(--color-elegant-black);
   background-color: var(--color-sand);
+  overflow-x: hidden;
 }
 
 /* Custom scrollbar — global */

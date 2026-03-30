@@ -55,10 +55,26 @@ import MobileMenu from "./MobileMenu.tsx";
   </div>
 </header>
 
+<script>
+  function setHeaderHeight() {
+    const header = document.querySelector("header");
+    if (header) {
+      document.documentElement.style.setProperty(
+        "--header-height",
+        header.offsetHeight + "px"
+      );
+    }
+  }
+  setHeaderHeight();
+  window.addEventListener("resize", setHeaderHeight, { passive: true });
+  document.addEventListener("astro:page-load", setHeaderHeight);
+</script>
+
 <style>
   header {
     background-color: var(--color-gold);
-    position: relative;
+    position: sticky;
+    top: 0;
     border-bottom: 1px solid var(--color-elegant-black);
     z-index: 200;
     view-transition-name: site-header;
@@ -99,7 +115,7 @@ import MobileMenu from "./MobileMenu.tsx";
   margin-left: -9vw;
 }
   }
-  @media (max-width:400px){
+  @media (max-width:415px){
     .logo-link img:nth-child(even) {
       display: none;
     }

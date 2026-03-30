@@ -39,9 +39,9 @@ const { fixed = false } = Astro.props;
 
 <style>
   .journal-badges {
-    position: absolute;
+    position: fixed;
     left: var(--space-lg);
-    top: -0.5em;
+    top: calc(var(--header-height, 0px) - 0.5em);
     z-index: 100;
     display: flex;
     align-items: center;

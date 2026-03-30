@@ -75,6 +75,7 @@
 
 .prose table {
   width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
   margin: 1.5rem 0;

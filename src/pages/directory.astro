@@ -272,9 +272,9 @@ const [categories, wineRegions, adminRegions, departments, towns, places] = awai
   }
 
   .directory-map-link {
-    position: absolute;
+    position: fixed;
     left: var(--space-lg);
-    top: -0.5em;
+    top: calc(var(--header-height, 0px) - 0.5em);
     z-index: 100;
     width: 120px;
     height: auto;
