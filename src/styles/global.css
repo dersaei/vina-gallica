@@ -18,6 +18,7 @@ body {
   color: var(--color-elegant-black);
   background-color: var(--color-sand);
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Custom scrollbar — global */
