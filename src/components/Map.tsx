@@ -316,15 +316,30 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
           });
         }
 
-        // mobile: rozwijanie/zwijanie po focusie
+        // mobile: rozwijanie/zwijanie
         const container = geocoderContainerRef.current;
+        const getInput = () =>
+          container.querySelector<HTMLInputElement>(".mapboxgl-ctrl-geocoder--input");
+
+        // dotknięcie/kliknięcie kontenera gdy zwinięty → focusuj input
+        container.addEventListener("pointerdown", (e) => {
+          if (!container.classList.contains("is-expanded")) {
+            e.preventDefault(); // zapobiega utracie focusu przez inne elementy
+            container.classList.add("is-expanded");
+            requestAnimationFrame(() => getInput()?.focus());
+          }
+        });
+
         container.addEventListener("focusin", () => {
           container.classList.add("is-expanded");
         });
-        container.addEventListener("focusout", (e) => {
-          if (!container.contains(e.relatedTarget as Node | null)) {
-            container.classList.remove("is-expanded");
-          }
+        container.addEventListener("focusout", () => {
+          // opóźnienie: dajemy czas na mousedown/touchstart na sugestii zanim sprawdzimy focus
+          setTimeout(() => {
+            if (!container.contains(document.activeElement)) {
+              container.classList.remove("is-expanded");
+            }
+          }, 200);
         });
       }
 

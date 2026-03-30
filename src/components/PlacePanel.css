@@ -50,7 +50,7 @@
 
 .panel-location__label {
   font-family: var(--font-extra);
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   font-weight: 400;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -60,12 +60,12 @@
 }
 
 .panel-location__label--region {
-  font-size: 0.6rem;
+  font-size: 0.65rem;
 }
 
 .panel-location__name {
   font-family: var(--font-heading);
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--loc-color);
@@ -129,7 +129,7 @@
 .place-label__row {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 300;
   text-align: center;
   color: #444;
@@ -180,7 +180,7 @@
   padding: 0.3em 1.1em 0.1em;
   background-color: var(--region-color, #888);
   font-family: var(--font-heading);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 700;
   width: 100%;
   height: auto;
