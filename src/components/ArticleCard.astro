@@ -53,7 +53,7 @@ const formattedDate = date.toLocaleDateString("en-US", {
     padding: var(--space-xs);
     overflow: hidden;
     transition: transform 0.5s ease;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 2 / 3;
   }
 
   .article-card:hover {
@@ -95,7 +95,7 @@ const formattedDate = date.toLocaleDateString("en-US", {
 
   .card-title {
     font-family: var(--font-heading);
-    font-size: clamp(1.2rem, 1.5vw, 2.1rem);
+    font-size: clamp(1.5rem, 2vw, 2.1rem);
     font-weight: 700;
     color: var(--color-sand);
     line-height: 1.2;
@@ -121,7 +121,7 @@ const formattedDate = date.toLocaleDateString("en-US", {
 
   .card-excerpt {
     font-family: var(--font-hero);
-    font-size: 0.81rem;
+    font-size: 0.95rem;
     font-weight: 400;
     color: #fdfbf7;
     line-height: 1.5;
@@ -162,7 +162,7 @@ const formattedDate = date.toLocaleDateString("en-US", {
     padding:var(--space-xs) ;
   }
     }
-    @media (max-width: 460px) {
+    @media (max-width: 480px) {
       .article-card {
     flex-direction: column;
     aspect-ratio: 4 / 5;
@@ -174,6 +174,9 @@ const formattedDate = date.toLocaleDateString("en-US", {
   .card-body {
     flex-shrink: 0;
     padding:var(--space-xs) ;
+  }
+  .card-title {
+    font-size: 8vw;
   }
     }
 </style>

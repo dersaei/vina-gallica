@@ -12,6 +12,7 @@ interface ProseProps {
   ogTitle?: string;
   ogDescription?: string;
   ogType?: "website" | "article";
+  ogImage?: string;
   noindex?: boolean;
   jsonLd?: object | object[];
 }
@@ -29,6 +30,7 @@ const {
   ogTitle,
   ogDescription,
   ogType,
+  ogImage,
   noindex,
   jsonLd,
 } = Astro.props.frontmatter ?? Astro.props;
@@ -43,6 +45,7 @@ const {
   ogTitle={ogTitle}
   ogDescription={ogDescription}
   ogType={ogType}
+  ogImage={ogImage}
   noindex={noindex}
   jsonLd={jsonLd}
 >

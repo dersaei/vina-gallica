@@ -60,6 +60,10 @@ interface Article {
   text: string | null;
   main_image: string | null;
   date_created: string;
+  date_updated: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
+  headline: string | null;
 }
 
 interface ArticleCard {

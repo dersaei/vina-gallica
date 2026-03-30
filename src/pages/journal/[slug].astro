@@ -14,7 +14,7 @@ const directusUrl = import.meta.env.DIRECTUS_URL as string;
 
 const results = await directus.request(
   readItems("journal_vg", {
-    fields: ["id", "status", "name", "slug", "text", "main_image", "date_created"],
+    fields: ["id", "status", "name", "slug", "text", "main_image", "date_created", "date_updated", "seo_title", "seo_description", "headline"],
     filter: { slug: { _eq: slug }, status: { _eq: "published" } },
     limit: 1,
   })
@@ -30,6 +30,10 @@ const mainImageUrl = article.main_image
   ? `${directusUrl}/assets/${article.main_image}?width=1920&format=webp&quality=85`
   : null;
 
+const ogImageUrl = article.main_image
+  ? `${directusUrl}/assets/${article.main_image}?width=1200&height=630&fit=cover&format=webp`
+  : undefined;
+
 const bodyHtml = article.text ? marked(article.text) : "";
 
 const date = new Date(article.date_created);
@@ -42,19 +46,21 @@ const formattedDate = date.toLocaleDateString("en-US", {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: article.name,
+  headline: article.seo_title ?? article.name,
   datePublished: article.date_created,
-  image: mainImageUrl ?? undefined,
+  dateModified: article.date_updated ?? article.date_created,
+  image: ogImageUrl ?? undefined,
 };
 ---
 
 <Layout
-  title={`${article.name} | Vina Gallica`}
-  description={article.name}
-  headline="French wine tells a story of place"
+  title={`${article.seo_title ?? article.name} | Vina Gallica`}
+  description={article.seo_description ?? article.name}
+  headline={article.headline ?? article.name}
   headlineStyle="light"
   canonical={new URL(`/journal/${article.slug}`, Astro.site).href}
   ogType="article"
+  ogImage={ogImageUrl}
   jsonLd={jsonLd}
 >
   <div class="article-page">
