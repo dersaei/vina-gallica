@@ -315,6 +315,17 @@ export default function Map({ geojsonData, categories, onOpenPanel }: Props) {
             input.select();
           });
         }
+
+        // mobile: rozwijanie/zwijanie po focusie
+        const container = geocoderContainerRef.current;
+        container.addEventListener("focusin", () => {
+          container.classList.add("is-expanded");
+        });
+        container.addEventListener("focusout", (e) => {
+          if (!container.contains(e.relatedTarget as Node | null)) {
+            container.classList.remove("is-expanded");
+          }
+        });
       }
 
     return () => {
