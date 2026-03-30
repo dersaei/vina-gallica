@@ -76,14 +76,14 @@ const jsonLd = {
           decoding="async"
         />
         <div class="article-title-wrap">
-          <h1 class="article-title">{article.name}</h1>
+          <h2 class="article-title">{article.name}</h2>
         </div>
       </div>
     )}
 
     {!mainImageUrl && (
       <div class="article-title-wrap article-title-wrap--no-image">
-        <h1 class="article-title">{article.name}</h1>
+        <h2 class="article-title">{article.name}</h2>
       </div>
     )}
 
@@ -138,7 +138,7 @@ const jsonLd = {
     line-height: 1.2;
     color: var(--color-elegant-black);
     background-color: #fffaf3;
-    border: 10px ridge wheat;
+    border: 10px ridge #f5deb3;
     box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 30px inset;
     padding: 0.6em 1em 0.5em;
     margin: 0;

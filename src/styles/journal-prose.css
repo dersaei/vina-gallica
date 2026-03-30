@@ -13,12 +13,12 @@
 
 .prose h2 {
   font-family: var(--font-heading);
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-xs);
   border-bottom: 1px solid #daa520;
-  text-align: start;
+  text-align: center;
 }
 
 .prose h2:first-of-type {
@@ -67,10 +67,12 @@
   margin-bottom: 0.3rem;
 }
 .prose strong {
-  background-color: gold;
+  background-color: #faebd7;
   color: #000;
-  border-bottom: 5px outset black;
+  border-bottom: 4px outset black;
   padding: 2px var(--space-xs);
+  font-family: var(--font-extra);
+  font-weight: 500;
 }
 
 .prose table {
