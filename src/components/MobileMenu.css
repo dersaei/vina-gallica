@@ -72,7 +72,7 @@
   }
 
   .mobile-nav--open {
-    max-height: 300px;
+    max-height: 450px;
     opacity: 1;
   }
 
@@ -97,5 +97,8 @@
 
   .mobile-nav li a:hover {
     background-color: rgba(0, 0, 0, 0.06);
+  }
+  .cl-internal-friqq3 {
+    padding-left: 5em;
   }
 }

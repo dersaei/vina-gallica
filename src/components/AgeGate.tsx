@@ -1,0 +1,74 @@
+import { useState, useEffect } from "react";
+import "./AgeGate.css";
+
+const COOKIE_KEY = "vg_age_verified";
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year in seconds
+
+function setVerifiedCookie() {
+  document.cookie = `${COOKIE_KEY}=1; max-age=${COOKIE_MAX_AGE}; path=/; SameSite=Lax`;
+}
+
+function isVerified(): boolean {
+  return document.cookie
+    .split(";")
+    .some((c) => c.trim().startsWith(`${COOKIE_KEY}=`));
+}
+
+export default function AgeGate() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (!isVerified()) {
+      setVisible(true);
+      document.body.style.overflow = "hidden";
+    }
+  }, []);
+
+  function confirm() {
+    setVerifiedCookie();
+    setVisible(false);
+    document.body.style.overflow = "";
+  }
+
+  function deny() {
+    window.location.href = "https://www.google.com";
+  }
+
+  if (!visible) return null;
+
+  return (
+    <div
+      className="age-gate-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="age-gate-title"
+    >
+      <div className="age-gate-modal">
+        <p className="age-gate-logo">VINA GALLICA</p>
+        <h2 id="age-gate-title" className="age-gate-title">
+          Welcome
+        </h2>
+        <p className="age-gate-text">
+          Vina Gallica is a guide to the French wine. <br /> You must be of
+          legal drinking age to enter.
+        </p>
+        <p className="age-gate-question">Are you 21 or older?</p>
+        <div className="age-gate-actions">
+          <button
+            className="age-gate-btn age-gate-btn--confirm"
+            onClick={confirm}
+          >
+            Yes, enter
+          </button>
+          <button className="age-gate-btn age-gate-btn--deny" onClick={deny}>
+            No
+          </button>
+        </div>
+        <p className="age-gate-disclaimer">
+          By entering, you confirm you are of legal drinking age in your country
+          of residence. Please drink responsibly.
+        </p>
+      </div>
+    </div>
+  );
+}

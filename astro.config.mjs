@@ -2,13 +2,7 @@
 import { defineConfig, fontProviders } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
-import { loadEnv } from "vite";
-
-const { ADOBE_FONTS_ID = "" } = loadEnv(
-  process.env.NODE_ENV ?? "development",
-  process.cwd(),
-  "",
-);
+const ADOBE_FONTS_ID = process.env.ADOBE_FONTS_ID ?? "";
 
 // https://astro.build/config
 export default defineConfig({

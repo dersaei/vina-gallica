@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import "./MobileMenu.css";
 
 const navItems = [
-  { label: "Journal", href: "/journal" },
-  { label: "About", href: "/about" },
   { label: "Directory", href: "/directory" },
   { label: "Map", href: "/map" },
+  { label: "Journal", href: "/journal" },
+  { label: "About", href: "/about" },
   { label: "Privacy", href: "/privacy-policy" },
 ];
 
