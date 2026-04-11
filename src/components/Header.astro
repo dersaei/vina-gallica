@@ -1,8 +1,6 @@
 ---
 import logoMark from "../assets/logo-vina-gallica.png";
 import logoText from "../assets/vina-gallica-text.png";
-import img001 from "../assets/001.png";
-import img002 from "../assets/002.png";
 import { Image } from "astro:assets";
 import MobileMenu from "./MobileMenu.tsx";
 ---
@@ -30,26 +28,6 @@ import MobileMenu from "./MobileMenu.tsx";
       />
     </a>
     <div class="header-right">
-          <a href="/journal" aria-label="Vina Gallica - Journal" class="logo-link">
-      <Image
-        src={img001}
-        alt="Journal Vina Gallica"
-        width={168}
-        height={30}
-        densities={[1, 2]}
-        loading="eager"
-        fetchpriority="high"
-      />
-      </a>
-      <Image
-        src={img002}
-        alt="About Vina Gallica"
-        width={126}
-        height={30}
-        densities={[1, 2]}
-        loading="eager"
-        fetchpriority="high"
-      />
     </div>
     <MobileMenu client:load />
   </div>

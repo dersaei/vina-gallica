@@ -4,7 +4,6 @@ import "./MobileMenu.css";
 const navItems = [
   { label: "Directory", href: "/directory" },
   { label: "Map", href: "/map" },
-  { label: "Journal", href: "/journal" },
   { label: "About", href: "/about" },
   { label: "Privacy", href: "/privacy-policy" },
 ];
