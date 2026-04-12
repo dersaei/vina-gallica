@@ -37,16 +37,17 @@ export default function MobileMenu() {
   return (
     <div className="mobile-menu" ref={menuRef}>
       <button
-        className={`hamburger${open ? " hamburger--open" : ""}`}
+        className={`menu-toggle${open ? " menu-toggle--open" : ""}`}
         onClick={() => setOpen(!open)}
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         aria-controls="mobile-nav"
         type="button"
       >
-        <span />
-        <span />
-        <span />
+        <span className="menu-toggle__label">Menu</span>
+        <span className="menu-toggle__bar" aria-hidden="true" />
+        <span className="menu-toggle__bar" aria-hidden="true" />
+        <span className="menu-toggle__bar" aria-hidden="true" />
       </button>
 
       <nav
