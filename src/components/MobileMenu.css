@@ -7,7 +7,6 @@
 .menu-toggle {
   background-color: var(--color-sand);
   color: var(--color-elegant-black);
-  border: 3px solid var(--color-elegant-black);
   border-radius: 4px;
   cursor: pointer;
   padding: 0.55em 1.1em 0.16em;
@@ -27,15 +26,15 @@
 .menu-toggle--open {
   background-color: var(--color-elegant-black);
   color: var(--color-sand);
-  border-color: var(--color-elegant-black);
 }
 
-/* ── Tryb hamburger (< 540px): okrągły przycisk z kreskami ── */
-@media (max-width: 539px) {
+/* ── Tryb hamburger (< 600px): okrągły przycisk z kreskami ── */
+@media (max-width: 600px) {
   .menu-toggle {
     width: 48px;
     height: 48px;
     border-radius: 50%;
+    background-color: var(--color-elegant-black);
     border: 4px solid #f0ffff;
     padding: 0;
     display: flex;
@@ -84,8 +83,8 @@
   }
 }
 
-/* ── Tryb tekstowy (≥ 540px): napis "Menu", bez kresek ── */
-@media (min-width: 540px) {
+/* ── Tryb tekstowy (≥ 600px): napis "Menu", bez kresek ── */
+@media (min-width: 600px) {
   .menu-toggle__label {
     display: inline;
   }
@@ -132,7 +131,7 @@
   text-decoration: none;
   color: var(--color-elegant-black);
   font-family: var(--font-label);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
