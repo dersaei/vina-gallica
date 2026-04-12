@@ -20,14 +20,14 @@ export default function AgeGate() {
   useEffect(() => {
     if (!isVerified()) {
       setVisible(true);
-      document.body.style.overflow = "hidden";
+      document.documentElement.classList.add("age-gate-open");
     }
   }, []);
 
   function confirm() {
     setVerifiedCookie();
     setVisible(false);
-    document.body.style.overflow = "";
+    document.documentElement.classList.remove("age-gate-open");
   }
 
   function deny() {

@@ -1,3 +1,7 @@
+html.age-gate-open {
+  overflow: hidden;
+}
+
 .age-gate-overlay {
   position: fixed;
   inset: 0;
