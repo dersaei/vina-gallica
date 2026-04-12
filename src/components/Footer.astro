@@ -4,8 +4,7 @@ const year = new Date().getFullYear();
 
 <footer>
   <div class="footer-inner">
-    <p>&copy; {year} Vina Gallica. All rights reserved.</p>
-    <a href="/privacy-policy" class="footer-link">Privacy Policy</a>
+    <p><a href="/submit" class="footer-link">Get listed on Vina Gallica</a></p>
   </div>
 </footer>
 
@@ -30,52 +29,24 @@ const year = new Date().getFullYear();
 
   footer p {
     color: var(--color-elegant-black);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     margin: 0;
-    font-weight: 300;
     letter-spacing: 0.03em;
-    font-family: var(--font-heading);
+        text-align: center;
+
   }
 
   .footer-link {
     color: var(--color-elegant-black);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 300;
     letter-spacing: 0.03em;
     font-family: var(--font-heading);
     text-decoration: none;
-    opacity: 0.7;
-    padding-left: 1em;
   }
 
   .footer-link:hover {
-    opacity: 1;
+    color: #b22222;
   }
-  .clerk-signin button {
-    background-color: transparent;
-    position: absolute;
-    left: 1em;
-    top:0;
-    cursor: pointer;
-    border: none;
-    font-family: var(--font-hero);
-    font-weight: 400;
-    font-size: 0.8rem;
-  }
-  .clerk-signup button {
-    background-color: transparent;
-    position: absolute;
-    right: 1em;
-    top:0;
-    cursor: pointer;
-    border: none;
-    font-family: var(--font-hero);
-    font-weight: 400;
-    font-size: 0.8rem;
-  }
-  @media (max-width: 750px){
-    .footer-link {
-      display: none;
-    }
-  }
+
 </style>
