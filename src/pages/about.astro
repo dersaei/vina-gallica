@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Badges from "../components/Badges.astro";
+import { Image } from "astro:assets";
+import aboutImg from "../assets/about-vina-gallica.jpg";
 ---
 
 <Layout
@@ -8,6 +10,8 @@ import Badges from "../components/Badges.astro";
   description="Learn about Vina Gallica and the concept of terroir — the unique fingerprint of place that defines French wine culture."
   headline="About"
   headlineStyle="light"
+  canonical={new URL('/about', Astro.site).href}
+  ogType="website"
 >
   <Badges />
   <main class="about">
@@ -59,7 +63,7 @@ import Badges from "../components/Badges.astro";
           world.
         </h2>
 <div class="about-cta">
-        <a href="/submit" class="join-btn">Are you operating within French winemaking?<br />Join Vina Gallica and connect with wine enthusiasts worldwide</a>
+        <a href="/submit" class="join-btn">Are you offering French wine experiences?<br />Join Vina Gallica and connect with wine enthusiasts worldwide</a>
       </div>
         <p>
           In the philosophy of terroir, the goal isn't to create wine that's objectively the best,
@@ -69,9 +73,85 @@ import Badges from "../components/Badges.astro";
           
         </p>
         <p>Thus, French winemaking doesn't treat wine as a simple agricultural product, but as a liquid record of the place where it was made—shaped by specific soil, microclimate, sun exposure, and local tradition. This diversity ranges from mountain slopes in cool Savoy to hot, Mediterranean coastlines of Languedoc.
-          Within a single country, one finds, as it were, a dozen separate, wine-focused continents, each with its own unique terroir and winemaking traditions. This is what makes exploring French wine regions so endlessly fascinating — it's not just about tasting different wines, but about experiencing the unique character of each place through its wine.
+          Within a single country, one finds, as it were, a dozen separate, wine-focused continents, each with its own unique terroir and winemaking traditions that make exploring French wine regions so fascinating, allowing us to experience the unique character of each place through its wine.
         </p>
-        <p>Vina Gallica aims to become your guide to French terroir, a growing collection of wineries, wine shops, festivals, and tasting experiences, designed to help you explore French wine culture — a living, dynamically evolving world.</p>
+        <p>Today's French winemakers face climate change, dust off forgotten grape varieties, and set new global trends. Each of the iconic regions harbors secrets that fascinatingly connect centuries of history with modernity. One can discover them anew and uncover the adventures with Vina Gallica and its growing collection of wineries, wine shops, festivals, and tasting experiences, all designed to serve as your guide to French terroir.</p>
+      </div>
+
+      <Image src={aboutImg} alt="French wine vineyard" class="about-image" />
+
+      <div class="regions-section">
+        <h3 class="regions-heading">14 French Wine Regions</h3>
+
+        <div class="region">
+          <h4>Alsace</h4>
+          <p>Alsace is home to one of the most complex and mysterious geological systems in the world. Over millions of years, powerful earthquakes created a mosaic of over 50 different soil types here. As a result, grapevines growing just meters apart can produce wine with a completely different flavor profile, making Alsatian terroir a giant, underground puzzle. Today, when visiting Alsatian wineries, you can experience something fascinating: winemakers often serve the same wine from the same vintage, but from plots separated by dozens of meters. They prove that in your glass you'll distinctly taste a completely different flavor of Earth.</p>
+        </div>
+
+        <div class="region">
+          <h4>Beaujolais</h4>
+          <p>Though today the region is associated with celebrating young wine, few people know that its flagship grape variety – Gamay – was once disgraced and banished. In 1395, the Duke of Burgundy called this variety "vile and disloyal," ordering its complete uprooting from his elite estates. Exiled to the granite hills of Beaujolais to the south, Gamay found its ideal refuge, where it reigns to this day. Today, this once-disgraced variety is experiencing its renaissance, and Beaujolais Cru wines rival the elegance (and rising prices) of expensive Burgundy without apology, becoming an absolute hit in the world's trendiest wine bars.</p>
+        </div>
+
+        <div class="region">
+          <h4>Bordeaux</h4>
+          <p>The most expensive and prestigious vineyards in the Médoc appellation of Bordeaux... didn't even exist until the 17th century. Until then, the terrain was a vast, inhospitable, and dangerous swamp. Only when Dutch engineers brought in by merchants drained these areas was the hidden gravel soil revealed, which turned out to be absolutely perfect for the royal Cabernet Sauvignon grape. Today, on those former, dark marshes stand the most luxurious châteaux on the planet. The gravel soils discovered then produce iconic wines that collectors are willing to pay thousands of euros per bottle for.</p>
+        </div>
+
+        <div class="region">
+          <h4>Bourgogne</h4>
+          <p>The soil in Burgundian vineyards with Grand Cru classification is considered so precious and almost sacred that employees reportedly must carefully clean their boots before leaving a plot, so as not to take even a gram of this priceless terroir with them. Moreover, centuries ago, Cistercian monks marked the boundaries of these vineyards, and according to legend, by tasting the soil – literally putting it in their mouths. Today, this obsession with microscopic differences has reached its peak – a hectare of Grand Cru vineyard costs tens of millions of euros, and winemakers use modern drones to precisely protect every centimeter of this historic soil.</p>
+        </div>
+
+        <div class="region">
+          <h4>Champagne</h4>
+          <p>Millions of bottles of the world's most luxurious wine mature in the complete darkness of ancient chalk mines (crayères). They were excavated by Romans over 2,000 years ago. These monumental, dark, underground labyrinths, stretching for miles beneath cities like Reims, hold the ideal microclimate for creating champagne's bubbles. Today, these dark, underground labyrinths are UNESCO-listed and hide maturing champagne reserves worth billions of euros, and a walk through them is one of France's most spectacular tourist attractions.</p>
+        </div>
+
+        <div class="region">
+          <h4>Corsica</h4>
+          <p>Corsican vineyards hide wines with a truly maritime spirit. Many vines are planted so close to the rocky Mediterranean coast that salt-water spray carried by the wind lands directly on the grapes. When the moisture evaporates, salt crystallizes on the skins, giving local wines a unique, fascinating, and palpable salty note found nowhere else. In today's gastronomic revolution, this natural minerality has become highly prized by top sommeliers, who consider Corsican wines perfect pairings for sophisticated, modern seafood dishes.</p>
+        </div>
+
+        <div class="region">
+          <h4>Jura</h4>
+          <p>This is home to one of the world's most enigmatic drinks – Vin Jaune, or "Yellow Wine." It matures in oak barrels that are deliberately left unfilled, and a mysterious "veil" of dead yeast mysteriously forms on its surface, protecting the liquid from spoilage. After more than six years, the wine is bottled in exceptional clavelin bottles holding 620 ml – it's believed this is precisely how much remains from one liter of wine after this long aging period due to "angels' share" (evaporation). Today, Jura has become an absolute mecca and the world's epicenter of the natural wine revolution – this old, enigmatic, and heavily oxidized style is now the most sought-after "flavor" among wine lovers worldwide.</p>
+        </div>
+
+        <div class="region">
+          <h4>Languedoc Roussillon</h4>
+          <p>Champagne wasn't actually the first sparkling wine in France. That historical crown belongs to the Limoux appellation, tucked away in Languedoc. Records show it was monks from the Saint-Hilaire abbey there who discovered the secret of trapped bubbles in glass in 1531 – over a century before the famous Dom Pérignon allegedly "drank the stars" in Champagne. Today, historic Blanquette de Limoux is not just a curiosity for connoisseurs, but also a wonderful and affordable alternative to expensive champagnes, proving that centuries of quality doesn't have to break the bank.</p>
+        </div>
+
+        <div class="region">
+          <h4>Lorraine</h4>
+          <p>Once a powerful winemaking force that supplied Roman emperors and European courts, today it's one of France's most carefully guarded and nearly forgotten wine secrets. Through phylloxera plagues and the darkness of world wars, only a handful of vineyards survived, producing Vin Gris ("Gray Wine") – intriguing, historic, remarkably pale pink wine made in part from dark Pinot Noir grapes. Now, as global demand for rosé wines continues to grow, seekers of novelty are turning away from commercial hits and are fascinated to discover this historic wine anew, seeing it as an authentic gem of craftsmanship.</p>
+        </div>
+
+        <div class="region">
+          <h4>Provence</h4>
+          <p>Though rosé wine is associated with a modern, vacation trend, Provence produced it... back in ancient times. When ancient Greeks from Phocaea founded what is now Marseille around 600 BCE, techniques of extended maceration (leaving juice in contact with skins) were still rare. So the first French wines in history were naturally light and surprisingly resembled the elegant Provençal rosés we know today. Today, it alone dictates global trends – the characteristic, remarkably pale salmon color of local wines has become a worldwide standard for summer lifestyle, copied from California all the way to New Zealand.</p>
+        </div>
+
+        <div class="region">
+          <h4>Savoie Bugey</h4>
+          <p>Growing grapes in this Alpine region is almost an extreme sport. Mountain slopes can be so steeply inclined that working on them resembles climbing. To harvest from the most inaccessible, nearly vertical plots, isolated winemakers have long had to and still must use rope pulley systems, and in exceptional cases, harvests are transported by helicopter. Today, with rising temperatures, these colder, high-altitude plots are becoming increasingly valuable, producing wines with lower alcohol content and amazing freshness that the market increasingly seeks.</p>
+        </div>
+
+        <div class="region">
+          <h4>Sud Ouest</h4>
+          <p>In the Cahors appellation, legendary "Black Wine" (Vin Noir) is born. In the Middle Ages, this drink, based on the Malbec grape, was so thick, inky dark, and powerful that English kings valued it more highly than wines from neighboring Bordeaux. Because of its remarkable, deep color, it also gained mystical status – for centuries it was the official sacramental wine of the powerful Russian Orthodox Church. Now, after decades of global dominance by Argentine Malbec, French Cahors is experiencing a great comeback – conscious consumers are returning here for the "original," seeking authentic, deeper structure.</p>
+        </div>
+
+        <div class="region">
+          <h4>Val de Loire et Centre</h4>
+          <p>The Loire Valley is a landscape dotted with fairy-tale castles made of white stone called tuffeau. To build them, architects carved hundreds of kilometers of gloomy, underground caves into nearby hills, creating a complex network of troglodytic tunnels. When the stoneworkers left, winemakers moved into the empty darkness – these dark, cool grottoes serve to this day as ideal vaults for the oldest and most precious vintages from the Loire. Today, many of these magical, underground tunnels are modern tasting rooms, and some wineries even allow overnight stays there, combining raw history with luxury tourism.</p>
+        </div>
+
+        <div class="region">
+          <h4>Vallée du Rhône</h4>
+          <p>In the notorious Châteauneuf-du-Pape appellation, grapevines often grow in places where there's seemingly no soil at all. The ground is covered to the horizon with large, round river stones called galets roulés. These prehistoric, river-worn stones function as natural heat accumulators – during the day they absorb the scorching southern sun like an oven, only to magically radiate heat at night and warm the grapes until dawn. Today, with waves of heat, this ancient amenity has become a challenge – winemakers must use new techniques to protect their vines, which is a great example of how old terroir must deal with today's climate change.</p>
+        </div>
       </div>
     </article>
   </main>
@@ -187,6 +267,57 @@ import Badges from "../components/Badges.astro";
 
   .join-btn:focus {
     box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+  }
+
+  .about-image {
+    width: 100%;
+    max-width: 1280px;
+    height: auto;
+    display: block;
+    margin: var(--space-lg) auto;
+  }
+
+  .regions-section {
+    max-width: 680px;
+    width: 100%;
+    margin: var(--space-xl) auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .regions-heading {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-elegant-black);
+    padding-bottom: var(--space-md);
+    border-bottom: 2px solid var(--color-elegant-black);
+  }
+
+  .region h4 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-elegant-black);
+    margin-bottom: var(--space-sm);
+  }
+
+  .region p {
+    text-align: left;
+  }
+
+  @media (max-width: 630px) {
+    .about {
+      padding: var(--space-lg) var(--space-md);
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    .join-btn {
+      font-size: 0.8rem;
+    }
   }
 
 </style>
