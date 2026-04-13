@@ -6,11 +6,13 @@ html.age-gate-open {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background-color: rgba(108, 102, 92, 0.75);
+  background-color: rgba(108, 102, 92, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 
 .age-gate-modal {

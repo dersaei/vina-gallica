@@ -44,13 +44,15 @@ export default function AgeGate() {
       aria-labelledby="age-gate-title"
     >
       <div className="age-gate-modal">
-        <p className="age-gate-logo">VINA GALLICA</p>
+        <p className="age-gate-logo">
+          Vina Gallica is a guide to the French wine
+        </p>
         <h2 id="age-gate-title" className="age-gate-title">
-          Welcome
+          You must be of legal drinking age to enter
         </h2>
         <p className="age-gate-text">
-          Vina Gallica is a guide to the French wine. <br /> You must be of
-          legal drinking age to enter.
+          By entering, you confirm you are of legal drinking age in your country
+          of residence.
         </p>
         <p className="age-gate-question">Are you 21 or older?</p>
         <div className="age-gate-actions">
@@ -64,10 +66,7 @@ export default function AgeGate() {
             No
           </button>
         </div>
-        <p className="age-gate-disclaimer">
-          By entering, you confirm you are of legal drinking age in your country
-          of residence. Please drink responsibly.
-        </p>
+        <p className="age-gate-disclaimer">Please drink responsibly.</p>
       </div>
     </div>
   );
