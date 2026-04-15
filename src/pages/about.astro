@@ -75,7 +75,7 @@ import aboutImg from "../assets/about-vina-gallica.jpg";
         <p>Thus, French winemaking doesn't treat wine as a simple agricultural product, but as a liquid record of the place where it was made—shaped by specific soil, microclimate, sun exposure, and local tradition. This diversity ranges from mountain slopes in cool Savoy to hot, Mediterranean coastlines of Languedoc.
           Within a single country, one finds, as it were, a dozen separate, wine-focused continents, each with its own unique terroir and winemaking traditions that make exploring French wine regions so fascinating, allowing us to experience the unique character of each place through its wine.
         </p>
-        <p>Today's French winemakers face climate change, dust off forgotten grape varieties, and set new global trends. Each of the iconic regions harbors secrets that fascinatingly connect centuries of history with modernity. One can discover them anew and uncover the adventures with Vina Gallica and its growing collection of wineries, wine shops, festivals, and tasting experiences, all designed to serve as your guide to French terroir.</p>
+        <h3>Our growing collection of wineries, wine shops, festivals, and tasting experiences is designed to serve as your guide to French terroir.</h3>
       </div>
 
       <Image src={aboutImg} alt="French wine vineyard" class="about-image" />
@@ -191,6 +191,12 @@ import aboutImg from "../assets/about-vina-gallica.jpg";
     letter-spacing: -0.01em;
     text-align: center;
   }
+  h3 {
+    font-size: 1.4rem;
+    font-family: var(--font-heading);
+    font-weight: 400;
+    text-align: center;
+  }
 
   .article-body {
     display: flex;
@@ -204,7 +210,9 @@ import aboutImg from "../assets/about-vina-gallica.jpg";
     color: var(--color-elegant-black);
     font-family: var(--font-hero);
     font-weight: 400;
-    text-align: center;
+    text-align: justify;
+    width: 80%;
+    margin: 0 auto;
   }
 
   em {
@@ -304,20 +312,24 @@ import aboutImg from "../assets/about-vina-gallica.jpg";
     margin-bottom: var(--space-sm);
   }
 
-  .region p {
-    text-align: left;
-  }
-
   @media (max-width: 630px) {
     .about {
-      padding: var(--space-lg) var(--space-md);
+      padding: var(--space-xl) var(--space-md);
     }
     h2 {
       font-size: 1.5rem;
     }
+    h3 {
+      font-size: 1.2rem;
+    }
     .join-btn {
       font-size: 0.8rem;
     }
+  }
+  @media (max-width: 400px) {
+   p {
+    width: 95%;
+   }
   }
 
 </style>
