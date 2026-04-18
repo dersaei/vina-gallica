@@ -1,0 +1,44 @@
+---
+import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+import "../styles/reset.css";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, follow" />
+    <Font cssVariable="--font-heading" preload />
+    <Font cssVariable="--font-label" />
+    <Font cssVariable="--font-hero" preload />
+    <Font cssVariable="--font-extra" />
+    <ClientRouter />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  html,
+  body {
+    min-height: 100%;
+    background-color: var(--color-gold);
+  }
+</style>
