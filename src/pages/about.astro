@@ -58,9 +58,7 @@ import aboutImg from "../assets/about-vina-gallica.jpg";
 
       <div class="article-body">
         <h2>
-          If there's one thing that defines French wine regions, it's <em>terroir</em> — a concept
-          so deeply rooted in French culture that it has no equivalent in any other language in the
-          world.
+Vina Gallica is a growing collection of wineries, wine shops, festivals, and wine adventures, designed to serve as your guide to French terroir
         </h2>
 <div class="about-cta">
         <a href="/submit" class="join-btn">Are you offering French wine experience?<br />Join Vina Gallica and connect with wine enthusiasts worldwide</a>
@@ -68,14 +66,13 @@ import aboutImg from "../assets/about-vina-gallica.jpg";
         <p>
           In the philosophy of terroir, the goal isn't to create wine that's objectively the best,
           but rather wine that most faithfully expresses the character of its birthplace.
-          One can say that terroir is the unique fingerprint of the place where a grapevine grows — a
-          combination of several elements that together shape the final taste and aroma of wine.
+          One can say that terroir is the unique fingerprint of the place where a grapevine grows — a concept so deeply rooted in French culture that it has no equivalent in any other language in the world.
           
         </p>
-        <p>Thus, French winemaking doesn't treat wine as a simple agricultural product, but as a liquid record of the place where it was made—shaped by specific soil, microclimate, sun exposure, and local tradition. This diversity ranges from mountain slopes in cool Savoy to hot, Mediterranean coastlines of Languedoc.
+        <p>Thus, French winemaking doesn't treat wine as a simple agricultural product, but as a liquid record of the place where it was made, shaped by specific soil, microclimate, sun exposure, and local tradition — a combination of several elements that together form the final taste and aroma of wine. This diversity ranges from mountain slopes in cool Savoy to hot, Mediterranean coastlines of Languedoc.
           Within a single country, one finds, as it were, a dozen separate, wine-focused continents, each with its own unique terroir and winemaking traditions that make exploring French wine regions so fascinating, allowing us to experience the unique character of each place through its wine.
         </p>
-        <h3>Vina Gallica is a growing collection of wineries, wine shops, festivals, and wine adventures, designed to serve as your guide to French terroir</h3>
+        <h3>We invite you to explore together with us the diverse world of French wine regions</h3>      
       </div>
 
       <Image src={aboutImg} alt="French wine vineyard" class="about-image" />
@@ -185,16 +182,19 @@ import aboutImg from "../assets/about-vina-gallica.jpg";
   h2 {
     font-size:1.9rem;
     font-weight: 700;
+    text-transform: uppercase;
     line-height: 1.1;
     font-family: var(--font-heading);
     color: var(--color-elegant-black);
     letter-spacing: -0.01em;
     text-align: center;
+    padding:var(--space-xs);
   }
   h3 {
     font-size: 1.4rem;
     font-family: var(--font-heading);
     font-weight: 400;
+    text-transform: uppercase;
     text-align: center;
   }
 
@@ -205,14 +205,15 @@ import aboutImg from "../assets/about-vina-gallica.jpg";
   }
 
   p {
-    font-size: 1.05rem;
+    font-size: 1rem;
     line-height: 1.75;
     color: var(--color-elegant-black);
-    font-family: var(--font-hero);
+    font-family: var(--font-extra);
     font-weight: 400;
     text-align: justify;
     width: 80%;
     margin: 0 auto;
+    text-transform: uppercase;
   }
 
   em {
@@ -295,9 +296,9 @@ import aboutImg from "../assets/about-vina-gallica.jpg";
   }
 
   .regions-heading {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-family: var(--font-heading)!important;
+    font-size: 1.5rem!important;
+    font-weight: 700!important;
     letter-spacing: -0.01em;
     color: var(--color-elegant-black);
     padding-bottom: var(--space-md);
@@ -310,6 +311,7 @@ import aboutImg from "../assets/about-vina-gallica.jpg";
     font-weight: 700;
     color: var(--color-elegant-black);
     margin-bottom: var(--space-sm);
+    text-transform: uppercase;
   }
 
   @media (max-width: 630px) {

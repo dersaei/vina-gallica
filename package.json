@@ -17,7 +17,7 @@
     "@mapbox/mapbox-gl-geocoder": "^5.1.2",
     "@types/mapbox__mapbox-gl-geocoder": "^5.1.1",
     "astro": "^6.1.7",
-    "mapbox-gl": "^3.21.0",
+    "mapbox-gl": "^3.22.0",
     "marked": "^17.0.6",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"

@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="404 — Page Not Found | Vina Gallica"
+  description="The page you are looking for does not exist."
+  headline="404"
+  headlineStyle="light"
+>
+  <main class="not-found">
+    <p class="not-found-message">I'm afraid nobody is here anymore.</p>
+  </main>
+</Layout>
+
+<style>
+  .not-found {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .not-found-message {
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 4vw, 3rem);
+    font-weight: 400;
+    color: var(--color-elegant-black);
+    text-align: center;
+    padding: var(--space-lg);
+  }
+</style>
