@@ -76,6 +76,14 @@ interface ArticleCard {
   date_created: string;
 }
 
+interface FAQ {
+  id: string;
+  status: 'published' | 'draft' | 'archived';
+  sort: number;
+  question: string;
+  answer: string;
+}
+
 interface Schema {
   wine_regions: WineRegion[];
   categories_vg: Category[];
@@ -85,6 +93,7 @@ interface Schema {
   places_vg: Place[];
   articles_cards_vg: ArticleCard[];
   journal_vg: Article[];
+  faq: FAQ[];
 }
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
@@ -93,4 +102,4 @@ const directus = createDirectus<Schema>(DIRECTUS_URL).with(rest());
 
 export default directus;
 export { readItems };
-export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, ArticleCard, Article };
+export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, ArticleCard, Article, FAQ };

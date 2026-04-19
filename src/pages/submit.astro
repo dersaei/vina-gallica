@@ -1,8 +1,19 @@
 ---
 import LayoutSubmit from "../layouts/LayoutSubmit.astro";
+import ScrollToTop from "../components/ScrollToTop.astro";
 import logoMark from "../assets/logo-vina-gallica.png";
 import logoText from "../assets/vina-gallica-text.png";
+import faqHeading from "../assets/faq.png";
 import { Image } from "astro:assets";
+import directus, { readItems } from "../lib/directus.ts";
+
+const faqItems = await directus.request(
+  readItems("faq", {
+    fields: ["id", "question", "answer"],
+    filter: { status: { _eq: "published" } },
+    sort: ["sort"],
+  })
+);
 ---
 
 <LayoutSubmit
@@ -72,6 +83,28 @@ import { Image } from "astro:assets";
       </nav>
     </div>
   </div>
+
+  <section id="faq" class="faq-section">
+    <div class="faq-inner">
+      <Image
+        src={faqHeading}
+        alt="F.A.Q."
+        width={358}
+        height={118}
+        densities={[1, 2]}
+        class="faq-heading"
+      />
+      <dl class="faq-list">
+        {faqItems.map((item) => (
+          <div class="faq-item">
+            <dt class="faq-question">{item.question}</dt>
+            <dd class="faq-answer" set:html={item.answer} />
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+  <ScrollToTop />
 </LayoutSubmit>
 
 <style>
@@ -133,7 +166,7 @@ import { Image } from "astro:assets";
 
   .submit-nav-link {
     font-family: var(--font-label);
-    font-size: 0.9rem;
+    font-size: 2rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -149,8 +182,6 @@ import { Image } from "astro:assets";
   }
 
   @media (max-width: 720px) {
-    
-
     .submit-logo img:nth-child(2) {
       width: 90%;
       height: auto;
@@ -162,6 +193,109 @@ import { Image } from "astro:assets";
 
     .submit-nav {
       gap: var(--space-md);
+    }
+  }
+
+  /* FAQ */
+  .faq-section {
+    background-color: var(--color-sand);
+    padding-block: var(--space-xl);
+    padding-inline: var(--space-md);
+  }
+
+  .faq-inner {
+    max-width: 920px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .faq-heading {
+    display: block;
+    width: 358px;
+    max-width: 100%;
+    height: auto;
+    align-self: center;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .faq-item {
+    padding-top: var(--space-md);
+  }
+
+  .faq-question {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 0 var(--color-elegant-black);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: firebrick;
+    margin-bottom: var(--space-sm);
+  }
+
+  .faq-answer {
+    font-family: var(--font-hero);
+    font-weight: 400;
+    font-size: 1.15rem;
+    line-height: 1.35;
+    color: var(--color-elegant-black);
+  }
+
+  :global(.faq-answer p) {
+    margin-bottom: var(--space-sm);
+  }
+
+  :global(.faq-answer p:last-child) {
+    margin-bottom: 0;
+  }
+
+  :global(.faq-answer strong) {
+    font-weight: 700;
+  }
+
+  :global(.faq-answer em) {
+    font-style: italic;
+  }
+
+  :global(.faq-answer ol),
+  :global(.faq-answer ul) {
+    padding-left: var(--space-lg);
+    margin-bottom: var(--space-sm);
+  }
+
+  :global(.faq-answer ol) {
+    list-style: decimal;
+  }
+
+  :global(.faq-answer ul) {
+    list-style: disc;
+  }
+
+  :global(.faq-answer li) {
+    margin-bottom: var(--space-xs);
+  }
+
+  :global(.faq-answer a) {
+    color: var(--color-elegant-black);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 150ms ease;
+  }
+
+  :global(.faq-answer a:hover) {
+    opacity: 0.65;
+  }
+
+  @media (max-width: 520px) {
+    .faq-question {
+      font-size: 0.9rem;
     }
   }
 </style>
