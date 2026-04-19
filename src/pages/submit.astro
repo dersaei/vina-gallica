@@ -5,6 +5,7 @@ import ScrollToTop from "../components/ScrollToTop.astro";
 import logoMark from "../assets/logo-vina-gallica.png";
 import logoText from "../assets/vina-gallica-text.png";
 import faqHeading from "../assets/faq.png";
+import pricingHeading from "../assets/pricing.png";
 import { Image } from "astro:assets";
 import directus, { readItems } from "../lib/directus.ts";
 
@@ -105,6 +106,67 @@ const faqItems = await directus.request(
       </dl>
     </div>
   </section>
+
+  <section id="pricing" class="pricing-section">
+    <div class="pricing-inner">
+      <div class="pricing-header">
+        <Image
+          src={pricingHeading}
+          alt="Pricing"
+          width={557}
+          height={140}
+          densities={[1, 2]}
+          class="pricing-title"
+        />
+        <h2 class="pricing-subtitle">Start with a free listing and upgrade to Premium when you are ready to tell your full story</h2>
+      </div>
+
+      <div class="pricing-cards">
+
+        <div class="pricing-card pricing-card--free">
+          <div class="pricing-card-header">
+            <span class="pricing-plan">Free</span>
+            <span class="pricing-tagline">Get listed on Vina Gallica and appear in both the Directory and the Map at no cost and with no time limit</span>
+          </div>
+          <p class="pricing-description">Ideal if you just want to be found by wine lovers looking for French wine experiences with zero budget and zero risk.</p>
+          <ul class="pricing-features">
+            <li>Listing in the <strong>Directory</strong> with your business name and category</li>
+            <li>Display of <strong>wine region, address, department and region</strong></li>
+            <li><strong>Website link</strong> (when applicable)</li>
+            <li>Pin on the <strong>Map</strong> with a basic info panel</li>
+            <li>Display of your <strong>logo and phone number</strong> in the Map panel</li>
+          </ul>
+          <a href="#join" class="pricing-cta pricing-cta--free">Start with Free</a>
+        </div>
+
+        <div class="pricing-card pricing-card--premium">
+          <div class="pricing-card-header">
+            <span class="pricing-plan">Premium</span>
+            <span class="pricing-tagline">Tell your full story and stand out</span>
+          </div>
+          <div class="pricing-price">
+            <span class="pricing-amount">€120<span class="pricing-period"> / year</span></span>
+            <span class="pricing-vat">excl. VAT · billed annually</span>
+            <span class="pricing-note">No automatic renewal. You choose if you want to continue.</span>
+          </div>
+          <p class="pricing-description">Upgrade from a basic listing to a full profile with photos, story and practical details that help visitors choose your place.</p>
+          <ul class="pricing-features">
+            <li>Everything in <strong>Free</strong>, plus:</li>
+            <li><strong>Profile page</strong> with a "Read more" link from your Directory card</li>
+            <li><strong>Gallery of images</strong> showcasing your place, wines and experiences</li>
+            <li><strong>Marketing description</strong> of your business and wine experience</li>
+            <li>Space for <strong>certifications and awards</strong> (photos, badges, labels)</li>
+            <li>Extra <strong>location details</strong>: directions, nearby attractions and visitor tips</li>
+          </ul>
+          <a href="#join" class="pricing-cta pricing-cta--premium">Go Premium for €120 / year</a>
+        </div>
+
+      </div>
+
+      <p class="pricing-footer">For full details, please see the <a href="#faq">FAQ</a> and our contract before joining Vina Gallica.</p>
+    </div>
+  </section>
+
   <ScrollToTop />
 </LayoutSubmit>
 
@@ -114,6 +176,7 @@ const faqItems = await directus.request(
     padding: var(--space-md);
     display: flex;
     flex-direction: column;
+    flex:1;
   }
 
   .back-link {
@@ -297,6 +360,241 @@ const faqItems = await directus.request(
   @media (max-width: 520px) {
     .faq-question {
       font-size: 0.9rem;
+    }
+  }
+
+  /* Pricing */
+  .pricing-section {
+    background-color: var(--color-gold);
+    padding-block: var(--space-xl);
+    padding-inline: var(--space-md);
+  }
+
+  .pricing-inner {
+    max-width: 960px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .pricing-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: center;
+  }
+
+  .pricing-title {
+    display: block;
+    width: 557px;
+    max-width: 100%;
+    height: auto;
+    align-self: center;
+  }
+
+  .pricing-subtitle {
+    font-family: var(--font-label);
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: var(--space-lg);
+    letter-spacing: 0.1em;
+    color: var(--color-elegant-black);
+  }
+
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  .pricing-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    border-radius: 2px;
+  }
+
+  .pricing-card--free {
+    background-color: #f0ffff;
+    border: 10px solid #000000;
+    color: var(--color-elegant-black);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);}
+
+  .pricing-card--premium {
+    background-color: var(--color-elegant-black);
+    border: 10px solid var(--color-gold);
+    color:white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .pricing-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .pricing-plan {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .pricing-card--free .pricing-plan {
+    color: var(--color-elegant-black);
+  }
+
+  .pricing-card--premium .pricing-plan {
+    color: var(--color-sand);
+  }
+
+  .pricing-tagline {
+    font-family: var(--font-label);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.75;
+  }
+
+  .pricing-price {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-block: var(--space-sm);
+    border-top: 1px solid rgba(255, 215, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.25);
+  }
+
+  .pricing-amount {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-sand);
+  }
+
+  .pricing-period {
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+
+  .pricing-vat {
+    font-family: var(--font-extra);
+    font-size: 0.8rem;
+    opacity: 0.65;
+    font-weight: 400;
+  }
+
+  .pricing-note {
+    font-family: var(--font-extra);
+    font-size: 0.85rem;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-top: 0.25rem;
+  }
+
+  .pricing-description {
+    font-family: var(--font-extra);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    font-weight: 500;
+  }
+
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0;
+  }
+
+  .pricing-features li {
+    font-family: var(--font-extra);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    padding-left: 1.2em;
+    position: relative;
+    font-weight: 500;
+  }
+
+  .pricing-features li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    opacity: 0.6;
+  }
+
+  .pricing-card--free .pricing-features li strong {
+    font-weight: 700;
+    color: var(--color-elegant-black);
+  }
+
+  .pricing-card--premium .pricing-features li strong {
+    font-weight: 700;
+    color: var(--color-gold);
+  }
+
+  .pricing-cta {
+    display: inline-block;
+    margin-top: auto;
+    padding: 0.75rem 1.5rem 0.5em;
+    font-family: var(--font-label);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-align: center;
+    border: 2px solid currentColor;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  .pricing-cta--free {
+    color: var(--color-elegant-black);
+    border-color: var(--color-elegant-black);
+  }
+
+  .pricing-cta--free:hover {
+    background-color: var(--color-elegant-black);
+    color: azure;
+  }
+
+  .pricing-cta--premium {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+  }
+
+  .pricing-cta--premium:hover {
+    background-color: var(--color-gold);
+    color: var(--color-elegant-black);
+  }
+
+  .pricing-footer {
+    font-family: var(--font-extra);
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--color-elegant-black);
+    opacity: 0.75;
+  }
+
+  .pricing-footer a {
+    color: var(--color-elegant-black);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 720px) {
+    .pricing-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-title {
+      font-size: 1.8rem;
     }
   }
 </style>
