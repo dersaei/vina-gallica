@@ -1,0 +1,28 @@
+---
+export const prerender = false;
+import LayoutDashboard from "../../layouts/LayoutDashboard.astro";
+---
+
+<LayoutDashboard title="Submit | Vina Gallica" active="submit">
+  <h1 class="dash-title">Submit a listing</h1>
+  <p class="dash-placeholder-text">The listing submission form is coming soon.</p>
+</LayoutDashboard>
+
+<style>
+  .dash-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-elegant-black);
+  }
+
+  .dash-placeholder-text {
+    font-family: var(--font-extra);
+    font-size: 0.92rem;
+    color: var(--color-elegant-black);
+    opacity: 0.55;
+    line-height: 1.6;
+  }
+</style>

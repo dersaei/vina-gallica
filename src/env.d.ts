@@ -6,6 +6,10 @@ declare namespace App {
 
 interface ImportMetaEnv {
 	readonly PUBLIC_MAPBOX_TOKEN: string;
+	readonly DIRECTUS_URL: string;
+	readonly DIRECTUS_STATIC_TOKEN: string;
+	readonly DIRECTUS_SERVICE_TOKEN: string;
+	readonly PUBLIC_SITE_URL: string;
 }
 
 interface ImportMeta {

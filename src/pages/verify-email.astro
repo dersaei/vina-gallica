@@ -1,0 +1,178 @@
+---
+export const prerender = false;
+import LayoutSubmit from "../layouts/LayoutSubmit.astro";
+import { Image } from "astro:assets";
+import logoMark from "../assets/logo-vina-gallica.png";
+import logoText from "../assets/vina-gallica-text.png";
+
+const token = Astro.url.searchParams.get("token");
+
+let status: "success" | "error" | "missing" = "missing";
+
+if (token) {
+  try {
+    const res = await fetch(
+      `${import.meta.env.DIRECTUS_URL}/users/register/verify-email?token=${encodeURIComponent(token)}`
+    );
+    status = res.ok ? "success" : "error";
+  } catch {
+    status = "error";
+  }
+}
+---
+
+<LayoutSubmit
+  title="Verify your email | Vina Gallica"
+  description="Email verification for your Vina Gallica account."
+>
+  <div class="verify-page">
+    <a href="/" class="verify-home" aria-label="Back to Vina Gallica">
+      <Image src={logoMark} alt="Logo Vina Gallica" width={80} height={80} densities={[1, 2]} priority />
+      <Image src={logoText} alt="Vina Gallica Directory" width={336} height={58} densities={[1, 2]} priority />
+    </a>
+
+    <div class="verify-card">
+      {status === "success" && (
+        <div class="verify-content">
+          <div class="verify-icon verify-icon--success" aria-hidden="true">✓</div>
+          <h1 class="verify-title">Email confirmed</h1>
+          <p class="verify-text">Your account is now active. You can sign in and start managing your listing.</p>
+          <a href="/login" class="verify-cta">Sign in to your account</a>
+        </div>
+      )}
+
+      {status === "error" && (
+        <div class="verify-content">
+          <div class="verify-icon verify-icon--error" aria-hidden="true">✗</div>
+          <h1 class="verify-title">Verification failed</h1>
+          <p class="verify-text">The link may have expired or already been used. Links are valid for 7 days.</p>
+          <a href="/submit#join" class="verify-cta verify-cta--secondary">Back to registration</a>
+        </div>
+      )}
+
+      {status === "missing" && (
+        <div class="verify-content">
+          <div class="verify-icon verify-icon--error" aria-hidden="true">?</div>
+          <h1 class="verify-title">Invalid link</h1>
+          <p class="verify-text">No verification token found. Please use the link from your confirmation email.</p>
+          <a href="/" class="verify-cta verify-cta--secondary">Go to homepage</a>
+        </div>
+      )}
+    </div>
+  </div>
+</LayoutSubmit>
+
+<style>
+  .verify-page {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-xl);
+    background-color: var(--color-gold);
+  }
+
+  .verify-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-decoration: none;
+    flex-wrap: wrap;
+    opacity: 0.85;
+    transition: opacity 150ms ease;
+  }
+
+  .verify-home:hover { opacity: 1; }
+
+
+  .verify-card {
+    background-color: var(--color-sand);
+    border: 10px solid var(--color-elegant-black);
+    padding: var(--space-xl) var(--space-lg);
+    max-width: 480px;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 30px inset;
+  }
+
+  .verify-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    text-align: center;
+  }
+
+  .verify-icon {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .verify-icon--success {
+    background-color: #d4edda;
+    color: #2d6a4f;
+  }
+
+  .verify-icon--error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .verify-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-elegant-black);
+  }
+
+  .verify-text {
+    font-family: var(--font-extra);
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-elegant-black);
+    opacity: 0.8;
+  }
+
+  .verify-cta {
+    display: inline-block;
+    margin-top: var(--space-sm);
+    padding: 0.75rem 1.75rem 0.4rem;
+    font-family: var(--font-label);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    background-color: var(--color-elegant-black);
+    color: var(--color-gold);
+    border: 2px solid var(--color-elegant-black);
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  .verify-cta:hover {
+    background-color: transparent;
+    color: var(--color-elegant-black);
+  }
+
+  .verify-cta--secondary {
+    background-color: transparent;
+    color: var(--color-elegant-black);
+  }
+
+  .verify-cta--secondary:hover {
+    background-color: var(--color-elegant-black);
+    color: var(--color-gold);
+  }
+</style>

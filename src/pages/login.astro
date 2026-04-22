@@ -1,0 +1,258 @@
+---
+export const prerender = false;
+import LayoutSubmit from "../layouts/LayoutSubmit.astro";
+import { Image } from "astro:assets";
+import logoMark from "../assets/logo-vina-gallica.png";
+import logoText from "../assets/vina-gallica-text.png";
+
+// Przekieruj jeśli już zalogowany
+const token = Astro.cookies.get("directus_access_token");
+if (token) {
+  return Astro.redirect("/dashboard");
+}
+---
+
+<LayoutSubmit
+  title="Sign in | Vina Gallica"
+  description="Sign in to your Vina Gallica business account."
+>
+  <div class="login-page">
+    <a href="/" class="login-home" aria-label="Back to Vina Gallica">
+      <Image src={logoMark} alt="Logo Vina Gallica" width={80} height={80} densities={[1, 2]} priority />
+      <Image src={logoText} alt="Vina Gallica Directory" width={336} height={58} densities={[1, 2]} priority />
+    </a>
+
+    <div class="login-card">
+      <h1 class="login-title">Sign in</h1>
+      <p class="login-subtitle">Manage your listing on Vina Gallica</p>
+
+      <div id="login-error" class="login-error" role="alert" hidden></div>
+
+      <form id="login-form" class="login-form" novalidate>
+        <div class="login-field">
+          <label for="email" class="login-label">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="login-input"
+            autocomplete="email"
+            required
+          />
+        </div>
+
+        <div class="login-field">
+          <label for="password" class="login-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="login-input"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <div class="login-footer">
+          <button type="submit" class="login-submit">Sign in</button>
+          <a href="/reset-password" class="login-forgot">Forgot password?</a>
+        </div>
+      </form>
+
+      <p class="login-register">
+        Don't have an account? <a href="/submit#join">Register here</a>
+      </p>
+    </div>
+  </div>
+</LayoutSubmit>
+
+<script>
+  const form = document.getElementById("login-form") as HTMLFormElement | null;
+  const errorBox = document.getElementById("login-error") as HTMLElement | null;
+  const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!form || !errorBox || !submitBtn) return;
+
+    errorBox.hidden = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Signing in…";
+
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      body: new FormData(form),
+    });
+
+    const json = await res.json().catch(() => ({}));
+
+    if (res.ok) {
+      window.location.href = "/dashboard";
+    } else {
+      errorBox.textContent = (json as { error?: string }).error ?? "Login failed. Please try again.";
+      errorBox.hidden = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Sign in";
+    }
+  });
+</script>
+
+<style>
+  .login-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-xl);
+    background-color: var(--color-gold);
+  }
+
+  .login-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 150ms ease;
+  }
+
+  .login-home:hover { opacity: 1; }
+
+
+
+  .login-card {
+    background-color: var(--color-sand);
+    border: 2px solid var(--color-elegant-black);
+    padding: var(--space-lg) var(--space-lg);
+    max-width: 440px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .login-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-elegant-black);
+  }
+
+  .login-subtitle {
+    font-family: var(--font-extra);
+    font-size: 0.9rem;
+    color: var(--color-elegant-black);
+    opacity: 0.65;
+    margin-top: calc(var(--space-sm) * -1);
+  }
+
+  .login-error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 0.6rem var(--space-sm);
+    font-family: var(--font-extra);
+    font-size: 0.88rem;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .login-label {
+    font-family: var(--font-label);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-elegant-black);
+  }
+
+  .login-input {
+    font-family: var(--font-extra);
+    font-size: 0.95rem;
+    padding: 0.6rem 0.75rem;
+    border: 2px solid var(--color-elegant-black);
+    background-color: white;
+    color: var(--color-elegant-black);
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 150ms ease;
+  }
+
+  .login-input:focus { border-color: firebrick; }
+
+  .login-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-top: var(--space-sm);
+  }
+
+  .login-submit {
+    font-family: var(--font-label);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.75rem 1.75rem 0.4rem;
+    background-color: var(--color-elegant-black);
+    color: var(--color-gold);
+    border: 2px solid var(--color-elegant-black);
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  .login-submit:hover {
+    background-color: transparent;
+    color: var(--color-elegant-black);
+  }
+
+  .login-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .login-forgot {
+    font-family: var(--font-extra);
+    font-size: 0.82rem;
+    color: var(--color-elegant-black);
+    opacity: 0.65;
+    text-underline-offset: 3px;
+    transition: opacity 150ms ease;
+  }
+
+  .login-forgot:hover { opacity: 1; }
+
+  .login-register {
+    font-family: var(--font-extra);
+    font-size: 0.85rem;
+    color: var(--color-elegant-black);
+    opacity: 0.7;
+    text-align: center;
+    padding-top: var(--space-sm);
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .login-register a {
+    color: var(--color-elegant-black);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+</style>

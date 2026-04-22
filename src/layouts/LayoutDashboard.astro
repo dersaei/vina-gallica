@@ -1,0 +1,163 @@
+---
+import LayoutSubmit from "./LayoutSubmit.astro";
+import { Image } from "astro:assets";
+import logoMark from "../assets/logo-vina-gallica.png";
+import logoText from "../assets/vina-gallica-text.png";
+
+interface Props {
+  title: string;
+  active: "details" | "manage" | "submit" | "upgrade";
+}
+
+const { title, active } = Astro.props;
+
+const nav = [
+  { key: "details", label: "Details", href: "/dashboard" },
+  { key: "manage",  label: "Manage",  href: "/dashboard/manage" },
+  { key: "submit",  label: "Submit",  href: "/dashboard/submit" },
+  { key: "upgrade", label: "Upgrade", href: "/dashboard/upgrade" },
+] as const;
+---
+
+<LayoutSubmit title={title} description="Manage your Vina Gallica business listing.">
+  <div class="dash-page">
+
+    <div class="dash-top">
+      <a href="/" class="dash-logo" aria-label="Vina Gallica - Home Page">
+        <Image src={logoMark} alt="Logo Vina Gallica" width={80} height={80} densities={[1, 2]} priority />
+        <Image src={logoText} alt="Vina Gallica Directory" width={399} height={69} densities={[1, 2]} priority />
+      </a>
+      <button id="logout-btn" class="dash-logout" onclick="fetch('/api/auth/logout',{method:'POST'}).then(()=>{window.location.href='/login'})">Sign out</button>
+    </div>
+
+    <nav class="dash-nav" aria-label="Dashboard sections">
+      {nav.map(({ key, label, href }) => (
+        <a
+          href={href}
+          class={`dash-nav-link${active === key ? " dash-nav-link--active" : ""}`}
+          aria-current={active === key ? "page" : undefined}
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+
+    <main class="dash-main">
+      <slot />
+    </main>
+
+  </div>
+</LayoutSubmit>
+
+<script>
+  function initLogout() {
+    document.getElementById("logout-btn")?.addEventListener("click", async () => {
+      await fetch("/api/auth/logout", { method: "POST" });
+      window.location.href = "/login";
+    });
+  }
+  initLogout();
+  document.addEventListener("astro:page-load", initLogout);
+</script>
+
+<style>
+  .dash-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-gold);
+  }
+
+  /* ── TOP: logo + sign out ─────────────────────────────── */
+  .dash-top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: var(--space-md) var(--space-lg);
+    gap: var(--space-md);
+  }
+
+  .dash-logo {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    text-decoration: none;
+    flex-wrap: wrap;
+  }
+
+  .dash-logout {
+    font-family: var(--font-label);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.6rem 1rem 0.25rem;
+    background-color: var(--color-elegant-black);
+    border: 1.5px solid var(--color-elegant-black);
+    color: var(--color-gold);
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  .dash-logout:hover {
+    background-color: var(--color-sand);
+    color: var(--color-elegant-black);
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .dash-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: var(--color-elegant-black);
+    gap: var(--space-lg);
+    padding: var(--space-md) var(--space-lg) var(--space-sm);
+  }
+
+  .dash-nav-link {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--color-sand);
+    line-height: 1.1;
+  }
+
+  .dash-nav-link--active {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+
+  /* ── MAIN ─────────────────────────────────────────────── */
+  .dash-main {
+    padding: var(--space-lg) var(--space-lg);
+    display: block;
+position:relative;
+    gap: var(--space-xl);
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────────── */
+  @media (max-width: 720px) {
+    .dash-logo img:last-child {
+      display: none;
+    }
+
+    .dash-nav {
+      gap: var(--space-md);
+      overflow-x: auto;
+    }
+
+    .dash-nav-link {
+      font-size: 4vw;
+      white-space: nowrap;
+    }
+
+    .dash-main {
+      padding: var(--space-lg) var(--space-md);
+    }
+  }
+</style>

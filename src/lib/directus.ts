@@ -1,4 +1,4 @@
-import { createDirectus, rest, readItems } from "@directus/sdk";
+import { createDirectus, rest, authentication, readItems, registerUser } from "@directus/sdk";
 
 interface WineRegion {
   id: number;
@@ -98,8 +98,10 @@ interface Schema {
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 
-const directus = createDirectus<Schema>(DIRECTUS_URL).with(rest());
+const directus = createDirectus<Schema>(DIRECTUS_URL)
+  .with(authentication('cookie'))
+  .with(rest());
 
 export default directus;
-export { readItems };
+export { readItems, registerUser };
 export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, ArticleCard, Article, FAQ };

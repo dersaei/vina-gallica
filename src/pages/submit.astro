@@ -167,6 +167,144 @@ const faqItems = await directus.request(
     </div>
   </section>
 
+  <section id="join" class="join-section">
+    <div class="join-inner">
+      <h2 class="join-title">Join Vina Gallica</h2>
+      <p class="join-subtitle">Create your free account and add your business to the directory</p>
+
+      <div id="join-success" class="join-success" role="alert" aria-live="polite" hidden>
+        <p class="join-success-text">
+          <span class="join-success-icon" aria-hidden="true">✓</span>
+          <strong class="join-success-title">Account created!</strong>
+        </p>
+        <p class="join-success-body">
+          Check your inbox. We've sent a confirmation email to <span id="join-success-email"></span>.
+          Click the link in that email to activate your account.
+        </p>
+        <p class="join-success-note">Didn't receive it? Check your spam folder. The link is valid for 7 days.</p>
+      </div>
+
+      <form
+        class="join-form"
+        method="POST"
+        action="/api/auth/register"
+        id="register-form"
+        novalidate
+      >
+        <div class="join-form-row">
+          <div class="join-field">
+            <label for="first_name" class="join-label">First name <span aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              class="join-input"
+              autocomplete="given-name"
+              required
+            />
+          </div>
+          <div class="join-field">
+            <label for="last_name" class="join-label">Last name <span aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              class="join-input"
+              autocomplete="family-name"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="join-field">
+          <label for="company_name" class="join-label">Company name <span aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="company_name"
+            name="company_name"
+            class="join-input"
+            autocomplete="organization"
+            required
+          />
+        </div>
+
+        <div class="join-field">
+          <label for="tax_id" class="join-label">
+            Tax ID
+            <span class="join-label-note">(SIRET for France, EIN for USA, VAT number for other countries)</span>
+          </label>
+          <input
+            type="text"
+            id="tax_id"
+            name="tax_id"
+            class="join-input"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="join-field">
+          <label for="company_address" class="join-label">Company address</label>
+          <input
+            type="text"
+            id="company_address"
+            name="company_address"
+            class="join-input"
+            autocomplete="street-address"
+            placeholder="Street, city, postal code, country"
+          />
+        </div>
+
+        <div class="join-field">
+          <label for="email" class="join-label">Email address <span aria-hidden="true">*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="join-input"
+            autocomplete="email"
+            required
+          />
+        </div>
+
+        <div class="join-form-row">
+          <div class="join-field">
+            <label for="password" class="join-label">Password <span aria-hidden="true">*</span></label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="join-input"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            />
+            <span class="join-field-hint">Minimum 8 characters</span>
+          </div>
+          <div class="join-field">
+            <label for="password_confirm" class="join-label">Confirm password <span aria-hidden="true">*</span></label>
+            <input
+              type="password"
+              id="password_confirm"
+              name="password_confirm"
+              class="join-input"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+        </div>
+
+        <div id="form-error" class="join-error" role="alert" hidden></div>
+
+        <button type="submit" class="join-submit">Create free account</button>
+
+        <p class="join-legal">
+          By registering you agree to our <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
+        </p>
+      </form>
+      </div>
+    </div>
+  </section>
+
   <ScrollToTop />
 </LayoutSubmit>
 
@@ -281,6 +419,7 @@ const faqItems = await directus.request(
     max-width: 100%;
     height: auto;
     align-self: center;
+    padding: 0 var(--space-md);
   }
 
   .faq-list {
@@ -305,10 +444,10 @@ const faqItems = await directus.request(
   }
 
   .faq-answer {
-    font-family: var(--font-hero);
+    font-family: var(--font-extra);
     font-weight: 400;
     font-size: 1.15rem;
-    line-height: 1.35;
+    line-height: 1.45;
     color: var(--color-elegant-black);
   }
 
@@ -359,7 +498,11 @@ const faqItems = await directus.request(
 
   @media (max-width: 520px) {
     .faq-question {
-      font-size: 0.9rem;
+      font-size: 2rem;
+      text-shadow: 1.5px 1.5px 0 var(--color-elegant-black);
+    }
+    .submit-nav-link {
+      font-size: 1.2rem;
     }
   }
 
@@ -597,4 +740,281 @@ const faqItems = await directus.request(
       font-size: 1.8rem;
     }
   }
+
+  /* Join / Registration */
+  .join-section {
+    background-color: var(--color-sand);
+    padding-block: var(--space-xl);
+    padding-inline: var(--space-md);
+  }
+
+  .join-inner {
+    max-width: 680px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .join-title {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+    color: var(--color-elegant-black);
+  }
+
+  .join-subtitle {
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    color: var(--color-elegant-black);
+    opacity: 0.75;
+    margin-top: calc(var(--space-sm) * -1);
+  }
+
+  .join-success {
+    border: 10px ridge var(--color-elegant-black);
+    background-color: var(--color-gold);
+    padding: var(--space-md);
+    flex-direction: column;
+    gap: 0.5rem;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 30px inset;
+    animation: fadeInUp 350ms ease forwards;
+  }
+
+  .join-success:not([hidden]) {
+    display: flex;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+
+  .join-success-icon {
+    font-size: 2rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    color:#008000;
+  }
+
+  .join-success-title {
+    font-family: var(--font-label);
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-elegant-black);
+  }
+
+  .join-success-body {
+    font-family: var(--font-extra);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--color-elegant-black);
+  }
+
+  .join-success-note {
+    font-family: var(--font-extra);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: firebrick;
+  }
+#join-success-email {
+    background-color: var(--color-sand);
+    padding: 4px;
+    color: var(--color-elegant-black);
+    font-weight: 500;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--color-elegant-black);
+  }
+  .join-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .join-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .join-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .join-label {
+    font-family: var(--font-label);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-elegant-black);
+  }
+
+  .join-label span[aria-hidden] {
+    color: firebrick;
+    margin-left: 2px;
+  }
+
+  .join-label-note {
+    font-family: var(--font-extra);
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    opacity: 0.65;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .join-input {
+    font-family: var(--font-extra);
+    font-size: 0.95rem;
+    padding: 0.6rem 0.75rem;
+    border: 2px solid var(--color-elegant-black);
+    background-color: white;
+    color: var(--color-elegant-black);
+    outline: none;
+    transition: border-color 150ms ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .join-input:focus {
+    border-color: firebrick;
+  }
+
+  .join-field-hint {
+    font-family: var(--font-extra);
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+
+  .join-error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-extra);
+    font-size: 0.9rem;
+  }
+
+  .join-submit {
+    font-family: var(--font-label);
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin:auto;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.85rem 2rem 0.5rem;
+    background-color: var(--color-elegant-black);
+    color: var(--color-gold);
+    border: 2px solid var(--color-elegant-black);
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+    align-self: flex-start;
+  }
+
+  .join-submit:hover {
+    background-color: transparent;
+    color: var(--color-elegant-black);
+  }
+
+  .join-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .join-legal {
+    font-family: var(--font-extra);
+    font-size: 0.8rem;
+    opacity: 0.6;
+    line-height: 1.5;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .join-legal a {
+    color: var(--color-elegant-black);
+    text-underline-offset: 3px;
+  }
+
+  .join-form {
+    transition: opacity 300ms ease;
+  }
+
+  .join-form.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 560px) {
+    .join-form-row {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
+
+<script>
+  const form = document.getElementById("register-form") as HTMLFormElement | null;
+  const errorBox = document.getElementById("form-error") as HTMLElement | null;
+  const successBox = document.getElementById("join-success") as HTMLElement | null;
+  const successEmail = document.getElementById("join-success-email") as HTMLElement | null;
+  const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!form || !errorBox || !submitBtn) return;
+
+    const password = (form.querySelector("#password") as HTMLInputElement).value;
+    const confirm = (form.querySelector("#password_confirm") as HTMLInputElement).value;
+    const email = (form.querySelector("#email") as HTMLInputElement).value;
+
+    if (password !== confirm) {
+      errorBox.textContent = "Passwords do not match.";
+      errorBox.hidden = false;
+      return;
+    }
+
+    errorBox.hidden = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Creating account…";
+
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      body: new FormData(form),
+    });
+
+    const json = await res.json().catch(() => ({}));
+
+    if (res.ok) {
+      if (successEmail) successEmail.textContent = email;
+      form.classList.add("is-hidden");
+      setTimeout(() => {
+        form.style.display = "none";
+        if (successBox) {
+          successBox.removeAttribute("hidden");
+          successBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }, 320);
+    } else {
+      errorBox.textContent = (json as { error?: string }).error ?? "Registration failed. Please try again.";
+      errorBox.hidden = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Create free account";
+    }
+  });
+</script>
