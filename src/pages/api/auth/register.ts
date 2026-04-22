@@ -6,6 +6,7 @@ import { createDirectus, rest, readUsers, updateUser, withToken } from "@directu
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 const DIRECTUS_SERVICE_TOKEN = import.meta.env.DIRECTUS_SERVICE_TOKEN;
 const PUBLIC_URL = import.meta.env.PUBLIC_SITE_URL ?? "http://localhost:4321";
+const TURNSTILE_SECRET = import.meta.env.TURNSTILE_SECRET_KEY;
 
 export const POST: APIRoute = async ({ request }) => {
   const data = await request.formData();
@@ -33,6 +34,24 @@ export const POST: APIRoute = async ({ request }) => {
   }
   if (password.length < 8) {
     return json({ error: "Password must be at least 8 characters." }, 400);
+  }
+
+  const turnstileToken = data.get("cf-turnstile-response") as string | null;
+  if (!turnstileToken) {
+    return json({ error: "Please complete the security check." }, 400);
+  }
+  const tsVerify = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      secret: TURNSTILE_SECRET,
+      response: turnstileToken,
+      remoteip: request.headers.get("CF-Connecting-IP") ?? undefined,
+    }),
+  });
+  const tsData = await tsVerify.json() as { success: boolean };
+  if (!tsData.success) {
+    return json({ error: "Security check failed. Please try again." }, 400);
   }
 
   // Krok 1: Zarejestruj przez publiczny endpoint — tworzy konto + wysyła email weryfikacyjny

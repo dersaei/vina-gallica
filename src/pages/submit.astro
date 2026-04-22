@@ -295,6 +295,13 @@ const faqItems = await directus.request(
 
         <div id="form-error" class="join-error" role="alert" hidden></div>
 
+        <div
+          class="cf-turnstile"
+          data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+          data-theme="light"
+          data-error-callback="onTurnstileError"
+        ></div>
+
         <button type="submit" class="join-submit">Create free account</button>
 
         <p class="join-legal">
@@ -912,6 +919,10 @@ const faqItems = await directus.request(
     font-size: 0.9rem;
   }
 
+  .cf-turnstile {
+    align-self: center;
+  }
+
   .join-submit {
     font-family: var(--font-label);
     font-size: 0.88rem;
@@ -969,6 +980,11 @@ const faqItems = await directus.request(
 </style>
 
 <script>
+  function onTurnstileError(code: string) {
+    console.warn("Turnstile error:", code);
+  }
+  (window as unknown as Record<string, unknown>).onTurnstileError = onTurnstileError;
+
   const form = document.getElementById("register-form") as HTMLFormElement | null;
   const errorBox = document.getElementById("form-error") as HTMLElement | null;
   const successBox = document.getElementById("join-success") as HTMLElement | null;
@@ -1015,6 +1031,7 @@ const faqItems = await directus.request(
       errorBox.hidden = false;
       submitBtn.disabled = false;
       submitBtn.textContent = "Create free account";
+      (window as unknown as { turnstile?: { reset: () => void } }).turnstile?.reset();
     }
   });
 </script>
