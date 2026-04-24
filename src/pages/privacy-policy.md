@@ -6,7 +6,7 @@ headline: "Privacy Policy"
 headlineStyle: "dark"
 ---
 
-**Last updated:** March 28, 2026
+**Last updated:** April 24, 2026
 
 Spiżarnia REGIO ("we," "us," or "our") owns and operates the website vinagallica.com. This Privacy Policy explains how we collect, use, and protect information when you visit our site.
 
@@ -76,7 +76,43 @@ For more information, see [Mapbox's Privacy Policy](https://www.mapbox.com/legal
 
 ### Information you provide
 
-Currently, Vina Gallica does not require user registration or collect personal information through forms. If we introduce user accounts or contact forms in the future, this policy will be updated accordingly.
+**Account registration.** When you create an account on the `/submit` page, we collect your email address and a password. Passwords are stored exclusively as a cryptographic hash; we never store your password in plain text. Account data is held in a PostgreSQL database managed by Directus, self-hosted by Spiżarnia REGIO on a privately managed virtual private server (VPS) located in Poland (European Union).
+
+**Business listing data.** When you submit or manage a business listing, we collect the following information relating to your business:
+
+- Business name and category
+- Wine region, French administrative region, and department
+- Physical address
+- Website URL and phone number
+- Business logo (uploaded file)
+
+If you upgrade to a premium listing, we additionally collect:
+
+- Photographs of your business or products
+- A written description or story about your business
+- Any additional details you choose to provide in the premium profile fields
+
+**Transactional emails.** Upon registration, we send a confirmation email to the address you provide. This email contains an account activation link that is valid for seven (7) days. We may also send account-related transactional emails (for example, notifications relating to your listing or premium subscription). These emails are sent automatically by Directus in the name of Spiżarnia REGIO from an `@spizarniaregio.pl` address.
+
+**Legal bases for processing.** We process the personal data described in this section on the following legal bases under Article 6 of the GDPR:
+
+- **Article 6(1)(b)** — processing is necessary for the performance of a contract to which you are party, or in order to take steps at your request prior to entering into a contract. This applies to the creation and management of your user account, the publication of your business listing, and the delivery of transactional emails necessary to activate and maintain your account.
+- **Article 6(1)(c)** — processing is necessary to comply with a legal obligation to which the controller is subject. This applies where applicable law requires us to retain certain records.
+
+### Email delivery
+
+Transactional emails are sent by **Directus**, the content management and backend system self-hosted by Spiżarnia REGIO on a VPS located in Poland (EU). Directus connects to an SMTP relay to dispatch these emails.
+
+**Fastmail as SMTP relay.** The SMTP relay used is operated by **Fastmail Pty Ltd** (ABN 31 142 646 580), an Australian company whose registered office is at PO Box 234, Collins Street West, VIC 8007, Australia. Directus connects to Fastmail's SMTP service (`smtp.fastmail.com`, port 465) using an `@spizarniaregio.pl` sender address. Fastmail acts as a data processor in respect of any personal data contained in or associated with emails transmitted via its infrastructure.
+
+**Data that Fastmail may process in transit.** In the course of delivering transactional emails, Fastmail may process the following categories of data:
+
+- Sender and recipient email addresses
+- Email content (subject line and message body) during transit and temporary storage
+- The IP address of the sending server (the VPS operated by Spiżarnia REGIO)
+- Technical metadata generated in connection with email delivery (e.g., delivery timestamps, bounce records)
+
+**International transfer.** Fastmail is an Australian company and may process data in Australia, the United States, and other countries outside the European Economic Area (EEA). To safeguard your personal data, Fastmail relies on EU Standard Contractual Clauses (SCCs) published by the European Commission on 4 June 2021, as incorporated in Fastmail's Data Protection Agreement. For further details, see the [Fastmail Privacy Policy](https://www.fastmail.com/about/privacy/) and the [Fastmail Data Protection Agreement](https://www.fastmail.com/policies/dpa/).
 
 ## How We Use Your Data
 
@@ -85,18 +121,23 @@ We use the data described above for the following purposes:
 - To deliver and secure the website (Cloudflare)
 - To understand general website usage patterns and improve content (Cloudflare Web Analytics, Google Analytics with consent)
 - To provide interactive map functionality (Mapbox)
+- To create and manage your user account on Vina Gallica
+- To publish your business listing in the Vina Gallica directory and interactive map, and to make it accessible to visitors of the site
+- To send transactional emails related to your account, including account activation and other account-management communications
+- To administer premium listing subscriptions, where applicable, including access to premium features and associated billing
 
 We do not sell, rent, or share your personal data with third parties for their own marketing purposes.
 
 ## Cookies Summary
 
-| Cookie                       | Provider         | Type               | Purpose                        | Consent required |
-| ---------------------------- | ---------------- | ------------------ | ------------------------------ | ---------------- |
-| `_cf_bm`                     | Cloudflare       | Strictly necessary | Bot detection                  | No               |
-| `cf_clearance`               | Cloudflare       | Strictly necessary | Security verification          | No               |
-| `zaraz-consent-vina-gallica` | Cloudflare Zaraz | Strictly necessary | Stores your cookie preferences | No               |
-| `_ga`                        | Google Analytics | Analytics          | Identifies unique visitors     | Yes              |
-| `_ga_[ID]`                   | Google Analytics | Analytics          | Session tracking               | Yes              |
+| Cookie                       | Provider         | Type               | Purpose                                                                                                               | Consent required |
+| ---------------------------- | ---------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `_cf_bm`                     | Cloudflare       | Strictly necessary | Bot detection                                                                                                         | No               |
+| `cf_clearance`               | Cloudflare       | Strictly necessary | Security verification                                                                                                 | No               |
+| `zaraz-consent-vina-gallica` | Cloudflare Zaraz | Strictly necessary | Stores your cookie preferences                                                                                        | No               |
+| Session cookie               | Vina Gallica     | Strictly necessary | Maintains your authenticated session after login. Set as an `HttpOnly` cookie; not accessible to client-side scripts. | No               |
+| `_ga`                        | Google Analytics | Analytics          | Identifies unique visitors                                                                                            | Yes              |
+| `_ga_[ID]`                   | Google Analytics | Analytics          | Session tracking                                                                                                      | Yes              |
 
 ## Your Rights and Choices
 
@@ -124,6 +165,12 @@ If you are located in the European Economic Area, you have the following rights 
 
 To exercise any of these rights, please contact us using the details provided below.
 
+### Account deletion
+
+You can delete your account and all associated personal data directly from your account settings at [vinagallica.com/dashboard/manage](https://vinagallica.com/dashboard/manage). After confirming the deletion, your account and all associated business listing data will be permanently removed from our systems within **30 days**. Following deletion, your data will no longer be accessible through Vina Gallica systems, subject to any retention obligations imposed by applicable law (see "Data Retention" below).
+
+If you experience any difficulty deleting your account, you may also contact us at [privacy@vinagallica.com](mailto:privacy@vinagallica.com) with the subject line "Account Deletion Request" and we will action your request within 30 days of receipt.
+
 ### Do Not Track
 
 We respect the Do Not Track (DNT) signal. Cloudflare Web Analytics operates without tracking by design, and Google Analytics is only loaded with your explicit consent.
@@ -133,12 +180,17 @@ We respect the Do Not Track (DNT) signal. Cloudflare Web Analytics operates with
 - **Cloudflare security logs** — retained according to [Cloudflare's data retention policies](https://www.cloudflare.com/privacypolicy/)
 - **Google Analytics data** — retained for 14 months, after which it is automatically deleted
 - **Cookie consent preferences** — stored in your browser until you clear your cookies
+- **User account data** (email address, password hash) — retained for as long as the account is active; deleted within 30 days of account deletion
+- **Business listing data** (all free and premium fields) — retained for as long as the associated account is active; deleted together with the account within 30 days of deletion
+- **Transactional email logs** — retained in accordance with [Fastmail's data retention policy](https://www.fastmail.com/policies/dpa/)
 
 ## Data Transfers
 
 Our website infrastructure is provided by Cloudflare, which operates a global network. Data may be processed in data centres outside the EEA. Cloudflare complies with applicable data protection frameworks for international data transfers.
 
 Google Analytics data is processed by Google LLC, which participates in the EU-US Data Privacy Framework. For more information, see [Google's data transfer practices](https://policies.google.com/privacy/frameworks).
+
+Transactional emails are relayed via Fastmail Pty Ltd (Australia), which relies on EU Standard Contractual Clauses for international data transfers. For more information, see the [Fastmail Data Protection Agreement](https://www.fastmail.com/policies/dpa/).
 
 ## Children's Privacy
 
