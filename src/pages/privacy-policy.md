@@ -194,7 +194,11 @@ Transactional emails are relayed via Fastmail Pty Ltd (Australia), which relies 
 
 ## Children's Privacy
 
-Vina Gallica is not directed at underage. We do not knowingly collect personal data from children. If you believe a child has provided us with personal data, please contact us so we can take appropriate action.
+Vina Gallica does not knowingly collect personal data from children under the age of 16. If you believe that a child under 16 has provided us with personal data without appropriate parental consent, please contact us at [privacy@vinagallica.com](mailto:privacy@vinagallica.com) and we will take prompt action to delete that information.
+
+## Age Restriction
+
+Vina Gallica contains content related to the consumption of alcohol. Access to the Platform is restricted to individuals aged **21 or over**, in line with the legal drinking age in the United States, which is the primary market this Platform is designed to serve. By passing the age verification prompt on entry, you confirm that you meet this requirement. We do not knowingly permit access to individuals who do not meet this age threshold. If you are located in a country where the legal drinking age is lower than 21, the stricter threshold of 21 still applies when using this Platform.
 
 ## Third-Party Links
 
