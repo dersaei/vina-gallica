@@ -303,6 +303,7 @@
   font-family: var(--font-heading);
   font-size: 0.85rem;
   color: var(--color-elegant-black);
+  padding: 6px 35px 3px;
 }
 
 .map-search .mapboxgl-ctrl-geocoder--input::placeholder {

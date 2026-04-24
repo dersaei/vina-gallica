@@ -35,6 +35,7 @@ interface Props {
   adminRegions: AdminRegion[];
   departments: Department[];
   towns: Town[];
+  lang?: "en" | "fr";
 }
 
 export default function RegionFilter({
@@ -42,7 +43,11 @@ export default function RegionFilter({
   adminRegions,
   departments,
   towns,
+  lang = "en",
 }: Props) {
+  const t = lang === "fr"
+    ? { filterBy: "Filtrer", by: "par", wineRegions: "Régions viticoles", adminRegions: "Régions administratives" }
+    : { filterBy: "Filter", by: "by", wineRegions: "Wine Regions", adminRegions: "Country's Regions" };
   const [openPanel, setOpenPanel] = useState<"wine" | "state" | null>(null);
   const [activeWine, setActiveWine] = useState<string | null>(null);
   const [activeAdmin, setActiveAdmin] = useState<string | null>(null);
@@ -137,7 +142,7 @@ export default function RegionFilter({
   return (
     <div className="rf-wrap" ref={wrapRef}>
       <span className="rf-label">
-        Filter <small>by</small>
+        {t.filterBy} <small>{t.by}</small>
       </span>
 
       <div className="rf-toggle">
@@ -146,14 +151,14 @@ export default function RegionFilter({
           onClick={() => setOpenPanel(openPanel === "wine" ? null : "wine")}
           type="button"
         >
-          Wine Regions
+          {t.wineRegions}
         </button>
         <button
           className={`rf-btn${openPanel === "state" ? " rf-btn--open" : ""}${activeAdmin || activeDept || activeTown ? " rf-btn--active" : ""}`}
           onClick={() => setOpenPanel(openPanel === "state" ? null : "state")}
           type="button"
         >
-          Country's Regions
+          {t.adminRegions}
         </button>
       </div>
 

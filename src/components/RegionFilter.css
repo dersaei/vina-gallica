@@ -215,3 +215,8 @@
   flex-wrap: wrap;
   column-gap: 10px;
 }
+@media (max-width: 430px) {
+  .rf-btn {
+    font-size: 0.8rem;
+  }
+}

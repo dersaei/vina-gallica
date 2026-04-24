@@ -6,9 +6,10 @@ import "./MapWithPanel.css";
 interface Props {
   geojsonData: string;
   categories: CategoryData[];
+  lang?: "en" | "fr";
 }
 
-export default function MapWithPanel({ geojsonData, categories }: Props) {
+export default function MapWithPanel({ geojsonData, categories, lang }: Props) {
   const [openPlace, setOpenPlace] = useState<PlaceData | null>(null);
 
   const handleOpenPanel = useCallback((place: PlaceData) => {
@@ -25,6 +26,7 @@ export default function MapWithPanel({ geojsonData, categories }: Props) {
         geojsonData={geojsonData}
         categories={categories}
         onOpenPanel={handleOpenPanel}
+        lang={lang}
       />
       <PlacePanel place={openPlace} onClose={handleClosePanel} />
     </div>

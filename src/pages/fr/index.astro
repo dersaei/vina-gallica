@@ -1,0 +1,153 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Découvrez la Culture du Vin Français | Vina Gallica"
+  description="Découvrez vignobles, caves et expériences vinicoles à travers la France avec Vina Gallica — votre annuaire du vin français."
+  headline="Découvrez la Culture du Vin Français"
+  lang="fr"
+>
+  <main class="hero">
+    <div class="hero-block hero-directory">
+      <div class="hero-content">
+        <span class="hero-label">Portail</span>
+        <h2>Annuaire</h2>
+        <h3>
+          Vignobles français, boutiques et expériences vinicoles
+        </h3>
+        <a href="/fr/annuaire" class="hero-cta">Parcourir l'Annuaire</a>
+      </div>
+    </div>
+
+    <div class="hero-block hero-map">
+      <div class="hero-content">
+        <span class="hero-label">Voyage</span>
+        <h2>Carte</h2>
+        <h3>
+          Paysage vinicole de la France sur une carte interactive
+        </h3>
+        <a href="/fr/carte" class="hero-cta">Voir la Carte</a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .hero {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    position: relative;
+  }
+
+  .hero-block {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-directory {
+    background-color: #b22222;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 310px inset;
+  }
+
+  .hero-map {
+    background-color: #31393b;
+    box-shadow: rgba(145, 139, 139, 0.2) 0px -3px 310px inset;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 440px;
+  }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-md);
+    font-family: var(--font-label);
+  }
+
+  h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: var(--space-md);
+    letter-spacing: -0.01em;
+    color: #faf6f0;
+    font-family: var(--font-heading);
+    text-shadow: 4px 4px 2px black;
+  }
+
+  h3 {
+    font-weight: 400;
+    font-size: 2rem;
+    text-transform: uppercase;
+    line-height: 1.75;
+    margin-bottom: var(--space-lg);
+    font-family: var(--font-hero);
+    text-shadow: 1px 2px 2px black;
+  }
+
+  .hero-directory span,
+  .hero-directory h3 {
+    color: beige;
+  }
+
+  .hero-map span,
+  .hero-map h3 {
+    color: #f5deb3;
+  }
+
+  .hero-cta {
+    display: block;
+    width: fit-content;
+    position: relative;
+    font-weight: 400;
+    font-size: 0.8rem;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.95em 1.8em 0.75em;
+    border-radius: 2px;
+    font-family: var(--font-heading);
+    background-color: transparent;
+    color: #e8eaed;
+    border: 1px solid rgba(232, 234, 237, 0.25);
+    transition: all 0.4s ease;
+  }
+
+  .hero-cta:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(232, 234, 237, 0.5);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 750px) {
+    .hero {
+      flex-direction: column;
+      flex: none;
+    }
+
+    .hero-block {
+      min-height: 50vh;
+      padding: var(--space-xl) var(--space-lg);
+    }
+  }
+
+  @media (max-width: 540px) {
+    .hero-headline {
+      width: 100%;
+    }
+  }
+</style>

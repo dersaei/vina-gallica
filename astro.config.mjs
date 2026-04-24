@@ -8,6 +8,11 @@ const ADOBE_FONTS_ID = process.env.ADOBE_FONTS_ID ?? "";
 export default defineConfig({
   site: "https://vinagallica.com",
   trailingSlash: "never",
+  i18n: {
+    locales: ["en", "fr"],
+    defaultLocale: "en",
+    routing: { prefixDefaultLocale: false },
+  },
   adapter: cloudflare({
     imageService: {
       build: "compile",

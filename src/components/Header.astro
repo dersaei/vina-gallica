@@ -1,13 +1,23 @@
 ---
 import logoMark from "../assets/logo-vina-gallica.png";
-import logoText from "../assets/vina-gallica-text.png";
+import logoTextEn from "../assets/vina-gallica-text.png";
+import logoTextFr from "../assets/logo-vina-gallica-fr.png";
 import { Image } from "astro:assets";
 import MobileMenu from "./MobileMenu.tsx";
+
+interface Props {
+  lang?: "en" | "fr";
+}
+const { lang = "en" } = Astro.props;
+const logoText = lang === "fr" ? logoTextFr : logoTextEn;
+const logoTextWidth = lang === "fr" ? 340 : 336;
+const logoTextHeight = lang === "fr" ? 58 : 58;
+const homeHref = lang === "fr" ? "/fr" : "/";
 ---
 
 <header>
   <div class="header-inner">
-    <a href="/" aria-label="Vina Gallica - Home Page" class="logo-link">
+    <a href={homeHref} aria-label="Vina Gallica - Home Page" class="logo-link">
       <Image
         src={logoMark}
         alt="Logo Vina Gallica"
@@ -19,8 +29,8 @@ import MobileMenu from "./MobileMenu.tsx";
       <Image
         src={logoText}
         alt="Vina Gallica Directory"
-        width={336}
-        height={58}
+        width={logoTextWidth}
+        height={logoTextHeight}
         densities={[1, 2]}
         priority
       />

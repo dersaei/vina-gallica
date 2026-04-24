@@ -3,9 +3,10 @@ import type { Place, Category, Town, Department, AdministrativeRegion, WineRegio
 
 interface Props {
   place: Place;
+  lang?: "en" | "fr";
 }
 
-const { place } = Astro.props;
+const { place, lang = "en" } = Astro.props;
 
 const category = typeof place.category === "object" ? place.category as Category : null;
 const town = typeof place.town === "object" ? place.town as Town : null;
@@ -19,6 +20,15 @@ const deptName = dept?.name ?? null;
 const deptColor = dept?.color ?? null;
 const townName = town?.name ?? null;
 
+const translation = lang === "fr"
+  ? place.translations?.find(t => t.languages_code === "fr-FR")
+  : null;
+
+const categoryLabel = lang === "fr"
+  ? (category?.name_fr ?? category?.name)
+  : category?.name;
+
+const websiteLabel = lang === "fr" ? "Visiter le site" : "Visit website";
 ---
 
 <article
@@ -33,7 +43,7 @@ const townName = town?.name ?? null;
   <div class="card-meta">
     {category && (
       <span class="tag tag-category" style={`--tag-color: ${category.color}`}>
-        {category.name}
+        {categoryLabel}
       </span>
     )}
   </div>
@@ -68,6 +78,10 @@ const townName = town?.name ?? null;
     )}
   </div>
 
+  {translation?.description && (
+    <p class="card-description">{translation.description}</p>
+  )}
+
   {place.website && (
     <a
       href={place.website}
@@ -75,7 +89,7 @@ const townName = town?.name ?? null;
       target="_blank"
       rel="noopener noreferrer"
     >
-      Visit website
+      {websiteLabel}
     </a>
   )}
 </article>
@@ -174,6 +188,14 @@ const townName = town?.name ?? null;
   .card-town {
     display: flex;
     gap: 0.4em;
+  }
+
+  .card-description {
+    font-family: var(--font-hero);
+    font-size: 0.8rem;
+    color: #444;
+    line-height: 1.5;
+    margin-top: var(--space-xs);
   }
 
   .card-link {

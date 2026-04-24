@@ -1,10 +1,17 @@
 ---
+interface Props {
+  lang?: "en" | "fr";
+}
+const { lang = "en" } = Astro.props;
 const year = new Date().getFullYear();
+const submitHref = lang === "fr" ? "/fr/submit" : "/submit";
+const submitLabel =
+  lang === "fr" ? "Inscrivez-vous sur Vina Gallica" : "Get listed on Vina Gallica";
 ---
 
 <footer>
   <div class="footer-inner">
-    <p><a href="/submit" class="footer-link">Get listed on Vina Gallica&nbsp;{year}</a></p>
+    <p><a href={submitHref} class="footer-link">{submitLabel}&nbsp;{year}</a></p>
   </div>
 </footer>
 

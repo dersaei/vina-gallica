@@ -13,6 +13,7 @@ interface LayoutProps {
   description: string;
   headline: string;
   headlineStyle?: "light" | "dark";
+  lang?: "en" | "fr";
   canonical?: string;
   ogTitle?: string;
   ogDescription?: string;
@@ -33,6 +34,7 @@ const {
   description,
   headline,
   headlineStyle = "dark",
+  lang = "en",
   canonical = new URL(Astro.url.pathname, Astro.site).href,
   ogTitle = title,
   ogDescription = description,
@@ -41,10 +43,17 @@ const {
   noindex = false,
   jsonLd,
 } = props;
+
+const alternateLang = lang === "en" ? "fr" : "en";
+const alternateHref =
+  lang === "en"
+    ? new URL("/fr" + (Astro.url.pathname === "/" ? "" : Astro.url.pathname), Astro.site).href
+    : new URL(Astro.url.pathname.replace(/^\/fr/, "") || "/", Astro.site).href;
+const ogLocale = lang === "fr" ? "fr_FR" : "en_US";
 ---
 
 <!doctype html>
-<html lang="en-US">
+<html lang={lang === "fr" ? "fr-FR" : "en-US"}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -59,7 +68,10 @@ const {
     <meta property="og:description" content={ogDescription} />
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={ogLocale} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link rel="alternate" hreflang={alternateLang} href={alternateHref} />
+    <link rel="alternate" hreflang="x-default" href={lang === "en" ? canonical : alternateHref} />
     <meta property="og:site_name" content="Vina Gallica" />
     {ogImage && <meta property="og:image" content={ogImage} />}
     {ogImage && <meta property="og:image:width" content="1200" />}
@@ -78,12 +90,12 @@ const {
   </head>
   <body>
     <AgeGate client:load />
-    <Header />
+    <Header lang={lang} />
     <div class:list={["page-headline-wrap", headlineStyle]}>
       <h1 class="page-headline">{headline}</h1>
     </div>
     <slot />
-    <Footer />
+    <Footer lang={lang} />
     <ScrollToTop />
   </body>
 </html>
@@ -135,6 +147,7 @@ const {
     .page-headline {
       width: 100%;
       text-align: center;
+      font-size: 0.8rem;
     }
   }
 </style>

@@ -10,6 +10,7 @@ interface WineRegion {
 interface Category {
   id: string;
   name: string;
+  name_fr?: string | null;
   slug: string;
   color: string;
 }
@@ -36,6 +37,14 @@ interface Town {
   department: string | Department;
 }
 
+interface PlaceTranslation {
+  id: number;
+  places_vg_id: string;
+  languages_code: string;
+  description: string | null;
+  extended_description: string | null;
+}
+
 interface Place {
   id: string;
   Name: string;
@@ -50,6 +59,7 @@ interface Place {
   category: string | Category;
   wine_region: number | WineRegion | null;
   town: string | Town;
+  translations?: PlaceTranslation[];
 }
 
 interface Article {
@@ -91,6 +101,7 @@ interface Schema {
   departments: Department[];
   towns: Town[];
   places_vg: Place[];
+  places_vg_translations: PlaceTranslation[];
   articles_cards_vg: ArticleCard[];
   journal_vg: Article[];
   faq: FAQ[];
@@ -104,4 +115,4 @@ const directus = createDirectus<Schema>(DIRECTUS_URL)
 
 export default directus;
 export { readItems, registerUser };
-export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, ArticleCard, Article, FAQ };
+export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, PlaceTranslation, ArticleCard, Article, FAQ };
