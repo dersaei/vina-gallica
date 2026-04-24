@@ -23,7 +23,7 @@ const homeHref = lang === "fr" ? "/fr" : "/";
         alt="Logo Vina Gallica"
         width={50}
         height={50}
-        densities={[1, 2]}
+        layout='fixed'
         priority
       />
       <Image
@@ -31,7 +31,7 @@ const homeHref = lang === "fr" ? "/fr" : "/";
         alt="Vina Gallica Directory"
         width={logoTextWidth}
         height={logoTextHeight}
-        densities={[1, 2]}
+        layout='fixed'
         priority
       />
     </a>
@@ -78,8 +78,7 @@ const homeHref = lang === "fr" ? "/fr" : "/";
   .logo-link {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
-    text-decoration: none;
+    justify-content: space-between;
   }
 
   .header-right {
@@ -98,19 +97,17 @@ const homeHref = lang === "fr" ? "/fr" : "/";
   }
 
   @media (max-width: 490px){
-    .logo-link {
-  scale: calc(0.8);
-  margin-left: -10vw;
+    .header-inner {
+      padding-inline: var(--space-sm);
+    }
+    .logo-link img:nth-child(even) {
+  width:261px;
+  height: 45px;
 }
   }
-  @media (max-width:406px){
+  @media (max-width:400px){
     .logo-link img:nth-child(even) {
       display: none;
     }
-    .logo-link {
-            scale: calc(1);
-margin-left: 0;
-   }
-     
   }
 </style>

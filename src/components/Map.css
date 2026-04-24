@@ -178,8 +178,9 @@
 
 .map-popup__open-btn svg {
   width: 48px;
-  height: auto;
+  height: 25px;
   display: block;
+  position: relative;
 }
 
 .map-popup__category {
@@ -303,7 +304,7 @@
   font-family: var(--font-heading);
   font-size: 0.85rem;
   color: var(--color-elegant-black);
-  padding: 6px 35px 3px;
+  padding: 6px 45px 3px;
 }
 
 .map-search .mapboxgl-ctrl-geocoder--input::placeholder {
@@ -387,27 +388,6 @@
   .map-search.is-expanded .mapboxgl-ctrl-geocoder--input {
     opacity: 1;
     pointer-events: auto;
-  }
-}
-
-/* ── Directory bookmark link ─────────────────────────── */
-.map-directory-link {
-  position: absolute;
-  left: var(--space-lg);
-  top: -0.5em;
-  z-index: 100;
-  width: 120px;
-  height: auto;
-  opacity: 0.8;
-  transition: opacity 0.3s;
-}
-.map-directory-link:hover {
-  opacity: 1;
-}
-
-@media (max-width: 750px) {
-  .map-directory-link {
-    display: none;
   }
 }
 
