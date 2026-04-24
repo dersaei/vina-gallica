@@ -295,12 +295,7 @@ const faqItems = await directus.request(
 
         <div id="form-error" class="join-error" role="alert" hidden></div>
 
-        <div
-          class="cf-turnstile"
-          data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
-          data-theme="light"
-          data-error-callback="onTurnstileError"
-        ></div>
+        <div id="turnstile-widget"></div>
 
         <button type="submit" class="join-submit">Create free account</button>
 
@@ -981,58 +976,85 @@ const faqItems = await directus.request(
 </style>
 
 <script>
-  function onTurnstileError(code: string) {
-    console.warn("Turnstile error:", code);
+  type Turnstile = {
+    render: (container: string | HTMLElement, options: Record<string, unknown>) => string;
+    reset: (widgetId?: string) => void;
+  };
+
+  const SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+  let widgetId: string | undefined;
+
+  function initTurnstile() {
+    const container = document.getElementById("turnstile-widget");
+    if (!container) return;
+    const ts = (window as unknown as { turnstile?: Turnstile }).turnstile;
+    if (!ts) return;
+    container.innerHTML = "";
+    widgetId = ts.render(container, {
+      sitekey: SITEKEY,
+      theme: "light",
+      "error-callback": () => console.warn("Turnstile error"),
+    });
   }
-  (window as unknown as Record<string, unknown>).onTurnstileError = onTurnstileError;
 
-  const form = document.getElementById("register-form") as HTMLFormElement | null;
-  const errorBox = document.getElementById("form-error") as HTMLElement | null;
-  const successBox = document.getElementById("join-success") as HTMLElement | null;
-  const successEmail = document.getElementById("join-success-email") as HTMLElement | null;
-  const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+  // Wywoływany przez Turnstile po załadowaniu skryptu (onload=onTurnstileLoad w URL)
+  (window as unknown as Record<string, unknown>).onTurnstileLoad = initTurnstile;
 
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  // Po każdej nawigacji View Transitions re-inicjalizuj widget i formularz
+  document.addEventListener("astro:page-load", () => {
+    initTurnstile();
+    setupForm();
+  });
+
+  function setupForm() {
+    const form = document.getElementById("register-form") as HTMLFormElement | null;
+    const errorBox = document.getElementById("form-error") as HTMLElement | null;
+    const successBox = document.getElementById("join-success") as HTMLElement | null;
+    const successEmail = document.getElementById("join-success-email") as HTMLElement | null;
+    const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
     if (!form || !errorBox || !submitBtn) return;
 
-    const password = (form.querySelector("#password") as HTMLInputElement).value;
-    const confirm = (form.querySelector("#password_confirm") as HTMLInputElement).value;
-    const email = (form.querySelector("#email") as HTMLInputElement).value;
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    if (password !== confirm) {
-      errorBox.textContent = "Passwords do not match.";
-      errorBox.hidden = false;
-      return;
-    }
+      const password = (form.querySelector("#password") as HTMLInputElement).value;
+      const confirm = (form.querySelector("#password_confirm") as HTMLInputElement).value;
+      const email = (form.querySelector("#email") as HTMLInputElement).value;
 
-    errorBox.hidden = true;
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Creating account…";
+      if (password !== confirm) {
+        errorBox.textContent = "Passwords do not match.";
+        errorBox.hidden = false;
+        return;
+      }
 
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      body: new FormData(form),
+      errorBox.hidden = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Creating account…";
+
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        body: new FormData(form),
+      });
+
+      const json = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        if (successEmail) successEmail.textContent = email;
+        form.classList.add("is-hidden");
+        setTimeout(() => {
+          form.style.display = "none";
+          if (successBox) {
+            successBox.removeAttribute("hidden");
+            successBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
+        }, 320);
+      } else {
+        errorBox.textContent = (json as { error?: string }).error ?? "Registration failed. Please try again.";
+        errorBox.hidden = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create free account";
+        (window as unknown as { turnstile?: Turnstile }).turnstile?.reset(widgetId);
+      }
     });
-
-    const json = await res.json().catch(() => ({}));
-
-    if (res.ok) {
-      if (successEmail) successEmail.textContent = email;
-      form.classList.add("is-hidden");
-      setTimeout(() => {
-        form.style.display = "none";
-        if (successBox) {
-          successBox.removeAttribute("hidden");
-          successBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }
-      }, 320);
-    } else {
-      errorBox.textContent = (json as { error?: string }).error ?? "Registration failed. Please try again.";
-      errorBox.hidden = false;
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Create free account";
-      (window as unknown as { turnstile?: { reset: () => void } }).turnstile?.reset();
-    }
-  });
+  }
 </script>
