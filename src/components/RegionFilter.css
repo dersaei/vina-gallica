@@ -94,8 +94,9 @@
 }
 
 .rf-panel--open {
-  max-height: 480px;
+  max-height: 465px;
   opacity: 1;
+  z-index: 300;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #daa520 #1a1a18;
