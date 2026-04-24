@@ -7,6 +7,8 @@ const navItems = [
   { label: "About", href: "/about" },
   { label: "Privacy", href: "/privacy-policy" },
   { label: "Terms", href: "/terms-of-service" },
+  { label: "Submit", href: "/submit" },
+  { label: "Login", href: "/login" },
 ];
 
 export default function MobileMenu() {
