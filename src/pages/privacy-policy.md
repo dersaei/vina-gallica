@@ -194,7 +194,7 @@ Transactional emails are relayed via Fastmail Pty Ltd (Australia), which relies 
 
 ## Children's Privacy
 
-Vina Gallica is not directed at children under the age of 16. We do not knowingly collect personal data from children. If you believe a child has provided us with personal data, please contact us so we can take appropriate action.
+Vina Gallica is not directed at underage. We do not knowingly collect personal data from children. If you believe a child has provided us with personal data, please contact us so we can take appropriate action.
 
 ## Third-Party Links
 
