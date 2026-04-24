@@ -93,7 +93,7 @@ const faqItems = await directus.request(
         alt="F.A.Q."
         width={358}
         height={118}
-        densities={[1, 2]}
+        layout="constrained"
         class="faq-heading"
       />
       <dl class="faq-list">
@@ -115,7 +115,7 @@ const faqItems = await directus.request(
           alt="Pricing"
           width={557}
           height={140}
-          densities={[1, 2]}
+          layout="constrained"
           class="pricing-title"
         />
         <h2 class="pricing-subtitle">Start with a free listing and upgrade to Premium when you are ready to tell your full story</h2>
@@ -354,10 +354,10 @@ const faqItems = await directus.request(
   .submit-intro {
     max-width: 860px;
     text-align: center;
-    font-family: var(--font-label);
+    font-family: var(--font-heading);
     font-size: 1.4rem;
     line-height: 1.5;
-    font-weight: 600;
+    font-weight: 300;
     text-transform: uppercase;
     color: var(--color-elegant-black);
   }
@@ -447,8 +447,9 @@ const faqItems = await directus.request(
 
   .faq-answer {
     font-family: var(--font-extra);
-    font-weight: 400;
-    font-size: 1.15rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 1rem;
     line-height: 1.45;
     color: var(--color-elegant-black);
   }

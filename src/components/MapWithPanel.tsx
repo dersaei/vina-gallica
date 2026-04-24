@@ -28,7 +28,7 @@ export default function MapWithPanel({ geojsonData, categories, lang }: Props) {
         onOpenPanel={handleOpenPanel}
         lang={lang}
       />
-      <PlacePanel place={openPlace} onClose={handleClosePanel} />
+      <PlacePanel place={openPlace} onClose={handleClosePanel} lang={lang} />
     </div>
   );
 }

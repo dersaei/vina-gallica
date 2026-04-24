@@ -5,9 +5,10 @@ import "./PlacePanel.css";
 interface Props {
   place: PlaceData | null;
   onClose: () => void;
+  lang?: "en" | "fr";
 }
 
-export default function PlacePanel({ place, onClose }: Props) {
+export default function PlacePanel({ place, onClose, lang = "en" }: Props) {
   const panelRef = useRef<HTMLDivElement | null>(null);
   const prevPlaceRef = useRef<PlaceData | null>(null);
 
@@ -60,11 +61,11 @@ export default function PlacePanel({ place, onClose }: Props) {
 
         {/* ── Nagłówek z regionem winiarskim ── */}
         <div className="panel-region-bar">
-          <span className="panel-region-bar__label">Wine Region</span>
+          <span className="panel-region-bar__label">{lang === "fr" ? "Région viticole" : "Wine Region"}</span>
           <button
             className="place-panel__close"
             type="button"
-            aria-label="Close panel"
+            aria-label={lang === "fr" ? "Fermer" : "Close panel"}
             onClick={onClose}
           >
             ✕
@@ -119,7 +120,7 @@ export default function PlacePanel({ place, onClose }: Props) {
                       className="panel-location__block"
                       style={{ "--loc-color": place.deptColor || "#888" } as CSSProperties}
                     >
-                      <span className="panel-location__label">Department</span>
+                      <span className="panel-location__label">{lang === "fr" ? "Département" : "Department"}</span>
                       <span className="panel-location__name">{place.deptName}</span>
                     </div>
                   )}
@@ -128,7 +129,7 @@ export default function PlacePanel({ place, onClose }: Props) {
                       className="panel-location__block"
                       style={{ "--loc-color": place.adminRegionColor || "#888" } as CSSProperties}
                     >
-                      <span className="panel-location__label panel-location__label--region">Region</span>
+                      <span className="panel-location__label panel-location__label--region">{lang === "fr" ? "Région" : "Region"}</span>
                       <span className="panel-location__name">{place.adminRegionName}</span>
                     </div>
                   )}
