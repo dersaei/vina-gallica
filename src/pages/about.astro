@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Badges from "../components/Badges.astro";
 import { Image } from "astro:assets";
-import aboutImg from "../assets/about-vina-gallica.jpg";
+import aboutImg from "../assets/about.jpg";
 ---
 
 <Layout
@@ -63,19 +63,16 @@ Vina Gallica is a growing collection of wineries, wine shops, festivals, and win
 <div class="about-cta">
         <a href="/submit" class="join-btn">Are you offering French wine experience?<br />Join Vina Gallica and connect with wine enthusiasts worldwide</a>
       </div>
-        <p>
-          In the philosophy of terroir, the goal isn't to create wine that's objectively the best,
-          but rather wine that most faithfully expresses the character of its birthplace.
-          One can say that terroir is the unique fingerprint of the place where a grapevine grows — a concept so deeply rooted in French culture that it has no equivalent in any other language in the world.
+        <p>French winemaking doesn't treat wine as a simple agricultural product. In the philosophy of terroir — a concept so deeply rooted in French culture that it has no equivalent in any other language in the world — the goal isn't to create wine that's objectively the best, but rather the one that most faithfully expresses the character of its birthplace.
+          Its fingerprint.</p>
           
-        </p>
-        <p>Thus, French winemaking doesn't treat wine as a simple agricultural product, but as a liquid record of the place where it was made, shaped by specific soil, microclimate, sun exposure, and local tradition — a combination of several elements that together form the final taste and aroma of wine. This diversity ranges from mountain slopes in cool Savoy to hot, Mediterranean coastlines of Languedoc.
+        <p>It is a story shaped by specific soil, microclimate, sun exposure, and local tradition — a combination of several elements that together form the final taste and aroma of wine. This diversity ranges in France from mountain slopes in cool Savoy to hot, Mediterranean coastlines of Languedoc.
           Within a single country, one finds, as it were, a dozen separate, wine-focused continents, each with its own unique terroir and winemaking traditions that make exploring French wine regions so fascinating, allowing us to experience the unique character of each place through its wine.
         </p>
         <h3>We invite you to explore together with us the diverse world of French wine regions</h3>      
       </div>
 
-      <Image src={aboutImg} alt="French wine vineyard" class="about-image" />
+      <Image src={aboutImg} alt="French wine vineyard" layout='constrained' class="about-image" />
 
       <div class="regions-section">
         <h3 class="regions-heading">14 French Wine Regions</h3>
@@ -172,9 +169,6 @@ Vina Gallica is a growing collection of wineries, wine shops, festivals, and win
     position: relative;
     margin: 0 0 var(--space-md);
   }
-
-
-
   .article-header {
     margin-bottom: var(--space-lg);
   }
@@ -244,13 +238,13 @@ Vina Gallica is a growing collection of wineries, wine shops, festivals, and win
   .about-cta {
     display: flex;
     justify-content: center;
-    margin: var(--space-xs) 0;
+    margin: var(--space-md) 0;
   }
 
   .join-btn {
     text-align: center;
     font-family: var(--font-label);
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -280,7 +274,7 @@ Vina Gallica is a growing collection of wineries, wine shops, festivals, and win
 
   .about-image {
     width: 100%;
-    max-width: 1280px;
+    max-width: 1380px;
     height: auto;
     display: block;
     margin: var(--space-lg) auto;
@@ -325,7 +319,7 @@ Vina Gallica is a growing collection of wineries, wine shops, festivals, and win
       font-size: 1.2rem;
     }
     .join-btn {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
   }
   @media (max-width: 400px) {

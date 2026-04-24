@@ -7,11 +7,14 @@ const year = new Date().getFullYear();
 const submitHref = lang === "fr" ? "/fr/submit" : "/submit";
 const submitLabel =
   lang === "fr" ? "Inscrivez-vous sur Vina Gallica" : "Get listed on Vina Gallica";
+const langSwitchHref = lang === "fr" ? "/" : "/fr";
+const langSwitchLabel = lang === "fr" ? "English" : "Français";
 ---
 
 <footer>
   <div class="footer-inner">
     <p><a href={submitHref} class="footer-link">{submitLabel}&nbsp;{year}</a></p>
+    <a href={langSwitchHref} class="footer-lang-switch">{langSwitchLabel}</a>
   </div>
 </footer>
 
@@ -28,7 +31,7 @@ const submitLabel =
   .footer-inner {
     display: flex;
     justify-content: center;
-    align-items: baseline;
+    align-items: center;
     position: relative;
     padding-inline: var(--space-lg);
     padding-block: var(--space-xs);
@@ -39,8 +42,7 @@ const submitLabel =
     font-size: 0.75rem;
     margin: 0;
     letter-spacing: 0.03em;
-        text-align: center;
-
+    text-align: center;
   }
 
   .footer-link {
@@ -54,6 +56,26 @@ const submitLabel =
 
   .footer-link:hover {
     color: #b22222;
+  }
+
+  .footer-lang-switch {
+    position: absolute;
+    right: var(--space-lg);
+    color: var(--color-elegant-black);
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    font-family: var(--font-heading);
+    text-decoration: none;
+  }
+
+  .footer-lang-switch:hover {
+    color: #b22222;
+  }
+  @media (max-width: 400px) {
+    .footer-inner {
+      justify-content: flex-start;
+    }
   }
 
 </style>
