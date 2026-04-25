@@ -8,7 +8,7 @@ headlineStyle: "dark"
 
 **Last updated:** April 24, 2026
 
-These Terms of Service ("Terms") govern your use of **vinagallica.com** ("Vina Gallica", "the Platform") and any services offered through it. The Platform is operated by **Bogusław Siemiątkowski "Spiżarnia REGIO"**, with its registered address at Napoleońska 49, 06-500 Mława, Poland, VAT-EU: PL5691729538.
+These Terms of Service ("Terms") govern your use of **vinagallica.com** ("Vina Gallica", "the Platform") and any services offered through it. The Platform is operated by **Bogusław Siemiątkowski "Spiżarnia REGIO"**, with its registered address at **Napoleońska 49, 06-500 Mława, Poland, VAT-EU: PL5691729538**.
 
 By creating an account on Vina Gallica, you confirm that you have read, understood, and agree to be bound by these Terms. If you do not agree, please do not use the Platform.
 

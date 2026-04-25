@@ -5,7 +5,7 @@
   max-width: 760px;
   margin-inline: auto;
   color: var(--color-elegant-black);
-  font-family: var(--font-sans);
+  font-family: var(--font-hero);
   font-size: 0.95rem;
   line-height: 1.75;
   padding: 5rem 1.5rem 1rem;
@@ -108,15 +108,4 @@
   border: none;
   border-top: 1px solid #daa520;
   margin: 2.5rem 0;
-}
-
-@media (max-width: 768px) {
-  .prose {
-    padding: 4rem 1rem 3rem;
-    font-size: 0.9rem;
-  }
-
-  .prose h2 {
-    font-size: 1.05rem;
-  }
 }
