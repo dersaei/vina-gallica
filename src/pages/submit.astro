@@ -446,11 +446,10 @@ const faqItems = await directus.request(
   }
 
   .faq-answer {
-    font-family: var(--font-extra);
-    font-weight: 400;
+    font-family: var(--font-heading);
+    font-weight: 300;
     text-align: justify;
-    text-transform: uppercase;
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.45;
     color: var(--color-elegant-black);
   }
@@ -465,6 +464,7 @@ const faqItems = await directus.request(
 
   :global(.faq-answer strong) {
     font-weight: 700;
+    text-transform: uppercase;
   }
 
   :global(.faq-answer em) {
