@@ -58,18 +58,18 @@ import aboutImg from "../assets/about.jpg";
 
       <div class="article-body">
         <h2>
-Vina Gallica is a growing collection of wineries, wine shops, festivals, and wine adventures, designed to serve as your guide to French terroir
+Vina Gallica is a growing collection of French wine experiences
         </h2>
 <div class="about-cta">
-        <a href="/submit" class="join-btn">Are you offering French wine experience?<br />Join Vina Gallica and connect with wine enthusiasts worldwide</a>
+        <a href="/submit" class="join-btn">
+          Do you want to add your company?<br /> Enter
+          to learn more!
+          </a>
       </div>
-        <p>French winemaking doesn't treat wine as a simple agricultural product. In the philosophy of terroir — a concept so deeply rooted in French culture that it has no equivalent in any other language in the world — the goal isn't to create wine that's objectively the best, but rather the one that most faithfully expresses the character of its birthplace.
-          Its fingerprint.</p>
+        <p>French winemaking doesn't treat wine as a simple agricultural product. In the philosophy of terroir, a concept so deeply rooted in French culture that it has no equivalent in any other language in the world, the goal isn't to create wine that's objectively the best, but rather the one that most faithfully expresses the character of its birthplace — its fingerprint.</p>
           
-        <p>It is a story shaped by specific soil, microclimate, sun exposure, and local tradition — a combination of several elements that together form the final taste and aroma of wine. This diversity ranges in France from mountain slopes in cool Savoy to hot, Mediterranean coastlines of Languedoc.
-          Within a single country, one finds, as it were, a dozen separate, wine-focused continents, each with its own unique terroir and winemaking traditions that make exploring French wine regions so fascinating, allowing us to experience the unique character of each place through its wine.
-        </p>
-        <h3>We invite you to explore together with us the diverse world of French wine regions</h3>      
+        <p>French Wine is a combination of several elements, such as soil, microclimate, sun exposure, and local tradition, that together form its final taste and aroma, allowing us to experience the unique character of each place.</p>
+        <h3>Vina Gallica aims to become a go-to place to learn about entreprises and experiences operating within French terroirs, helping to find the best way to enjoy it in person</h3>      
       </div>
 
       <Image src={aboutImg} alt="French wine vineyard" layout='constrained' class="about-image" />
@@ -182,13 +182,13 @@ Vina Gallica is a growing collection of wineries, wine shops, festivals, and win
     color: var(--color-elegant-black);
     letter-spacing: -0.01em;
     text-align: center;
-    padding:var(--space-xs);
+    margin:var(--space-md) 0 var(--space-xs);
   }
   h3 {
     font-size: 1.4rem;
-    font-family: var(--font-heading);
-    font-weight: 400;
-    text-transform: uppercase;
+    font-family: var(--font-label);
+    font-weight: 600;
+    text-transform: capitalize;
     text-align: center;
   }
 
@@ -238,7 +238,7 @@ Vina Gallica is a growing collection of wineries, wine shops, festivals, and win
   .about-cta {
     display: flex;
     justify-content: center;
-    margin: var(--space-md) 0;
+    margin: var(--space-xs) 0 var(--space-md);
   }
 
   .join-btn {

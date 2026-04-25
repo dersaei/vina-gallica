@@ -390,6 +390,23 @@
     opacity: 1;
     pointer-events: auto;
   }
+  .map-popup__region {
+    font-size: 1rem;
+  }
+  .map-popup__name {
+    font-size: 1.3rem;
+  }
+  .map-popup__address,
+  .map-popup__tag-location {
+    font-size: 0.9rem;
+  }
+  .map-popup__category {
+    font-size: 0.75rem;
+  }
+  .map-popup__open-btn svg {
+    width: 60px;
+    height: 31px;
+  }
 }
 
 @media (max-width: 530px) {

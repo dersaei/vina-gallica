@@ -75,7 +75,8 @@ const faqItems = await directus.request(
       </a>
 
       <h2 class="submit-intro">
-        If you run a business connected to the French world of wine, join us and add your company to one or more of our four categories
+        We're developing a database of French wine-related businesses. Our four categories are Adventures, Festivals, Shops, and Wineries. 
+        If your business fits into at least one of these, read this page and join our community
       </h2>
 
       <nav class="submit-nav" aria-label="Page sections">
@@ -126,9 +127,8 @@ const faqItems = await directus.request(
         <div class="pricing-card pricing-card--free">
           <div class="pricing-card-header">
             <span class="pricing-plan">Free</span>
-            <span class="pricing-tagline">Get listed on Vina Gallica and appear in both the Directory and the Map at no cost and with no time limit</span>
+            <span class="pricing-tagline">Ideal if you want to start your experience with us</span>
           </div>
-          <p class="pricing-description">Ideal if you just want to be found by wine lovers looking for French wine experiences with zero budget and zero risk.</p>
           <ul class="pricing-features">
             <li>Listing in the <strong>Directory</strong> with your business name and category</li>
             <li>Display of <strong>wine region, address, department and region</strong></li>
@@ -142,17 +142,16 @@ const faqItems = await directus.request(
         <div class="pricing-card pricing-card--premium">
           <div class="pricing-card-header">
             <span class="pricing-plan">Premium</span>
-            <span class="pricing-tagline">Tell your full story and stand out</span>
+            <span class="pricing-tagline">Ideal if you want to tell more about your story</span>
           </div>
           <div class="pricing-price">
             <span class="pricing-amount">€150<span class="pricing-period"> / year</span></span>
             <span class="pricing-vat">excl. VAT · billed annually</span>
-            <span class="pricing-note">No automatic renewal. You choose if you want to continue.</span>
+            <span class="pricing-note">No automatic renewal</span>
           </div>
-          <p class="pricing-description">Upgrade from a basic listing to a full profile with photos, story and practical details that help visitors choose your place.</p>
+          <p class="pricing-description">Everything in Free, plus:</p>
           <ul class="pricing-features">
-            <li>Everything in <strong>Free</strong>, plus:</li>
-            <li><strong>Profile page</strong> with a "Read more" link from your Directory card</li>
+            <li><strong>Profile page</strong> with a <strong>"Read more"</strong> link from your Directory card</li>
             <li><strong>Gallery of images</strong> showcasing your place, wines and experiences</li>
             <li><strong>Marketing description</strong> of your business and wine experience</li>
             <li>Space for <strong>certifications and awards</strong> (photos, badges, labels)</li>
@@ -354,11 +353,11 @@ const faqItems = await directus.request(
   .submit-intro {
     max-width: 860px;
     text-align: center;
-    font-family: var(--font-heading);
+    font-family: var(--font-extra);
     font-size: 1.4rem;
     line-height: 1.5;
-    font-weight: 300;
-    text-transform: uppercase;
+    font-weight: 500;
+    text-transform: capitalize;
     color: var(--color-elegant-black);
   }
 
@@ -446,11 +445,11 @@ const faqItems = await directus.request(
   }
 
   .faq-answer {
-    font-family: var(--font-heading);
-    font-weight: 300;
+    font-family: var(--font-extra);
+    font-weight: 500;
     text-align: justify;
     font-size: 1.1rem;
-    line-height: 1.45;
+    line-height: 1.55;
     color: var(--color-elegant-black);
   }
 
@@ -465,6 +464,7 @@ const faqItems = await directus.request(
   :global(.faq-answer strong) {
     font-weight: 700;
     text-transform: uppercase;
+    font-family: var(--font-heading)!important;
   }
 
   :global(.faq-answer em) {
@@ -543,6 +543,7 @@ const faqItems = await directus.request(
   .pricing-subtitle {
     font-family: var(--font-label);
     font-size: 1.2rem;
+    line-height: 1.5;
     font-weight: 600;
     text-transform: uppercase;
     margin-top: var(--space-lg);
@@ -569,7 +570,7 @@ const faqItems = await directus.request(
     background-color: #f0ffff;
     border: 10px solid #000000;
     color: var(--color-elegant-black);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);}
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.522) inset;}
 
   .pricing-card--premium {
     background-color: var(--color-elegant-black);
@@ -586,7 +587,7 @@ const faqItems = await directus.request(
 
   .pricing-plan {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -597,16 +598,15 @@ const faqItems = await directus.request(
   }
 
   .pricing-card--premium .pricing-plan {
-    color: var(--color-sand);
+    color: var(--color-gold);
   }
 
   .pricing-tagline {
-    font-family: var(--font-label);
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    opacity: 0.75;
   }
 
   .pricing-price {
@@ -622,7 +622,7 @@ const faqItems = await directus.request(
     font-family: var(--font-heading);
     font-size: 2.2rem;
     font-weight: 700;
-    color: var(--color-sand);
+    color: var(--color-gold);
   }
 
   .pricing-period {
@@ -633,23 +633,23 @@ const faqItems = await directus.request(
   .pricing-vat {
     font-family: var(--font-extra);
     font-size: 0.8rem;
-    opacity: 0.65;
     font-weight: 400;
   }
 
   .pricing-note {
     font-family: var(--font-extra);
     font-size: 0.85rem;
+    text-transform: capitalize;
     font-weight: 400;
-    opacity: 0.8;
     margin-top: 0.25rem;
   }
 
   .pricing-description {
-    font-family: var(--font-extra);
-    font-size: 0.95rem;
+    font-family: var(--font-label);
+    font-size: 0.9rem;
     line-height: 1.65;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
   }
 
   .pricing-features {
@@ -661,12 +661,12 @@ const faqItems = await directus.request(
   }
 
   .pricing-features li {
-    font-family: var(--font-extra);
+    font-family: var(--font-heading);
     font-size: 0.92rem;
     line-height: 1.5;
     padding-left: 1.2em;
     position: relative;
-    font-weight: 500;
+    font-weight: 300;
   }
 
   .pricing-features li::before {
@@ -678,11 +678,13 @@ const faqItems = await directus.request(
 
   .pricing-card--free .pricing-features li strong {
     font-weight: 700;
+    text-transform: uppercase;
     color: var(--color-elegant-black);
   }
 
   .pricing-card--premium .pricing-features li strong {
     font-weight: 700;
+    text-transform: uppercase;
     color: var(--color-gold);
   }
 
@@ -762,7 +764,7 @@ const faqItems = await directus.request(
 
   .join-title {
     font-family: var(--font-heading);
-    font-size: 3rem;
+    font-size:clamp(3rem, 6vw, 6rem);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -772,13 +774,13 @@ const faqItems = await directus.request(
 
   .join-subtitle {
     font-family: var(--font-label);
-    font-size: 1rem;
+    font-size: 1.2rem;
+    line-height: 1.5;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     text-align: center;
     color: var(--color-elegant-black);
-    opacity: 0.75;
     margin-top: calc(var(--space-sm) * -1);
   }
 
