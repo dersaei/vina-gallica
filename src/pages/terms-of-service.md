@@ -2,40 +2,39 @@
 layout: ../layouts/LayoutProse.astro
 title: "Terms Of Service | Vina Gallica"
 description: "Vina Gallica Terms Of Service - rules and conditions."
-headline: "Terms Of Service"
+headline: "Terms of Service"
 headlineStyle: "dark"
 ---
 
-**Last updated:** April 24, 2026
+**Last updated:** April 26, 2026
 
-These Terms of Service ("Terms") govern your use of **vinagallica.com** ("Vina Gallica", "the Platform") and any services offered through it. The Platform is operated by **Bogusław Siemiątkowski "Spiżarnia REGIO"**, with its registered address at **Napoleońska 49, 06-500 Mława, Poland, VAT-EU: PL5691729538**.
+These Terms of Service ("Terms") govern your use of **[vinagallica.com](https://vinagallica.com)** ("Vina Gallica", "the Platform") and any services offered through it. The Platform is operated by **Bogusław Siemiątkowski "Spiżarnia REGIO"**, with its registered address at **Napoleońska 49, 06-500 Mława, Poland, VAT-EU: PL5691729538**.
 
 By creating an account on Vina Gallica, you confirm that you have read, understood, and agree to be bound by these Terms. If you do not agree, please do not use the Platform.
 
-For B2B and partnership enquiries: **<partners@vinagallica.com>**
-For legal, privacy, or data protection matters: **<privacy@vinagallica.com>**
+For B2B and partnership enquiries: **[partners@vinagallica.com](mailto:partners@vinagallica.com)** For legal, privacy, or data protection matters: **[privacy@vinagallica.com](mailto:privacy@vinagallica.com)**
 
 ## Table of Contents
 
-1. [Eligibility](#1-eligibility)
-2. [Nature of the Agreement](#2-nature-of-the-agreement)
-3. [The Platform — What Vina Gallica Provides](#3-the-platform--what-vina-gallica-provides)
-4. [Account Registration](#4-account-registration)
-5. [Listing Plans and Pricing](#5-listing-plans-and-pricing)
-6. [Payment and VAT](#6-payment-and-vat)
-7. [Listing Submission and Moderation](#7-listing-submission-and-moderation)
-8. [Listing Standards](#8-listing-standards)
-9. [Content and Intellectual Property](#9-content-and-intellectual-property)
-10. [Social Media and Marketing](#10-social-media-and-marketing)
-11. [Refund Policy](#11-refund-policy)
-12. [Account Suspension and Termination](#12-account-suspension-and-termination)
-13. [Limitation of Liability](#13-limitation-of-liability)
-14. [Indemnification](#14-indemnification)
-15. [Future Features](#15-future-features)
-16. [Changes to These Terms](#16-changes-to-these-terms)
-17. [Language](#17-language)
-18. [Governing Law and Dispute Resolution](#18-governing-law-and-dispute-resolution)
-19. [Miscellaneous](#19-miscellaneous)
+1. Eligibility
+2. Nature of the Agreement
+3. The Platform — What Vina Gallica Provides
+4. Account Registration
+5. Listing Plans and Pricing
+6. Payment and VAT
+7. Listing Submission and Moderation
+8. Listing Standards
+9. Content and Intellectual Property
+10. Social Media and Marketing
+11. Refund Policy
+12. Account Suspension and Termination
+13. Limitation of Liability
+14. Indemnification
+15. Future Features
+16. Changes to These Terms
+17. Language
+18. Governing Law and Dispute Resolution
+19. Miscellaneous
 
 ## 1. Eligibility
 
@@ -66,7 +65,7 @@ These Terms constitute a **business-to-business (B2B) agreement** between Spiża
 
 ### 2.2 Voluntary commercial commitments
 
-Where these Terms provide rights or remedies beyond what Polish law requires in a B2B context (such as the voluntary refund window described in Section 11), these are offered as a commercial gesture and do not create a precedent for future cases.
+Where these Terms provide rights or remedies beyond what French law requires in a B2B context (such as the voluntary refund window described in Section 11), these are offered as a commercial gesture and do not create a precedent for future cases.
 
 **Summary:** Because you are a business signing up — not a private individual — consumer protection rules don't apply here. Any extra protections we offer you are voluntary, not legally mandated.
 
@@ -74,7 +73,7 @@ Where these Terms provide rights or remedies beyond what Polish law requires in 
 
 ### 3.1 Description
 
-Vina Gallica is an English-language **online directory and interactive map** of French wine businesses. It allows businesses to create listings that are visible to the public, helping wine enthusiasts and professionals discover French wine producers, retailers, and events.
+Vina Gallica is an **online directory and interactive map** of French wine businesses. It allows businesses to create listings that are visible to the public, helping wine enthusiasts and professionals discover French wine producers, retailers, and events.
 
 ### 3.2 No guaranteed outcomes
 
@@ -104,7 +103,7 @@ You are responsible for ensuring that all information you provide during registr
 
 ### 4.3 Account security
 
-You are responsible for maintaining the confidentiality of your account login credentials. You must notify us immediately at **<privacy@vinagallica.com>** if you suspect unauthorised access to your account.
+You are responsible for maintaining the confidentiality of your account login credentials. You must notify us immediately at **[privacy@vinagallica.com](mailto:privacy@vinagallica.com)** if you suspect unauthorised access to your account.
 
 ### 4.4 One account per business
 
@@ -162,14 +161,14 @@ After your Premium period expires, your listings will remain at Premium level fo
 
 ### 6.1 Payment method
 
-Payments for the Premium Plan are processed in **Euro (EUR) only**. Payment is currently handled **manually by email** — please contact **<partners@vinagallica.com>** to initiate a Premium subscription. A Stripe-based online payment system is being introduced and will be made available on the Platform in the near future. These Terms will be updated when Stripe payments go live.
+Payments for the Premium Plan are processed in **Euro (EUR) only**. Payment is currently handled **manually by email** — please contact **[partners@vinagallica.com](mailto:partners@vinagallica.com)** to initiate a Premium subscription. A Stripe-based online payment system is being introduced and will be made available on the Platform in the near future. These Terms will be updated when Stripe payments go live.
 
 ### 6.2 VAT and EU reverse charge
 
 Vina Gallica is operated by a Polish entity (Spiżarnia REGIO, VAT-EU: PL5691729538).
 
 - If your business is **VAT-registered in France or another EU member state**, the **EU reverse charge mechanism** applies. You will receive an invoice **excluding VAT**, and you are responsible for self-assessing and reporting VAT in your own country in accordance with your local tax rules.
-- If your business is **not VAT-registered**, different rules may apply. Please contact **<partners@vinagallica.com>** before subscribing to confirm your situation.
+- If your business is **not VAT-registered**, different rules may apply. Please contact **[partners@vinagallica.com](mailto:partners@vinagallica.com)** before subscribing to confirm your situation.
 - You must provide a valid EU VAT number at registration if you are VAT-registered. Providing an invalid VAT number may affect the tax treatment of your invoice.
 
 ### 6.3 Invoicing
@@ -182,7 +181,7 @@ A formal invoice will be issued upon successful payment. Pro-forma invoices sent
 
 ### 7.1 How to submit a listing
 
-Listings are submitted through the **[submit page](/submit)** on the Platform or through your **account dashboard**. You must complete all required fields in the submission form accurately and in full.
+Listings are submitted through the [submit page](/submit) on the Platform or through your **account dashboard**. You must complete all required fields in the submission form accurately and in full.
 
 ### 7.2 Review process
 
@@ -260,7 +259,7 @@ By submitting Your Content, you warrant that:
 
 By submitting Your Content to Vina Gallica, you grant Spiżarnia REGIO a **non-exclusive, royalty-free, worldwide licence** to use, publish, display, reproduce, and promote Your Content for the following purposes:
 
-- displaying your listing on vinagallica.com;
+- displaying your listing on [vinagallica.com](https://vinagallica.com);
 - featuring your listing in marketing materials, newsletters, or editorial content produced by Vina Gallica;
 - promoting your business on Vina Gallica's social media channels (see Section 10).
 
@@ -290,7 +289,7 @@ Features on social media are at Vina Gallica's sole editorial discretion. Not al
 
 ### 10.3 Withdrawal of consent
 
-If you wish your business not to be featured on social media going forward, you may notify us at **<partners@vinagallica.com>**. We will honour such requests for future content. However, content already published on third-party platforms (e.g. YouTube or TikTok) may not be immediately removable due to the nature of those platforms.
+If you wish your business not to be featured on social media going forward, you may notify us at **[partners@vinagallica.com](mailto:partners@vinagallica.com)**. We will honour such requests for future content. However, content already published on third-party platforms (e.g. YouTube or TikTok) may not be immediately removable due to the nature of those platforms.
 
 **Summary:** By listing your business, you agree that we may feature it on our YouTube, TikTok, or other social media channels as part of our editorial activity. This is not a paid service — it is purely at our discretion. If you'd rather we didn't feature your business, let us know at any time.
 
@@ -303,7 +302,7 @@ As a commercial gesture, Spiżarnia REGIO offers a **full refund of the Premium 
 1. You request the refund **within 14 days of the date of payment**; and
 2. **Your first listing has not yet been approved and published** at the time of the refund request (i.e., the Premium period has not yet started).
 
-To request a refund, contact **<partners@vinagallica.com>** from the email address associated with your account.
+To request a refund, contact **[partners@vinagallica.com](mailto:partners@vinagallica.com)** from the email address associated with your account.
 
 ### 11.2 No refund once the Premium period has started
 
@@ -375,7 +374,7 @@ Spiżarnia REGIO shall not be liable for any loss or damage arising from tempora
 
 ### 13.5 Exceptions
 
-Nothing in these Terms excludes or limits liability for death or personal injury caused by negligence, for fraud or fraudulent misrepresentation, or for any other liability that cannot be excluded or limited by Polish law.
+Nothing in these Terms excludes or limits liability for death or personal injury caused by negligence, for fraud or fraudulent misrepresentation, or for any other liability that cannot be excluded or limited by French law.
 
 **Summary:** We're not responsible if your listing doesn't generate the business results you hoped for. If something goes wrong on our end, our liability is capped at what you've paid us in the past year, and we're never liable for lost profits or indirect losses.
 
@@ -430,23 +429,21 @@ For minor or non-material changes (such as corrections of typographical errors, 
 
 ### 17.1 Language of the Terms
 
-These Terms are available in **English** and in **French**. Both versions are equally authoritative. In the event of any conflict or ambiguity between the two versions, the parties agree that the interpretation most favourable to the User shall prevail, and — if necessary — the matter shall be resolved by the competent court in accordance with Section 18.
+These Terms are available in **English** and in **French**. Both versions are equally authoritative. In the event of any conflict or ambiguity between the two versions, the matter shall be resolved by the competent court in accordance with Section 18.
 
-### 17.2 Prevailing version
+The French version is available at [vinagallica.com/fr/conditions-generales](https://vinagallica.com/fr/conditions-generales).
 
-In the event of any conflict between an English version of these Terms and a translated version, the **English version shall prevail**.
+### 17.2 Language of proceedings
 
-### 17.3 Language of proceedings
+Legal proceedings arising under these Terms shall be conducted in **French**, before the courts identified in Section 18. An English translation of any procedural documents may be requested at the cost of the requesting party.
 
-Legal proceedings arising under these Terms shall be conducted in **Polish**, in accordance with Section 18. An English translation of any procedural documents may be requested at the cost of the requesting party.
-
-**Summary:** These Terms are in English, and the English version is the official one. Court proceedings, if it ever came to that, would be in Polish.
+**Summary:** These Terms exist in both English and French — both are equally valid. If there's ever a conflict between the two versions, the court decides. Proceedings would be in French.
 
 ## 18. Governing Law and Dispute Resolution
 
 ### 18.1 Governing law
 
-These Terms and any dispute or claim arising out of or in connection with them — including non-contractual disputes — shall be governed by and construed in accordance with the laws of **Poland**, in particular the Polish Civil Code and applicable Polish statutes.
+These Terms and any dispute or claim arising out of or in connection with them — including non-contractual disputes — shall be governed by and construed in accordance with the laws of **France**, in particular the French Civil Code (_Code civil_) and applicable French commercial statutes (_Code de commerce_).
 
 ### 18.2 Good-faith resolution
 
@@ -454,13 +451,13 @@ Before initiating any legal proceedings, both parties agree to make a genuine ef
 
 ### 18.3 Jurisdiction
 
-If the dispute cannot be resolved by negotiation, the parties submit to the **exclusive jurisdiction of the courts in Mława, Poland**.
+If the dispute cannot be resolved by negotiation, the parties submit to the **exclusive jurisdiction of the competent commercial courts of Paris, France** (_Tribunal de commerce de Paris_).
 
 ### 18.4 B2B context
 
-As this is a B2B agreement, the parties acknowledge that no consumer arbitration schemes or consumer dispute resolution platforms apply to this relationship.
+As this is a B2B agreement, the parties acknowledge that no consumer arbitration schemes or consumer dispute resolution platforms (_médiation de la consommation_) apply to this relationship.
 
-**Summary:** If there's a disagreement, we'll try to sort it out by email first over 30 days. If that fails, Polish courts in Mława will handle it. Polish law applies.
+**Summary:** If there's a disagreement, we'll try to sort it out by email first over 30 days. If that fails, the Commercial Court of Paris will handle it under French law.
 
 ## 19. Miscellaneous
 
@@ -488,10 +485,8 @@ Neither party will be liable for any delay or failure to perform obligations und
 
 For any questions about these Terms, please contact us:
 
-- **B2B and partnership enquiries**: <partners@vinagallica.com>
-- **Legal, privacy, and data protection**: <privacy@vinagallica.com>
+- **B2B and partnership enquiries**: [partners@vinagallica.com](mailto:partners@vinagallica.com)
+- **Legal, privacy, and data protection**: [privacy@vinagallica.com](mailto:privacy@vinagallica.com)
 - **Post**: Bogusław Siemiątkowski "Spiżarnia REGIO", Napoleońska 49, 06-500 Mława, Poland
 
 **Summary:** These Terms, along with the Privacy Policy, are the full agreement between us. Individual clauses can be adjusted if a court finds them unenforceable, without affecting the rest.
-
----
