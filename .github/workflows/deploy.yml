@@ -22,10 +22,11 @@ jobs:
 
             - name: Install Doppler CLI
               run: |
-                  sudo apt-get update -y
-                  sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
-                  curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://dl.doppler.com/linux/pub.gpg' | sudo apt-key add -
-                  echo "deb https://dl.doppler.com/linux/deb stable main" | sudo tee /etc/apt/sources.list.d/doppler.sources.list
+                  curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://dl.doppler.com/linux/pub.gpg' \
+                    | gpg --dearmor \
+                    | sudo tee /usr/share/keyrings/doppler-archive-keyring.gpg > /dev/null
+                  echo "deb [signed-by=/usr/share/keyrings/doppler-archive-keyring.gpg] https://dl.doppler.com/linux/deb stable main" \
+                    | sudo tee /etc/apt/sources.list.d/doppler.sources.list
                   sudo apt-get update -y
                   sudo apt-get install -y doppler
 
