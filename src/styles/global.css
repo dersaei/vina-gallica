@@ -14,10 +14,6 @@
   --space-xl: 4rem;
 }
 
-html {
-  overflow-x: hidden;
-}
-
 body {
   color: var(--color-elegant-black);
   background-color: var(--color-sand);
