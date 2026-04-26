@@ -22,13 +22,10 @@ jobs:
 
             - name: Install Doppler CLI
               run: |
-                  curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://dl.doppler.com/linux/pub.gpg' \
-                    | gpg --dearmor \
-                    | sudo tee /usr/share/keyrings/doppler-archive-keyring.gpg > /dev/null
-                  echo "deb [signed-by=/usr/share/keyrings/doppler-archive-keyring.gpg] https://dl.doppler.com/linux/deb stable main" \
-                    | sudo tee /etc/apt/sources.list.d/doppler.sources.list
-                  sudo apt-get update -y
-                  sudo apt-get install -y doppler
+                  DOPPLER_VERSION=$(curl -sf https://api.github.com/repos/DopplerHQ/cli/releases/latest | jq -r .tag_name | tr -d 'v')
+                  curl -sLf --retry 3 "https://github.com/DopplerHQ/cli/releases/download/${DOPPLER_VERSION}/doppler_${DOPPLER_VERSION}_linux_amd64.deb" -o doppler.deb
+                  sudo dpkg -i doppler.deb
+                  rm doppler.deb
 
             - name: Install dependencies
               run: npm ci
