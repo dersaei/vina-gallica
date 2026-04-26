@@ -14,7 +14,29 @@ function isVerified(): boolean {
     .some((c) => c.trim().startsWith(`${COOKIE_KEY}=`));
 }
 
-export default function AgeGate() {
+const copy = {
+  en: {
+    logo: "Vina Gallica is a guide to the French wine",
+    title: "You must be of legal drinking age to enter",
+    text: "By entering, you confirm you are of legal drinking age in your country of residence.",
+    question: "Are you 21 or older?",
+    confirm: "Yes, enter",
+    deny: "No",
+    disclaimer: "Please drink responsibly.",
+  },
+  fr: {
+    logo: "Vina Gallica est un guide du vin français",
+    title: "Vous devez avoir l'âge légal pour consommer de l'alcool",
+    text: "En entrant, vous confirmez avoir l'âge légal de consommer de l'alcool dans votre pays de résidence.",
+    question: "Avez-vous 18 ans ou plus ?",
+    confirm: "Oui, entrer",
+    deny: "Non",
+    disclaimer: "Veuillez consommer avec modération.",
+  },
+} as const;
+
+export default function AgeGate({ lang = "en" }: { lang?: "en" | "fr" }) {
+  const t = copy[lang];
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -44,29 +66,19 @@ export default function AgeGate() {
       aria-labelledby="age-gate-title"
     >
       <div className="age-gate-modal">
-        <p className="age-gate-logo">
-          Vina Gallica is a guide to the French wine
-        </p>
-        <h2 id="age-gate-title" className="age-gate-title">
-          You must be of legal drinking age to enter
-        </h2>
-        <p className="age-gate-text">
-          By entering, you confirm you are of legal drinking age in your country
-          of residence.
-        </p>
-        <p className="age-gate-question">Are you 21 or older?</p>
+        <p className="age-gate-logo">{t.logo}</p>
+        <h2 id="age-gate-title" className="age-gate-title">{t.title}</h2>
+        <p className="age-gate-text">{t.text}</p>
+        <p className="age-gate-question">{t.question}</p>
         <div className="age-gate-actions">
-          <button
-            className="age-gate-btn age-gate-btn--confirm"
-            onClick={confirm}
-          >
-            Yes, enter
+          <button className="age-gate-btn age-gate-btn--confirm" onClick={confirm}>
+            {t.confirm}
           </button>
           <button className="age-gate-btn age-gate-btn--deny" onClick={deny}>
-            No
+            {t.deny}
           </button>
         </div>
-        <p className="age-gate-disclaimer">Please drink responsibly.</p>
+        <p className="age-gate-disclaimer">{t.disclaimer}</p>
       </div>
     </div>
   );

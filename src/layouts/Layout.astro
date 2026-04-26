@@ -89,7 +89,7 @@ const ogLocale = lang === "fr" ? "fr_FR" : "en_US";
     <ClientRouter />
   </head>
   <body>
-    <AgeGate client:load />
+    <AgeGate lang={lang} client:load />
     <Header lang={lang} />
     <div class:list={["page-headline-wrap", headlineStyle]}>
       <h1 class="page-headline">{headline}</h1>

@@ -68,7 +68,7 @@ const faqItems = faqRaw
 
   <section id="faq" class="faq-section">
     <div class="faq-inner">
-      <h2 class="section-title">F.A.Q.</h2>
+      <h2 class="faq-title">F.A.Q.</h2>
       <dl class="faq-list">
         {faqItems.map((item) => (
           <div class="faq-item">
@@ -83,7 +83,7 @@ const faqItems = faqRaw
   <section id="pricing" class="pricing-section">
     <div class="pricing-inner">
       <div class="pricing-header">
-        <h2 class="section-title">Pricing</h2>
+        <h2 class="pricing-title">Pricing</h2>
         <h3 class="pricing-subtitle">Start with a free listing and upgrade to Premium when you are ready to tell your full story</h3>
       </div>
 
@@ -133,7 +133,7 @@ const faqItems = faqRaw
 
   <section id="join" class="join-section">
     <div class="join-inner">
-      <h2 class="section-title">Join</h2>
+      <h2 class="join-title">Join</h2>
       <h3 class="join-subtitle">Create your free account and add your business to the collection</h3>
 
       <div id="join-success" class="join-success" role="alert" aria-live="polite" hidden>
@@ -387,22 +387,52 @@ const faqItems = faqRaw
     margin-inline: auto;
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
   }
 
- .section-title {
+  .faq-title {
     font-family: var(--font-heading);
-    font-size: 6rem;
+    font-size: 10rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     text-align: center;
     color: var(--color-elegant-black);
+    hyphens: auto;
+    text-shadow: 3px 3px 1px silver;
   }
-  @media (max-width: 500px) {
-    .section-title {
-      font-size: 19vw;
+
+
+ .pricing-title {
+    font-family: var(--font-heading);
+    font-size: 8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+    color: var(--color-elegant-black);
+    hyphens: auto;
+    text-shadow: 3px 3px 1px goldenrod;
+  }
+  .join-title {
+    font-family: var(--font-heading);
+    font-size: 10rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+    color: var(--color-elegant-black);
+        text-shadow: 3px 3px 1px silver;
+  }
+  @media (max-width: 820px) {
+    .faq-title {
+      font-size: 25vw;
     }
+      .pricing-title {
+        font-size: 18vw;
+      }
+      .join-title {
+        font-size: 30vw;
+      }
   }
 
   .faq-list {
@@ -434,6 +464,7 @@ const faqItems = faqRaw
     font-size: 1.1rem;
     line-height: 1.55;
     color: var(--color-elegant-black);
+    hyphens: auto;
   }
 
   :global(.faq-answer p) {
@@ -752,7 +783,6 @@ const faqItems = faqRaw
     margin-inline: auto;
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
   }
 
   .join-subtitle {
@@ -765,7 +795,7 @@ const faqItems = faqRaw
     letter-spacing: 0.1em;
     text-align: center;
     color: var(--color-elegant-black);
-    margin-bottom:var(--space-lg);
+    margin-bottom:var(--space-xl);
   }
 
   .join-success {
