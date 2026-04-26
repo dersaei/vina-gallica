@@ -430,7 +430,7 @@ For minor or non-material changes (such as corrections of typographical errors, 
 
 ### 17.1 Language of the Terms
 
-These Terms are written in **English** and are made available in English only. Any translation that may be provided in the future is for convenience only.
+These Terms are available in **English** and in **French**. Both versions are equally authoritative. In the event of any conflict or ambiguity between the two versions, the parties agree that the interpretation most favourable to the User shall prevail, and — if necessary — the matter shall be resolved by the competent court in accordance with Section 18.
 
 ### 17.2 Prevailing version
 
