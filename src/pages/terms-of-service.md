@@ -16,25 +16,25 @@ For B2B and partnership enquiries: **[partners@vinagallica.com](mailto:partners@
 
 ## Table of Contents
 
-1. Eligibility
-2. Nature of the Agreement
-3. The Platform — What Vina Gallica Provides
-4. Account Registration
-5. Listing Plans and Pricing
-6. Payment and VAT
-7. Listing Submission and Moderation
-8. Listing Standards
-9. Content and Intellectual Property
-10. Social Media and Marketing
-11. Refund Policy
-12. Account Suspension and Termination
-13. Limitation of Liability
-14. Indemnification
-15. Future Features
-16. Changes to These Terms
-17. Language
-18. Governing Law and Dispute Resolution
-19. Miscellaneous
+1. [Eligibility](#1-eligibility)
+2. [Nature of the Agreement](#2-nature-of-the-agreement)
+3. [The Platform — What Vina Gallica Provides](#3-the-platform--what-vina-gallica-provides)
+4. [Account Registration](#4-account-registration)
+5. [Listing Plans and Pricing](#5-listing-plans-and-pricing)
+6. [Payment and VAT](#6-payment-and-vat)
+7. [Listing Submission and Moderation](#7-listing-submission-and-moderation)
+8. [Listing Standards](#8-listing-standards)
+9. [Content and Intellectual Property](#9-content-and-intellectual-property)
+10. [Social Media and Marketing](#10-social-media-and-marketing)
+11. [Refund Policy](#11-refund-policy)
+12. [Account Suspension and Termination](#12-account-suspension-and-termination)
+13. [Limitation of Liability](#13-limitation-of-liability)
+14. [Indemnification](#14-indemnification)
+15. [Future Features](#15-future-features)
+16. [Changes to These Terms](#16-changes-to-these-terms)
+17. [Language](#17-language)
+18. [Governing Law and Dispute Resolution](#18-governing-law-and-dispute-resolution)
+19. [Miscellaneous](#19-miscellaneous)
 
 ## 1. Eligibility
 

@@ -114,16 +114,11 @@ const categoriesData = categories.map(c => ({
 </Layout>
 
 <style is:global>
-  /* Override Layout.astro's mobile height:auto — map must always fill the viewport */
+  html:has(.map-page),
   body:has(.map-page) {
-    height: 100dvh !important;
-  }
-
-  @media (max-width: 768px) {
-    html:has(.map-page),
-    body:has(.map-page) {
-      height: 100dvh !important;
-    }
+    height: 100dvh;
+    min-height: unset;
+    overflow: hidden;
   }
 
   .map-page {
@@ -131,6 +126,7 @@ const categoriesData = categories.map(c => ({
     min-height: 0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 </style>
 
