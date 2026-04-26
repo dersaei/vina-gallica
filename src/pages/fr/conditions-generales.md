@@ -17,25 +17,25 @@ Pour toute demande commerciale ou partenariat : **<partners@vinagallica.com>** P
 
 ## Table des matières
 
-1. Éligibilité
-2. Nature de l'accord
-3. La Plateforme — ce que Vina Gallica propose
-4. Création de compte
-5. Offres et tarifs
-6. Paiement et TVA
-7. Soumission et modération des fiches
-8. Standards des fiches
-9. Contenu et propriété intellectuelle
-10. Réseaux sociaux et marketing
-11. Politique de remboursement
-12. Suspension et résiliation de compte
-13. Limitation de responsabilité
-14. Indemnisation
-15. Fonctionnalités futures
-16. Modifications des CGU
-17. Langue
-18. Droit applicable et règlement des litiges
-19. Dispositions diverses
+1. [Éligibilité](#1-éligibilité)
+2. [Nature de l'accord](#2-nature-de-laccord)
+3. [La Plateforme — ce que Vina Gallica propose](#3-la-plateforme--ce-que-vina-gallica-propose)
+4. [Création de compte](#4-création-de-compte)
+5. [Offres et tarifs](#5-offres-et-tarifs)
+6. [Paiement et TVA](#6-paiement-et-tva)
+7. [Soumission et modération des fiches](#7-soumission-et-modération-des-fiches)
+8. [Standards des fiches](#8-standards-des-fiches)
+9. [Contenu et propriété intellectuelle](#9-contenu-et-propriété-intellectuelle)
+10. [Réseaux sociaux et marketing](#10-réseaux-sociaux-et-marketing)
+11. [Politique de remboursement](#11-politique-de-remboursement)
+12. [Suspension et résiliation de compte](#12-suspension-et-résiliation-de-compte)
+13. [Limitation de responsabilité](#13-limitation-de-responsabilité)
+14. [Indemnisation](#14-indemnisation)
+15. [Fonctionnalités futures](#15-fonctionnalités-futures)
+16. [Modifications des CGU](#16-modifications-des-cgu)
+17. [Langue](#17-langue)
+18. [Droit applicable et règlement des litiges](#18-droit-applicable-et-règlement-des-litiges)
+19. [Dispositions diverses](#19-dispositions-diverses)
 
 ## 1. Éligibilité
 
