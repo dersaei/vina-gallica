@@ -8,6 +8,7 @@ interface ProseProps {
   description: string;
   headline: string;
   headlineStyle?: "light" | "dark";
+  lang?: "en" | "fr";
   canonical?: string;
   ogTitle?: string;
   ogDescription?: string;
@@ -26,6 +27,7 @@ const {
   description,
   headline,
   headlineStyle = "dark",
+  lang = "en",
   canonical,
   ogTitle,
   ogDescription,
@@ -41,6 +43,7 @@ const {
   description={description}
   headline={headline}
   headlineStyle={headlineStyle}
+  lang={lang}
   canonical={canonical}
   ogTitle={ogTitle}
   ogDescription={ogDescription}
@@ -50,7 +53,7 @@ const {
   jsonLd={jsonLd}
 >
   <div class="prose-page">
-    <JournalBadges />
+    <JournalBadges lang={lang} />
     <main class="prose">
       <slot />
     </main>

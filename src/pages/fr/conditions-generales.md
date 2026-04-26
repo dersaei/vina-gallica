@@ -4,6 +4,7 @@ title: "Conditions Générales d'Utilisation | Vina Gallica"
 description: "Conditions générales d'utilisation de Vina Gallica — règles et conditions de la plateforme."
 headline: "Conditions Générales d'Utilisation"
 headlineStyle: "dark"
+lang: "fr"
 ---
 
 **Dernière mise à jour :** 26 avril 2026

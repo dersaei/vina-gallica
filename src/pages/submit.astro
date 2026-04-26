@@ -4,8 +4,6 @@ import LayoutSubmit from "../layouts/LayoutSubmit.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import logoMark from "../assets/logo-vina-gallica.png";
 import logoText from "../assets/vina-gallica-text.png";
-import faqHeading from "../assets/faq.png";
-import pricingHeading from "../assets/pricing.png";
 import { Image } from "astro:assets";
 import directus, { readItems } from "../lib/directus.ts";
 import MobileMenu from "../components/MobileMenu.tsx";
@@ -70,14 +68,7 @@ const faqItems = faqRaw
 
   <section id="faq" class="faq-section">
     <div class="faq-inner">
-      <Image
-        src={faqHeading}
-        alt="F.A.Q."
-        width={358}
-        height={118}
-        layout="constrained"
-        class="faq-heading"
-      />
+      <h2 class="section-title">F.A.Q.</h2>
       <dl class="faq-list">
         {faqItems.map((item) => (
           <div class="faq-item">
@@ -92,15 +83,8 @@ const faqItems = faqRaw
   <section id="pricing" class="pricing-section">
     <div class="pricing-inner">
       <div class="pricing-header">
-        <Image
-          src={pricingHeading}
-          alt="Pricing"
-          width={557}
-          height={140}
-          layout="constrained"
-          class="pricing-title"
-        />
-        <h2 class="pricing-subtitle">Start with a free listing and upgrade to Premium when you are ready to tell your full story</h2>
+        <h2 class="section-title">Pricing</h2>
+        <p class="pricing-subtitle">Start with a free listing and upgrade to Premium when you are ready to tell your full story</p>
       </div>
 
       <div class="pricing-cards">
@@ -406,13 +390,14 @@ const faqItems = faqRaw
     gap: var(--space-lg);
   }
 
-  .faq-heading {
-    display: block;
-    width: 358px;
-    max-width: 100%;
-    height: auto;
-    align-self: center;
-    padding: 0 var(--space-md);
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 6vw, 6rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+    color: var(--color-elegant-black);
   }
 
   .faq-list {
@@ -524,24 +509,20 @@ const faqItems = faqRaw
     text-align: center;
   }
 
-  .pricing-title {
-    display: block;
-    width: 557px;
-    max-width: 100%;
-    height: auto;
-    align-self: center;
-  }
-
   .pricing-subtitle {
     font-family: var(--font-label);
     font-size: 1.2rem;
     line-height: 1.5;
     font-weight: 600;
+    max-width: 700px;
     opacity: 0.65;
     text-transform: uppercase;
-    margin-top: var(--space-lg);
     letter-spacing: 0.1em;
+    text-align: center;
     color: var(--color-elegant-black);
+    margin-top: calc(var(--space-sm) * -1);
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .pricing-cards {
@@ -735,9 +716,6 @@ const faqItems = faqRaw
       grid-template-columns: 1fr;
     }
 
-    .pricing-title {
-      font-size: 1.8rem;
-    }
   }
 
   /* Join / Registration */

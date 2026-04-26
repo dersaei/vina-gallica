@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./MobileMenu.css";
 
-const navItems = [
+const navItemsEn = [
   { label: "Directory", href: "/directory" },
   { label: "Map", href: "/map" },
   { label: "About", href: "/about" },
@@ -11,9 +11,24 @@ const navItems = [
   { label: "Login", href: "/login" },
 ];
 
-export default function MobileMenu() {
+const navItemsFr = [
+  { label: "Annuaire", href: "/fr/annuaire" },
+  { label: "Carte", href: "/fr/carte" },
+  { label: "À propos", href: "/fr/a-propos" },
+  { label: "Confidentialité", href: "/fr/politique-de-confidentialite" },
+  { label: "CGU", href: "/fr/conditions-generales" },
+  { label: "Rejoindre", href: "/fr/rejoindre" },
+  { label: "Login", href: "/login" },
+];
+
+interface Props {
+  lang?: "en" | "fr";
+}
+
+export default function MobileMenu({ lang = "en" }: Props) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const navItems = lang === "fr" ? navItemsFr : navItemsEn;
 
   useEffect(() => {
     if (!open) return;
@@ -42,7 +57,7 @@ export default function MobileMenu() {
       <button
         className={`menu-toggle${open ? " menu-toggle--open" : ""}`}
         onClick={() => setOpen(!open)}
-        aria-label={open ? "Close menu" : "Open menu"}
+        aria-label={open ? (lang === "fr" ? "Fermer le menu" : "Close menu") : (lang === "fr" ? "Ouvrir le menu" : "Open menu")}
         aria-expanded={open}
         aria-controls="mobile-nav"
         type="button"
@@ -56,7 +71,7 @@ export default function MobileMenu() {
       <nav
         id="mobile-nav"
         className={`mobile-nav${open ? " mobile-nav--open" : ""}`}
-        aria-label="Mobile navigation"
+        aria-label={lang === "fr" ? "Navigation mobile" : "Mobile navigation"}
         inert={open ? undefined : true}
       >
         <ul>
