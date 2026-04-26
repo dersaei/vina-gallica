@@ -21,7 +21,13 @@ jobs:
                   node-version: "24"
 
             - name: Install Doppler CLI
-              uses: dopplerhq/cli-action@v3
+              run: |
+                  sudo apt-get update -y
+                  sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
+                  curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://dl.doppler.com/linux/pub.gpg' | sudo apt-key add -
+                  echo "deb https://dl.doppler.com/linux/deb stable main" | sudo tee /etc/apt/sources.list.d/doppler.sources.list
+                  sudo apt-get update -y
+                  sudo apt-get install -y doppler
 
             - name: Install dependencies
               run: npm ci
