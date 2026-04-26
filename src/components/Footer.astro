@@ -4,7 +4,7 @@ interface Props {
 }
 const { lang = "en" } = Astro.props;
 const year = new Date().getFullYear();
-const submitHref = lang === "fr" ? "/fr/submit" : "/submit";
+const submitHref = lang === "fr" ? "/fr/rejoindre" : "/submit";
 const submitLabel =
   lang === "fr" ? "Inscrivez-vous sur Vina Gallica" : "Get listed on Vina Gallica";
 const langSwitchHref = lang === "fr" ? "/" : "/fr";
