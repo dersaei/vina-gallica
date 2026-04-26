@@ -399,12 +399,7 @@ const faqItems = faqRaw
     text-align: center;
     color: var(--color-elegant-black);
   }
-  @media (max-width: 650px) {
-    .section-title {
-      font-size:14vw;
-    }
-  }
-  @media (max-width: 450px) {
+  @media (max-width: 500px) {
     .section-title {
       font-size: 19vw;
     }
@@ -429,6 +424,8 @@ const faqItems = faqRaw
     text-transform: uppercase;
     color: firebrick;
     margin-bottom: var(--space-sm);
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .faq-answer {
@@ -755,7 +752,7 @@ const faqItems = faqRaw
     margin-inline: auto;
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
+    gap: var(--space-md);
   }
 
   .join-subtitle {
@@ -768,7 +765,7 @@ const faqItems = faqRaw
     letter-spacing: 0.1em;
     text-align: center;
     color: var(--color-elegant-black);
-    margin-top: calc(var(--space-sm) * -1);
+    margin-bottom:var(--space-lg);
   }
 
   .join-success {
