@@ -1,0 +1,323 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Badges from "../../components/Badges.astro";
+import { Image } from "astro:assets";
+import aboutImg from "../../assets/about.jpg";
+---
+
+<Layout
+  title="À propos de Vina Gallica | Vin Français & Terroir"
+  description="Découvrez Vina Gallica et le concept de terroir — l'empreinte unique du lieu qui définit la culture vitivinicole française."
+  headline="À propos"
+  headlineStyle="light"
+  lang="fr"
+  canonical={new URL('/fr/a-propos', Astro.site).href}
+  ogType="website"
+>
+  <Badges />
+  <main class="about">
+    <svg id="flower" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 63.37099375 63.37261089">
+  <g data-name="flower">
+    <path d="M26.80293952 39.96332997c-.71302396 1.1803327-1.59426178 2.28516902-2.6531557 3.26146112-6.0481942 5.61443027-15.50097154 5.2585186-21.1154739-.78962816-.33323732-.36477348-.65457787-.73737698-.94058867-1.13323329.25214344-.1828989.52821312-.43228248.8105754-.76206855 11.22562281-12.8990948 16.40599614 1.8914751 21.11345287.79943177 1.1056671-.26213766 2.03022684-.73523072 2.78519-1.37596289"/>
+    <path fill="#231f20" d="M10.63413391 48.37227222c-3.32270716-.68498428-6.34354541-2.37961786-8.69912988-4.91675649-.4483313-.4902667-.7717104-.88049039-1.05657548-1.2737424L0 40.96768962l1.21332444-.87958218c.17820995-.12927839.36812236-.31048613.55171334-.52390709 8.58210268-9.86242476 14.6876472-4.81926634 18.33501767-1.80593371 1.37063954 1.13358384 2.78961514 2.30355538 3.57834011 2.11966143.83343088-.19761097 1.55997167-.55386001 2.15245775-1.05789507l7.0151872-5.96174125-4.75936862 7.8800541c-.81127799 1.34285793-1.79307348 2.5503549-2.91952412 3.5889357-3.21472943 2.98465997-7.4050571 4.53977327-11.79331476 4.37546837-.93001936-.0351814-1.84637484-.1463167-2.7396991-.3304777M4.1328271 41.4133647c.00333286.00317982.00561069.0066407.00894355.00982052 2.43465648 2.62273783 5.75509281 4.14581336 9.34362457 4.28135667 3.26819173.1223506 6.40077795-.92094298 8.92174123-2.953811-1.45228846-.39411715-2.80778223-1.51410913-4.21768627-2.6797178-3.83758939-3.16920718-7.46140322-6.16621692-14.05662308 1.3423516"/>
+    <path fill="#f7941d" d="M26.80293952 39.96332997c-.71302396 1.1803327-1.59426178 2.28516902-2.6531557 3.26146112-6.0481942 5.61443027-15.50097154 5.2585186-21.1154739-.78962816-.33323732-.36477348-.65457787-.73737698-.94058867-1.13323329.25214344-.1828989.52821312-.43228248.8105754-.76206855 11.22562281-12.8990948 16.40599614 1.8914751 21.11345287.79943177 1.1056671-.26213766 2.03022684-.73523072 2.78519-1.37596289" opacity=".75"/>
+    <path fill="#231f20" d="M30.70800936 36.433842c-3.7215468-.76720606-6.30960327-3.52127747-5.76983802-6.13955924.53976524-2.61828176 4.0061356-4.1247167 7.7276824-3.35751064s6.30950468 3.52175569 5.76973943 6.14003745c-.53976524 2.61828177-4.00603702 4.12423848-7.72758381 3.35703242m1.9073677-9.2522187c-3.58668734-.73940444-6.9203909.67971382-7.43235453 3.16313614s1.98877615 5.10482692 5.5754635 5.84423136 6.92029231-.67923558 7.43225595-3.1626579-1.98867757-5.10530515-5.57536492-5.8447096"/>
+    <path d="M34.08687348 40.9923227c.33043718 1.33880534.4885452 2.74317182.43013689 4.18226565-.30671743 8.24672086-7.24250794 14.67917625-15.48924622 14.37254337-.49356816-.02229944-.9842607-.05854782-1.46641356-.13622032.04896328-.3076214.0678332-.67917296.03429951-1.1120272-1.18332339-17.05875143 12.938266-10.26331625 15.49474933-14.36418208.59646539-.96718401.91570054-1.9554738.99647405-2.94237943"/>
+    <path fill="#231f20" d="m15.84779278 60.65346498.23241827-1.4756521c.03443484-.22023952.04097366-.48411958.01993287-.76415478-.904776-13.04260453 6.9773809-13.7927658 11.68728-14.2406789 1.7697113-.16861707 3.60035874-.34261976 4.02961245-1.03186447.44920962-.72800596.71095504-1.49465813.77434161-2.27129243l.75099072-9.16156632 2.2004391 8.92447178c.37605892 1.52281899.53449318 3.07106952.47306317 4.60241178-.16293938 4.38405222-2.02632757 8.44597-5.24557292 11.43318887-3.21904817 2.9862624-7.40927726 4.54089748-11.79878712 4.37783008-.45541576-.02059838-1.04231836-.05633792-1.6492491-.15453655zm17.1010659-14.58187227c-1.30581772.74784239-3.05617342.91446707-4.87666483 1.08757216-4.95509305.47164956-9.6356777.91762911-8.99007716 10.88858841.0039244.00031048.00880523.00081812.0128282.00065037 3.57705436.13317721 7.00286716-1.13782831 9.63503116-3.57951544 2.39683646-2.22397533 3.87417211-5.17743656 4.21888263-8.3972955"/>
+    <path fill="#f7941d" d="M34.08687348 40.9923227c.33043718 1.33880534.4885452 2.74317182.43013689 4.18226565-.30671743 8.24672086-7.24250794 14.67917625-15.48924622 14.37254337-.49356816-.02229944-.9842607-.05854782-1.46641356-.13622032.04896328-.3076214.0678332-.67917296.03429951-1.1120272-1.18332339-17.05875143 12.938266-10.26331625 15.49474933-14.36418208.59646539-.96718401.91570054-1.9554738.99647405-2.94237943" opacity=".75"/>
+    <path fill="#231f20" d="M28.50647493 37.11069934c-1.0913094-.22497612-2.00652507-.77210681-2.57608024-1.63684695-1.4690008-2.23321981-.08304804-5.7494368 3.0906715-7.83868177 3.1758296-2.08980706 6.95138992-1.97154484 8.42240221.2615911 1.4690008 2.23321981.08304804 5.7494368-3.09067148 7.83868177-1.94501088 1.28013839-4.11706046 1.73174738-5.84632199 1.37525585m6.3083559-10.6103507c-1.66135358-.34249215-3.76574245.10013202-5.65537934 1.34382519-3.05931353 2.01312024-4.41428048 5.37419516-3.01929432 7.49244688 1.39307326 2.11785737 5.01705098 2.20237771 8.07425444.18981957 3.05931353-2.01312024 4.41332402-5.37439234 3.01929431-7.49244688-.5321535-.80916899-1.39069138-1.32168216-2.41887509-1.53364477"/>
+    <path d="M39.9650003 36.56941133c1.18033272.71302396 2.28516903 1.59426178 3.26146112 2.6531557 5.61443027 6.0481942 5.2585186 15.50097154-.78962816 21.1154739-.36477347.33323732-.73737697.65457787-1.13323328.94058867-.1828989-.25214344-.43228249-.52821312-.76206856-.8105754-12.8990948-11.22562281 1.89147512-16.40599614.79943178-21.11345287-.26213766-1.1056671-.73523072-2.03022684-1.3759629-2.78519"/>
+    <path fill="#231f20" d="m40.96749245 63.37261089-.879385-1.2142809c-.08909125-.12405876-.25302405-.32038088-.522571-.55093934-9.86260724-8.58363595-4.81916776-14.68812544-1.80487869-18.33529873 1.13205058-1.37045707 2.30258422-2.7873226 2.11966143-3.5783401-.19818778-.83305125-.55481646-1.56016885-1.05865434-2.15361138l-5.95420295-7.01064187 7.87279686 4.75587833c1.34152183.810504 2.54892022 1.79277771 3.5888371 2.92000234 2.98456139 3.21520766 4.53977327 7.4050571 4.37489156 11.7936944-.16468453 4.38768084-2.0281713 8.45007685-5.24665738 11.43844934-.49382615.45108734-.88452807.77436786-1.27479743 1.05685653zm1.78457453-22.40731892c-.39411715 1.45228846-1.51410913 2.80778223-2.67923957 4.21778486-3.17006505 3.83691399-6.16488084 7.4621772 1.34187338 14.0565245.00365804-.00323428.0072175-.00599033.01087555-.0092246 2.62273783-2.43465649 4.14601054-5.75604927 4.28040022-9.34382176.12225202-3.2677135-.92104157-6.40029971-2.95390958-8.921263"/>
+    <path fill="#f7941d" d="M39.9650003 36.56941133c1.18033272.71302396 2.28516903 1.59426178 3.26146112 2.6531557 5.61443027 6.0481942 5.2585186 15.50097154-.78962816 21.1154739-.36477347.33323732-.73737697.65457787-1.13323328.94058867-.1828989-.25214344-.43228249-.52821312-.76206856-.8105754-12.8990948-11.22562281 1.89147512-16.40599614.79943178-21.11345287-.26213766-1.1056671-.73523072-2.03022684-1.3759629-2.78519" opacity=".75"/>
+    <path fill="#231f20" d="M30.29561885 38.43425708c-2.61875999-.53986383-4.12461811-4.00661383-3.35751065-7.7276824.76720606-3.7215468 3.52137606-6.31008149 6.14013605-5.77021765s4.1246181 4.00661383 3.35741206 7.72816062c-.76710747 3.72106857-3.52127747 6.30960327-6.14003746 5.76973943m2.73214872-13.25304886c-2.48390054-.51206223-5.10540373 1.98915579-5.84480818 5.57584314-.73930585 3.58620912.6792356 6.9202923 3.16313614 7.43235453s5.10540373-1.98915579 5.84470959-5.57536491c.73940444-3.58668735-.679137-6.92077054-3.16303755-7.43283276"/>
+    <path d="M40.99399303 29.28547737c1.33880534-.33043718 2.74317183-.4885452 4.18226566-.43013689 8.24672086.30671743 14.67917625 7.24250794 14.37254336 15.48924622-.02229943.49356816-.05854781.9842607-.13622031 1.46641356-.3076214-.04896328-.67917296-.0678332-1.1120272-.03429951-17.05875143 1.18332339-10.26331626-12.938266-14.36418208-15.49474933-.96718401-.59646539-1.9554738-.91570054-2.94237943-.99647405"/>
+    <path fill="#231f20" d="M52.5199146 46.98081057c-7.40780352-1.52663842-7.97782752-7.53051816-8.34540214-11.39676252-.16861707-1.7697113-.34271835-3.5998805-1.03186447-4.02961245-.72896241-.44940679-1.49465813-.71095504-2.27129242-.77434161l-9.15841593-.74934415 8.9212228-2.20160745c1.52224217-.37567927 3.07068988-.53506998 4.6023132-.47258494 4.38261753.16264362 8.4465468 2.02594793 11.43318886 5.24557292 2.98674063 3.21914676 4.54089747 7.40927726 4.37792867 11.7983089-.02940186.66498567-.07662626 1.1697528-.15338293 1.64848981l-.2380878 1.47897026-1.47898497-.2355981c-.21812943-.03499693-.48095446-.0418168-.76061002-.0201992-2.33667556.1619153-4.28021241.04193347-5.89661284-.29129147M46.07312598 30.4226133c.74784239 1.30581771.91446707 3.05617341 1.08747357 4.87714305.47212779 4.95519163.9208781 9.63684604 10.88858842 8.99007715.0007887-.0038258.00062094-.00784877.0004532-.01187174.13337438-3.57801082-1.13763114-7.00382361-3.57941686-9.63550939-2.22397533-2.39683646-5.17992628-3.87418682-8.39709833-4.21983907"/>
+    <path fill="#f7941d" d="M40.99399303 29.28547737c1.33880534-.33043718 2.74317183-.4885452 4.18226566-.43013689 8.24672086.30671743 14.67917625 7.24250794 14.37254336 15.48924622-.02229943.49356816-.05854781.9842607-.13622031 1.46641356-.3076214-.04896328-.67917296-.0678332-1.1120272-.03429951-17.05875143 1.18332339-10.26331626-12.938266-14.36418208-15.49474933-.96718401-.59646539-1.9554738-.91570054-2.94237943-.99647405" opacity=".75"/>
+    <path fill="#231f20" d="M32.46235197 37.92621315c-1.72830508-.35629435-3.54465183-1.63012109-4.82479022-3.57513196-2.0896246-3.17429634-1.97192449-6.95196674.26053605-8.42212117 2.2346692-1.47119476 5.7514483-.08313192 7.83916 3.09077007 2.08866815 3.17409917 1.97096803 6.95176957-.2614925 8.421924-.8650212.56850013-1.92114748.70973236-3.01341333.48455906M28.0364831 26.13796322c-2.119011 1.39383254-2.20381239 5.01675522-.19011533 8.07568911 2.01379564 3.05845567 5.37506774 4.41246616 7.4910122 3.01899856 2.119011-1.39383254 2.2038124-5.01675522.19011534-8.07568912-2.0128392-3.05825849-5.37516633-4.41198793-7.49101221-3.01899855"/>
+    <path d="M36.57108167 23.40735054c.71302396-1.1803327 1.59426178-2.28516902 2.6531557-3.26146111 6.0481942-5.61443027 15.50097154-5.2585186 21.1154739.78962816.33323731.36477347.65457787.73737697.94058867 1.13323328-.25214344.1828989-.52821312.43228249-.8105754.76206856-11.22562282 12.8990948-16.40599614-1.89147512-21.11345287-.79943178-1.1056671.26213766-2.03022685.73523072-2.78519 1.3759629"/>
+    <path fill="#231f20" d="m30.53971344 30.49333608 4.74747777-7.86106783c.81127799-1.34285792 1.79307348-2.5503549 2.91952411-3.58893568 6.64079721-6.16256281 17.06385694-5.77270416 23.23224233.87128758.3091294.33842829.6988597.77922306 1.05713758 1.27585248l.87489852 1.21186034-1.20930147.87941442c-.181868.13251267-.3678266.30905146-.55286696.52466636-8.58210268 9.86242477-14.68669076 4.81946352-18.33501768 1.80593372-1.37073812-1.13310561-2.79096594-2.30183965-3.5783401-2.11966143-.83227726.1968517-1.55891663.55357896-2.15361137 1.05865435zm10.42796966-9.8732557c1.45218987.39459539 2.80768364 1.51458737 4.21768627 2.6797178 3.83462145 3.1690939 7.4615018 6.1657387 14.05576522-1.343027-.00323428-.00365804-.00656714-.00683786-.00980142-.01049591-4.81545446-5.187509-12.82524315-5.70454775-18.26365007-1.32619488"/>
+    <path fill="#f7941d" d="M36.57108167 23.40735054c.71302396-1.1803327 1.59426178-2.28516902 2.6531557-3.26146111 6.0481942-5.61443027 15.50097154-5.2585186 21.1154739.78962816.33323731.36477347.65457787.73737697.94058867 1.13323328-.25214344.1828989-.52821312.43228249-.8105754.76206856-11.22562282 12.8990948-16.40599614-1.89147512-21.11345287-.79943178-1.1056671.26213766-2.03022685.73523072-2.78519 1.3759629" opacity=".75"/>
+    <path fill="#231f20" d="M30.70800936 36.433842c-3.7215468-.76720606-6.30960327-3.52127747-5.76983802-6.13955924.53976524-2.61828176 4.0061356-4.1247167 7.7276824-3.35751064s6.30950468 3.52175569 5.76973943 6.14003745c-.53976524 2.61828177-4.00603702 4.12423848-7.72758381 3.35703242m1.9073677-9.2522187c-3.58668734-.73940444-6.9203909.67971382-7.43235453 3.16313614s1.98877615 5.10482692 5.5754635 5.84423136 6.92029231-.67923558 7.43225595-3.1626579-1.98867757-5.10530515-5.57536492-5.8447096"/>
+    <path d="M29.2871477 22.37835782c-.33043717-1.33880534-.48854519-2.74317183-.43013688-4.18226566.30671743-8.24672086 7.24250794-14.67917625 15.48924622-14.37254336.49356816.02229943.9842607.05854781 1.46641356.13622031-.04896328.3076214-.0678332.67917296-.03429951 1.1120272 1.18332339 17.05875144-12.938266 10.26331625-15.49474933 14.36418208-.59646539.96718401-.91570055 1.9554738-.99647405 2.94237943"/>
+    <path fill="#231f20" d="m30.0314944 31.66235813-2.20043911-8.92447178c-.3760589-1.52281899-.53449317-3.07106952-.47306317-4.60241179.1628408-4.38357398 2.02632758-8.44597 5.24652937-11.43299168 3.21904817-2.98626241 7.40832081-4.54109466 11.79783068-4.37802726.66679998.03027443 1.1715671.07749883 1.64829264.15433937l1.48145997.23810251-.2375257 1.48108033c-.03565763.2164976-.0419007.47894298-.0208599.75897818.904776 13.04260453-6.9773809 13.7927658-11.68728 14.2406789-1.7697113.16861707-3.60035874.34261976-4.02961245 1.03186447-.44920962.72800596-.71095504 1.49465813-.77434162 2.27129243zm14.260252-26.3394973c-.00392438-.00031048-.00880522-.00081812-.0128282-.00065037-3.57705436-.13317721-7.00286715 1.1378283-9.63503115 3.57951544-2.39693505 2.22445355-3.87417212 5.17743656-4.21888263 8.3972955 1.30581771-.74784239 3.05617342-.91446707 4.87666483-1.08757216 4.95509305-.47164956 9.6356777-.91762911 8.99007715-10.88858841"/>
+    <path fill="#f7941d" d="M29.2871477 22.37835782c-.33043717-1.33880534-.48854519-2.74317183-.43013688-4.18226566.30671743-8.24672086 7.24250794-14.67917625 15.48924622-14.37254336.49356816.02229943.9842607.05854781 1.46641356.13622031-.04896328.3076214-.0678332.67917296-.03429951 1.1120272 1.18332339 17.05875144-12.938266 10.26331625-15.49474933 14.36418208-.59646539.96718401-.91570055 1.9554738-.99647405 2.94237943" opacity=".75"/>
+    <path fill="#231f20" d="M28.50647493 37.11069934c-1.0913094-.22497612-2.00652507-.77210681-2.57608024-1.63684695-1.4690008-2.23321981-.08304804-5.7494368 3.0906715-7.83868177 3.1758296-2.08980706 6.95138992-1.97154484 8.42240221.2615911 1.4690008 2.23321981.08304804 5.7494368-3.09067148 7.83868177-1.94501088 1.28013839-4.11706046 1.73174738-5.84632199 1.37525585m-2.36631776-1.77407863c1.39307326 2.11785737 5.01705098 2.20237771 8.07425444.18981957 3.05931353-2.01312024 4.41428047-5.37419517 3.01929431-7.49244688-1.39241257-2.11622552-5.01503949-2.2024616-8.07425443-.18981957-3.05931353 2.01312024-4.41332403 5.37439234-3.01929432 7.49244688"/>
+    <path fill="#fdedd2" d="M30.85667894 35.71267872c-2.2208768-.45783923-3.65514811-2.63703587-3.19740747-4.85743445.45783924-2.2208768 2.63703588-3.65514812 4.85791268-3.19730888s3.65514812 2.63703587 3.19730889 4.85791268c-.45774065 2.22039858-2.63693729 3.65466989-4.8578141 3.19683065m1.2566918-6.09593382c-1.1410448-.2352292-2.26015913.5017462-2.49528975 1.64231278-.23513061 1.14056658.50136657 2.25958232 1.64241137 2.49481153 1.1410448.2352292 2.26006054-.50126798 2.49519116-1.64183456s-.50126798-2.26006054-1.64231278-2.49528975"/>
+    <circle cx="31.68701059" cy="31.68534026" r="3.1121008" fill="#c05c56"/>
+    <path fill="#292529" d="M30.9576323 35.22297634c-1.95115792-.40223602-3.21079588-2.31609903-2.80865845-4.26677872.40213744-1.9506797 2.31609903-3.21079587 4.26725695-2.80855985s3.21069729 2.31657725 2.80855986 4.26725694-2.31600045 3.21031765-4.26715836 2.80808163m1.2566918-6.09593382c-1.4107637-.29083241-2.79511307.62029812-3.08594549 2.0310618-.29073383 1.41028547.6203967 2.79463485 2.0311604 3.08546726s2.79511306-.6202981 3.08584689-2.03058357c.29083241-1.4107637-.62029812-2.79511307-2.0310618-3.08594549"/>
+  </g>
+</svg>
+    <article class="terroir-article">
+
+      <div class="article-body">
+        <h2>
+Vina Gallica est une collection grandissante d'expériences vitivinicoles françaises
+        </h2>
+<div class="about-cta">
+        <a href="/fr/rejoindre" class="join-btn">
+          Vous souhaitez référencer votre établissement ?<br /> Rejoignez-nous pour en savoir plus !
+          </a>
+      </div>
+        <p>La viticulture française ne traite pas le vin comme un simple produit agricole. Dans la philosophie du terroir — un concept si profondément ancré dans la culture française qu'il est intraduisible dans aucune autre langue au monde — l'objectif n'est pas de produire le meilleur vin de manière objective, mais celui qui exprime le plus fidèlement le caractère de son lieu de naissance : son empreinte.</p>
+
+        <p>Le vin français est ainsi la résultante de plusieurs éléments — sol, microclimat, ensoleillement et tradition locale — qui se combinent pour former son goût et son arôme définitifs, nous permettant d'éprouver le caractère unique de chaque terroir.</p>
+        <h3>Vina Gallica ambitionne de devenir la référence pour découvrir les expériences des terroirs français, et vous permettre de les vivre au mieux en personne</h3>
+      </div>
+
+      <Image src={aboutImg} alt="Vignoble français" layout='constrained' class="about-image" />
+
+      <div class="regions-section">
+        <h3 class="regions-heading">14 Régions Viticoles Françaises</h3>
+
+        <div class="region">
+          <h4>Alsace</h4>
+          <p>L'Alsace abrite l'un des systèmes géologiques les plus complexes et les plus mystérieux au monde. Au fil de millions d'années, de puissants séismes ont façonné ici une mosaïque de plus de 50 types de sols différents. Des vignes plantées à quelques mètres d'intervalle peuvent ainsi produire des vins aux profils aromatiques radicalement différents, faisant du terroir alsacien un gigantesque puzzle souterrain. Aujourd'hui, en visitant les vignerons alsaciens, il est possible de vivre quelque chose de fascinant : beaucoup servent le même vin du même millésime, mais issu de parcelles séparées de quelques dizaines de mètres. Ils prouvent qu'il est possible de distinguer dans son verre un goût de la terre absolument différent.</p>
+        </div>
+
+        <div class="region">
+          <h4>Beaujolais</h4>
+          <p>Bien que la région soit aujourd'hui associée à la célébration du vin nouveau, rares sont ceux qui savent que son cépage emblématique — le Gamay — fut jadis banni dans la honte. En 1395, le duc de Bourgogne qualifia ce cépage de « vil et déloyal », ordonnant son arrachage complet de ses domaines d'élite. Exilé vers les collines granitiques du Beaujolais au sud, le Gamay y trouva son refuge idéal, où il règne encore aujourd'hui. Ce cépage autrefois disgracié connaît désormais sa renaissance : les vins de Beaujolais Villages et des Crus rivalisent avec l'élégance — et les prix en hausse — de la Bourgogne, s'imposant comme une référence absolue dans les bars à vins les plus tendance du monde.</p>
+        </div>
+
+        <div class="region">
+          <h4>Bordeaux</h4>
+          <p>Les vignobles les plus prestigieux et les plus chers de l'appellation Médoc à Bordeaux… n'existaient même pas avant le XVIIe siècle. Ce territoire était alors un vaste marais inhospitalier et dangereux. C'est seulement lorsque des ingénieurs néerlandais, mandatés par des marchands, asséchèrent ces zones qu'un sol de graves fut mis au jour — un sol qui s'avéra parfait pour le royal Cabernet Sauvignon. Aujourd'hui, sur ces anciens marécages se dressent les châteaux les plus luxueux de la planète. Les sols de graves découverts alors produisent des vins iconiques pour lesquels les collectionneurs acceptent de payer des milliers d'euros la bouteille.</p>
+        </div>
+
+        <div class="region">
+          <h4>Bourgogne</h4>
+          <p>Le sol des vignobles bourguignons classés Grand Cru est considéré comme si précieux, presque sacré, que les employés doivent, dit-on, soigneusement nettoyer leurs bottes avant de quitter une parcelle, pour ne pas emporter avec eux le moindre gramme de cet inestimable terroir. Qui plus est, des moines cisterciens délimitèrent autrefois ces vignobles selon la légende en goûtant littéralement la terre. Aujourd'hui, cette obsession des différences microscopiques a atteint son paroxysme : un hectare de Grand Cru se négocie à plusieurs dizaines de millions d'euros, et les vignerons utilisent des drones de précision pour protéger chaque centimètre de ce sol historique.</p>
+        </div>
+
+        <div class="region">
+          <h4>Champagne</h4>
+          <p>Des millions de bouteilles du vin le plus luxueux au monde mûrissent dans l'obscurité totale d'anciennes carrières de craie — les crayères — creusées par les Romains il y a plus de 2 000 ans. Ces labyrinthes souterrains monumentaux, s'étendant sur des kilomètres sous des villes comme Reims, offrent le microclimat idéal pour le développement des bulles du champagne. Aujourd'hui classés au patrimoine mondial de l'UNESCO, ces dédales souterrains abritent des réserves de champagne en cours de vieillissement représentant des milliards d'euros, et une visite y constitue l'une des plus spectaculaires attractions touristiques de France.</p>
+        </div>
+
+        <div class="region">
+          <h4>Corse</h4>
+          <p>Les vignobles corses produisent des vins imprégnés d'un véritable esprit maritime. De nombreuses vignes sont plantées si près du littoral rocheux méditerranéen que les embruns salés portés par le vent se déposent directement sur les raisins. Lorsque l'humidité s'évapore, le sel se cristallise sur les peaux, conférant aux vins locaux une note saline unique, fascinante et palpable, introuvable ailleurs. Dans la révolution gastronomique actuelle, cette minéralité naturelle est très prisée par les grands sommeliers, qui considèrent les vins corses comme l'accord parfait pour des plats de fruits de mer sophistiqués et contemporains.</p>
+        </div>
+
+        <div class="region">
+          <h4>Jura</h4>
+          <p>C'est ici que naît l'une des boissons les plus énigmatiques au monde : le Vin Jaune. Il mûrit dans des fûts de chêne délibérément non ouillés, sur lesquels se forme mystérieusement un « voile » de levures mortes protégeant le liquide de toute altération. Après plus de six années, le vin est mis en bouteille dans l'exceptionnel clavelin — une bouteille de 62 cl — qui correspond précisément à ce qui reste d'un litre de vin après cette longue période d'élevage, compte tenu de la « part des anges » (l'évaporation). Aujourd'hui, le Jura est devenu la Mecque absolue et l'épicentre mondial de la révolution du vin naturel : ce style ancien, énigmatique et fortement oxydatif est désormais le « goût » le plus recherché par les amateurs de vin dans le monde entier.</p>
+        </div>
+
+        <div class="region">
+          <h4>Languedoc-Roussillon</h4>
+          <p>Le Champagne n'a pas été le premier vin effervescent de France. Cette couronne historique revient à l'appellation Limoux, nichée en Languedoc. Des archives attestent que ce sont les moines de l'abbaye Saint-Hilaire qui y découvrirent le secret des bulles emprisonnées dans le verre en 1531 — plus d'un siècle avant que le célèbre Dom Pérignon n'ait prétendument « bu des étoiles » en Champagne. Aujourd'hui, la Blanquette de Limoux n'est pas seulement une curiosité pour connaisseurs : c'est aussi une merveilleuse alternative abordable aux champagnes coûteux, qui prouve que des siècles de qualité n'ont pas à peser lourd sur le portefeuille.</p>
+        </div>
+
+        <div class="region">
+          <h4>Lorraine</h4>
+          <p>Autrefois grande puissance viticole approvisionnant empereurs romains et cours européennes, la Lorraine est aujourd'hui l'un des secrets vinicoles de France les mieux gardés et des plus méconnus. À travers le phylloxéra et les ténèbres des guerres mondiales, quelques rares vignobles ont survécu, produisant le Vin Gris — un vin rosé pâle, intrigant et historique, élaboré en partie à partir du Pinot Noir. Alors que la demande mondiale de rosés continue de croître, les amateurs en quête de nouveauté se détournent des succès commerciaux et redécouvrent avec fascination ce vin historique, le percevant comme un véritable joyau artisanal.</p>
+        </div>
+
+        <div class="region">
+          <h4>Provence</h4>
+          <p>Si le rosé est aujourd'hui associé à une tendance estivale et moderne, la Provence en produisait déjà… dans l'Antiquité. Lorsque les Grecs phocéens fondèrent l'actuelle Marseille vers 600 av. J.-C., les techniques de macération prolongée (laissant le jus en contact avec les peaux) étaient encore rares. Les premiers vins français de l'histoire étaient donc naturellement légers et ressemblaient de façon surprenante aux élégants rosés provençaux que nous connaissons aujourd'hui. Seule la Provence dicte désormais les tendances mondiales : la couleur saumon remarquablement pâle de ses vins est devenue un standard mondial du style de vie estival, repris de la Californie jusqu'en Nouvelle-Zélande.</p>
+        </div>
+
+        <div class="region">
+          <h4>Savoie-Bugey</h4>
+          <p>Cultiver la vigne dans cette région alpine est presque un sport extrême. Les pentes de montagne peuvent être si inclinées que travailler dans les vignes ressemble à de l'alpinisme. Pour vendanger les parcelles les plus inaccessibles, quasi verticales, des vignerons isolés ont longtemps dû — et doivent encore — recourir à des systèmes de poulies et de cordes ; dans des cas exceptionnels, les vendanges sont même acheminées par hélicoptère. Aujourd'hui, avec la montée des températures, ces parcelles en altitude plus fraîches gagnent en valeur, produisant des vins à plus faible teneur en alcool et d'une fraîcheur remarquable, de plus en plus recherchée par le marché.</p>
+        </div>
+
+        <div class="region">
+          <h4>Sud-Ouest</h4>
+          <p>Dans l'appellation Cahors naît le légendaire « Vin Noir ». Au Moyen Âge, cette cuvée à base de Malbec était si dense, d'une teinte noire d'encre et d'une puissance telle que les rois d'Angleterre la prisaient davantage que les vins de la Bordeaux voisine. En raison de sa couleur intense et profonde, elle acquit également un statut mystique : pendant des siècles, ce fut le vin sacramentel officiel de la puissante Église orthodoxe russe. Aujourd'hui, après des décennies de domination mondiale du Malbec argentin, le Cahors français vit un grand retour : des consommateurs avertis y reviennent pour « l'original », en quête d'une structure plus authentique et plus profonde.</p>
+        </div>
+
+        <div class="region">
+          <h4>Val de Loire et Centre</h4>
+          <p>La Loire est un paysage parsemé de châteaux de conte de fées construits en tuffeau, une pierre blanche calcaire. Pour les bâtir, les architectes ont creusé des centaines de kilomètres de caves souterraines dans les collines environnantes, créant un réseau complexe de tunnels troglodytiques. Lorsque les carriers partirent, les vignerons investirent ces espaces : ces caves fraîches et sombres servent encore aujourd'hui de chais idéaux pour les millésimes les plus anciens et les plus précieux de la Loire. Aujourd'hui, nombre de ces galeries souterraines magiques sont des salles de dégustation contemporaines, et certains domaines proposent même d'y séjourner, alliant histoire brute et tourisme de luxe.</p>
+        </div>
+
+        <div class="region">
+          <h4>Vallée du Rhône</h4>
+          <p>Dans la célèbre appellation Châteauneuf-du-Pape, les vignes poussent souvent là où il ne semble y avoir aucun sol. Le terrain est recouvert à perte de vue de grosses galets roulés, ces pierres rondes polies par les rivières. Ces galets préhistoriques fonctionnent comme des accumulateurs de chaleur naturels : le jour, ils absorbent le soleil brûlant du Midi comme un four, pour restituer leur chaleur la nuit et réchauffer les raisins jusqu'à l'aube. Aujourd'hui, avec les vagues de chaleur, cet atout ancestral est devenu un défi : les vignerons doivent adopter de nouvelles techniques pour protéger leurs vignes, illustrant parfaitement la façon dont un vieux terroir doit faire face au changement climatique actuel.</p>
+        </div>
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  .about {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl);
+    position: relative;
+  }
+
+  #flower {
+    width: 150px;
+    height: auto;
+    display: block;
+    position: relative;
+    margin: 0 0 var(--space-md);
+  }
+  .article-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  h2 {
+    font-size:1.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+    font-family: var(--font-heading);
+    color: var(--color-elegant-black);
+    letter-spacing: -0.01em;
+    text-align: center;
+    margin:var(--space-md) 0 var(--space-xs);
+  }
+  h3 {
+    font-size: 1.4rem;
+    font-family: var(--font-label);
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+  }
+
+  .article-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-elegant-black);
+    font-family: var(--font-extra);
+    font-weight: 400;
+    text-align: justify;
+    width: 80%;
+    margin: 0 auto;
+    text-transform: uppercase;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  .terroir-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    border-left: 3px solid #b22222;
+    padding-left: var(--space-lg);
+  }
+
+  .terroir-list li {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-elegant-black);
+  }
+
+  .terroir-list strong {
+    font-weight: 700;
+  }
+
+  .about-cta {
+    display: flex;
+    justify-content: center;
+    margin: var(--space-xs) 0 var(--space-md);
+  }
+
+  .join-btn {
+    text-align: center;
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.6em 1.2em 0.2em;
+    border-style: solid;
+    border-width: 2px;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    background-color: #3DD1E7;
+    color: var(--color-elegant-black);
+    cursor: pointer;
+    transition: all 235ms ease-in-out;
+  }
+
+  .join-btn:hover {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+    transform: translate3d(0, 2px, 0);
+  }
+
+  .join-btn:focus {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+  }
+
+  .about-image {
+    width: 100%;
+    max-width: 1180px;
+    height: auto;
+    display: block;
+    margin: var(--space-lg) auto;
+  }
+
+  .regions-section {
+    max-width: 680px;
+    width: 100%;
+    margin: var(--space-xl) auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .regions-heading {
+    font-family: var(--font-heading)!important;
+    font-size: 1.5rem!important;
+    font-weight: 700!important;
+    letter-spacing: -0.01em;
+    color: var(--color-elegant-black);
+    padding-bottom: var(--space-md);
+    border-bottom: 2px solid var(--color-elegant-black);
+  }
+
+  .region h4 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-elegant-black);
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 630px) {
+    .about {
+      padding: var(--space-xl) var(--space-md);
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    h3 {
+      font-size: 1.2rem;
+    }
+    .join-btn {
+      font-size: 0.9rem;
+    }
+  }
+  @media (max-width: 400px) {
+   p {
+    width: 95%;
+   }
+  }
+
+</style>
