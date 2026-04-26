@@ -132,7 +132,7 @@ const faqItems = faqRaw
 
   <section id="rejoindre" class="join-section">
     <div class="join-inner">
-      <h2 class="join-title">Rejoindre Vina Gallica</h2>
+      <h2 class="section-title">Rejoindre</h2>
       <p class="join-subtitle">Créez votre compte gratuit et ajoutez votre entreprise à l'annuaire</p>
 
       <div id="join-success" class="join-success" role="alert" aria-live="polite" hidden>
@@ -391,12 +391,22 @@ const faqItems = faqRaw
 
   .section-title {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 6vw, 6rem);
+    font-size: 6rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     text-align: center;
     color: var(--color-elegant-black);
+  }
+  @media (max-width: 650px) {
+    .section-title {
+      font-size:14vw;
+    }
+  }
+  @media (max-width: 450px) {
+    .section-title {
+      font-size: 21vw;
+    }
   }
 
   .faq-list {
@@ -540,6 +550,12 @@ const faqItems = faqRaw
     padding: var(--space-lg);
     border-radius: 2px;
   }
+  @media (max-width: 380px) {
+    .pricing-card {
+      padding: var(--space-md);
+    }
+  }
+
 
   .pricing-card--free {
     background-color: #f0ffff;
@@ -552,6 +568,11 @@ const faqItems = faqRaw
     border: 10px solid var(--color-gold);
     color:white;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  @media (max-width: 350px) {
+    .pricing-card--free, .pricing-card--premium {
+      border-width: 2px;
+    }
   }
 
   .pricing-card-header {
@@ -566,6 +587,11 @@ const faqItems = faqRaw
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
+  }
+  @media (max-width: 340px) {
+    .pricing-plan {
+      font-size: 2.8rem;
+    }
   }
 
   .pricing-card--free .pricing-plan {
@@ -727,21 +753,11 @@ const faqItems = faqRaw
   }
 
   .join-inner {
-    max-width: 680px;
+    max-width: 650px;
     margin-inline: auto;
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
-  }
-
-  .join-title {
-    font-family: var(--font-heading);
-    font-size:clamp(3rem, 6vw, 6rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    text-align: center;
-    color: var(--color-elegant-black);
   }
 
   .join-subtitle {

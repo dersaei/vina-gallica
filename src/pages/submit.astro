@@ -84,7 +84,7 @@ const faqItems = faqRaw
     <div class="pricing-inner">
       <div class="pricing-header">
         <h2 class="section-title">Pricing</h2>
-        <p class="pricing-subtitle">Start with a free listing and upgrade to Premium when you are ready to tell your full story</p>
+        <h3 class="pricing-subtitle">Start with a free listing and upgrade to Premium when you are ready to tell your full story</h3>
       </div>
 
       <div class="pricing-cards">
@@ -133,8 +133,8 @@ const faqItems = faqRaw
 
   <section id="join" class="join-section">
     <div class="join-inner">
-      <h2 class="join-title">Join Vina Gallica</h2>
-      <p class="join-subtitle">Create your free account and add your business to the collection</p>
+      <h2 class="section-title">Join</h2>
+      <h3 class="join-subtitle">Create your free account and add your business to the collection</h3>
 
       <div id="join-success" class="join-success" role="alert" aria-live="polite" hidden>
         <p class="join-success-text">
@@ -390,14 +390,24 @@ const faqItems = faqRaw
     gap: var(--space-lg);
   }
 
-  .section-title {
+ .section-title {
     font-family: var(--font-heading);
-    font-size: clamp(4rem, 6vw, 6rem);
+    font-size: 6rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     text-align: center;
     color: var(--color-elegant-black);
+  }
+  @media (max-width: 650px) {
+    .section-title {
+      font-size:14vw;
+    }
+  }
+  @media (max-width: 450px) {
+    .section-title {
+      font-size: 19vw;
+    }
   }
 
   .faq-list {
@@ -539,6 +549,11 @@ const faqItems = faqRaw
     padding: var(--space-lg);
     border-radius: 2px;
   }
+  @media (max-width: 380px) {
+    .pricing-card {
+      padding: var(--space-md);
+    }
+  }
 
   .pricing-card--free {
     background-color: #f0ffff;
@@ -551,6 +566,11 @@ const faqItems = faqRaw
     border: 10px solid var(--color-gold);
     color:white;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+    @media (max-width: 350px) {
+    .pricing-card--free, .pricing-card--premium {
+      border-width: 2px;
+    }
   }
 
   .pricing-card-header {
@@ -565,6 +585,11 @@ const faqItems = faqRaw
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
+  }
+    @media (max-width: 340px) {
+    .pricing-plan {
+      font-size: 2.8rem;
+    }
   }
 
   .pricing-card--free .pricing-plan {
@@ -731,16 +756,6 @@ const faqItems = faqRaw
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
-  }
-
-  .join-title {
-    font-family: var(--font-heading);
-    font-size:clamp(3rem, 6vw, 6rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    text-align: center;
-    color: var(--color-elegant-black);
   }
 
   .join-subtitle {
@@ -944,9 +959,12 @@ const faqItems = faqRaw
     pointer-events: none;
   }
 
-  @media (max-width: 560px) {
+  @media (max-width: 500px) {
     .join-form-row {
       grid-template-columns: 1fr;
+    }
+    .pricing-subtitle, .join-subtitle {
+      font-size: 1rem;
     }
   }
 </style>
