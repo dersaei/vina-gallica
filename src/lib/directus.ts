@@ -86,12 +86,21 @@ interface ArticleCard {
   date_created: string;
 }
 
+interface FAQTranslation {
+  id: number;
+  faq_id: string;
+  languages_code: string;
+  question: string;
+  answer: string;
+}
+
 interface FAQ {
   id: string;
   status: 'published' | 'draft' | 'archived';
   sort: number;
   question: string;
   answer: string;
+  translations?: FAQTranslation[];
 }
 
 interface Schema {
@@ -105,6 +114,8 @@ interface Schema {
   articles_cards_vg: ArticleCard[];
   journal_vg: Article[];
   faq: FAQ[];
+  faq_translations: FAQTranslation[];
+  languages: { code: string; name: string; direction: string }[];
 }
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
@@ -115,4 +126,4 @@ const directus = createDirectus<Schema>(DIRECTUS_URL)
 
 export default directus;
 export { readItems, registerUser };
-export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, PlaceTranslation, ArticleCard, Article, FAQ };
+export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, PlaceTranslation, ArticleCard, Article, FAQ, FAQTranslation };

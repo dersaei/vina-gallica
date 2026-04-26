@@ -1,14 +1,14 @@
 ---
 export const prerender = false;
-import LayoutSubmit from "../layouts/LayoutSubmit.astro";
-import ScrollToTop from "../components/ScrollToTop.astro";
-import logoMark from "../assets/logo-vina-gallica.png";
-import logoText from "../assets/vina-gallica-text.png";
-import faqHeading from "../assets/faq.png";
-import pricingHeading from "../assets/pricing.png";
+import LayoutSubmit from "../../layouts/LayoutSubmit.astro";
+import ScrollToTop from "../../components/ScrollToTop.astro";
+import logoMark from "../../assets/logo-vina-gallica.png";
+import logoText from "../../assets/logo-vina-gallica-fr.png";
+import faqHeading from "../../assets/faq.png";
+import pricingHeading from "../../assets/pricing.png";
 import { Image } from "astro:assets";
-import directus, { readItems } from "../lib/directus.ts";
-import MobileMenu from "../components/MobileMenu.tsx";
+import directus, { readItems } from "../../lib/directus.ts";
+import MobileMenu from "../../components/MobileMenu.tsx";
 
 const faqRaw = await directus.request(
   readItems("faq", {
@@ -17,7 +17,7 @@ const faqRaw = await directus.request(
     sort: ["sort"],
     deep: {
       translations: {
-        _filter: { languages_code: { _eq: "en-US" } },
+        _filter: { languages_code: { _eq: "fr-FR" } },
       },
     },
   })
@@ -28,17 +28,17 @@ const faqItems = faqRaw
 ---
 
 <LayoutSubmit
-  title="Join Vina Gallica | For Wine Businesses"
-  description="Add your French wine business to Vina Gallica. Connect with enthusiasts and gain visibility across our four categories."
+  title="Rejoindre Vina Gallica | Pour les professionnels du vin"
+  description="Ajoutez votre entreprise vinicole française à Vina Gallica. Connectez-vous avec les amateurs et gagnez en visibilité dans nos quatre catégories."
 >
   <div class="submit-page">
     <div class="submit-topbar">
-      <a href="/fr/rejoindre" class="submit-lang-link">Français</a>
+      <a href="/submit" class="submit-lang-link">English</a>
       <MobileMenu client:idle />
     </div>
 
     <div class="submit-center">
-      <a href="/" class="submit-logo" aria-label="Vina Gallica - Home Page">
+      <a href="/fr" class="submit-logo" aria-label="Vina Gallica - Page d'accueil">
         <Image
           src={logoMark}
           alt="Logo Vina Gallica"
@@ -48,22 +48,21 @@ const faqItems = faqRaw
         />
         <Image
           src={logoText}
-          alt="Vina Gallica Directory"
+          alt="Vina Gallica Annuaire"
           width={672}
-          height={116}
+          height={115}
           priority
         />
       </a>
 
       <h2 class="submit-intro">
-        We're developing a database of French wine-related businesses. Our four categories are Adventures, Festivals, Shops, and Wineries. 
-        If your business fits into at least one of these, read this page and join our community
+        Nous développons un annuaire de référence dédié aux acteurs du monde du vin français. Nos quatre catégories sont : Aventures, Festivals, Boutiques et Domaines viticoles. Si votre établissement correspond à l'une d'entre elles, lisez cette page et rejoignez notre communauté
       </h2>
 
-      <nav class="submit-nav" aria-label="Page sections">
+      <nav class="submit-nav" aria-label="Sections de la page">
         <a href="#faq" class="submit-nav-link">F.A.Q.</a>
-        <a href="#pricing" class="submit-nav-link">Pricing</a>
-        <a href="#join" class="submit-nav-link">Join</a>
+        <a href="#tarifs" class="submit-nav-link">Tarifs</a>
+        <a href="#rejoindre" class="submit-nav-link">Rejoindre</a>
       </nav>
     </div>
   </div>
@@ -89,79 +88,79 @@ const faqItems = faqRaw
     </div>
   </section>
 
-  <section id="pricing" class="pricing-section">
+  <section id="tarifs" class="pricing-section">
     <div class="pricing-inner">
       <div class="pricing-header">
         <Image
           src={pricingHeading}
-          alt="Pricing"
+          alt="Tarifs"
           width={557}
           height={140}
           layout="constrained"
           class="pricing-title"
         />
-        <h2 class="pricing-subtitle">Start with a free listing and upgrade to Premium when you are ready to tell your full story</h2>
+        <h2 class="pricing-subtitle">Commencez avec une fiche gratuite et passez à l'offre Premium quand vous êtes prêt à raconter votre histoire</h2>
       </div>
 
       <div class="pricing-cards">
 
         <div class="pricing-card pricing-card--free">
           <div class="pricing-card-header">
-            <span class="pricing-plan">Free</span>
-            <span class="pricing-tagline">Ideal if you want to start your experience with us</span>
+            <span class="pricing-plan">Gratuit</span>
+            <span class="pricing-tagline">Idéal pour faire vos premiers pas avec nous</span>
           </div>
           <ul class="pricing-features">
-            <li>Listing in the <strong>Directory</strong> with your business name and category</li>
-            <li>Display of <strong>wine region, address, department and region</strong></li>
-            <li><strong>Website link</strong> (when applicable)</li>
-            <li>Pin on the <strong>Map</strong> with a basic info panel</li>
-            <li>Display of your <strong>logo and phone number</strong> in the Map panel</li>
+            <li>Fiche dans l'<strong>Annuaire</strong> avec le nom et la catégorie de votre entreprise</li>
+            <li>Affichage de la <strong>région viticole, adresse, département et région</strong></li>
+            <li><strong>Lien vers votre site web</strong> (le cas échéant)</li>
+            <li>Épingle sur la <strong>Carte</strong> avec un panneau d'informations de base</li>
+            <li>Affichage de votre <strong>logo et numéro de téléphone</strong> dans le panneau Carte</li>
           </ul>
-          <a href="#join" class="pricing-cta pricing-cta--free">Start with Free</a>
+          <a href="#rejoindre" class="pricing-cta pricing-cta--free">Commencer gratuitement</a>
         </div>
 
         <div class="pricing-card pricing-card--premium">
           <div class="pricing-card-header">
             <span class="pricing-plan">Premium</span>
-            <span class="pricing-tagline">Ideal if you want to tell more about your story</span>
+            <span class="pricing-tagline">Idéal pour raconter davantage votre histoire</span>
           </div>
           <div class="pricing-price">
-            <span class="pricing-amount">€150<span class="pricing-period"> / year</span></span>
-            <span class="pricing-vat">excl. VAT · billed annually</span>
-            <span class="pricing-note">No automatic renewal</span>
+            <span class="pricing-amount">150&nbsp;€<span class="pricing-period"> / an</span></span>
+            <span class="pricing-vat">HT · facturé annuellement</span>
+            <span class="pricing-note">Sans renouvellement automatique</span>
           </div>
-          <p class="pricing-description">Everything in Free, plus:</p>
+          <p class="pricing-description">Tout ce qui est inclus dans le Gratuit, plus :</p>
           <ul class="pricing-features">
-            <li><strong>Profile page</strong> with a <strong>"Read more"</strong> link from your Directory card</li>
-            <li><strong>Gallery of images</strong> showcasing your place, wines and experiences</li>
-            <li><strong>Marketing description</strong> of your business and wine experience</li>
-            <li>Space for <strong>certifications and awards</strong> (photos, badges, labels)</li>
-            <li>Extra <strong>location details</strong>: directions, nearby attractions and visitor tips</li>
+            <li><strong>Page de profil</strong> avec un lien <strong>« En savoir plus »</strong> depuis votre fiche Annuaire</li>
+            <li><strong>Galerie d'images</strong> mettant en valeur votre lieu, vos vins et vos expériences</li>
+            <li><strong>Description marketing</strong> de votre activité et de votre expérience vinicole</li>
+            <li>Espace pour vos <strong>certifications et récompenses</strong> (photos, badges, étiquettes)</li>
+            <li><strong>Informations de localisation</strong> supplémentaires : itinéraire, attractions à proximité et conseils aux visiteurs</li>
           </ul>
-          <a href="#join" class="pricing-cta pricing-cta--premium">Go Premium for €150 / year</a>
+          <a href="#rejoindre" class="pricing-cta pricing-cta--premium">Passer au Premium pour 150&nbsp;€&nbsp;/ an</a>
         </div>
 
       </div>
 
-      <p class="pricing-footer">For full details, please see the <a href="#faq">FAQ</a> and our <a href="/terms-of-service">Terms of Service</a> before joining Vina Gallica.</p>
+      <p class="pricing-footer">Pour tous les détails, veuillez consulter la <a href="#faq">FAQ</a> et nos <a href="/fr/conditions-generales">Conditions Générales</a> avant de rejoindre Vina Gallica.</p>
     </div>
   </section>
 
-  <section id="join" class="join-section">
+  <section id="rejoindre" class="join-section">
     <div class="join-inner">
-      <h2 class="join-title">Join Vina Gallica</h2>
-      <p class="join-subtitle">Create your free account and add your business to the collection</p>
+      <h2 class="join-title">Rejoindre Vina Gallica</h2>
+      <p class="join-subtitle">Créez votre compte gratuit et ajoutez votre entreprise à l'annuaire</p>
 
       <div id="join-success" class="join-success" role="alert" aria-live="polite" hidden>
         <p class="join-success-text">
           <span class="join-success-icon" aria-hidden="true">✓</span>
-          <strong class="join-success-title">Account created!</strong>
+          <strong class="join-success-title">Compte créé !</strong>
         </p>
         <p class="join-success-body">
-          Check your inbox. We've sent a confirmation email to <span id="join-success-email"></span>.
-          Click the link in that email to activate your account.
+          Vérifiez votre boîte mail. Nous avons envoyé un e-mail de confirmation à <span id="join-success-email"></span>.
+          Cliquez sur le lien dans cet e-mail pour activer votre compte.
         </p>
-        <p class="join-success-note">Didn't receive it? Check your spam folder. The link is valid for 7 days.</p>
+        <p class="join-success-note">Vous ne l'avez pas reçu ? Vérifiez vos spams. Le lien est valable 7 jours.</p>
       </div>
 
       <form
@@ -173,7 +172,7 @@ const faqItems = faqRaw
       >
         <div class="join-form-row">
           <div class="join-field">
-            <label for="first_name" class="join-label">First name <span aria-hidden="true">*</span></label>
+            <label for="first_name" class="join-label">Prénom <span aria-hidden="true">*</span></label>
             <input
               type="text"
               id="first_name"
@@ -184,7 +183,7 @@ const faqItems = faqRaw
             />
           </div>
           <div class="join-field">
-            <label for="last_name" class="join-label">Last name <span aria-hidden="true">*</span></label>
+            <label for="last_name" class="join-label">Nom <span aria-hidden="true">*</span></label>
             <input
               type="text"
               id="last_name"
@@ -197,7 +196,7 @@ const faqItems = faqRaw
         </div>
 
         <div class="join-field">
-          <label for="company_name" class="join-label">Company name <span aria-hidden="true">*</span></label>
+          <label for="company_name" class="join-label">Nom de l'entreprise <span aria-hidden="true">*</span></label>
           <input
             type="text"
             id="company_name"
@@ -210,8 +209,8 @@ const faqItems = faqRaw
 
         <div class="join-field">
           <label for="tax_id" class="join-label">
-            Tax ID
-            <span class="join-label-note">(SIRET for France)</span>
+            Numéro fiscal
+            <span class="join-label-note">(SIRET pour la France)</span>
           </label>
           <input
             type="text"
@@ -223,20 +222,20 @@ const faqItems = faqRaw
         </div>
 
         <div class="join-field">
-          <label for="company_address" class="join-label">Company address</label>
-          <span class="join-label-note">(street, number, postal code, place, department, region)</span>
+          <label for="company_address" class="join-label">Adresse de l'entreprise</label>
+          <span class="join-label-note">(rue, numéro, code postal, commune, département, région)</span>
           <input
             type="text"
             id="company_address"
             name="company_address"
             class="join-input"
             autocomplete="street-address"
-            placeholder="Your main location"
+            placeholder="Votre adresse principale"
           />
         </div>
 
         <div class="join-field">
-          <label for="email" class="join-label">Email address <span aria-hidden="true">*</span></label>
+          <label for="email" class="join-label">Adresse e-mail <span aria-hidden="true">*</span></label>
           <input
             type="email"
             id="email"
@@ -249,7 +248,7 @@ const faqItems = faqRaw
 
         <div class="join-form-row">
           <div class="join-field">
-            <label for="password" class="join-label">Password <span aria-hidden="true">*</span></label>
+            <label for="password" class="join-label">Mot de passe <span aria-hidden="true">*</span></label>
             <input
               type="password"
               id="password"
@@ -259,10 +258,10 @@ const faqItems = faqRaw
               minlength="8"
               required
             />
-            <span class="join-field-hint">Minimum 8 characters</span>
+            <span class="join-field-hint">Minimum 8 caractères</span>
           </div>
           <div class="join-field">
-            <label for="password_confirm" class="join-label">Confirm password <span aria-hidden="true">*</span></label>
+            <label for="password_confirm" class="join-label">Confirmer le mot de passe <span aria-hidden="true">*</span></label>
             <input
               type="password"
               id="password_confirm"
@@ -278,10 +277,10 @@ const faqItems = faqRaw
 
         <div id="turnstile-widget"></div>
 
-        <button type="submit" class="join-submit">Create free account</button>
+        <button type="submit" class="join-submit">Créer un compte gratuit</button>
 
         <p class="join-legal">
-          By registering you agree to our <a href="/terms-of-service">Terms of Service</a> and <a href="/privacy-policy">Privacy Policy</a>.
+          En vous inscrivant, vous acceptez nos <a href="/fr/conditions-generales">Conditions Générales</a> et notre <a href="/fr/politique-de-confidentialite">Politique de confidentialité</a>.
         </p>
       </form>
       </div>
@@ -343,7 +342,7 @@ const faqItems = faqRaw
   }
 
   .submit-intro {
-    max-width: 860px;
+    max-width: 960px;
     text-align: center;
     font-family: var(--font-extra);
     font-size: 1.4rem;
@@ -376,7 +375,7 @@ const faqItems = faqRaw
     border-bottom-color: var(--color-elegant-black);
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: 780px) {
     .submit-logo img:nth-child(2) {
       width: 90%;
       height: auto;
@@ -492,7 +491,7 @@ const faqItems = faqRaw
     opacity: 0.65;
   }
 
-  @media (max-width: 520px) {
+  @media (max-width: 580px) {
     .faq-question {
       font-size: 2rem;
       text-shadow: 1.5px 1.5px 0 var(--color-elegant-black);
@@ -784,7 +783,7 @@ const faqItems = faqRaw
     padding: var(--space-md);
     flex-direction: column;
     gap: 0.5rem;
-        box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 30px inset;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 30px inset;
     animation: fadeInUp 350ms ease forwards;
   }
 
@@ -796,7 +795,6 @@ const faqItems = faqRaw
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-
 
   .join-success-icon {
     font-size: 2rem;
@@ -829,7 +827,8 @@ const faqItems = faqRaw
     font-weight: 500;
     color: firebrick;
   }
-#join-success-email {
+
+  #join-success-email {
     background-color: var(--color-sand);
     padding: 4px;
     color: var(--color-elegant-black);
@@ -837,6 +836,7 @@ const faqItems = faqRaw
     text-transform: uppercase;
     border-bottom: 2px solid var(--color-elegant-black);
   }
+
   .join-form {
     display: flex;
     flex-direction: column;
@@ -995,10 +995,8 @@ const faqItems = faqRaw
     });
   }
 
-  // Wywoływany przez Turnstile po załadowaniu skryptu (onload=onTurnstileLoad w URL)
   (window as unknown as Record<string, unknown>).onTurnstileLoad = initTurnstile;
 
-  // Po każdej nawigacji View Transitions re-inicjalizuj widget i formularz
   document.addEventListener("astro:page-load", () => {
     initTurnstile();
     setupForm();
@@ -1020,14 +1018,14 @@ const faqItems = faqRaw
       const email = (form.querySelector("#email") as HTMLInputElement).value;
 
       if (password !== confirm) {
-        errorBox.textContent = "Passwords do not match.";
+        errorBox.textContent = "Les mots de passe ne correspondent pas.";
         errorBox.hidden = false;
         return;
       }
 
       errorBox.hidden = true;
       submitBtn.disabled = true;
-      submitBtn.textContent = "Creating account…";
+      submitBtn.textContent = "Création du compte…";
 
       const res = await fetch("/api/auth/register", {
         method: "POST",
@@ -1047,10 +1045,10 @@ const faqItems = faqRaw
           }
         }, 320);
       } else {
-        errorBox.textContent = (json as { error?: string }).error ?? "Registration failed. Please try again.";
+        errorBox.textContent = (json as { error?: string }).error ?? "Échec de l'inscription. Veuillez réessayer.";
         errorBox.hidden = false;
         submitBtn.disabled = false;
-        submitBtn.textContent = "Create free account";
+        submitBtn.textContent = "Créer un compte gratuit";
         (window as unknown as { turnstile?: Turnstile }).turnstile?.reset(widgetId);
       }
     });
