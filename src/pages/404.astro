@@ -1,15 +1,41 @@
 ---
+export const prerender = false;
 import Layout from "../layouts/Layout.astro";
+
+const isFr = Astro.url.pathname.startsWith("/fr");
+const lang = isFr ? "fr" : "en";
+
+const copy = {
+  en: {
+    title: "404 — Page Not Found | Vina Gallica",
+    description: "The page you are looking for does not exist.",
+    message: "I'm afraid nobody is here anymore",
+    home: "Go back home",
+    homeHref: "/",
+  },
+  fr: {
+    title: "404 — Page introuvable | Vina Gallica",
+    description: "La page que vous recherchez n'existe pas.",
+    message: "Je crains que cette page n'existe plus",
+    home: "Retourner à l'accueil",
+    homeHref: "/fr",
+  },
+};
+
+const t = copy[lang];
 ---
 
 <Layout
-  title="404 — Page Not Found | Vina Gallica"
-  description="The page you are looking for does not exist."
+  title={t.title}
+  description={t.description}
   headline="404"
   headlineStyle="light"
+  lang={lang}
+  noindex={true}
 >
   <main class="not-found">
-    <p class="not-found-message">I'm afraid nobody is here anymore</p>
+    <p class="not-found-message">{t.message}</p>
+    <a href={t.homeHref} class="not-found-link">{t.home}</a>
   </main>
 </Layout>
 
@@ -17,8 +43,10 @@ import Layout from "../layouts/Layout.astro";
   .not-found {
     flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: var(--space-lg);
   }
 
   .not-found-message {
@@ -27,7 +55,24 @@ import Layout from "../layouts/Layout.astro";
     font-weight: 400;
     color: var(--color-elegant-black);
     text-align: center;
-    padding: var(--space-lg);
+    padding-inline: var(--space-lg);
     text-transform: uppercase;
+  }
+
+  .not-found-link {
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-elegant-black);
+    border-bottom: 2px solid var(--color-elegant-black);
+    padding-bottom: 2px;
+    transition: opacity 150ms ease;
+  }
+
+  .not-found-link:hover {
+    opacity: 0.6;
   }
 </style>
