@@ -18,7 +18,7 @@ const navItemsFr = [
   { label: "Confidentialité", href: "/fr/politique-de-confidentialite" },
   { label: "CGU", href: "/fr/conditions-generales" },
   { label: "Rejoindre", href: "/fr/rejoindre" },
-  { label: "Login", href: "/login" },
+  { label: "Connexion", href: "/fr/connexion" },
 ];
 
 interface Props {

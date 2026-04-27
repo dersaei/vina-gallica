@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     });
 
   if (!email || !password) {
-    return json({ error: "Email and password are required." }, 400);
+    return json({ error: "Email and password are required" }, 400);
   }
 
   try {
@@ -30,11 +30,13 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       const err = await res.json().catch(() => ({}));
       const message =
         (err as { errors?: { message: string }[] })?.errors?.[0]?.message ||
-        "Invalid email or password.";
+        "Invalid email or password";
       return json({ error: message }, 401);
     }
 
-    const body = await res.json() as { data: { access_token: string; refresh_token: string } };
+    const body = (await res.json()) as {
+      data: { access_token: string; refresh_token: string };
+    };
     const { access_token, refresh_token } = body.data;
 
     // Przechowuj tokeny w httpOnly cookies

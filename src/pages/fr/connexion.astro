@@ -1,12 +1,11 @@
 ---
 export const prerender = false;
-import LayoutSubmit from "../layouts/LayoutSubmit.astro";
+import LayoutSubmit from "../../layouts/LayoutSubmit.astro";
 import { Image } from "astro:assets";
-import logoMark from "../assets/logo-vina-gallica.png";
-import logoText from "../assets/vina-gallica-text.png";
-import MobileMenu from "../components/MobileMenu.tsx";
+import logoMark from "../../assets/logo-vina-gallica.png";
+import logoText from "../../assets/logo-vina-gallica-fr.png";
+import MobileMenu from "../../components/MobileMenu.tsx";
 
-// Przekieruj jeśli już zalogowany
 const token = Astro.cookies.get("directus_access_token");
 if (token) {
   return Astro.redirect("/dashboard");
@@ -14,29 +13,29 @@ if (token) {
 ---
 
 <LayoutSubmit
-  title="Sign in | Vina Gallica"
-  description="Sign in to your Vina Gallica business account."
+  title="Connexion | Vina Gallica"
+  description="Connectez-vous à votre compte professionnel Vina Gallica."
 >
   <div class="login-topbar">
-    <a href="/fr/connexion" class="login-lang-link">Français</a>
-    <MobileMenu client:idle />
+    <a href="/login" class="login-lang-link">English</a>
+    <MobileMenu lang="fr" client:idle />
   </div>
 
   <div class="login-page">
-    <a href="/" class="login-home" aria-label="Back to Vina Gallica">
+    <a href="/fr" class="login-home" aria-label="Retour à Vina Gallica">
       <Image src={logoMark} alt="Logo Vina Gallica" width={80} height={80} densities={[1, 2]} priority />
-      <Image src={logoText} alt="Vina Gallica Directory" width={336} height={58} densities={[1, 2]} priority />
+      <Image src={logoText} alt="Vina Gallica Annuaire" width={340} height={58} densities={[1, 2]} priority />
     </a>
 
     <div class="login-card">
-      <h1 class="login-title">Sign in</h1>
-      <h2 class="login-subtitle">Business Account</h2>
+      <h1 class="login-title">Connexion</h1>
+      <h2 class="login-subtitle">Compte professionnel</h2>
 
       <div id="login-error" class="login-error" role="alert" hidden></div>
 
       <form id="login-form" class="login-form" novalidate>
         <div class="login-field">
-          <label for="email" class="login-label">Email address</label>
+          <label for="email" class="login-label">Adresse e-mail</label>
           <input
             type="email"
             id="email"
@@ -48,7 +47,7 @@ if (token) {
         </div>
 
         <div class="login-field">
-          <label for="password" class="login-label">Password</label>
+          <label for="password" class="login-label">Mot de passe</label>
           <input
             type="password"
             id="password"
@@ -60,13 +59,13 @@ if (token) {
         </div>
 
         <div class="login-footer">
-          <button type="submit" class="login-submit">Sign in</button>
-          <a href="/reset-password" class="login-forgot">Forgot password?</a>
+          <button type="submit" class="login-submit">Se connecter</button>
+          <a href="/reset-password" class="login-forgot">Mot de passe oublié ?</a>
         </div>
       </form>
 
       <p class="login-register">
-        Don't have an account? <a href="/submit#join">Register here</a>
+        Pas encore de compte ? <a href="/fr/rejoindre#join">S'inscrire ici</a>
       </p>
     </div>
   </div>
@@ -83,7 +82,7 @@ if (token) {
 
     errorBox.hidden = true;
     submitBtn.disabled = true;
-    submitBtn.textContent = "Signing in…";
+    submitBtn.textContent = "Connexion en cours…";
 
     const res = await fetch("/api/auth/login", {
       method: "POST",
@@ -95,15 +94,43 @@ if (token) {
     if (res.ok) {
       window.location.href = "/dashboard";
     } else {
-      errorBox.textContent = (json as { error?: string }).error ?? "Login failed. Please try again.";
+      errorBox.textContent = (json as { error?: string }).error ?? "Échec de la connexion. Veuillez réessayer.";
       errorBox.hidden = false;
       submitBtn.disabled = false;
-      submitBtn.textContent = "Sign in";
+      submitBtn.textContent = "Se connecter";
     }
   });
 </script>
 
 <style>
+  .login-topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: var(--space-md);
+    padding-block: var(--space-xs);
+    z-index: 10;
+  }
+
+  .login-lang-link {
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    color: var(--color-elegant-black);
+    border-bottom: 1px solid transparent;
+    transition: border-color 150ms ease;
+  }
+
+  .login-lang-link:hover {
+    border-bottom-color: var(--color-elegant-black);
+  }
+
   .login-page {
     min-height: 100vh;
     display: flex;
@@ -128,8 +155,6 @@ if (token) {
 
   .login-home:hover { opacity: 1; }
 
-
-
   .login-card {
     background-color: goldenrod;
     border: 2px solid var(--color-elegant-black);
@@ -150,7 +175,7 @@ if (token) {
     -webkit-text-stroke: 0.5px var(--color-elegant-black);
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color:var(--color-gold);
+    color: var(--color-gold);
   }
 
   .login-subtitle {
@@ -269,33 +294,5 @@ if (token) {
     color: var(--color-elegant-black);
     font-weight: 700;
     text-underline-offset: 3px;
-  }
-
-  .login-topbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-inline: var(--space-md);
-    padding-block: var(--space-xs);
-    z-index: 10;
-  }
-
-  .login-lang-link {
-    font-family: var(--font-label);
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-decoration: none;
-    color: var(--color-elegant-black);
-    border-bottom: 1px solid transparent;
-    transition: border-color 150ms ease;
-  }
-
-  .login-lang-link:hover {
-    border-bottom-color: var(--color-elegant-black);
   }
 </style>
