@@ -1,0 +1,337 @@
+---
+export const prerender = false;
+import LayoutDashboard from "../../../layouts/LayoutDashboard.astro";
+
+type User = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  company_name?: string;
+  tax_id?: string;
+  company_address?: string;
+};
+
+const accessToken = Astro.cookies.get("directus_access_token")?.value;
+const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
+
+let user: User | null = null;
+
+if (accessToken) {
+  try {
+    const res = await fetch(
+      `${DIRECTUS_URL}/users/me?fields=id,first_name,last_name,email,company_name,tax_id,company_address`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+    if (res.ok) {
+      const body = await res.json() as { data: User };
+      user = body.data;
+    }
+  } catch {
+    // token expiré
+  }
+}
+
+const u = user;
+---
+
+<LayoutDashboard title="Gérer | Vina Gallica" active="manage" lang="fr">
+  {u && (
+    <div class="manage">
+      <h1 class="manage-title">Gestion du compte</h1>
+
+      <div id="manage-feedback" class="manage-feedback" hidden></div>
+
+      <!-- CHAMPS PERSONNELS ET PROFESSIONNELS -->
+      <div class="manage-list">
+
+        <div class="manage-field">
+          <span class="manage-label">Prénom</span>
+          <div class="manage-row">
+            <input class="manage-input" type="text" data-field="first_name" value={u.first_name} autocomplete="given-name" />
+            <button class="manage-save" data-field="first_name">Enregistrer</button>
+          </div>
+        </div>
+
+        <div class="manage-field">
+          <span class="manage-label">Nom</span>
+          <div class="manage-row">
+            <input class="manage-input" type="text" data-field="last_name" value={u.last_name} autocomplete="family-name" />
+            <button class="manage-save" data-field="last_name">Enregistrer</button>
+          </div>
+        </div>
+
+        <div class="manage-field">
+          <span class="manage-label">Adresse e-mail</span>
+          <div class="manage-row">
+            <input class="manage-input" type="email" data-field="email" value={u.email} autocomplete="email" />
+            <button class="manage-save" data-field="email">Enregistrer</button>
+          </div>
+        </div>
+
+        <div class="manage-field">
+          <span class="manage-label">Nom de l'entreprise</span>
+          <div class="manage-row">
+            <input class="manage-input" type="text" data-field="company_name" value={u.company_name ?? ""} autocomplete="organization" />
+            <button class="manage-save" data-field="company_name">Enregistrer</button>
+          </div>
+        </div>
+
+        <div class="manage-field">
+          <span class="manage-label">Numéro de TVA</span>
+          <div class="manage-row">
+            <input class="manage-input" type="text" data-field="tax_id" value={u.tax_id ?? ""} />
+            <button class="manage-save" data-field="tax_id">Enregistrer</button>
+          </div>
+        </div>
+
+        <div class="manage-field">
+          <span class="manage-label">Adresse de l'entreprise</span>
+          <div class="manage-row">
+            <input class="manage-input" type="text" data-field="company_address" value={u.company_address ?? ""} autocomplete="street-address" />
+            <button class="manage-save" data-field="company_address">Enregistrer</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MOT DE PASSE -->
+      <div class="manage-section">
+        <h2 class="manage-section-title">Changer de mot de passe</h2>
+        <div class="manage-list">
+          <div class="manage-field">
+            <span class="manage-label">Nouveau mot de passe</span>
+            <input class="manage-input" type="password" id="new-password" autocomplete="new-password" />
+          </div>
+          <div class="manage-field">
+            <span class="manage-label">Confirmer le nouveau mot de passe</span>
+            <input class="manage-input" type="password" id="confirm-password" autocomplete="new-password" />
+          </div>
+          <button class="manage-save manage-save--block" id="change-password-btn">Changer le mot de passe</button>
+        </div>
+      </div>
+
+      <!-- SUPPRESSION DU COMPTE -->
+      <div class="manage-section manage-section--danger">
+        <h2 class="manage-section-title">Supprimer le compte</h2>
+        <p class="manage-danger-text">Cette action est définitive et irréversible. Toutes vos données seront supprimées.</p>
+        <button class="manage-delete" id="delete-account-btn">Supprimer mon compte</button>
+      </div>
+
+    </div>
+  )}
+</LayoutDashboard>
+
+<script>
+  const feedback = document.getElementById("manage-feedback") as HTMLElement;
+
+  function showFeedback(msg: string, ok: boolean) {
+    feedback.textContent = msg;
+    feedback.className = `manage-feedback manage-feedback--${ok ? "ok" : "err"}`;
+    feedback.hidden = false;
+    setTimeout(() => { feedback.hidden = true; }, 4000);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>(".manage-save[data-field]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const field = btn.dataset.field!;
+      const input = document.querySelector<HTMLInputElement>(`.manage-input[data-field="${field}"]`);
+      if (!input) return;
+
+      btn.disabled = true;
+      const fd = new FormData();
+      fd.append("field", field);
+      fd.append("value", input.value);
+
+      const res = await fetch("/api/auth/update-profile", { method: "POST", body: fd });
+      const json = await res.json().catch(() => ({})) as { ok?: boolean; error?: string };
+      showFeedback(json.ok ? "Enregistré." : (json.error ?? "Erreur."), !!json.ok);
+      btn.disabled = false;
+    });
+  });
+
+  document.getElementById("change-password-btn")?.addEventListener("click", async () => {
+    const password = (document.getElementById("new-password") as HTMLInputElement).value;
+    const passwordConfirm = (document.getElementById("confirm-password") as HTMLInputElement).value;
+
+    const fd = new FormData();
+    fd.append("password", password);
+    fd.append("password_confirm", passwordConfirm);
+
+    const res = await fetch("/api/auth/update-password", { method: "POST", body: fd });
+    const json = await res.json().catch(() => ({})) as { ok?: boolean; error?: string };
+
+    if (json.ok) {
+      showFeedback("Mot de passe modifié.", true);
+      (document.getElementById("new-password") as HTMLInputElement).value = "";
+      (document.getElementById("confirm-password") as HTMLInputElement).value = "";
+    } else {
+      const msgMap: Record<string, string> = {
+        "Both fields are required.": "Les deux champs sont obligatoires.",
+        "Passwords do not match.": "Les mots de passe ne correspondent pas.",
+        "Password must be at least 8 characters.": "Le mot de passe doit contenir au moins 8 caractères.",
+      };
+      showFeedback(msgMap[json.error ?? ""] ?? (json.error ?? "Erreur."), false);
+    }
+  });
+
+  document.getElementById("delete-account-btn")?.addEventListener("click", () => {
+    if (confirm("Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.")) {
+      showFeedback("La suppression du compte n'est pas encore disponible. Veuillez nous contacter.", false);
+    }
+  });
+</script>
+
+<style>
+  .manage {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    max-width: 860px;
+    margin: auto;
+  }
+
+  .manage-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-elegant-black);
+  }
+
+  .manage-feedback {
+    padding: 0.6rem var(--space-md);
+    font-family: var(--font-extra);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .manage-feedback--ok {
+    background-color: #d4edda;
+    color: #2d6a4f;
+  }
+
+  .manage-feedback--err {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .manage-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .manage-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .manage-label {
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-elegant-black);
+  }
+
+  .manage-row {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .manage-input {
+    font-family: var(--font-extra);
+    font-size: 1.05rem;
+    color: var(--color-elegant-black);
+    background-color: var(--color-sand);
+    padding: 0.35rem 0.75rem;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    flex: 1;
+    outline: none;
+    transition: border-color 150ms ease;
+  }
+
+  .manage-input:focus {
+    border-color: firebrick;
+  }
+
+  .manage-save {
+    font-family: var(--font-label);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.6rem 0.85rem 0.3rem;
+    background-color: var(--color-elegant-black);
+    color: var(--color-gold);
+    border: 1.5px solid var(--color-elegant-black);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  .manage-save:hover {
+    background-color: transparent;
+    color: var(--color-elegant-black);
+  }
+
+  .manage-save:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .manage-save--block {
+    align-self: flex-start;
+  }
+
+  .manage-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-top: var(--space-lg);
+    border-top: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .manage-section-title {
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-elegant-black);
+  }
+
+  .manage-danger-text {
+    font-family: var(--font-extra);
+    font-size: 0.92rem;
+    color: var(--color-elegant-black);
+    line-height: 1.5;
+  }
+
+  .manage-delete {
+    align-self: flex-start;
+    font-family: var(--font-label);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.6rem 0.85rem 0.3rem;
+    background-color: firebrick;
+    color: white;
+    border: 1.5px solid firebrick;
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  .manage-delete:hover {
+    background-color: white;
+    color: firebrick;
+  }
+</style>

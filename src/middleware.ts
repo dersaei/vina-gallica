@@ -1,14 +1,18 @@
 import { defineMiddleware } from "astro:middleware";
 
-const PROTECTED = ["/dashboard"];
-
 export const onRequest = defineMiddleware(({ url, cookies, redirect }, next) => {
-  const isProtected = PROTECTED.some((path) => url.pathname.startsWith(path));
-  if (!isProtected) return next();
+  const { pathname } = url;
 
-  const token = cookies.get("directus_access_token");
-  if (!token) {
-    return redirect(`/login?next=${encodeURIComponent(url.pathname)}`);
+  if (pathname.startsWith("/dashboard")) {
+    if (!cookies.get("directus_access_token")) {
+      return redirect(`/login?next=${encodeURIComponent(pathname)}`);
+    }
+  }
+
+  if (pathname.startsWith("/fr/dashboard")) {
+    if (!cookies.get("directus_access_token")) {
+      return redirect(`/fr/connexion?next=${encodeURIComponent(pathname)}`);
+    }
   }
 
   return next();

@@ -154,6 +154,7 @@ const faqItems = faqRaw
         id="register-form"
         novalidate
       >
+        <input type="hidden" name="lang" value="fr" />
         <div class="join-form-row">
           <div class="join-field">
             <label for="first_name" class="join-label">Prénom <span aria-hidden="true">*</span></label>
@@ -912,13 +913,18 @@ const faqItems = faqRaw
     background-color: white;
     color: var(--color-elegant-black);
     outline: none;
-    transition: border-color 150ms ease;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
     width: 100%;
     box-sizing: border-box;
+    box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
 
   .join-input:focus {
     border-color: firebrick;
+    box-shadow:none;
   }
 
   .join-field-hint {
@@ -948,16 +954,20 @@ const faqItems = faqRaw
     text-transform: uppercase;
     letter-spacing: 0.12em;
     padding: 0.85rem 2rem 0.5rem;
-    background-color: var(--color-elegant-black);
+    background-color: #31393b;
     color: var(--color-gold);
     border: 2px solid var(--color-elegant-black);
     cursor: pointer;
     transition: background-color 150ms ease, color 150ms ease;
     align-self: flex-start;
+    box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
 
   .join-submit:hover {
-    background-color: transparent;
+    background-color: azure;
     color: var(--color-elegant-black);
   }
 

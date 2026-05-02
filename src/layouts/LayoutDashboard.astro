@@ -7,30 +7,53 @@ import logoText from "../assets/vina-gallica-text.png";
 interface Props {
   title: string;
   active: "details" | "manage" | "submit" | "upgrade";
+  lang?: "en" | "fr";
 }
 
-const { title, active } = Astro.props;
+const { title, active, lang = "en" } = Astro.props;
 
-const nav = [
-  { key: "details", label: "Details", href: "/dashboard" },
-  { key: "manage",  label: "Manage",  href: "/dashboard/manage" },
-  { key: "submit",  label: "Submit",  href: "/dashboard/submit" },
-  { key: "upgrade", label: "Upgrade", href: "/dashboard/upgrade" },
-] as const;
+const isFr = lang === "fr";
+
+const nav = isFr
+  ? [
+      { key: "details", label: "Détails",      href: "/fr/dashboard" },
+      { key: "manage",  label: "Gérer",         href: "/fr/dashboard/manage" },
+      { key: "submit",  label: "Soumettre",      href: "/fr/dashboard/submit" },
+      { key: "upgrade", label: "Abonnement",     href: "/fr/dashboard/upgrade" },
+    ] as const
+  : [
+      { key: "details", label: "Details",  href: "/dashboard" },
+      { key: "manage",  label: "Manage",   href: "/dashboard/manage" },
+      { key: "submit",  label: "Submit",   href: "/dashboard/submit" },
+      { key: "upgrade", label: "Upgrade",  href: "/dashboard/upgrade" },
+    ] as const;
+
+const logoutHref = isFr ? "/fr/connexion" : "/login";
+
+const langSwitch = isFr
+  ? { label: "English", href: "/dashboard" }
+  : { label: "Français", href: "/fr/dashboard" };
 ---
 
 <LayoutSubmit title={title} description="Manage your Vina Gallica business listing.">
   <div class="dash-page">
 
     <div class="dash-top">
-      <a href="/" class="dash-logo" aria-label="Vina Gallica - Home Page">
+      <a href={isFr ? "/fr" : "/"} class="dash-logo" aria-label="Vina Gallica - Home Page">
         <Image src={logoMark} alt="Logo Vina Gallica" width={80} height={80} densities={[1, 2]} priority />
         <Image src={logoText} alt="Vina Gallica Directory" width={399} height={69} densities={[1, 2]} priority />
       </a>
-      <button id="logout-btn" class="dash-logout" onclick="fetch('/api/auth/logout',{method:'POST'}).then(()=>{window.location.href='/login'})">Sign out</button>
+      <div class="dash-top-actions">
+        <a href={langSwitch.href} class="dash-lang">{langSwitch.label}</a>
+        <button
+          id="logout-btn"
+          class="dash-logout"
+          data-logout-href={logoutHref}
+        >{isFr ? "Déconnexion" : "Sign out"}</button>
+      </div>
     </div>
 
-    <nav class="dash-nav" aria-label="Dashboard sections">
+    <nav class="dash-nav" aria-label={isFr ? "Sections du tableau de bord" : "Dashboard sections"}>
       {nav.map(({ key, label, href }) => (
         <a
           href={href}
@@ -51,9 +74,12 @@ const nav = [
 
 <script>
   function initLogout() {
-    document.getElementById("logout-btn")?.addEventListener("click", async () => {
+    const btn = document.getElementById("logout-btn") as HTMLButtonElement | null;
+    if (!btn) return;
+    const href = btn.dataset.logoutHref ?? "/login";
+    btn.addEventListener("click", async () => {
       await fetch("/api/auth/logout", { method: "POST" });
-      window.location.href = "/login";
+      window.location.href = href;
     });
   }
   initLogout();
@@ -85,6 +111,28 @@ const nav = [
     gap: 1.5rem;
     text-decoration: none;
     flex-wrap: wrap;
+  }
+
+  .dash-top-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .dash-lang {
+    font-family: var(--font-label);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-elegant-black);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 150ms ease;
+  }
+
+  .dash-lang:hover {
+    border-bottom-color: var(--color-elegant-black);
   }
 
   .dash-logout {
@@ -136,7 +184,7 @@ const nav = [
   .dash-main {
     padding: var(--space-lg) var(--space-lg);
     display: block;
-position:relative;
+    position: relative;
     gap: var(--space-xl);
   }
 

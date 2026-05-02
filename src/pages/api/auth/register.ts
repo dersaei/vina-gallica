@@ -5,11 +5,12 @@ import { createDirectus, rest, readUsers, updateUser, withToken } from "@directu
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 const DIRECTUS_SERVICE_TOKEN = import.meta.env.DIRECTUS_SERVICE_TOKEN;
-const PUBLIC_URL = import.meta.env.PUBLIC_SITE_URL ?? "http://localhost:4321";
 const TURNSTILE_SECRET = import.meta.env.TURNSTILE_SECRET_KEY;
 
 export const POST: APIRoute = async ({ request }) => {
+  const origin = new URL(request.url).origin;
   const data = await request.formData();
+  const lang = data.get("lang") === "fr" ? "fr" : "en";
 
   const firstName = (data.get("first_name") as string)?.trim();
   const lastName = (data.get("last_name") as string)?.trim();
@@ -63,7 +64,7 @@ export const POST: APIRoute = async ({ request }) => {
       password,
       first_name: firstName,
       last_name: lastName,
-      verification_url: `${PUBLIC_URL}/verify-email`,
+      verification_url: lang === "fr" ? `${origin}/fr/verification-email` : `${origin}/verify-email`,
     }),
   });
 

@@ -8,7 +8,7 @@ import MobileMenu from "../../components/MobileMenu.tsx";
 
 const token = Astro.cookies.get("directus_access_token");
 if (token) {
-  return Astro.redirect("/dashboard");
+  return Astro.redirect("/fr/dashboard");
 }
 ---
 
@@ -92,7 +92,7 @@ if (token) {
     const json = await res.json().catch(() => ({}));
 
     if (res.ok) {
-      window.location.href = "/dashboard";
+      window.location.href = "/fr/dashboard";
     } else {
       errorBox.textContent = (json as { error?: string }).error ?? "Échec de la connexion. Veuillez réessayer.";
       errorBox.hidden = false;

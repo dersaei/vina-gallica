@@ -1,0 +1,156 @@
+---
+export const prerender = false;
+import LayoutDashboard from "../../../layouts/LayoutDashboard.astro";
+
+type User = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  company_name?: string;
+  tax_id?: string;
+  company_address?: string;
+  plan?: string;
+};
+
+const accessToken = Astro.cookies.get("directus_access_token")?.value;
+const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
+
+let user: User | null = null;
+
+if (accessToken) {
+  try {
+    const res = await fetch(
+      `${DIRECTUS_URL}/users/me?fields=id,first_name,last_name,email,company_name,tax_id,company_address,plan`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+    if (res.ok) {
+      const body = await res.json() as { data: User };
+      user = body.data;
+    }
+  } catch {
+    // token expiré
+  }
+}
+
+const u = user;
+---
+
+<LayoutDashboard title="Détails | Vina Gallica" active="details" lang="fr">
+  {u && (
+    <div class="details">
+      <h1 class="details-title">Détails du compte</h1>
+
+      <div class="details-list">
+        <div class="details-field">
+          <span class="details-label">Prénom</span>
+          <span class="details-value">{u.first_name}</span>
+        </div>
+        <div class="details-field">
+          <span class="details-label">Nom</span>
+          <span class="details-value">{u.last_name}</span>
+        </div>
+        <div class="details-field">
+          <span class="details-label">Adresse e-mail</span>
+          <span class="details-value">{u.email}</span>
+        </div>
+        <div class="details-field">
+          <span class="details-label">Nom de l'entreprise</span>
+          <span class="details-value">{u.company_name ?? <em class="details-empty">Non renseigné</em>}</span>
+        </div>
+        <div class="details-field">
+          <span class="details-label">Numéro de TVA</span>
+          <span class="details-value">{u.tax_id ?? <em class="details-empty">Non renseigné</em>}</span>
+        </div>
+        <div class="details-field">
+          <span class="details-label">Adresse de l'entreprise</span>
+          <span class="details-value">{u.company_address ?? <em class="details-empty">Non renseigné</em>}</span>
+        </div>
+        <div class="details-field">
+          <span class="details-label">Abonnement</span>
+          <span class="details-value">
+            <span class={`details-plan details-plan--${u.plan ?? "free"}`}>
+              {u.plan === "premium" ? "Premium" : "Gratuit"}
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  )}
+</LayoutDashboard>
+
+<style>
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    max-width: 860px;
+    margin: auto;
+  }
+
+  .details-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-elegant-black);
+  }
+
+  .details-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .details-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.25rem;
+  }
+
+  .details-label {
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-elegant-black);
+  }
+
+  .details-value {
+    font-family: var(--font-extra);
+    font-size: 1.05rem;
+    color: var(--color-elegant-black);
+    line-height: 1.3;
+    background-color: var(--color-sand);
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    border: 1px solid #000000;
+  }
+
+  .details-empty {
+    font-style: italic;
+  }
+
+  .details-plan {
+    display: inline-block;
+    font-family: var(--font-label);
+    font-size: 1rem;
+    padding-top: 0.4em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .details-plan--free {
+    color: #008000;
+  }
+
+  .details-plan--premium {
+    color: #b22222;
+  }
+</style>
