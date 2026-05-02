@@ -186,7 +186,7 @@ const u = user;
   .manage {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xl);
+    gap: var(--space-lg);
     max-width: 860px;
     margin: auto;
   }
@@ -199,7 +199,7 @@ const u = user;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--color-elegant-black);
-        text-shadow: 2px 2px 0 goldenrod, -1px 1px 0 gold, 1px -1px 0 goldenrod, -1px -1px 0 #fff;
+    text-shadow: 2px 2px 0 goldenrod, -1px 1px 0 gold, 1px -1px 0 goldenrod, -1px -1px 0 #fff;
   }
 
   .manage-feedback {
@@ -242,8 +242,9 @@ const u = user;
 
   .manage-row {
     display: flex;
+    flex-direction: column;
     gap: var(--space-sm);
-    align-items: center;
+    align-items: flex-start;
   }
 
   .manage-input {
@@ -254,13 +255,19 @@ const u = user;
     padding: 0.35rem 0.75rem;
     border: 1px solid #000000;
     border-radius: 4px;
+    width:100%;
     flex: 1;
     outline: none;
     transition: border-color 150ms ease;
+    box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
 
   .manage-input:focus {
     border-color: firebrick;
+    box-shadow:none;
   }
 
   .manage-save {
@@ -274,12 +281,13 @@ const u = user;
     color: var(--color-gold);
     border: 1.5px solid var(--color-elegant-black);
     cursor: pointer;
+    border-radius:4px;
     white-space: nowrap;
     transition: background-color 150ms ease, color 150ms ease;
   }
 
   .manage-save:hover {
-    background-color: transparent;
+    background-color: azure;
     color: var(--color-elegant-black);
   }
 
