@@ -1,7 +1,7 @@
-import { createDirectus, rest, authentication, readItems, registerUser } from "@directus/sdk";
+import { createDirectus, rest, authentication, readItems, registerUser, createItem, updateItem, readItem } from "@directus/sdk";
 
 interface WineRegion {
-  id: number;
+  id: string;
   region: string;
   slug: string;
   color: string;
@@ -43,6 +43,33 @@ interface PlaceTranslation {
   languages_code: string;
   description: string | null;
   extended_description: string | null;
+}
+
+interface PlaceListing {
+  id: string;
+  Name: string;
+  slug: string;
+  status: 'draft' | 'pending_review' | 'published' | 'archived';
+  date_created: string | null;
+  date_updated: string | null;
+  location: { type: 'Point'; coordinates: [number, number] } | null;
+  address: string | null;
+  postal_code: string | null;
+  place: string | null;
+  website: string | null;
+  phone: string | null;
+  logo: string | null;
+  category: string | Category;
+  terroir: string[] | WineRegion[];
+  department: string | Department | null;
+  user_id: string | null;
+  description_en: string | null;
+  description_fr: string | null;
+  translate_to_en: boolean;
+  translate_to_fr: boolean;
+  gallery: string[] | null;
+  certificates: string[] | null;
+  video: string[] | null;
 }
 
 interface Place {
@@ -109,7 +136,7 @@ interface Schema {
   administrative_regions: AdministrativeRegion[];
   departments: Department[];
   towns: Town[];
-  places_vg: Place[];
+  places_vg: PlaceListing[];
   places_vg_translations: PlaceTranslation[];
   articles_cards_vg: ArticleCard[];
   journal_vg: Article[];
@@ -125,5 +152,5 @@ const directus = createDirectus<Schema>(DIRECTUS_URL)
   .with(rest());
 
 export default directus;
-export { readItems, registerUser };
-export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, PlaceTranslation, ArticleCard, Article, FAQ, FAQTranslation };
+export { readItems, registerUser, createItem, updateItem, readItem };
+export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, PlaceListing, PlaceTranslation, ArticleCard, Article, FAQ, FAQTranslation };

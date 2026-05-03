@@ -8,18 +8,19 @@ interface Props {
   title: string;
   active: "details" | "manage" | "submit" | "upgrade";
   lang?: "en" | "fr";
+  plan?: "free" | "premium";
 }
 
-const { title, active, lang = "en" } = Astro.props;
+const { title, active, lang = "en", plan = "free" } = Astro.props;
 
 const isFr = lang === "fr";
 
 const nav = isFr
   ? [
-      { key: "details", label: "Détails",      href: "/fr/dashboard" },
-      { key: "manage",  label: "Gérer",         href: "/fr/dashboard/manage" },
-      { key: "submit",  label: "Soumettre",      href: "/fr/dashboard/submit" },
-      { key: "upgrade", label: "Abonnement",     href: "/fr/dashboard/upgrade" },
+      { key: "details", label: "Détails",  href: "/fr/dashboard" },
+      { key: "manage",  label: "Gérer",    href: "/fr/dashboard/manage" },
+      { key: "submit",  label: "Soumettre", href: "/fr/dashboard/submit" },
+      { key: "upgrade", label: "Abonnement", href: "/fr/dashboard/upgrade" },
     ] as const
   : [
       { key: "details", label: "Details",  href: "/dashboard" },
@@ -38,19 +39,17 @@ const langSwitch = isFr
 <LayoutSubmit title={title} description="Manage your Vina Gallica business listing.">
   <div class="dash-page">
 
-    <div class="dash-top">
+    <div class="dash-topbar">
+      <a href={langSwitch.href} class="dash-topbar-lang">{langSwitch.label}</a>
       <a href={isFr ? "/fr" : "/"} class="dash-logo" aria-label="Vina Gallica - Home Page">
         <Image src={logoMark} alt="Logo Vina Gallica" width={80} height={80} densities={[1, 2]} priority />
         <Image src={logoText} alt="Vina Gallica Directory" width={399} height={69} densities={[1, 2]} priority />
       </a>
-      <div class="dash-top-actions">
-        <a href={langSwitch.href} class="dash-lang">{langSwitch.label}</a>
-        <button
-          id="logout-btn"
-          class="dash-logout"
-          data-logout-href={logoutHref}
-        >{isFr ? "Déconnexion" : "Sign out"}</button>
-      </div>
+      <button
+        id="logout-btn"
+        class="dash-topbar-logout"
+        data-logout-href={logoutHref}
+      >{isFr ? "Déconnexion" : "Sign out"}</button>
     </div>
 
     <nav class="dash-nav" aria-label={isFr ? "Sections du tableau de bord" : "Dashboard sections"}>
@@ -64,6 +63,14 @@ const langSwitch = isFr
         </a>
       ))}
     </nav>
+
+    <div class="dash-bar">
+      <span class={`dash-bar-plan dash-bar-plan--${plan}`}>
+        {plan === "premium"
+          ? "Premium"
+          : (isFr ? "Gratuit" : "Free")}
+      </span>
+    </div>
 
     <main class="dash-main">
       <slot />
@@ -94,15 +101,13 @@ const langSwitch = isFr
     background-color: var(--color-gold);
   }
 
-  /* ── TOP: logo + sign out ─────────────────────────────── */
-  .dash-top {
+  /* ── TOPBAR: logo centered · logout top-right ───────────── */
+  .dash-topbar {
+    position: relative;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
     padding: var(--space-md) var(--space-lg);
-    gap: var(--space-md);
   }
 
   .dash-logo {
@@ -111,50 +116,52 @@ const langSwitch = isFr
     gap: 1.5rem;
     text-decoration: none;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
-  .dash-top-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-  }
-
-  .dash-lang {
+  .dash-topbar-lang {
+    position: absolute;
+    top: 0;
+    left: 0;
     font-family: var(--font-label);
-    font-size: 0.78rem;
+    font-size: 0.68rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    margin: 0.6rem 0.75rem 0.3rem;
     color: var(--color-elegant-black);
     text-decoration: none;
     border-bottom: 1px solid transparent;
     transition: border-color 150ms ease;
   }
 
-  .dash-lang:hover {
+  .dash-topbar-lang:hover {
     border-bottom-color: var(--color-elegant-black);
   }
 
-  .dash-logout {
+  .dash-topbar-logout {
+    position: absolute;
+    top: 0;
+    right: 0;
     font-family: var(--font-label);
-    font-size: 0.78rem;
+    font-size: 0.68rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    padding: 0.6rem 1rem 0.25rem;
+    padding: 0.6rem 0.75rem 0.3rem;
     background-color: var(--color-elegant-black);
-    border: 1.5px solid var(--color-elegant-black);
+    border: none;
     color: var(--color-gold);
     cursor: pointer;
     transition: background-color 150ms ease, color 150ms ease;
   }
 
-  .dash-logout:hover {
-    background-color: var(--color-sand);
-    color: var(--color-elegant-black);
+  .dash-topbar-logout:hover {
+    background-color: firebrick;
+    color: var(--color-sand);
   }
 
-  /* ── NAV ──────────────────────────────────────────────── */
+  /* ── NAV ────────────────────────────────────────────────── */
   .dash-nav {
     display: flex;
     flex-direction: row;
@@ -180,16 +187,41 @@ const langSwitch = isFr
     text-underline-offset: 5px;
   }
 
-  /* ── MAIN ─────────────────────────────────────────────── */
+  /* ── BAR: plan status ───────────────────────────────────── */
+  .dash-bar {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    background-color: goldenrod;
+    border-bottom: 1px solid var(--color-elegant-black);
+  }
+
+  .dash-bar-plan {
+    font-family: var(--font-label);
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .dash-bar-plan--free {
+    color: var(--color-elegant-black);
+  }
+
+  .dash-bar-plan--premium {
+    color: var(--color-wine, #7a1f2e);
+  }
+
+  /* ── MAIN ───────────────────────────────────────────────── */
   .dash-main {
     padding: var(--space-lg) var(--space-lg);
     display: block;
     position: relative;
-    gap: var(--space-xl);
   }
 
-  /* ── RESPONSIVE ───────────────────────────────────────── */
-  @media (max-width: 720px) {
+  /* ── RESPONSIVE ─────────────────────────────────────────── */
+  @media (max-width: 750px) {
     .dash-logo img:last-child {
       display: none;
     }

@@ -1,29 +1,49 @@
 ---
 export const prerender = false;
 import LayoutDashboard from "../../layouts/LayoutDashboard.astro";
+import ListingsManager from "../../components/ListingsManager";
+const accessToken = Astro.cookies.get("directus_access_token")?.value;
+const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
+const DIRECTUS_SERVICE_TOKEN = import.meta.env.DIRECTUS_SERVICE_TOKEN ?? import.meta.env.DIRECTUS_STATIC_TOKEN;
+
+let plan: "free" | "premium" = "free";
+if (accessToken) {
+  try {
+    const res = await fetch(`${DIRECTUS_URL}/users/me?fields=plan`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (res.ok) {
+      const body = await res.json() as { data: { plan?: string } };
+      if (body.data.plan === "premium") plan = "premium";
+    }
+  } catch { /* token expired */ }
+}
+
+const headers = { Authorization: `Bearer ${DIRECTUS_SERVICE_TOKEN}` };
+
+const [wrRes, catRes] = await Promise.all([
+  fetch(`${DIRECTUS_URL}/items/wine_regions?fields=id,region&sort[]=region`, { headers }),
+  fetch(`${DIRECTUS_URL}/items/categories_vg?fields=id,name,name_fr&sort[]=name`, { headers }),
+]);
+
+const wineRegions: { id: string; region: string }[] = wrRes.ok
+  ? ((await wrRes.json()) as { data: { id: string; region: string }[] }).data
+  : [];
+const categories: { id: string; name: string; name_fr: string | null }[] = catRes.ok
+  ? ((await catRes.json()) as { data: { id: string; name: string; name_fr?: string | null }[] }).data
+    .map(c => ({ ...c, name_fr: c.name_fr ?? null }))
+  : [];
+
+const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
 ---
 
 <LayoutDashboard title="Submit | Vina Gallica" active="submit">
-  <h1 class="dash-title">Submit a listing</h1>
-  <p class="dash-placeholder-text">The listing submission form is coming soon.</p>
+  <ListingsManager
+    client:load
+    lang="en"
+    plan={plan}
+    wineRegions={wineRegions}
+    categories={categories}
+    mapboxToken={mapboxToken}
+  />
 </LayoutDashboard>
-
-<style>
-  .dash-title {
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-        text-shadow: 2px 2px 0 goldenrod, -1px 1px 0 gold, 1px -1px 0 goldenrod, -1px -1px 0 #fff;
-    letter-spacing: 0.04em;
-    color: var(--color-elegant-black);
-  }
-
-  .dash-placeholder-text {
-    font-family: var(--font-extra);
-    font-size: 0.92rem;
-    color: var(--color-elegant-black);
-    opacity: 0.55;
-    line-height: 1.6;
-  }
-</style>
