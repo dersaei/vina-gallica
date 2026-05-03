@@ -50,7 +50,7 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
   const payload: Record<string, unknown> = {
     Name: name,
     logo_alt: name,
-    status: (data.submit === true) ? "pending_review" : "draft",
+    status: (data.submit === true) ? (isPremium ? "published" : "pending_review") : "draft",
     category: data.category ?? null,
     address: (data.address as string)?.trim() || null,
     postal_code: postalCode || null,
@@ -61,7 +61,9 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
     department: departmentId,
   };
 
-  if (Array.isArray(data.terroir)) payload.terroir = data.terroir;
+  if (Array.isArray(data.terroir)) {
+    payload.terroir = (data.terroir as string[]).map(id => ({ wine_regions_id: id }));
+  }
   if (data.logo !== undefined) payload.logo = data.logo;
 
   if (isPremium) {
@@ -86,6 +88,42 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     const message = (err as { errors?: { message: string }[] })?.errors?.[0]?.message ?? "Failed to update listing.";
+    return json({ error: message }, res.status);
+  }
+
+  return json({ ok: true });
+};
+
+export const DELETE: APIRoute = async ({ cookies, params }) => {
+  const accessToken = cookies.get("directus_access_token")?.value;
+  if (!accessToken) return json({ error: "Not authenticated." }, 401);
+
+  const listingId = params.id;
+  if (!listingId) return json({ error: "Missing listing id." }, 400);
+
+  const meRes = await fetch(`${DIRECTUS_URL}/users/me?fields=id`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  if (!meRes.ok) return json({ error: "Not authenticated." }, 401);
+  const { data: me } = await meRes.json() as { data: { id: string } };
+
+  const checkRes = await fetch(
+    `${DIRECTUS_URL}/items/places_vg/${listingId}?fields=id,user_id,status`,
+    { headers: { Authorization: `Bearer ${DIRECTUS_SERVICE_TOKEN}` } }
+  );
+  if (!checkRes.ok) return json({ error: "Listing not found." }, 404);
+  const { data: existing } = await checkRes.json() as { data: { id: string; user_id: string; status: string } };
+  if (existing.user_id !== me.id) return json({ error: "Forbidden." }, 403);
+  if (existing.status === "published") return json({ error: "Published listings cannot be deleted. Contact support." }, 403);
+
+  const res = await fetch(`${DIRECTUS_URL}/items/places_vg/${listingId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${DIRECTUS_SERVICE_TOKEN}` },
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    const message = (err as { errors?: { message: string }[] })?.errors?.[0]?.message ?? "Failed to delete listing.";
     return json({ error: message }, res.status);
   }
 

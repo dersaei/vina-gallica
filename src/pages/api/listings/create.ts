@@ -50,7 +50,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     Name: name,
     slug: `${slugify(name)}-${nanoid6()}`,
     logo_alt: name,
-    status: (data.submit === true) ? "pending_review" : "draft",
+    status: (data.submit === true) ? (isPremium ? "published" : "pending_review") : "draft",
     user_id: me.id,
     category: data.category ?? null,
     address: (data.address as string)?.trim() || null,
@@ -62,9 +62,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     department: departmentId,
   };
 
-  // Terroir (M2M) — tablica uuid regionów winiarskich
+  // Terroir (M2M) — Directus wymaga tablicy obiektów { wine_regions_id: uuid }
   if (Array.isArray(data.terroir) && data.terroir.length > 0) {
-    payload.terroir = data.terroir;
+    payload.terroir = (data.terroir as string[]).map(id => ({ wine_regions_id: id }));
   }
 
   // Logo (już jako file_id po uploadzie)

@@ -45,11 +45,13 @@ const t = {
     editListing:    "Edit listing",
     saveDraft:      "Save draft",
     submitReview:   "Submit for review",
+    publish:        "Publish listing",
     saving:         "Saving…",
-    submitting:     "Submitting…",
+    submitting:     "Publishing…",
     cancel:         "Cancel",
     saved:          "Draft saved.",
     submitted:      "Submitted for review.",
+    published:      "Listing published.",
     name:           "Listing name",
     namePlaceholder:"Château Margaux",
     category:       "Category",
@@ -82,17 +84,20 @@ const t = {
     uploading:      "Uploading…",
     remove:         "Remove",
     required:       "This field is required.",
+    backToListings: "← Back to listings",
   },
   fr: {
     newListing:     "Nouvelle fiche",
     editListing:    "Modifier la fiche",
     saveDraft:      "Enregistrer le brouillon",
     submitReview:   "Soumettre pour révision",
+    publish:        "Publier la fiche",
     saving:         "Enregistrement…",
-    submitting:     "Envoi…",
+    submitting:     "Publication…",
     cancel:         "Annuler",
     saved:          "Brouillon enregistré.",
     submitted:      "Soumis pour révision.",
+    published:      "Fiche publiée.",
     name:           "Nom de la fiche",
     namePlaceholder:"Château Margaux",
     category:       "Catégorie",
@@ -125,6 +130,7 @@ const t = {
     uploading:      "Téléchargement…",
     remove:         "Supprimer",
     required:       "Ce champ est obligatoire.",
+    backToListings: "← Retour aux fiches",
   },
 } as const;
 
@@ -358,7 +364,10 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
       if (!res.ok || !body.ok) {
         setFeedback({ msg: body.error ?? "Error.", ok: false });
       } else {
-        setFeedback({ msg: submit ? tx.submitted : tx.saved, ok: true });
+        const successMsg = submit
+          ? (isPremium ? tx.published : tx.submitted)
+          : tx.saved;
+        setFeedback({ msg: successMsg, ok: true });
         if (body.id) onSaved?.(body.id);
       }
     } catch {
@@ -383,13 +392,12 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
 
   return (
     <div className="lf">
-      <h2 className="lf-title">{isEdit ? tx.editListing : tx.newListing}</h2>
-
-      {feedback && (
-        <div className={`lf-feedback lf-feedback--${feedback.ok ? "ok" : "err"}`}>
-          {feedback.msg}
-        </div>
+      {onCancel && (
+        <button type="button" className="lf-back" onClick={onCancel}>
+          {tx.backToListings}
+        </button>
       )}
+      <h2 className="lf-title">{isEdit ? tx.editListing : tx.newListing}</h2>
 
       {/* NAME */}
       <div className="lf-field">
@@ -568,21 +576,28 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
 
       {/* ACTIONS */}
       <div className="lf-actions">
-        {onCancel && (
-          <button type="button" className="lf-btn lf-btn--ghost" onClick={onCancel}>
-            {tx.cancel}
-          </button>
+        {feedback && (
+          <div className={`lf-feedback lf-feedback--${feedback.ok ? "ok" : "err"}`}>
+            {feedback.msg}
+          </div>
         )}
-        <button type="button" className="lf-btn lf-btn--secondary"
-          disabled={status !== "idle"}
-          onClick={() => save(false)}>
-          {status === "saving" ? tx.saving : tx.saveDraft}
-        </button>
-        <button type="button" className="lf-btn lf-btn--primary"
-          disabled={status !== "idle"}
-          onClick={() => save(true)}>
-          {status === "submitting" ? tx.submitting : tx.submitReview}
-        </button>
+        <div className="lf-actions-btns">
+          {onCancel && (
+            <button type="button" className="lf-btn lf-btn--ghost" onClick={onCancel}>
+              {tx.cancel}
+            </button>
+          )}
+          <button type="button" className="lf-btn lf-btn--secondary"
+            disabled={status !== "idle"}
+            onClick={() => save(false)}>
+            {status === "saving" ? tx.saving : tx.saveDraft}
+          </button>
+          <button type="button" className="lf-btn lf-btn--primary"
+            disabled={status !== "idle"}
+            onClick={() => save(true)}>
+            {status === "submitting" ? tx.submitting : (isPremium ? tx.publish : tx.submitReview)}
+          </button>
+        </div>
       </div>
     </div>
   );
