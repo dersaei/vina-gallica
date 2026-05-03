@@ -81,6 +81,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     if (Array.isArray(data.video)) payload.video = data.video;
   }
 
+  console.log("[listings/create] payload", JSON.stringify(payload));
   const res = await fetch(`${DIRECTUS_URL}/items/places_vg`, {
     method: "POST",
     headers: {
@@ -92,6 +93,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
+    console.error("[listings/create] Directus error", res.status, JSON.stringify(err));
     const message = (err as { errors?: { message: string }[] })?.errors?.[0]?.message ?? "Failed to create listing.";
     return json({ error: message }, res.status);
   }
