@@ -194,21 +194,27 @@ const faqItems = faqRaw
         </div>
 
         <div class="join-field">
-          <label for="tax_id" class="join-label">
-            Numéro fiscal
-            <span class="join-label-note">(SIRET pour la France)</span>
-          </label>
-          <input
-            type="text"
-            id="tax_id"
-            name="tax_id"
-            class="join-input"
-            autocomplete="off"
-          />
+          <label for="tax_id" class="join-label">SIREN <span aria-hidden="true">*</span></label>
+          <span class="join-label-note">Votre SIREN sera vérifié auprès du registre officiel des entreprises françaises.</span>
+          <div class="siren-input-wrap">
+            <input
+              type="text"
+              id="tax_id"
+              name="tax_id"
+              class="join-input"
+              autocomplete="off"
+              inputmode="numeric"
+              maxlength="9"
+              pattern="\d{9}"
+              required
+            />
+            <span class="siren-status" id="siren-status" aria-live="polite"></span>
+          </div>
+          <span class="siren-feedback" id="siren-feedback"></span>
         </div>
 
         <div class="join-field">
-          <label for="company_address" class="join-label">Adresse de l'entreprise</label>
+          <label for="company_address" class="join-label">Adresse de l'entreprise <span aria-hidden="true">*</span></label>
           <span class="join-label-note">(rue, numéro, code postal, commune, département, région)</span>
           <input
             type="text"
@@ -217,6 +223,7 @@ const faqItems = faqRaw
             class="join-input"
             autocomplete="street-address"
             placeholder="Votre adresse principale"
+            required
           />
         </div>
 
@@ -1009,6 +1016,39 @@ const faqItems = faqRaw
       font-size: 1rem;
     }
   }
+
+  .siren-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .siren-input-wrap .join-input {
+    padding-right: 2.5rem;
+  }
+
+  .siren-status {
+    position: absolute;
+    right: 0.75rem;
+    font-size: 1.1rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .siren-feedback {
+    font-family: var(--font-extra);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    min-height: 1.2em;
+  }
+
+  .siren-feedback.is-valid {
+    color: #1a6b1a;
+  }
+
+  .siren-feedback.is-invalid {
+    color: firebrick;
+  }
 </style>
 
 <script>
@@ -1037,8 +1077,80 @@ const faqItems = faqRaw
 
   document.addEventListener("astro:page-load", () => {
     initTurnstile();
+    setupSirenValidation();
     setupForm();
   });
+
+  let sirenValid = false;
+
+  function setupSirenValidation() {
+    const input = document.getElementById("tax_id") as HTMLInputElement | null;
+    const statusEl = document.getElementById("siren-status") as HTMLElement | null;
+    const feedbackEl = document.getElementById("siren-feedback") as HTMLElement | null;
+    if (!input || !statusEl || !feedbackEl) return;
+
+    sirenValid = false;
+    let debounceTimer: ReturnType<typeof setTimeout>;
+
+    function setValidating() {
+      statusEl!.textContent = "⏳";
+      feedbackEl!.textContent = "Vérification en cours…";
+      feedbackEl!.className = "siren-feedback";
+      input!.setCustomValidity("Vérification du SIREN…");
+    }
+
+    function setValid(name?: string) {
+      sirenValid = true;
+      statusEl!.textContent = "✓";
+      feedbackEl!.textContent = name ? `Vérifié : ${name}` : "SIREN vérifié.";
+      feedbackEl!.className = "siren-feedback is-valid";
+      input!.setCustomValidity("");
+    }
+
+    function setInvalid(msg: string) {
+      sirenValid = false;
+      statusEl!.textContent = "✗";
+      feedbackEl!.textContent = msg;
+      feedbackEl!.className = "siren-feedback is-invalid";
+      input!.setCustomValidity(msg);
+    }
+
+    function clear() {
+      sirenValid = false;
+      statusEl!.textContent = "";
+      feedbackEl!.textContent = "";
+      feedbackEl!.className = "siren-feedback";
+      input!.setCustomValidity("");
+    }
+
+    input.addEventListener("input", () => {
+      clearTimeout(debounceTimer);
+      const val = input.value.replace(/\D/g, "");
+      if (val !== input.value) input.value = val;
+
+      if (val.length === 0) { clear(); return; }
+      if (val.length < 9) {
+        clear();
+        input.setCustomValidity("Le SIREN doit comporter 9 chiffres");
+        return;
+      }
+
+      setValidating();
+      debounceTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(`/api/validate-siren?siren=${val}`);
+          const json = await res.json() as { valid: boolean; name?: string; error?: string };
+          if (json.valid) {
+            setValid(json.name);
+          } else {
+            setInvalid(json.error ?? "SIREN invalide.");
+          }
+        } catch {
+          setInvalid("Impossible de vérifier le SIREN. Vérifiez votre connexion.");
+        }
+      }, 600);
+    });
+  }
 
   function setupForm() {
     const form = document.getElementById("register-form") as HTMLFormElement | null;
@@ -1054,6 +1166,13 @@ const faqItems = faqRaw
       const password = (form.querySelector("#password") as HTMLInputElement).value;
       const confirm = (form.querySelector("#password_confirm") as HTMLInputElement).value;
       const email = (form.querySelector("#email") as HTMLInputElement).value;
+
+      if (!sirenValid) {
+        errorBox.textContent = "Veuillez saisir un SIREN valide avant de soumettre le formulaire.";
+        errorBox.hidden = false;
+        document.getElementById("tax_id")?.focus();
+        return;
+      }
 
       if (password !== confirm) {
         errorBox.textContent = "Les mots de passe ne correspondent pas.";
