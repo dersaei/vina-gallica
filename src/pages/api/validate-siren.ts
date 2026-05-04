@@ -22,7 +22,7 @@ export const GET: APIRoute = async ({ request, url }) => {
 
   // In dev mode, skip the real API call so local testing works without a real SIREN
   if (import.meta.env.DEV) {
-    return json({ valid: true, name: "Dev mode — validation skipped" });
+    return json({ valid: true, name: "Château Dev Mode", address: "1 Rue de la Vigne, 33000 Bordeaux" });
   }
 
   let res: Response;
@@ -40,7 +40,20 @@ export const GET: APIRoute = async ({ request, url }) => {
   }
 
   const data = (await res.json()) as {
-    results?: Array<{ siren: string; nom_complet?: string; etat_administratif?: string }>;
+    results?: Array<{
+      siren: string;
+      nom_complet?: string;
+      etat_administratif?: string;
+      siege?: {
+        adresse?: string;
+        numero_voie?: string;
+        type_voie?: string;
+        libelle_voie?: string;
+        code_postal?: string;
+        libelle_commune?: string;
+        libelle_pays_etranger?: string;
+      };
+    }>;
     total_results?: number;
   };
 
@@ -54,5 +67,12 @@ export const GET: APIRoute = async ({ request, url }) => {
     return json({ valid: false, error: "This company is closed (radiation). Registration is not possible." });
   }
 
-  return json({ valid: true, name: match.nom_complet });
+  const s = match.siege;
+  const address = s?.adresse ?? [
+    [s?.numero_voie, s?.type_voie, s?.libelle_voie].filter(Boolean).join(" "),
+    s?.code_postal,
+    s?.libelle_commune ?? s?.libelle_pays_etranger,
+  ].filter(Boolean).join(", ");
+
+  return json({ valid: true, name: match.nom_complet, address: address || undefined });
 };

@@ -1099,12 +1099,17 @@ const faqItems = faqRaw
       input!.setCustomValidity("Vérification du SIREN…");
     }
 
-    function setValid(name?: string) {
+    function setValid(name?: string, address?: string) {
       sirenValid = true;
       statusEl!.textContent = "✓";
       feedbackEl!.textContent = name ? `Vérifié : ${name}` : "SIREN vérifié.";
       feedbackEl!.className = "siren-feedback is-valid";
       input!.setCustomValidity("");
+
+      const nameField = document.getElementById("company_name") as HTMLInputElement | null;
+      const addressField = document.getElementById("company_address") as HTMLInputElement | null;
+      if (nameField && !nameField.value && name) nameField.value = name;
+      if (addressField && !addressField.value && address) addressField.value = address;
     }
 
     function setInvalid(msg: string) {
@@ -1139,9 +1144,9 @@ const faqItems = faqRaw
       debounceTimer = setTimeout(async () => {
         try {
           const res = await fetch(`/api/validate-siren?siren=${val}`);
-          const json = await res.json() as { valid: boolean; name?: string; error?: string };
+          const json = await res.json() as { valid: boolean; name?: string; address?: string; error?: string };
           if (json.valid) {
-            setValid(json.name);
+            setValid(json.name, json.address);
           } else {
             setInvalid(json.error ?? "SIREN invalide.");
           }
