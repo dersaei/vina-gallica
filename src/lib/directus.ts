@@ -45,6 +45,12 @@ interface PlaceTranslation {
   extended_description: string | null;
 }
 
+interface TerroirJunction {
+  id: number;
+  places_vg_id: string;
+  wine_regions_id: string | WineRegion;
+}
+
 interface PlaceListing {
   id: string;
   Name: string;
@@ -60,8 +66,9 @@ interface PlaceListing {
   phone: string | null;
   logo: string | null;
   category: string | Category;
-  terroir: string[] | WineRegion[];
+  terroir: TerroirJunction[];
   department: string | Department | null;
+  translations?: PlaceTranslation[];
   user_id: string | null;
   description_en: string | null;
   description_fr: string | null;
@@ -78,14 +85,15 @@ interface Place {
   slug: string;
   status: string;
   location: { type: 'Point'; coordinates: [number, number] } | null;
-  address: string;
-  postal_code: string;
+  address: string | null;
+  postal_code: string | null;
+  place: string | null;
   website: string | null;
   phone: string | null;
   logo: string | null;
   category: string | Category;
-  wine_region: number | WineRegion | null;
-  town: string | Town;
+  terroir: TerroirJunction[];
+  department: string | Department | null;
   translations?: PlaceTranslation[];
 }
 
@@ -137,6 +145,7 @@ interface Schema {
   departments: Department[];
   towns: Town[];
   places_vg: PlaceListing[];
+  places_vg_wine_regions: TerroirJunction[];
   places_vg_translations: PlaceTranslation[];
   articles_cards_vg: ArticleCard[];
   journal_vg: Article[];
@@ -153,4 +162,4 @@ const directus = createDirectus<Schema>(DIRECTUS_URL)
 
 export default directus;
 export { readItems, registerUser, createItem, updateItem, readItem };
-export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, PlaceListing, PlaceTranslation, ArticleCard, Article, FAQ, FAQTranslation };
+export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, PlaceListing, PlaceTranslation, TerroirJunction, ArticleCard, Article, FAQ, FAQTranslation };

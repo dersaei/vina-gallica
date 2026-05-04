@@ -10,9 +10,8 @@ Astro.response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-r
 
 interface AdminRegion { id: string; name: string; slug: string; color: string; }
 interface Department { id: string; name: string; slug: string; color: string; administrative_region: string; }
-interface TownItem { id: string; name: string; slug: string; department: string; }
 
-const [categories, wineRegions, adminRegions, departments, towns, places] = await Promise.all([
+const [categories, wineRegions, adminRegions, departments, places] = await Promise.all([
   directus.request(
     readItems('categories_vg', {
       fields: ['id', 'name', 'slug', 'color'],
@@ -22,21 +21,20 @@ const [categories, wineRegions, adminRegions, departments, towns, places] = awai
   directus.request(readItems('wine_regions', { fields: ['id', 'region', 'slug', 'color'], sort: ['region'] })) as unknown as Promise<{ id: string; region: string; slug: string; color: string }[]>,
   directus.request(readItems('administrative_regions', { fields: ['id', 'name', 'slug', 'color'], sort: ['name'] })) as unknown as Promise<AdminRegion[]>,
   directus.request(readItems('departments', { fields: ['id', 'name', 'slug', 'color', 'administrative_region'], sort: ['name'] })) as unknown as Promise<Department[]>,
-  directus.request(readItems('towns', { fields: ['id', 'name', 'slug', 'department'], sort: ['name'] })) as unknown as Promise<TownItem[]>,
-  directus.request(
+  (directus.request(
     readItems('places_vg', {
       fields: [
         'id', 'Name', 'slug', 'status',
-        'address', 'postal_code', 'website', 'phone', 'logo',
+        'address', 'postal_code', 'place', 'website', 'phone', 'logo',
         { category: ['id', 'name', 'slug', 'color'] },
-        { wine_region: ['region', 'slug', 'color'] },
-        { town: ['id', 'name', 'slug', { department: ['id', 'name', 'slug', 'color', { administrative_region: ['id', 'name', 'slug', 'color'] }] }] },
-      ] as const,
+        { terroir: [{ wine_regions_id: ['id', 'region', 'slug', 'color'] }] },
+        { department: ['id', 'name', 'slug', 'color', { administrative_region: ['id', 'name', 'slug', 'color'] }] },
+      ],
       filter: { status: { _eq: 'published' } },
       sort: ['Name'],
       limit: -1,
-    })
-  ) as unknown as Promise<Place[]>,
+    } as any)
+  )) as unknown as Promise<Place[]>,
 ]);
 ---
 
@@ -106,7 +104,6 @@ const [categories, wineRegions, adminRegions, departments, towns, places] = awai
         wineRegions={wineRegions}
         adminRegions={adminRegions}
         departments={departments}
-        towns={towns}
       />
     </div>
 
@@ -153,7 +150,6 @@ const [categories, wineRegions, adminRegions, departments, towns, places] = awai
     let activeWineRegion: string | null = null;
     let activeAdminRegion: string | null = null;
     let activeDept: string | null = null;
-    let activeTown: string | null = null;
 
     function applyFilters() {
       cards.forEach((card) => {
@@ -161,8 +157,7 @@ const [categories, wineRegions, adminRegions, departments, towns, places] = awai
         const matchWine = !activeWineRegion || card.dataset.wineRegion === activeWineRegion;
         const matchAdmin = !activeAdminRegion || card.dataset.adminRegion === activeAdminRegion;
         const matchDept = !activeDept || card.dataset.dept === activeDept;
-        const matchTown = !activeTown || card.dataset.town === activeTown;
-        card.style.display = (matchCat && matchWine && matchAdmin && matchDept && matchTown) ? '' : 'none';
+        card.style.display = (matchCat && matchWine && matchAdmin && matchDept) ? '' : 'none';
       });
     }
 
@@ -177,11 +172,10 @@ const [categories, wineRegions, adminRegions, departments, towns, places] = awai
 
     // Region filter events from RegionFilter React component
     document.addEventListener('region-filter', (e) => {
-      const { wine, admin, dept, town } = (e as CustomEvent).detail;
+      const { wine, admin, dept } = (e as CustomEvent).detail;
       activeWineRegion = wine;
       activeAdminRegion = admin;
       activeDept = dept;
-      activeTown = town;
       applyFilters();
     });
   });

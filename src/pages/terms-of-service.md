@@ -6,7 +6,7 @@ headline: "Terms of Service"
 headlineStyle: "dark"
 ---
 
-**Last updated:** April 26, 2026
+**Last updated:** May 04, 2026
 
 These Terms of Service ("Terms") govern your use of **[vinagallica.com](https://vinagallica.com)** ("Vina Gallica", "the Platform") and any services offered through it. The Platform is operated by **Bogusław Siemiątkowski "Spiżarnia REGIO"**, with its registered address at **Napoleońska 49, 06-500 Mława, Poland, VAT-EU: PL5691729538**.
 
@@ -125,7 +125,7 @@ There is no obligation to upgrade to a paid plan at any point.
 
 ### 5.2 Premium Plan
 
-The **Premium Plan** is available for **€150 per year, excluding VAT**, billed annually. It includes everything in the Free Plan, plus:
+The **Premium Plan** is available for **€120 per year, excluding VAT**, billed annually. It includes everything in the Free Plan, plus:
 
 - a full profile page accessible from the directory card ("read more");
 - an image gallery;
@@ -155,7 +155,7 @@ A pro-forma invoice will be included with these reminders. This pro-forma invoic
 
 After your Premium period expires, your listings will remain at Premium level for a **7-day grace period**. If you have not renewed by the end of this grace period, all your listings will revert permanently to the Free Plan. You may upgrade back to Premium at any time from your account dashboard.
 
-**Summary:** The Free Plan is yours forever at no cost. Premium costs €150/year and adds a full profile page, images, and more. It doesn't renew automatically, but you'll get reminders. If you don't renew within the 7-day grace period, your listings drop back to the free level.
+**Summary:** The Free Plan is yours forever at no cost. Premium costs €120/year and adds a full profile page, images, and more. It doesn't renew automatically, but you'll get reminders. If you don't renew within the 7-day grace period, your listings drop back to the free level.
 
 ## 6. Payment and VAT
 

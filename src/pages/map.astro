@@ -15,20 +15,20 @@ const [categories, places] = await Promise.all([
       sort: ['name'],
     })
   ) as Promise<Category[]>,
-  directus.request(
+  (directus.request(
     readItems('places_vg', {
       fields: [
-        'id', 'Name', 'slug', 'location', 'address', 'postal_code', 'phone', 'website', 'logo',
+        'id', 'Name', 'slug', 'location', 'address', 'postal_code', 'place', 'phone', 'website', 'logo',
         { category: ['id', 'name', 'slug', 'color'] },
-        { wine_region: ['id', 'region', 'color'] },
-        { town: ['id', 'name', { department: ['id', 'name', 'color', { administrative_region: ['id', 'name', 'color'] }] }] },
-      ] as const,
+        { terroir: [{ wine_regions_id: ['id', 'region', 'color'] }] },
+        { department: ['id', 'name', 'color', { administrative_region: ['id', 'name', 'color'] }] },
+      ],
       filter: {
         status: { _eq: 'published' },
       },
       limit: -1,
-    })
-  ) as unknown as Promise<Place[]>,
+    } as any)
+  )) as unknown as Promise<Place[]>,
 ]);
 
 const geojson = {
@@ -37,9 +37,9 @@ const geojson = {
     .filter(p => p.location !== null)
     .map(p => {
       const cat = typeof p.category === 'object' ? p.category as Category : null;
-      const wr = typeof p.wine_region === 'object' && p.wine_region !== null ? p.wine_region as WineRegion : null;
-      const town = typeof p.town === 'object' && p.town !== null ? p.town as { id: string; name: string; department: string | Department } : null;
-      const dept = town && typeof town.department === 'object' ? town.department as Department : null;
+      const firstTerroir = Array.isArray(p.terroir) && p.terroir.length > 0 ? p.terroir[0] : null;
+      const wr = firstTerroir && typeof firstTerroir.wine_regions_id === 'object' ? firstTerroir.wine_regions_id as WineRegion : null;
+      const dept = typeof p.department === 'object' && p.department !== null ? p.department as Department : null;
       const adminRegion = dept && typeof dept.administrative_region === 'object' ? dept.administrative_region as AdministrativeRegion : null;
       return {
         type: 'Feature' as const,
@@ -53,7 +53,7 @@ const geojson = {
           slug: p.slug,
           address: p.address ?? '',
           postalCode: p.postal_code ?? '',
-          townName: town?.name ?? '',
+          townName: p.place ?? '',
           phone: p.phone ?? '',
           website: p.website ?? '',
           logoUrl: p.logo ? `${import.meta.env.DIRECTUS_URL}/assets/${p.logo}` : '',

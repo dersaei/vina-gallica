@@ -1,5 +1,5 @@
 ---
-import type { Place, Category, Town, Department, AdministrativeRegion, WineRegion } from "../lib/directus.ts";
+import type { Place, Category, Department, AdministrativeRegion, WineRegion, TerroirJunction } from "../lib/directus.ts";
 
 interface Props {
   place: Place;
@@ -9,16 +9,16 @@ interface Props {
 const { place, lang = "en" } = Astro.props;
 
 const category = typeof place.category === "object" ? place.category as Category : null;
-const town = typeof place.town === "object" ? place.town as Town : null;
-const dept = town && typeof town.department === "object" ? town.department as Department : null;
+const dept = typeof place.department === "object" && place.department !== null ? place.department as Department : null;
 const region = dept && typeof dept.administrative_region === "object" ? dept.administrative_region as AdministrativeRegion : null;
-const wineRegion = place.wine_region && typeof place.wine_region === "object" ? place.wine_region as WineRegion : null;
+const firstTerroir = Array.isArray(place.terroir) && place.terroir.length > 0 ? place.terroir[0] as TerroirJunction : null;
+const wineRegion = firstTerroir && typeof firstTerroir.wine_regions_id === "object" ? firstTerroir.wine_regions_id as WineRegion : null;
 
-const regionName = region?.name ?? wineRegion?.region ?? null;
+const regionName = region?.name ?? null;
 const regionColor = region?.color ?? null;
 const deptName = dept?.name ?? null;
 const deptColor = dept?.color ?? null;
-const townName = town?.name ?? null;
+const townName = place.place ?? null;
 
 const translation = lang === "fr"
   ? place.translations?.find(t => t.languages_code === "fr-FR")
@@ -37,7 +37,6 @@ const websiteLabel = lang === "fr" ? "Visiter le site" : "Visit website";
   data-wine-region={wineRegion?.slug ?? undefined}
   data-dept={dept?.slug ?? undefined}
   data-admin-region={region?.slug ?? undefined}
-  data-town={town?.slug ?? undefined}
 >
 
   <div class="card-meta">
