@@ -1,4 +1,6 @@
-.lf-hidden { display: none; }
+.lf-hidden {
+  display: none;
+}
 
 .lf {
   display: flex;
@@ -73,6 +75,7 @@
 .lf-error {
   font-family: var(--font-extra);
   font-size: 0.8rem;
+  font-weight: 500;
   color: firebrick;
 }
 
@@ -97,7 +100,7 @@
   border-color: firebrick;
 }
 .lf-input--err {
-  border-color: firebrick;
+  border-color: red;
 }
 
 .lf-textarea {
@@ -309,7 +312,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 0.25rem 0.5rem 0.1rem;
+  padding: 0.45rem 0.5rem 0.1rem;
   background: transparent;
   border: 1px solid firebrick;
   color: firebrick;
@@ -323,7 +326,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  padding: 0.5rem 1rem 0.25rem;
+  padding: 0.55rem 1rem 0.25rem;
   background: var(--color-elegant-black);
   color: var(--color-gold);
   border: 1.5px solid var(--color-elegant-black);
@@ -371,6 +374,7 @@
 }
 .lf-premium-lock {
   font-family: var(--font-extra);
+  font-weight: 500;
   font-size: 0.82rem;
   color: firebrick;
 }

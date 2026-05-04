@@ -49,6 +49,7 @@ const T = {
     noListings: "No listings yet. Create your first one above.",
     yourListings: "Your listings",
     edit: "Edit",
+    archive: "Archive",
     delete: "Delete",
     deleteConfirm: "Are you sure you want to delete",
     deleteCancel: "Cancel",
@@ -70,6 +71,7 @@ const T = {
       "Aucune fiche pour l'instant. Créez votre première fiche ci-dessus.",
     yourListings: "Vos fiches",
     edit: "Modifier",
+    archive: "Archiver",
     delete: "Supprimer",
     deleteConfirm: "Voulez-vous vraiment supprimer",
     deleteCancel: "Annuler",
@@ -96,6 +98,7 @@ export default function ListingsManager({
   const [loading, setLoading] = useState(true);
   const [deleteTarget, setDeleteTarget] = useState<Listing | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [archiving, setArchiving] = useState(false);
 
   useEffect(() => {
     (window as unknown as Record<string, string>).__MAPBOX_TOKEN__ =
@@ -156,7 +159,36 @@ export default function ListingsManager({
     );
   }
 
-  const editable = (_status: string) => true;
+  async function archiveListing(l: Listing) {
+    setArchiving(true);
+    const res = await fetch(`/api/listings/${l.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        Name: l.Name,
+        category: l.category?.id ?? null,
+        terroir: l.terroir.map(t => t.wine_regions_id.id),
+        address: l.address,
+        postal_code: l.postal_code,
+        place: l.place,
+        phone: l.phone,
+        website: l.website,
+        location: l.location,
+        logo: l.logo,
+        archive: true,
+        submit: false,
+      }),
+    });
+    if (res.ok) {
+      setListings(prev => prev.map(item =>
+        item.id === l.id ? { ...item, status: "archived" } : item
+      ));
+    } else {
+      const body = await res.json().catch(() => ({})) as { error?: string };
+      alert(body.error ?? "Failed to archive.");
+    }
+    setArchiving(false);
+  }
 
   async function confirmDelete() {
     if (!deleteTarget) return;
@@ -235,15 +267,24 @@ export default function ListingsManager({
                       </div>
                     </div>
                   </div>
-                  {editable(l.status) && (
-                    <div className="lm-card-actions">
+                  <div className="lm-card-actions">
+                    <button
+                      type="button"
+                      className="lf-btn lf-btn--secondary"
+                      onClick={() => setView({ edit: l })}
+                    >
+                      {tx.edit}
+                    </button>
+                    {l.status === "published" ? (
                       <button
                         type="button"
-                        className="lf-btn lf-btn--secondary"
-                        onClick={() => setView({ edit: l })}
+                        className="lf-btn lf-btn--danger"
+                        disabled={archiving}
+                        onClick={() => archiveListing(l)}
                       >
-                        {tx.edit}
+                        {tx.archive}
                       </button>
+                    ) : (
                       <button
                         type="button"
                         className="lf-btn lf-btn--danger"
@@ -251,8 +292,8 @@ export default function ListingsManager({
                       >
                         {tx.delete}
                       </button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </li>
               );
             })}
