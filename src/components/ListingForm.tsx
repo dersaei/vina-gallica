@@ -1,31 +1,10 @@
 import { useState, useRef, useCallback, useEffect } from "react";
+import type { Listing } from "./listingTypes";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
 interface WineRegion { id: string; region: string; }
 interface Category   { id: string; name: string; name_fr: string | null; }
-
-interface Listing {
-  id: string;
-  Name: string;
-  status: string;
-  category: { id: string } | null;
-  terroir: { wine_regions_id: { id: string; region: string } }[];
-  address: string | null;
-  postal_code: string | null;
-  place: string | null;
-  phone: string | null;
-  website: string | null;
-  location: { type: "Point"; coordinates: [number, number] } | null;
-  logo: string | null;
-  description_en: string | null;
-  description_fr: string | null;
-  translate_to_en: boolean;
-  translate_to_fr: boolean;
-  gallery: string[] | null;
-  certificates: string[] | null;
-  video: string[] | null;
-}
 
 interface Props {
   lang: "en" | "fr";
@@ -33,7 +12,7 @@ interface Props {
   wineRegions: WineRegion[];
   categories: Category[];
   listing?: Listing;       // jeśli podane → tryb edycji
-  onSaved?: (id: string) => void;
+  onSaved?: (id: string, newStatus: string, updatedListing?: Listing) => void;
   onCancel?: () => void;
 }
 
@@ -46,12 +25,16 @@ const t = {
     saveDraft:      "Save draft",
     submitReview:   "Submit for review",
     publish:        "Publish listing",
+    updatePublish:  "Update & publish",
+    archive:        "Archive",
+    archiving:      "Archiving…",
     saving:         "Saving…",
     submitting:     "Publishing…",
-    cancel:         "Cancel",
+    cancel:         "Back",
     saved:          "Draft saved.",
     submitted:      "Submitted for review.",
     published:      "Listing published.",
+    archived:       "Listing archived.",
     name:           "Listing name",
     namePlaceholder:"Château Margaux",
     category:       "Category",
@@ -92,12 +75,16 @@ const t = {
     saveDraft:      "Enregistrer le brouillon",
     submitReview:   "Soumettre pour révision",
     publish:        "Publier la fiche",
+    updatePublish:  "Mettre à jour et publier",
+    archive:        "Archiver",
+    archiving:      "Archivage…",
     saving:         "Enregistrement…",
     submitting:     "Publication…",
-    cancel:         "Annuler",
+    cancel:         "Retour",
     saved:          "Brouillon enregistré.",
     submitted:      "Soumis pour révision.",
     published:      "Fiche publiée.",
+    archived:       "Fiche archivée.",
     name:           "Nom de la fiche",
     namePlaceholder:"Château Margaux",
     category:       "Catégorie",
@@ -175,7 +162,7 @@ interface GeocoderResult {
   place_name: string;
   text: string;
   address?: string;
-  context?: { id: string; text: string }[];
+  context?: { id: string; text: string; short_code?: string }[];
 }
 
 function parseGeocoderResult(result: GeocoderResult) {
@@ -185,6 +172,11 @@ function parseGeocoderResult(result: GeocoderResult) {
                 ?? ctx.find(c => c.id.startsWith("locality"))?.text
                 ?? result.text;
 
+  // Kod INSEE gminy: Mapbox zwraca go w short_code kontekstu "place" (np. "fr-69123")
+  const placeCtx = ctx.find(c => c.id.startsWith("place"));
+  const shortCode = placeCtx?.short_code ?? "";
+  const insee = shortCode.startsWith("fr-") ? shortCode.slice(3) : "";
+
   const streetNumber = result.address ?? "";
   const streetName   = result.text ?? "";
   const address = streetNumber ? `${streetNumber} ${streetName}` : streetName;
@@ -193,6 +185,7 @@ function parseGeocoderResult(result: GeocoderResult) {
     address,
     postal_code: postcode,
     place,
+    insee,
     location: { type: "Point" as const, coordinates: result.geometry.coordinates },
   };
 }
@@ -266,7 +259,7 @@ function FileUploadField({
             type="file"
             multiple={multiple}
             aria-label={label}
-            style={{ display: "none" }}
+            className="lf-hidden"
             onChange={e => e.target.files && handleFiles(e.target.files)}
           />
         </>
@@ -290,6 +283,7 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
   const [address, setAddress]     = useState(listing?.address ?? "");
   const [postalCode, setPostal]   = useState(listing?.postal_code ?? "");
   const [place, setPlace]         = useState(listing?.place ?? "");
+  const [insee, setInsee]         = useState("");
   const [phone, setPhone]         = useState(listing?.phone ?? "");
   const [website, setWebsite]     = useState(listing?.website ?? "");
   const [location, setLocation]   = useState<{ type: "Point"; coordinates: [number, number] } | null>(
@@ -308,7 +302,7 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
   const [certs, setCerts]         = useState<string[]>(listing?.certificates ?? []);
   const [video, setVideo]         = useState<string[]>(listing?.video ?? []);
 
-  const [status, setStatus]       = useState<"idle" | "saving" | "submitting">("idle");
+  const [status, setStatus]       = useState<"idle" | "saving" | "submitting" | "archiving">("idle");
   const [feedback, setFeedback]   = useState<{ msg: string; ok: boolean } | null>(null);
   const [nameError, setNameError] = useState(false);
 
@@ -317,12 +311,15 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
     setAddress(parsed.address);
     setPostal(parsed.postal_code);
     setPlace(parsed.place);
+    setInsee(parsed.insee);
     setLocation(parsed.location);
   }, []);
 
   const geocoderRef = useGeocoder(onGeoResult);
 
-  function buildPayload(submit: boolean) {
+  const isPublished = listing?.status === "published";
+
+  function buildPayload(submit: boolean, archive = false) {
     return {
       Name: name,
       category: category || null,
@@ -330,6 +327,7 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
       address,
       postal_code: postalCode,
       place,
+      insee,
       phone,
       website,
       location,
@@ -342,13 +340,15 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
       certificates:    isPremium ? certs   : undefined,
       video:           isPremium ? video   : undefined,
       submit,
+      archive,
     };
   }
 
-  async function save(submit: boolean) {
+  async function save(submit: boolean, archive = false) {
     if (!name.trim()) { setNameError(true); return; }
     setNameError(false);
-    setStatus(submit ? "submitting" : "saving");
+    if (archive) setStatus("archiving");
+    else setStatus(submit ? "submitting" : "saving");
     setFeedback(null);
 
     try {
@@ -357,18 +357,28 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(buildPayload(submit)),
+        body: JSON.stringify(buildPayload(submit, archive)),
       });
-      const body = await res.json() as { ok?: boolean; id?: string; error?: string };
+      const body = await res.json() as { ok?: boolean; id?: string; listing?: Listing; error?: string };
 
       if (!res.ok || !body.ok) {
         setFeedback({ msg: body.error ?? "Error.", ok: false });
       } else {
-        const successMsg = submit
-          ? (isPremium ? tx.published : tx.submitted)
-          : tx.saved;
+        let successMsg: string;
+        let newStatus: string;
+        if (archive) {
+          successMsg = tx.archived;
+          newStatus = "archived";
+        } else if (submit) {
+          successMsg = isPublished ? tx.published : (isPremium ? tx.published : tx.submitted);
+          newStatus = isPublished ? "published" : (isPremium ? "published" : "pending_review");
+        } else {
+          successMsg = tx.saved;
+          newStatus = "draft";
+        }
         setFeedback({ msg: successMsg, ok: true });
-        if (body.id) onSaved?.(body.id);
+        const savedId = body.id ?? body.listing?.id ?? (isEdit ? listing!.id : undefined);
+        if (savedId) onSaved?.(savedId, newStatus, body.listing);
       }
     } catch {
       setFeedback({ msg: "Network error.", ok: false });
@@ -522,7 +532,7 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
               {logoUploading ? tx.uploading : tx.uploadBtn}
             </button>
             <input ref={logoInputRef} type="file" accept="image/*" aria-label={tx.logo}
-              style={{ display: "none" }}
+              className="lf-hidden"
               onChange={e => e.target.files && handleLogoUpload(e.target.files)} />
           </>
         )}
@@ -587,16 +597,33 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
               {tx.cancel}
             </button>
           )}
-          <button type="button" className="lf-btn lf-btn--secondary"
-            disabled={status !== "idle"}
-            onClick={() => save(false)}>
-            {status === "saving" ? tx.saving : tx.saveDraft}
-          </button>
-          <button type="button" className="lf-btn lf-btn--primary"
-            disabled={status !== "idle"}
-            onClick={() => save(true)}>
-            {status === "submitting" ? tx.submitting : (isPremium ? tx.publish : tx.submitReview)}
-          </button>
+          {isPublished ? (
+            <>
+              <button type="button" className="lf-btn lf-btn--danger"
+                disabled={status !== "idle"}
+                onClick={() => save(false, true)}>
+                {status === "archiving" ? tx.archiving : tx.archive}
+              </button>
+              <button type="button" className="lf-btn lf-btn--primary"
+                disabled={status !== "idle"}
+                onClick={() => save(true)}>
+                {status === "submitting" ? tx.submitting : tx.updatePublish}
+              </button>
+            </>
+          ) : (
+            <>
+              <button type="button" className="lf-btn lf-btn--secondary"
+                disabled={status !== "idle"}
+                onClick={() => save(false)}>
+                {status === "saving" ? tx.saving : tx.saveDraft}
+              </button>
+              <button type="button" className="lf-btn lf-btn--primary"
+                disabled={status !== "idle"}
+                onClick={() => save(true)}>
+                {status === "submitting" ? tx.submitting : (isPremium ? tx.publish : tx.submitReview)}
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

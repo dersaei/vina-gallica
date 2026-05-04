@@ -1,3 +1,5 @@
+.lf-hidden { display: none; }
+
 .lf {
   display: flex;
   flex-direction: column;

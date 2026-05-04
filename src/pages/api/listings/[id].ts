@@ -36,21 +36,26 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
   const { data: existing } = await checkRes.json() as { data: { id: string; user_id: string; status: string } };
   if (existing.user_id !== me.id) return json({ error: "Forbidden." }, 403);
 
-  // Nie pozwól edytować opublikowanych bez cofnięcia do draft
-  if (existing.status === "published") return json({ error: "Published listings cannot be edited directly. Contact support." }, 403);
-
   const data = await request.json() as Record<string, unknown>;
 
   const name = (data.Name as string)?.trim();
   if (!name) return json({ error: "Name is required." }, 400);
 
   const postalCode = (data.postal_code as string)?.trim() ?? "";
-  const departmentId = postalCode ? await departmentIdFromPostalCode(postalCode) : null;
+  const insee = (data.insee as string)?.trim() ?? "";
+  const departmentId = postalCode ? await departmentIdFromPostalCode(postalCode, insee) : null;
+
+  let newStatus: string;
+  if (existing.status === "published") {
+    newStatus = (data.archive === true) ? "archived" : "published";
+  } else {
+    newStatus = (data.submit === true) ? (isPremium ? "published" : "pending_review") : "draft";
+  }
 
   const payload: Record<string, unknown> = {
     Name: name,
     logo_alt: name,
-    status: (data.submit === true) ? (isPremium ? "published" : "pending_review") : "draft",
+    status: newStatus,
     category: data.category ?? null,
     address: (data.address as string)?.trim() || null,
     postal_code: postalCode || null,
@@ -76,7 +81,17 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
     if (Array.isArray(data.video)) payload.video = data.video;
   }
 
-  const res = await fetch(`${DIRECTUS_URL}/items/places_vg/${listingId}`, {
+  const fields = [
+    "id", "Name", "status", "date_created", "date_updated",
+    "category.id", "category.name", "category.name_fr",
+    "terroir.wine_regions_id.id", "terroir.wine_regions_id.region",
+    "address", "postal_code", "place", "location", "website", "phone",
+    "logo", "description_en", "description_fr",
+    "translate_to_en", "translate_to_fr",
+    "gallery", "certificates", "video",
+  ].join(",");
+
+  const res = await fetch(`${DIRECTUS_URL}/items/places_vg/${listingId}?fields=${fields}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -91,7 +106,8 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
     return json({ error: message }, res.status);
   }
 
-  return json({ ok: true });
+  const { data: updated } = await res.json() as { data: unknown };
+  return json({ ok: true, listing: updated });
 };
 
 export const DELETE: APIRoute = async ({ cookies, params }) => {
@@ -114,8 +130,6 @@ export const DELETE: APIRoute = async ({ cookies, params }) => {
   if (!checkRes.ok) return json({ error: "Listing not found." }, 404);
   const { data: existing } = await checkRes.json() as { data: { id: string; user_id: string; status: string } };
   if (existing.user_id !== me.id) return json({ error: "Forbidden." }, 403);
-  if (existing.status === "published") return json({ error: "Published listings cannot be deleted. Contact support." }, 403);
-
   const res = await fetch(`${DIRECTUS_URL}/items/places_vg/${listingId}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${DIRECTUS_SERVICE_TOKEN}` },

@@ -43,7 +43,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   if (!name) return json({ error: "Name is required." }, 400);
 
   const postalCode = (data.postal_code as string)?.trim() ?? "";
-  const departmentId = postalCode ? await departmentIdFromPostalCode(postalCode) : null;
+  const insee = (data.insee as string)?.trim() ?? "";
+  const departmentId = postalCode ? await departmentIdFromPostalCode(postalCode, insee) : null;
 
   // Buduj payload
   const payload: Record<string, unknown> = {

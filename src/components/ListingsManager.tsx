@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ListingForm from "./ListingForm";
+import type { Listing } from "./listingTypes";
 import "./ListingForm.css";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
@@ -11,30 +12,6 @@ interface Category {
   id: string;
   name: string;
   name_fr: string | null;
-}
-
-interface Listing {
-  id: string;
-  Name: string;
-  status: string;
-  date_updated: string | null;
-  date_created: string | null;
-  category: { id: string; name: string; name_fr: string | null } | null;
-  terroir: { wine_regions_id: { id: string; region: string } }[];
-  address: string | null;
-  postal_code: string | null;
-  place: string | null;
-  phone: string | null;
-  website: string | null;
-  location: { type: "Point"; coordinates: [number, number] } | null;
-  logo: string | null;
-  description_en: string | null;
-  description_fr: string | null;
-  translate_to_en: boolean;
-  translate_to_fr: boolean;
-  gallery: string[] | null;
-  certificates: string[] | null;
-  video: string[] | null;
 }
 
 interface Props {
@@ -161,17 +138,25 @@ export default function ListingsManager({
         wineRegions={wineRegions}
         categories={categories}
         listing={listing}
-        onSaved={() => {
-          setView("list");
-          loadListings();
+        onSaved={(id, newStatus, updatedListing) => {
+          if (typeof view === "object" && "edit" in view) {
+            setListings(prev => prev.map(l =>
+              l.id === id
+                ? (updatedListing ?? { ...l, status: newStatus, date_updated: new Date().toISOString() })
+                : l
+            ));
+            setView("list");
+          } else {
+            setView("list");
+            loadListings();
+          }
         }}
         onCancel={() => setView("list")}
       />
     );
   }
 
-  const editable = (status: string) =>
-    status === "draft" || status === "pending_review";
+  const editable = (_status: string) => true;
 
   async function confirmDelete() {
     if (!deleteTarget) return;
