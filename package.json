@@ -1,7 +1,7 @@
 {
   "name": "vina-gallica",
   "type": "module",
-  "version": "0.6.5",
+  "version": "0.8.5",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -11,13 +11,13 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.3.0",
+    "@astrojs/cloudflare": "^13.3.1",
     "@astrojs/react": "^5.0.4",
     "@directus/sdk": "^21.3.0",
     "@mapbox/mapbox-gl-geocoder": "^5.1.2",
     "@types/mapbox__mapbox-gl-geocoder": "^5.1.1",
-    "astro": "^6.2.1",
-    "mapbox-gl": "^3.23.0",
+    "astro": "^6.2.2",
+    "mapbox-gl": "^3.23.1",
     "marked": "^17.0.6",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"

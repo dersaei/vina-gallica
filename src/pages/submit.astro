@@ -20,9 +20,10 @@ const faqRaw = await directus.request(
     },
   })
 );
-const faqItems = faqRaw
+type FaqTranslation = { question: string; answer: string };
+const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
   .map((item) => item.translations?.[0])
-  .filter((t): t is NonNullable<typeof t> => Boolean(t?.question));
+  .filter((t): t is FaqTranslation => Boolean(t?.question));
 ---
 
 <LayoutSubmit
@@ -467,10 +468,10 @@ const faqItems = faqRaw
   }
 
   .faq-answer {
-    font-family: var(--font-extra);
-    font-weight: 500;
+    font-family: var(--font-hero);
+    font-weight: 400;
     font-size: 1.1rem;
-    line-height: 1.55;
+    line-height: 1.5;
     color: var(--color-elegant-black);
     hyphens: auto;
   }

@@ -70,12 +70,10 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (!regRes.ok) {
     const err = await regRes.json().catch(() => ({}));
-    const message =
-      (err as { errors?: { message: string }[] })?.errors?.[0]?.message ||
-      "Registration failed. Please try again.";
-    // Zwróć 409 dla duplikatu emaila, żeby frontend mógł pokazać właściwy komunikat
-    const status = regRes.status === 400 ? 409 : 500;
-    return json({ error: message }, status);
+    const firstError = (err as { errors?: { message: string; extensions?: { code: string } }[] })?.errors?.[0];
+    const message = firstError?.message || "Registration failed. Please try again.";
+    const isDuplicate = firstError?.extensions?.code === "RECORD_NOT_UNIQUE";
+    return json({ error: message }, isDuplicate ? 409 : 500);
   }
 
   // Krok 2: Znajdź nowo utworzonego użytkownika po emailu i uzupełnij custom pola
