@@ -7,7 +7,7 @@ headlineStyle: "dark"
 lang: "fr"
 ---
 
-**Dernière mise à jour :** 26 avril 2026
+**Dernière mise à jour :** 6 mai 2026
 
 Spiżarnia REGIO (« nous », « notre » ou « nos ») est propriétaire et exploitant du site vinagallica.com. La présente Politique de confidentialité explique comment nous collectons, utilisons et protégeons les informations lorsque vous visitez notre site.
 
@@ -70,6 +70,7 @@ Google Analytics dépose les cookies suivants :
 | `_ga_[ID]` | Maintenir l'état de la session   | 2 ans |
 
 Nous n'utilisons pas Google Analytics à des fins publicitaires, de remarketing ou de profilage des utilisateurs. Nous n'activons pas les Audiences Google Analytics et ne partageons pas les données analytiques avec Google à des fins publicitaires.
+
 Pour en savoir plus, consultez la [Politique de confidentialité de Google](https://policies.google.com/privacy?hl=fr) et l'[outil de désactivation de Google Analytics](https://tools.google.com/dlpage/gaoptout).
 
 ### Carte interactive
@@ -94,32 +95,35 @@ Pour en savoir plus, consultez la [Politique de confidentialité de Mapbox](http
 
 - Prénom et nom de famille
 - Nom de l'entreprise
-- Numéro SIRET (requis pour la publication d'une annonce ; facultatif à l'inscription)
+- Numéro SIREN (requis pour la publication d'une annonce ; facultatif à l'inscription)
 - Adresse de l'entreprise (facultative à l'inscription)
 - Adresse e-mail
 - Mot de passe (conservé exclusivement sous forme de hachage cryptographique ; nous ne stockons jamais votre mot de passe en clair)
 
 Les données de compte sont hébergées dans une base de données PostgreSQL gérée par Directus, auto-hébergée par Spiżarnia REGIO sur un serveur privé virtuel (VPS) situé en Pologne (Union européenne).
 
-**Données de l'annonce professionnelle.** Lorsque vous soumettez ou gérez une annonce professionnelle, nous collectons les informations suivantes relatives à votre établissement :
+**Données de la fiche professionnelle.** Lorsque vous soumettez ou gérez une fiche professionnelle, nous collectons les informations suivantes relatives à votre établissement :
 
 - Nom et catégorie de l'établissement
 - Région viticole, région administrative française et département
 - Adresse physique
 - URL du site web et numéro de téléphone
 - Logo de l'établissement (fichier téléversé)
+- Horaires d'ouverture ou dates pour les événements
 
-Si vous optez pour une annonce Premium, nous collectons en outre :
+Si vous optez pour une fiche Premium, nous collectons en outre :
 
 - Des photographies de votre établissement ou de vos produits
+- Des vidéos
+- Certifications et récompenses
 - Une description ou présentation rédigée de votre établissement
 - Tout autre détail que vous choisissez de renseigner dans les champs du profil Premium
 
-**Emails transactionnels.** Lors de votre inscription, nous vous envoyons un e-mail de confirmation à l'adresse que vous avez fournie. Cet e-mail contient un lien d'activation de compte valable sept (7) jours. Nous pouvons également envoyer des e-mails transactionnels liés à votre compte (par exemple, des notifications relatives à votre annonce ou à votre abonnement Premium). Ces e-mails sont envoyés automatiquement par Directus au nom de Spiżarnia REGIO depuis une adresse `@spizarniaregio.pl`.
+**E-mails transactionnels.** Lors de votre inscription, nous vous envoyons un e-mail de confirmation à l'adresse que vous avez fournie. Cet e-mail contient un lien d'activation de compte valable sept (7) jours. Nous pouvons également envoyer des e-mails transactionnels liés à votre compte (par exemple, des notifications relatives à votre fiche ou à votre abonnement Premium). Ces e-mails sont envoyés automatiquement par Directus au nom de Spiżarnia REGIO depuis une adresse `@spizarniaregio.pl`.
 
 **Bases juridiques du traitement.** Nous traitons les données personnelles décrites dans la présente section sur les bases juridiques suivantes au titre de l'article 6 du RGPD :
 
-- **Article 6(1)(b)** — le traitement est nécessaire à l'exécution d'un contrat auquel vous êtes partie, ou à l'exécution de mesures précontractuelles prises à votre demande. Cela s'applique à la création et à la gestion de votre compte utilisateur, à la publication de votre annonce professionnelle et à l'envoi des e-mails transactionnels nécessaires à l'activation et à la gestion de votre compte.
+- **Article 6(1)(b)** — le traitement est nécessaire à l'exécution d'un contrat auquel vous êtes partie, ou à l'exécution de mesures précontractuelles prises à votre demande. Cela s'applique à la création et à la gestion de votre compte utilisateur, à la publication de votre fiche professionnelle et à l'envoi des e-mails transactionnels nécessaires à l'activation et à la gestion de votre compte.
 - **Article 6(1)(c)** — le traitement est nécessaire au respect d'une obligation légale à laquelle le responsable du traitement est soumis. Cela s'applique lorsque le droit applicable nous impose de conserver certains documents.
 
 ### Acheminement des e-mails
@@ -146,9 +150,9 @@ Nous utilisons les données décrites ci-dessus aux fins suivantes :
 - Comprendre les tendances générales d'utilisation du site et améliorer les contenus (Cloudflare Web Analytics, Google Analytics avec consentement)
 - Proposer les fonctionnalités de carte interactive et de recherche de lieux (Mapbox)
 - Créer et gérer votre compte utilisateur sur Vina Gallica
-- Publier votre annonce professionnelle dans l'annuaire Vina Gallica et sur la carte interactive, et la rendre accessible aux visiteurs du site
+- Publier votre fiche professionnelle dans l'annuaire Vina Gallica et sur la carte interactive, et la rendre accessible aux visiteurs du site
 - Envoyer des e-mails transactionnels liés à votre compte, notamment l'activation de compte et autres communications de gestion de compte
-- Administrer les abonnements aux annonces Premium, le cas échéant, y compris l'accès aux fonctionnalités Premium et la facturation associée
+- Administrer les abonnements aux fiches Premium, le cas échéant, y compris l'accès aux fonctionnalités Premium et la facturation associée
 
 Nous ne vendons, ne louons ni ne partageons vos données personnelles avec des tiers à leurs propres fins commerciales.
 
@@ -191,7 +195,7 @@ Pour exercer l'un de ces droits, veuillez nous contacter en utilisant les coordo
 
 ### Suppression de votre compte
 
-Vous pouvez supprimer votre compte et toutes les données personnelles associées directement depuis les paramètres de votre compte sur [vinagallica.com/dashboard/manage](https://vinagallica.com/dashboard/manage). Après confirmation de la suppression, votre compte et toutes les données d'annonce associées seront définitivement effacés de nos systèmes dans un délai de **30 jours**. Suite à la suppression, vos données ne seront plus accessibles via les systèmes de Vina Gallica, sous réserve des obligations de conservation imposées par le droit applicable (voir « Conservation des données » ci-dessous).
+Vous pouvez supprimer votre compte et toutes les données personnelles associées directement depuis les paramètres de votre compte sur [vinagallica.com/dashboard/manage](https://vinagallica.com/dashboard/manage). Après confirmation de la suppression, votre compte et toutes les données de fiche associées seront définitivement effacés de nos systèmes dans un délai de **30 jours**. Suite à la suppression, vos données ne seront plus accessibles via les systèmes de Vina Gallica, sous réserve des obligations de conservation imposées par le droit applicable (voir « Conservation des données » ci-dessous).
 
 Si vous rencontrez des difficultés pour supprimer votre compte, vous pouvez également nous contacter à l'adresse [privacy@vinagallica.com](mailto:privacy@vinagallica.com) en indiquant « Demande de suppression de compte » en objet. Nous traiterons votre demande dans un délai de 30 jours à compter de sa réception.
 
@@ -209,11 +213,11 @@ Vina Gallica ne collecte pas sciemment de données personnelles auprès d'enfant
 
 ## Conservation des données
 
-- **Journaux de sécurité Cloudflare** — conservés conformément aux [politiques de conservation des données de Cloudflare](https://www.cloudflare.com/fr-fr/privacypolicy/)
+- **Journaux de sécurité Cloudflare** — conservés conformément aux [politiques de conservation des données de Cloudflare](https://www.cloudflare.com/privacypolicy/)
 - **Données Google Analytics** — conservées pendant 14 mois, puis supprimées automatiquement
 - **Préférences en matière de cookies** — stockées dans votre navigateur jusqu'à ce que vous effaciez vos cookies
 - **Données du compte utilisateur** (nom, adresse e-mail, hachage du mot de passe, informations sur l'entreprise) — conservées tant que le compte est actif ; supprimées dans un délai de 30 jours après la suppression du compte
-- **Données de l'annonce professionnelle** (tous les champs gratuits et Premium) — conservées tant que le compte associé est actif ; supprimées avec le compte dans un délai de 30 jours après sa suppression
+- **Données de la fiche professionnelle** (tous les champs gratuits et Premium) — conservées tant que le compte associé est actif ; supprimées avec le compte dans un délai de 30 jours après sa suppression
 - **Journaux d'e-mails transactionnels** — conservés conformément à la [politique de conservation des données de Fastmail](https://www.fastmail.com/policies/dpa/)
 
 ## Transferts internationaux de données
