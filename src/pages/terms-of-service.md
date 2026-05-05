@@ -26,24 +26,23 @@ For B2B and partnership enquiries: **[partners@vinagallica.com](mailto:partners@
 8. [Listing Standards](#8-listing-standards)
 9. [Content and Intellectual Property](#9-content-and-intellectual-property)
 10. [Social Media and Marketing](#10-social-media-and-marketing)
-11. [Refund Policy](#11-refund-policy)
-12. [Account Suspension and Termination](#12-account-suspension-and-termination)
-13. [Limitation of Liability](#13-limitation-of-liability)
-14. [Indemnification](#14-indemnification)
-15. [Future Features](#15-future-features)
-16. [Changes to These Terms](#16-changes-to-these-terms)
-17. [Language](#17-language)
-18. [Governing Law and Dispute Resolution](#18-governing-law-and-dispute-resolution)
-19. [Miscellaneous](#19-miscellaneous)
+11. [Account Suspension and Termination](#11-account-suspension-and-termination)
+12. [Limitation of Liability](#12-limitation-of-liability)
+13. [Indemnification](#13-indemnification)
+14. [Future Features](#14-future-features)
+15. [Changes to These Terms](#15-changes-to-these-terms)
+16. [Language](#16-language)
+17. [Governing Law and Dispute Resolution](#17-governing-law-and-dispute-resolution)
+18. [Miscellaneous](#18-miscellaneous)
 
 ## 1. Eligibility
 
 ### 1.1 Who may use Vina Gallica
 
-At this stage, Vina Gallica is open exclusively to **businesses registered in France** that hold a valid French **SIRET number**. By registering, you confirm that your business:
+At this stage, Vina Gallica is open exclusively to **businesses registered in France** that hold a valid French **SIREN number**. By registering, you confirm that your business:
 
 - is incorporated or registered in France;
-- holds a valid, active SIRET number;
+- holds a valid, active SIREN number;
 - operates in the French wine sector (winery, wine shop, wine-related hospitality, wine festival, or similar); and
 - is represented by an individual who has the authority to enter into binding agreements on behalf of that business.
 
@@ -55,7 +54,7 @@ Vina Gallica may expand eligibility to businesses in other countries in the futu
 
 Vina Gallica does not offer services to individual consumers. All registered users are businesses acting in a commercial capacity.
 
-**Summary:** Only French wine businesses with a valid SIRET number can register. This is a business-to-business platform, not a consumer service.
+**Summary:** Only French wine businesses with a valid SIREN number can register. This is a business-to-business platform, not a consumer service.
 
 ## 2. Nature of the Agreement
 
@@ -92,7 +91,7 @@ We aim to keep the Platform available at all times but do not provide any uptime
 To list your business on Vina Gallica, you must create an account. During registration, you must provide:
 
 - your business name and legal form;
-- your French SIRET number;
+- your French SIREN number;
 - a valid business email address;
 - your EU VAT number (if VAT-registered); and
 - accurate contact details for your business.
@@ -139,7 +138,7 @@ A single account may hold any number of listings, each independently designated 
 
 ### 5.4 When the Premium period starts
 
-The **Premium period begins on the date your first Premium listing is approved and published** by Vina Gallica — not on the date of payment. This is because listings are subject to manual review (see Section 7). If additional listings are submitted after the first, they share the same Premium period end date as the first published listing.
+Your annual Premium subscription period begins on the date we **record your payment** against the pro-forma invoice. We will notify you by email and add a corresponding note to your account dashboard, showing both the start and end dates of your subscription.
 
 ### 5.5 No automatic renewal
 
@@ -161,21 +160,23 @@ After your Premium period expires, your listings will remain at Premium level fo
 
 ### 6.1 Payment method
 
-Payments for the Premium Plan are processed in **Euro (EUR) only**. Payment is currently handled **manually by email** — please contact **[partners@vinagallica.com](mailto:partners@vinagallica.com)** to initiate a Premium subscription. A Stripe-based online payment system is being introduced and will be made available on the Platform in the near future. These Terms will be updated when Stripe payments go live.
+Payments for the Premium Plan are processed in **Euro (EUR) only**. Payment is made by **SEPA bank transfer**. After you complete the Premium order form, we will send you a **pro-forma invoice** by email showing the exact amount due, including VAT where applicable. The pro-forma invoice is payable within **30 days**.
+
+Upon receipt of your order form, we may grant you **provisional Premium access for 33 days** while awaiting payment. We aim to record and confirm your payment within **2 business days** of receiving the transfer.
+
+Please note that a pro-forma invoice is not a VAT invoice and cannot be used for tax deduction purposes.
 
 ### 6.2 VAT and EU reverse charge
 
 Vina Gallica is operated by a Polish entity (Spiżarnia REGIO, VAT-EU: PL5691729538).
 
-- If your business is **VAT-registered in France or another EU member state**, the **EU reverse charge mechanism** applies. You will receive an invoice **excluding VAT**, and you are responsible for self-assessing and reporting VAT in your own country in accordance with your local tax rules.
-- If your business is **not VAT-registered**, different rules may apply. Please contact **[partners@vinagallica.com](mailto:partners@vinagallica.com)** before subscribing to confirm your situation.
-- You must provide a valid EU VAT number at registration if you are VAT-registered. Providing an invalid VAT number may affect the tax treatment of your invoice.
+- If your business holds a **valid EU intra-community VAT number**, you will be invoiced **without VAT** under the **reverse charge** mechanism, and you are responsible for self-assessing and reporting VAT in your own country.
+- If your business does **not** hold an EU VAT number, **VAT will be applied** to your invoice in accordance with applicable tax regulations. The applicable amount will be shown on the pro-forma invoice before payment is due.
+- If you have questions about invoicing or VAT, please contact **[partners@vinagallica.com](mailto:partners@vinagallica.com)**.
 
 ### 6.3 Invoicing
 
-A formal invoice will be issued upon successful payment. Pro-forma invoices sent with renewal reminders are for planning purposes only and do not constitute a formal demand for payment or a binding obligation.
-
-**Summary:** Prices are in Euros. If you're VAT-registered in the EU, you won't be charged VAT — you handle that yourself in your own country. Payments are currently by email; Stripe is coming soon.
+The Premium order process may involve both a **pro-forma invoice** and a **final VAT invoice**. The pro-forma invoice is issued before payment and is for payment purposes only. Following confirmation of payment, we will issue and send the final VAT invoice by email.
 
 ## 7. Listing Submission and Moderation
 
@@ -185,14 +186,13 @@ Listings are submitted through the [submit page](/submit) on the Platform or thr
 
 ### 7.2 Review process
 
-Every listing is **manually reviewed** by the Spiżarnia REGIO team before it is published. The review process covers:
+**Free listings** are subject to a **standard review** before publication. This review covers technical completeness, category relevance, and compliance with the Platform's content standards.
 
-- **Technical completeness**: all required fields are filled in correctly, the format is valid, and images meet the technical specifications;
-- **Substantive assessment**: the business appears to be legitimate, the listing category is accurate, the images are appropriate and meet the Platform's standards (see Section 8), and the information is internally consistent.
+**Listings submitted under a Premium account** are not subject to the standard review queue and are **published without delay**.
 
 ### 7.3 Review timeframe
 
-Reviews are typically completed within **3 business days** of submission. During high-demand periods (such as around major wine events or seasonal peaks), this may take slightly longer. We will communicate any significant delays.
+For Free listings, reviews are typically completed within **3 business days** of submission. During high-demand periods, this may take slightly longer.
 
 ### 7.4 Notification of outcome
 
@@ -202,7 +202,7 @@ You will receive an email notification when your listing is **approved and publi
 
 Vina Gallica reserves the right to **reject, remove, or suspend any listing** at any time if it does not comply with these Terms or the Platform's editorial standards, or if circumstances arise that make the listing no longer appropriate for the Platform. Where possible, we will give you an opportunity to remedy the issue before removing a published listing.
 
-**Summary:** Submit your listing through the website and we'll review it manually within 3 business days. We'll email you when it's live. We can reject a listing if it doesn't meet our standards.
+**Summary:** Submit your listing through the website. Free listings go through a standard review before publication, while listings submitted under a Premium account are published without delay.
 
 ## 8. Listing Standards
 
@@ -293,42 +293,13 @@ If you wish your business not to be featured on social media going forward, you 
 
 **Summary:** By listing your business, you agree that we may feature it on our YouTube, TikTok, or other social media channels as part of our editorial activity. This is not a paid service — it is purely at our discretion. If you'd rather we didn't feature your business, let us know at any time.
 
-## 11. Refund Policy
+## 11. Account Suspension and Termination
 
-### 11.1 Voluntary 14-day refund window
-
-As a commercial gesture, Spiżarnia REGIO offers a **full refund of the Premium Plan fee** if both of the following conditions are met:
-
-1. You request the refund **within 14 days of the date of payment**; and
-2. **Your first listing has not yet been approved and published** at the time of the refund request (i.e., the Premium period has not yet started).
-
-To request a refund, contact **[partners@vinagallica.com](mailto:partners@vinagallica.com)** from the email address associated with your account.
-
-### 11.2 No refund once the Premium period has started
-
-Once your first listing is approved and published — marking the start of the Premium period — **no refund is available**, regardless of how much of the annual period remains.
-
-### 11.3 No refund on voluntary account deletion
-
-If you choose to delete your account during an active Premium period, no refund will be issued for the remaining time.
-
-### 11.4 No refund on termination for cause
-
-If Spiżarnia REGIO terminates your account for violation of these Terms, no refund will be issued.
-
-### 11.5 Non-consumer clarification
-
-The 14-day refund window described in this section is a voluntary commercial commitment. It is not a statutory right of withdrawal under EU consumer law, which does not apply to B2B transactions.
-
-**Summary:** If you pay for Premium but then change your mind before your first listing goes live, we'll refund you in full within 14 days of payment. Once your listing is published, there are no refunds.
-
-## 12. Account Suspension and Termination
-
-### 12.1 Termination by you
+### 11.1 Termination by you
 
 You may delete your account at any time through the **Settings section of your account dashboard**. Following account deletion, your personal and business data will be deleted within **30 days**, in accordance with our Privacy Policy. No refund will be issued for any remaining Premium period.
 
-### 12.2 Suspension or termination by Spiżarnia REGIO
+### 11.2 Suspension or termination by Spiżarnia REGIO
 
 Spiżarnia REGIO reserves the right to **suspend or terminate your account** without prior notice if:
 
@@ -339,11 +310,11 @@ Spiżarnia REGIO reserves the right to **suspend or terminate your account** wit
 
 Where the violation appears capable of remedy, we will, where reasonably practicable, give you notice and an opportunity to correct the issue before taking action.
 
-### 12.3 Effect of non-payment
+### 11.3 Effect of non-payment
 
 Non-renewal of the Premium Plan does not constitute grounds for account termination. Your account will remain active, and your listings will revert to the Free Plan in accordance with Section 5.6. Termination by Spiżarnia REGIO is reserved for the situations described in Section 12.2.
 
-### 12.4 Effect of termination
+### 11.4 Effect of termination
 
 Upon termination of your account (for any reason):
 
@@ -354,31 +325,31 @@ Upon termination of your account (for any reason):
 
 **Summary:** You can close your account anytime from the dashboard. We can suspend or close accounts that violate our rules. Not renewing Premium just puts you on the free plan — it doesn't close your account.
 
-## 13. Limitation of Liability
+## 12. Limitation of Liability
 
-### 13.1 Scope of the Platform
+### 12.1 Scope of the Platform
 
 Vina Gallica provides a listing and mapping platform. It is not a booking engine, a sales platform, a review platform, or a marketing agency. We do not represent or warrant that listing on Vina Gallica will produce any particular commercial result for your business.
 
-### 13.2 Cap on liability
+### 12.2 Cap on liability
 
 To the maximum extent permitted by applicable law, Spiżarnia REGIO's total aggregate liability to you — whether in contract, for breach of statutory duty, or otherwise — arising out of or in connection with these Terms or your use of the Platform shall not exceed the **total amount you have paid to Spiżarnia REGIO in the 12 months immediately preceding the event giving rise to the claim**.
 
-### 13.3 Exclusion of indirect and consequential losses
+### 12.3 Exclusion of indirect and consequential losses
 
 Neither party shall be liable to the other for any **indirect, incidental, special, or consequential loss or damage**, including loss of profit, loss of revenue, loss of business, loss of anticipated savings, or damage to reputation, whether or not such losses were foreseeable or the party had been advised of their possibility.
 
-### 13.4 Platform availability
+### 12.4 Platform availability
 
 Spiżarnia REGIO shall not be liable for any loss or damage arising from temporary unavailability of the Platform, including where this results from maintenance, software updates, third-party infrastructure failures (including Cloudflare), or events outside our reasonable control.
 
-### 13.5 Exceptions
+### 12.5 Exceptions
 
 Nothing in these Terms excludes or limits liability for death or personal injury caused by negligence, for fraud or fraudulent misrepresentation, or for any other liability that cannot be excluded or limited by French law.
 
 **Summary:** We're not responsible if your listing doesn't generate the business results you hoped for. If something goes wrong on our end, our liability is capped at what you've paid us in the past year, and we're never liable for lost profits or indirect losses.
 
-## 14. Indemnification
+## 13. Indemnification
 
 You agree to indemnify, defend, and hold harmless Spiżarnia REGIO, its proprietor, employees, and agents from and against any claims, damages, losses, costs, and expenses (including reasonable legal fees) arising out of or related to:
 
@@ -389,99 +360,99 @@ You agree to indemnify, defend, and hold harmless Spiżarnia REGIO, its propriet
 
 **Summary:** If your listing causes a legal problem — for example, because you used someone else's photo without permission — you're responsible for handling that, not us.
 
-## 15. Future Features
+## 14. Future Features
 
-### 15.1 Platform development
+### 14.1 Platform development
 
 Vina Gallica is an actively developed platform. We are working on additional features, including a **Cinema section** featuring video content about French wine businesses and regions, as well as **video partnership programmes** for businesses that wish to commission or feature in Vina Gallica video content.
 
-### 15.2 Updated Terms
+### 14.2 Updated Terms
 
 When new features with material commercial or legal implications are launched, these Terms will be updated in advance in accordance with Section 16. You will be notified by email before any such changes take effect.
 
-### 15.3 No current commitment
+### 14.3 No current commitment
 
 The mention of future features in these Terms does not constitute a commitment to deliver them by any particular date. Platform features may be introduced, modified, or discontinued at any time.
 
 **Summary:** We're building new features, including a video/cinema section. When those launch, we'll update these Terms and let you know in advance.
 
-## 16. Changes to These Terms
+## 15. Changes to These Terms
 
-### 16.1 Right to update
+### 15.1 Right to update
 
 Spiżarnia REGIO may update these Terms at any time to reflect changes in the Platform, applicable law, or our business practices.
 
-### 16.2 Notice of material changes
+### 15.2 Notice of material changes
 
 For any **material change** — meaning a change that meaningfully affects your rights or obligations — we will notify you by email at least **30 days before** the updated Terms take effect.
 
-### 16.3 Acceptance
+### 15.3 Acceptance
 
 If you continue to use the Platform after the notice period has elapsed, you will be deemed to have accepted the updated Terms. If you do not accept the updated Terms, you may close your account before the new Terms take effect.
 
-### 16.4 Minor changes
+### 15.4 Minor changes
 
 For minor or non-material changes (such as corrections of typographical errors, clarifications that do not alter the substance of any clause, or updates to contact details), we may update the Terms without the 30-day notice period, but we will always update the "Last updated" date at the top of this document.
 
 **Summary:** If we make important changes, we'll email you at least 30 days in advance. If you keep using the Platform after that, it means you agree to the new Terms.
 
-## 17. Language
+## 16. Language
 
-### 17.1 Language of the Terms
+### 16.1 Language of the Terms
 
 These Terms are available in **English** and in **French**. Both versions are equally authoritative. In the event of any conflict or ambiguity between the two versions, the matter shall be resolved by the competent court in accordance with Section 18.
 
 The French version is available at [vinagallica.com/fr/conditions-generales](https://vinagallica.com/fr/conditions-generales).
 
-### 17.2 Language of proceedings
+### 16.2 Language of proceedings
 
 Legal proceedings arising under these Terms shall be conducted in **French**, before the courts identified in Section 18. An English translation of any procedural documents may be requested at the cost of the requesting party.
 
 **Summary:** These Terms exist in both English and French — both are equally valid. If there's ever a conflict between the two versions, the court decides. Proceedings would be in French.
 
-## 18. Governing Law and Dispute Resolution
+## 17. Governing Law and Dispute Resolution
 
-### 18.1 Governing law
+### 17.1 Governing law
 
 These Terms and any dispute or claim arising out of or in connection with them — including non-contractual disputes — shall be governed by and construed in accordance with the laws of **France**, in particular the French Civil Code (_Code civil_) and applicable French commercial statutes (_Code de commerce_).
 
-### 18.2 Good-faith resolution
+### 17.2 Good-faith resolution
 
 Before initiating any legal proceedings, both parties agree to make a genuine effort to resolve any dispute by exchanging written communications by email (at the contact addresses set out in these Terms) over a period of **at least 30 days**. This is not a condition precedent to legal proceedings, but a mutual commitment to attempt a reasonable commercial resolution first.
 
-### 18.3 Jurisdiction
+### 17.3 Jurisdiction
 
 If the dispute cannot be resolved by negotiation, the parties submit to the **exclusive jurisdiction of the competent commercial courts of Paris, France** (_Tribunal de commerce de Paris_).
 
-### 18.4 B2B context
+### 17.4 B2B context
 
 As this is a B2B agreement, the parties acknowledge that no consumer arbitration schemes or consumer dispute resolution platforms (_médiation de la consommation_) apply to this relationship.
 
 **Summary:** If there's a disagreement, we'll try to sort it out by email first over 30 days. If that fails, the Commercial Court of Paris will handle it under French law.
 
-## 19. Miscellaneous
+## 18. Miscellaneous
 
-### 19.1 Entire agreement
+### 18.1 Entire agreement
 
 These Terms, together with our **[Privacy Policy](/privacy-policy)**, constitute the entire agreement between you and Spiżarnia REGIO with respect to your use of the Platform, and supersede all prior agreements, representations, or understandings relating to the same subject matter.
 
-### 19.2 Severability
+### 18.2 Severability
 
 If any provision of these Terms is found to be unenforceable or invalid under applicable law, that provision will be modified to the minimum extent necessary to make it enforceable, or, if modification is not possible, severed from the Terms. The remaining provisions will continue in full force and effect.
 
-### 19.3 No waiver
+### 18.3 No waiver
 
 Failure by either party to enforce any provision of these Terms at any time does not constitute a waiver of that party's right to enforce the same provision in the future.
 
-### 19.4 Assignment
+### 18.4 Assignment
 
 Spiżarnia REGIO may assign its rights and obligations under these Terms to a successor in the event of a business transfer, merger, or acquisition, provided your rights under these Terms are not materially diminished. You may not assign your rights or obligations under these Terms without our prior written consent.
 
-### 19.5 Force majeure
+### 18.5 Force majeure
 
 Neither party will be liable for any delay or failure to perform obligations under these Terms to the extent that such delay or failure results from circumstances beyond their reasonable control, including natural disasters, government action, widespread internet outages, or other events that could not have been reasonably anticipated or avoided.
 
-### 19.6 Contact
+### 18.6 Contact
 
 For any questions about these Terms, please contact us:
 

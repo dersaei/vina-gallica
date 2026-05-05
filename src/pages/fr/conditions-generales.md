@@ -41,10 +41,10 @@ Pour toute demande commerciale ou partenariat : **<partners@vinagallica.com>** P
 
 ### 1.1 Qui peut utiliser Vina Gallica
 
-À ce stade, Vina Gallica est ouvert exclusivement aux **entreprises immatriculées en France** qui possèdent un **numéro SIRET** valide. En vous inscrivant, vous confirmez que votre entreprise :
+À ce stade, Vina Gallica est ouvert exclusivement aux **entreprises immatriculées en France** qui possèdent un **numéro SIREN** valide. En vous inscrivant, vous confirmez que votre entreprise :
 
 - est constituée ou immatriculée en France ;
-- détient un numéro SIRET valide et actif ;
+- détient un numéro SIREN valide et actif ;
 - exerce son activité dans le secteur vitivinicole français (domaine viticole, caviste, hébergement ou expérience liés au vin, fête ou salon du vin, ou activité similaire) ; et
 - est représentée par une personne habilitée à conclure des engagements contractuels au nom de cette entreprise.
 
@@ -56,7 +56,7 @@ Vina Gallica pourra, à l'avenir, élargir son accès à des entreprises établi
 
 Vina Gallica ne propose pas ses services aux particuliers. Tous les utilisateurs inscrits sont des entreprises agissant à titre professionnel.
 
-**Résumé :** Seules les entreprises vitivinicoles françaises détenant un numéro SIRET valide peuvent s'inscrire. Il s'agit d'une plateforme exclusivement professionnelle (B2B), non destinée aux consommateurs.
+**Résumé :** Seules les entreprises vitivinicoles françaises détenant un numéro SIREN valide peuvent s'inscrire. Il s'agit d'une plateforme exclusivement professionnelle (B2B), non destinée aux consommateurs.
 
 ## 2. Nature de l'accord
 
@@ -93,7 +93,7 @@ Nous nous efforçons de maintenir la Plateforme accessible en permanence, sans t
 Pour référencer votre entreprise sur Vina Gallica, vous devez créer un compte. Lors de l'inscription, vous devez fournir :
 
 - le nom et la forme juridique de votre entreprise ;
-- votre numéro SIRET français ;
+- votre numéro SIREN français ;
 - une adresse e-mail professionnelle valide ;
 - votre numéro de TVA intracommunautaire (si vous êtes assujetti à la TVA) ; et
 - les coordonnées exactes de votre entreprise.
