@@ -120,6 +120,23 @@ If you upgrade to a premium listing, we additionally collect:
 
 **Transactional emails.** Upon registration, we send a confirmation email to the address you provide. This email contains an account activation link that is valid for seven (7) days. We may also send account-related transactional emails (for example, notifications relating to your listing or premium subscription). These emails are sent automatically by Directus in the name of Spiżarnia REGIO from an `@spizarniaregio.pl` address.
 
+**Premium upgrade and billing data.** When you initiate the Premium upgrade process from your account dashboard, we collect additional data required to issue invoices and administer your subscription. This data is collected through the Premium order form, which becomes available after successful real-time validation of your EU intra-community VAT number or SIREN number (see Section 4.1 of our Terms of Service). The following categories of data are collected at this stage:
+
+- Legal business name and registered address (pre-filled from SIREN or VAT validation; editable before submission)
+- EU intra-community VAT number or French SIREN number (as applicable)
+- Business email address (used for invoicing and subscription communications)
+- Consent to receive invoices electronically, recorded at the time of form submission
+
+This data is used exclusively for the following purposes:
+
+- Issuing a pro-forma invoice and, following receipt of payment, a final VAT invoice
+- Administering your Premium subscription, including recording the start and end dates of your subscription period
+- Communicating subscription-related information (renewal reminders, payment confirmation)
+
+Invoice data is retained in accordance with applicable Polish and EU accounting regulations, which require the retention of accounting documents for a minimum of five (5) years from the end of the financial year in which the invoice was issued. This retention obligation continues regardless of whether you subsequently delete your account.
+
+The legal basis for processing this data is **Article 6(1)(b) GDPR** (performance of a contract) and, where applicable, **Article 6(1)(c) GDPR** (compliance with a legal obligation, namely tax and invoicing requirements).
+
 **Legal bases for processing.** We process the personal data described in this section on the following legal bases under Article 6 of the GDPR:
 
 - **Article 6(1)(b)** — processing is necessary for the performance of a contract to which you are party, or in order to take steps at your request prior to entering into a contract. This applies to the creation and management of your user account, the publication of your business listing, and the delivery of transactional emails necessary to activate and maintain your account.
