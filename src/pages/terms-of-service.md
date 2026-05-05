@@ -62,10 +62,6 @@ Vina Gallica does not offer services to individual consumers. All registered use
 
 These Terms constitute a **business-to-business (B2B) agreement** between Spiżarnia REGIO and the registered business entity ("you", "the Customer", "the User"). Consumer protection laws and regulations that apply only to private individuals — including statutory rights of withdrawal under EU consumer law — do not apply to this agreement.
 
-### 2.2 Voluntary commercial commitments
-
-Where these Terms provide rights or remedies beyond what French law requires in a B2B context (such as the voluntary refund window described in Section 11), these are offered as a commercial gesture and do not create a precedent for future cases.
-
 **Summary:** Because you are a business signing up — not a private individual — consumer protection rules don't apply here. Any extra protections we offer you are voluntary, not legally mandated.
 
 ## 3. The Platform — What Vina Gallica Provides
@@ -88,13 +84,15 @@ We aim to keep the Platform available at all times but do not provide any uptime
 
 ### 4.1 Creating an account
 
-To list your business on Vina Gallica, you must create an account. During registration, you must provide:
+To list your business on Vina Gallica, you must create an account. During registration, you must provide your French **SIREN number**, which is verified in **real time** against official French business registry data.
 
-- your business name and legal form;
-- your French SIREN number;
-- a valid business email address;
-- your EU VAT number (if VAT-registered); and
-- accurate contact details for your business.
+Upon successful validation of an active SIREN number, the **Company Name** and **Company Address** fields will be pre-filled automatically — both remain editable before you submit.
+
+Account creation is only permitted once the SIREN number is confirmed as active.
+
+During registration you also need to provide a valid business email address and accurate contact details for your business.
+
+The registration form is protected by **Cloudflare Turnstile** to prevent automated submissions and ensure the security of the registration process.
 
 ### 4.2 Accuracy of information
 
@@ -118,7 +116,7 @@ The **Free Plan** is available permanently at no cost and with no time limit. A 
 
 - inclusion in the Vina Gallica directory;
 - a pin on the interactive map; and
-- a basic information panel (business name, category, location, and contact link).
+- a basic information panel (business name, category, location, operating hours or dates for festivals, contact link).
 
 There is no obligation to upgrade to a paid plan at any point.
 
@@ -130,6 +128,7 @@ The **Premium Plan** is available for **€120 per year, excluding VAT**, billed
 - an image gallery;
 - a marketing description authored by your team;
 - certifications and awards display;
+- videos;
 - detailed location information, including directions and nearby attractions.
 
 ### 5.3 Multiple listings
@@ -138,7 +137,17 @@ A single account may hold any number of listings, each independently designated 
 
 ### 5.4 When the Premium period starts
 
-Your annual Premium subscription period begins on the date we **record your payment** against the pro-forma invoice. We will notify you by email and add a corresponding note to your account dashboard, showing both the start and end dates of your subscription.
+To access the Premium Plan, you must complete the **Premium upgrade process** from your account dashboard. This involves the following steps:
+
+1. Navigate to the **Upgrade** tab in your dashboard.
+2. Select your registration path based on your tax status and enter either your **EU intra-community VAT number** or your **SIREN number**. Both are validated in real time.
+3. Once validation is successful, a **pre-filled order form** appears. Complete the remaining fields and review the details.
+4. Tick the checkbox confirming your consent to receive invoices electronically by email.
+5. Submit the form. We will then send a **pro-forma invoice** to the email address indicated in the form, showing the exact amount due, inclusive of VAT where applicable.
+
+Upon receipt of your completed form, we will grant you **provisional Premium access for 33 days**, pending receipt of payment. You will simultaneously receive the pro-forma invoice by email, payable by SEPA bank transfer within **30 days**.
+
+Your **annual Premium subscription period begins on the date we record your payment** against the pro-forma invoice. We will notify you by email and add a corresponding note to your account dashboard, showing both the start and end dates of your subscription.
 
 ### 5.5 No automatic renewal
 
@@ -400,15 +409,15 @@ For minor or non-material changes (such as corrections of typographical errors, 
 
 ### 16.1 Language of the Terms
 
-These Terms are available in **English** and in **French**. Both versions are equally authoritative. In the event of any conflict or ambiguity between the two versions, the matter shall be resolved by the competent court in accordance with Section 18.
+These Terms are available in **English** and in **French**. In the event of any conflict or ambiguity between the two versions, **the French version shall prevail.**
 
 The French version is available at [vinagallica.com/fr/conditions-generales](https://vinagallica.com/fr/conditions-generales).
 
 ### 16.2 Language of proceedings
 
-Legal proceedings arising under these Terms shall be conducted in **French**, before the courts identified in Section 18. An English translation of any procedural documents may be requested at the cost of the requesting party.
+Legal proceedings arising under these Terms shall be conducted in **French**, before the competent courts of France as identified in Section 17. An English translation of any procedural documents may be requested at the cost of the requesting party.
 
-**Summary:** These Terms exist in both English and French — both are equally valid. If there's ever a conflict between the two versions, the court decides. Proceedings would be in French.
+**Summary:** These Terms exist in both English and French. In case of any conflict between the two versions, the French version prevails. Any legal proceedings will be brought before French courts and conducted in French.
 
 ## 17. Governing Law and Dispute Resolution
 
