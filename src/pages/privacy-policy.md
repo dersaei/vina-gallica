@@ -235,6 +235,7 @@ Vina Gallica does not knowingly collect personal data from children under the ag
 - **User account data** (name, email address, password hash, company details) — retained for as long as the account is active; deleted within 30 days of account deletion
 - **Business listing data** (all free and premium fields) — retained for as long as the associated account is active; deleted together with the account within 30 days of deletion
 - **Transactional email logs** — retained in accordance with [Fastmail's data retention policy](https://www.fastmail.com/policies/dpa/)
+- - **Premium billing and invoicing data** (business name, address, VAT or SIREN number, email address, invoice records) — retained for a minimum of **5 years** from the end of the financial year in which the invoice was issued, in accordance with applicable Polish and EU accounting regulations. This retention obligation applies regardless of account deletion.
 
 ## Data Transfers
 
