@@ -6,7 +6,7 @@ headline: "Privacy Policy"
 headlineStyle: "dark"
 ---
 
-**Last updated:** April 26, 2026
+**Last updated:** May 6, 2026
 
 Spiżarnia REGIO ("we," "us," or "our") owns and operates the website vinagallica.com. This Privacy Policy explains how we collect, use, and protect information when you visit our site.
 
@@ -94,8 +94,8 @@ For more information, see [Mapbox's Privacy Policy](https://www.mapbox.com/legal
 
 - First name and last name
 - Company name
-- SIRET number (French business registration number — optional at registration, required for listing publication)
-- Company address (optional at registration)
+- SIREN number
+- Company address
 - Email address
 - Password (stored exclusively as a cryptographic hash; we never store your password in plain text)
 
@@ -108,10 +108,13 @@ Account data is held in a PostgreSQL database managed by Directus, self-hosted b
 - Physical address
 - Website URL and phone number
 - Business logo (uploaded file)
+- Opening Hours or date for festivals
 
 If you upgrade to a premium listing, we additionally collect:
 
 - Photographs of your business or products
+- Videos
+- Certifications and Awards
 - A written description or story about your business
 - Any additional details you choose to provide in the premium profile fields
 
