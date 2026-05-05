@@ -7,13 +7,13 @@ headlineStyle: "dark"
 lang: "fr"
 ---
 
-**Dernière mise à jour :** 4 mai 2026
+**Dernière mise à jour :** 5 mai 2026
 
-Les présentes Conditions Générales d'Utilisation (« CGU ») régissent votre utilisation de **vinagallica.com** (« Vina Gallica », « la Plateforme ») ainsi que les services qui y sont proposés. La Plateforme est exploitée par **Bogusław Siemiątkowski « Spiżarnia REGIO »**, dont le siège social est situé **Napoleońska 49, 06-500 Mława, Pologne, TVA-UE : PL5691729538**.
+Les présentes Conditions Générales d'Utilisation (« CGU ») régissent votre utilisation de **[vinagallica.com](https://vinagallica.com)** (« Vina Gallica », « la Plateforme ») ainsi que les services qui y sont proposés. La Plateforme est exploitée par **Bogusław Siemiątkowski « Spiżarnia REGIO »**, dont le siège social est situé **Napoleońska 49, 06-500 Mława, Pologne, TVA-UE : PL5691729538**.
 
 En créant un compte sur Vina Gallica, vous confirmez avoir lu, compris et accepté d'être lié par les présentes CGU. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser la Plateforme.
 
-Pour toute demande commerciale ou partenariat : **<partners@vinagallica.com>** Pour toute question juridique, relative à la vie privée ou à la protection des données : **<privacy@vinagallica.com>**
+Pour toute demande commerciale ou partenariat : **[partners@vinagallica.com](mailto:partners@vinagallica.com)** Pour toute question juridique, relative à la vie privée ou à la protection des données : **[privacy@vinagallica.com](mailto:privacy@vinagallica.com)**
 
 ## Table des matières
 
@@ -62,11 +62,11 @@ Vina Gallica ne propose pas ses services aux particuliers. Tous les utilisateurs
 
 ### 2.1 Relation entre professionnels
 
-Les présentes CGU constituent un **accord entre professionnels (B2B)** entre Spiżarnia REGIO et l'entité commerciale inscrite (« vous », « le Client », « l'Utilisateur »). Les dispositions du droit de la consommation — notamment le Code de la consommation — applicables aux seuls particuliers, y compris les droits légaux de rétractation prévus par le droit européen de la consommation, ne s'appliquent pas au présent accord.
+Les présentes CGU constituent un **accord entre professionnels (B2B)** entre Spiżarnia REGIO et l'entité commerciale inscrite (« vous », « le Client », « l'Utilisateur »). Les dispositions du droit de la consommation — notamment le Code de la consommation — applicables aux seuls particuliers, y compris le droit légal de rétractation prévu à l'article L221-18 du Code de la consommation, ne s'appliquent pas au présent accord.
 
 ### 2.2 Engagements commerciaux volontaires
 
-Lorsque les présentes CGU accordent des droits ou des recours allant au-delà de ce qu'exige le droit français dans un contexte B2B (tels que la fenêtre de remboursement volontaire décrite à la section 11), ceux-ci sont proposés à titre de geste commercial et ne créent pas de précédent pour des situations futures.
+Lorsque les présentes CGU accordent des droits ou des recours allant au-delà de ce qu'exige le droit français dans un contexte B2B — tels que la fenêtre de remboursement volontaire décrite à la section 11 — ceux-ci sont proposés à titre de geste commercial et ne créent pas de précédent pour des situations futures.
 
 **Résumé :** Parce que vous vous inscrivez en tant qu'entreprise — et non en tant que particulier — les règles de protection des consommateurs ne s'appliquent pas ici. Toute protection supplémentaire que nous vous accordons est volontaire, non imposée par la loi.
 
@@ -90,13 +90,15 @@ Nous nous efforçons de maintenir la Plateforme accessible en permanence, sans t
 
 ### 4.1 Ouverture d'un compte
 
-Pour référencer votre entreprise sur Vina Gallica, vous devez créer un compte. Lors de l'inscription, vous devez fournir :
+Pour référencer votre entreprise sur Vina Gallica, vous devez créer un compte. Lors de l'inscription, vous devez fournir votre **numéro SIREN** français, qui est vérifié en **temps réel** auprès des données officielles du registre des entreprises françaises.
 
-- le nom et la forme juridique de votre entreprise ;
-- votre numéro SIREN français ;
-- une adresse e-mail professionnelle valide ;
-- votre numéro de TVA intracommunautaire (si vous êtes assujetti à la TVA) ; et
-- les coordonnées exactes de votre entreprise.
+Dès validation d'un numéro SIREN actif, les champs **Nom de l'entreprise** et **Adresse de l'entreprise** sont préremplis automatiquement — ces champs restent modifiables avant soumission.
+
+La création de compte n'est autorisée qu'une fois le numéro SIREN confirmé comme actif.
+
+Lors de l'inscription, vous devez également fournir une adresse e-mail professionnelle valide et des coordonnées exactes pour votre entreprise.
+
+Le formulaire d'inscription est protégé par **Cloudflare Turnstile** afin de prévenir les soumissions automatisées et de garantir la sécurité du processus d'inscription.
 
 ### 4.2 Exactitude des informations
 
@@ -120,7 +122,7 @@ L'**offre gratuite** est disponible en permanence, sans frais et sans limite de 
 
 - l'inclusion dans l'annuaire Vina Gallica ;
 - un repère sur la carte interactive ; et
-- un panneau d'informations de base (nom de l'entreprise, catégorie, localisation et lien de contact).
+- un panneau d'informations de base (nom de l'entreprise, catégorie, localisation, horaires d'ouverture ou dates pour les événements, lien de contact).
 
 Aucune obligation de passer à une offre payante n'existe à quelque moment que ce soit.
 
@@ -132,6 +134,7 @@ L'**offre Premium** est disponible au tarif de **120 € par an, hors TVA**, fac
 - une galerie d'images ;
 - une description marketing rédigée par vos soins ;
 - l'affichage des certifications et récompenses ;
+- des vidéos ;
 - des informations détaillées sur la localisation, incluant l'itinéraire et les points d'intérêt à proximité.
 
 ### 5.3 Fiches multiples
@@ -140,7 +143,17 @@ Un seul compte peut comporter un nombre illimité de fiches, chacune étant ind�
 
 ### 5.4 Date de début de la période Premium
 
-La **période Premium débute à la date d'approbation et de publication de votre première fiche Premium** par Vina Gallica — et non à la date du paiement. En effet, les fiches font l'objet d'une vérification manuelle (voir section 7). Si des fiches supplémentaires sont soumises après la première, elles partagent la même date d'expiration de la période Premium que la première fiche publiée.
+Pour accéder à l'offre Premium, vous devez effectuer le **processus de mise à niveau Premium** depuis votre espace client. Ce processus comporte les étapes suivantes :
+
+1. Accédez à l'onglet **Mise à niveau** de votre espace client.
+2. Sélectionnez votre parcours d'inscription selon votre statut fiscal et saisissez soit votre **numéro de TVA intracommunautaire**, soit votre **numéro SIREN**. Les deux sont validés en temps réel.
+3. Une fois la validation effectuée, un **formulaire de commande prérempli** s'affiche. Complétez les champs restants et vérifiez les informations.
+4. Cochez la case confirmant votre consentement à recevoir les factures par voie électronique.
+5. Soumettez le formulaire. Nous vous enverrons alors une **facture pro forma** à l'adresse e-mail indiquée dans le formulaire, indiquant le montant exact dû, TVA comprise le cas échéant.
+
+À réception de votre formulaire complété, nous vous accorderons un **accès Premium provisoire de 33 jours**, dans l'attente du paiement. Vous recevrez simultanément la facture pro forma par e-mail, payable par virement bancaire SEPA dans un délai de **30 jours**.
+
+**La période d'abonnement Premium annuel débute à la date à laquelle nous enregistrons votre paiement** en regard de la facture pro forma. Nous vous en informerons par e-mail et ajouterons une note correspondante dans votre espace client, indiquant les dates de début et de fin de votre abonnement.
 
 ### 5.5 Absence de renouvellement automatique
 
@@ -156,27 +169,31 @@ Une facture pro forma sera jointe à ces rappels. Cette facture pro forma est **
 
 À l'expiration de votre période Premium, vos fiches resteront au niveau Premium pendant un **délai de grâce de 7 jours**. Si vous n'avez pas renouvelé à l'issue de ce délai, toutes vos fiches reviendront définitivement à l'offre gratuite. Vous pouvez repasser à l'offre Premium à tout moment depuis votre espace client.
 
-**Résumé :** L'offre gratuite est à votre disposition pour toujours et sans frais. L'offre Premium coûte 120 € par an et ajoute une page de profil complète, des images et bien plus encore. Elle ne se renouvelle pas automatiquement, mais vous recevrez des rappels. Si vous ne renouvelez pas dans le délai de grâce de 7 jours, vos fiches repassent au niveau gratuit.
+**Résumé :** L'offre gratuite est à votre disposition pour toujours et sans frais. L'offre Premium coûte 120 € HT par an et ajoute une page de profil complète, des images, des vidéos et bien plus encore. Elle ne se renouvelle pas automatiquement, mais vous recevrez des rappels. Si vous ne renouvelez pas dans le délai de grâce de 7 jours, vos fiches repassent au niveau gratuit.
 
 ## 6. Paiement et TVA
 
 ### 6.1 Mode de paiement
 
-Les paiements pour l'offre Premium sont traités exclusivement en **euro (EUR)**. Le paiement est actuellement effectué **manuellement par e-mail** — veuillez contacter **[partners@vinagallica.com](mailto:partners@vinagallica.com)** pour démarrer un abonnement Premium. Un système de paiement en ligne via Stripe est en cours de déploiement et sera mis à disposition sur la Plateforme prochainement. Les présentes CGU seront mises à jour lors de l'activation des paiements Stripe.
+Les paiements pour l'offre Premium sont traités exclusivement en **euro (EUR)**. Le paiement est effectué par **virement bancaire SEPA**. Après avoir complété le formulaire de commande Premium, nous vous enverrons une **facture pro forma** par e-mail indiquant le montant exact dû, TVA comprise le cas échéant. La facture pro forma est payable dans un délai de **30 jours**.
+
+À réception de votre formulaire de commande, nous pouvons vous accorder un **accès Premium provisoire de 33 jours** dans l'attente du paiement. Nous nous efforçons d'enregistrer et de confirmer votre paiement dans les **2 jours ouvrés** suivant la réception du virement.
+
+Veuillez noter qu'une facture pro forma n'est pas une facture de TVA et ne peut pas être utilisée à des fins de déduction fiscale.
 
 ### 6.2 TVA et autoliquidation
 
 Vina Gallica est exploitée par une entité polonaise (Spiżarnia REGIO, TVA-UE : PL5691729538).
 
-- Si votre entreprise est **assujettie à la TVA en France ou dans un autre État membre de l'UE**, le mécanisme d'**autoliquidation de la TVA** s'applique, conformément à l'article 283 du Code général des impôts (CGI). Vous recevrez une facture **hors TVA** et vous êtes responsable de la déclaration et du paiement de la TVA dans votre pays, conformément à vos obligations fiscales locales.
-- Si votre entreprise **n'est pas assujettie à la TVA**, des règles différentes peuvent s'appliquer. Veuillez contacter **[partners@vinagallica.com](mailto:partners@vinagallica.com)** avant de souscrire pour clarifier votre situation.
-- Vous devez fournir un numéro de TVA intracommunautaire valide lors de l'inscription si vous êtes assujetti à la TVA. La fourniture d'un numéro invalide peut affecter le traitement fiscal de votre facture.
+- Si votre entreprise est **assujettie à la TVA dans l'UE**, le mécanisme d'**autoliquidation de la TVA** s'applique, conformément à l'article 283 du Code général des impôts (CGI). Vous recevrez une facture **hors TVA** et vous êtes responsable de la déclaration et du paiement de la TVA dans votre pays, conformément à vos obligations fiscales locales.
+- Si votre entreprise **ne détient pas de numéro de TVA intracommunautaire**, la TVA sera appliquée à votre facture conformément à la réglementation fiscale applicable. Le montant applicable sera indiqué sur la facture pro forma avant l'échéance du paiement.
+- Pour toute question relative à la facturation ou à la TVA, veuillez contacter **[partners@vinagallica.com](mailto:partners@vinagallica.com)**.
 
 ### 6.3 Facturation
 
-Une facture formelle sera émise après réception du paiement. Les factures pro forma envoyées avec les rappels de renouvellement sont fournies à titre indicatif uniquement et ne constituent ni une demande formelle de paiement ni une obligation contractuelle.
+Le processus de commande Premium peut impliquer à la fois une **facture pro forma** et une **facture de TVA définitive**. La facture pro forma est émise avant le paiement et est destinée uniquement au règlement. Après confirmation du paiement, nous émettrons et enverrons la facture de TVA définitive par e-mail.
 
-**Résumé :** Les prix sont en euros. Si vous êtes assujetti à la TVA dans l'UE, la TVA ne vous sera pas facturée — vous la gérez vous-même dans votre pays via l'autoliquidation (art. 283 CGI). Les paiements sont actuellement effectués par e-mail ; Stripe arrive prochainement.
+**Résumé :** Les prix sont en euros. Si vous êtes assujetti à la TVA dans l'UE, la TVA ne vous sera pas facturée — vous la gérez vous-même dans votre pays via l'autoliquidation (art. 283 CGI). Le paiement s'effectue par virement SEPA sous 30 jours.
 
 ## 7. Soumission et modération des fiches
 
@@ -186,14 +203,13 @@ Les fiches sont soumises via la [page de dépôt](/fr/rejoindre) sur la Platefor
 
 ### 7.2 Processus de vérification
 
-Chaque fiche est **vérifiée manuellement** par l'équipe de Spiżarnia REGIO avant sa publication. La vérification porte sur :
+Les **fiches gratuites** font l'objet d'une **vérification standard** avant publication. Cette vérification porte sur la complétude technique, la pertinence de la catégorie et la conformité aux standards de contenu de la Plateforme.
 
-- **La complétude technique** : tous les champs obligatoires sont correctement renseignés, le format est valide et les images respectent les spécifications techniques ;
-- **L'évaluation substantielle** : l'entreprise semble légitime, la catégorie de la fiche est exacte, les images sont appropriées et conformes aux standards de la Plateforme (voir section 8), et les informations sont cohérentes entre elles.
+Les **fiches soumises dans le cadre d'un compte Premium** ne sont pas soumises à la file d'attente de vérification standard et sont **publiées sans délai**.
 
 ### 7.3 Délai de vérification
 
-Les vérifications sont généralement effectuées dans les **3 jours ouvrés** suivant la soumission. Lors des périodes de forte demande (par exemple, autour de grands événements vitivinicoles ou de pics saisonniers), ce délai peut être légèrement plus long. Nous vous informerons de tout retard significatif.
+Pour les fiches gratuites, les vérifications sont généralement effectuées dans les **3 jours ouvrés** suivant la soumission. Lors des périodes de forte demande, ce délai peut être légèrement plus long.
 
 ### 7.4 Notification du résultat
 
@@ -203,7 +219,7 @@ Vous recevrez une notification par e-mail lorsque votre fiche sera **approuvée 
 
 Vina Gallica se réserve le droit de **refuser, retirer ou suspendre toute fiche** à tout moment si elle ne respecte pas les présentes CGU ou les standards éditoriaux de la Plateforme, ou si des circonstances rendent la fiche inappropriée pour la Plateforme. Dans la mesure du possible, nous vous donnerons l'occasion de remédier au problème avant de retirer une fiche publiée.
 
-**Résumé :** Soumettez votre fiche via le site et nous la vérifierons manuellement dans les 3 jours ouvrés. Nous vous enverrons un e-mail dès qu'elle sera en ligne. Nous pouvons refuser une fiche qui ne respecte pas nos standards.
+**Résumé :** Soumettez votre fiche via le site. Les fiches gratuites font l'objet d'une vérification standard avant publication, tandis que les fiches soumises dans le cadre d'un compte Premium sont publiées sans délai.
 
 ## 8. Standards des fiches
 
@@ -260,7 +276,7 @@ En soumettant Votre Contenu, vous garantissez que :
 
 En soumettant Votre Contenu à Vina Gallica, vous accordez à Spiżarnia REGIO une **licence non exclusive, sans redevance et mondiale** pour utiliser, publier, afficher, reproduire et promouvoir Votre Contenu aux fins suivantes :
 
-- afficher votre fiche sur vinagallica.com ;
+- afficher votre fiche sur [vinagallica.com](https://vinagallica.com) ;
 - mettre en avant votre fiche dans des supports marketing, des lettres d'information ou du contenu éditorial produit par Vina Gallica ;
 - promouvoir votre entreprise sur les canaux de réseaux sociaux de Vina Gallica (voir section 10).
 
@@ -301,13 +317,13 @@ Si vous souhaitez que votre entreprise ne soit plus mise en avant sur les résea
 À titre de geste commercial, Spiżarnia REGIO propose un **remboursement intégral des frais de l'offre Premium** si les deux conditions suivantes sont réunies :
 
 1. Vous demandez le remboursement **dans les 14 jours suivant la date du paiement** ; et
-2. **Votre première fiche n'a pas encore été approuvée et publiée** au moment de la demande de remboursement (c'est-à-dire que la période Premium n'a pas encore commencé).
+2. **Aucune de vos fiches n'a encore été approuvée et publiée** au moment de la demande de remboursement — c'est-à-dire que la période Premium n'a pas encore commencé.
 
 Pour demander un remboursement, contactez **[partners@vinagallica.com](mailto:partners@vinagallica.com)** depuis l'adresse e-mail associée à votre compte.
 
 ### 11.2 Absence de remboursement une fois la période Premium commencée
 
-Dès lors que votre première fiche est approuvée et publiée — marquant le début de la période Premium — **aucun remboursement n'est possible**, quelle que soit la durée restante de la période annuelle.
+Dès lors que votre paiement est enregistré et que la période Premium a commencé, **aucun remboursement n'est possible**, quelle que soit la durée restante de la période annuelle.
 
 ### 11.3 Absence de remboursement en cas de suppression volontaire du compte
 
@@ -321,7 +337,7 @@ Si Spiżarnia REGIO résilie votre compte pour violation des présentes CGU, auc
 
 La fenêtre de remboursement de 14 jours décrite dans la présente section constitue un engagement commercial volontaire. Il ne s'agit pas d'un droit légal de rétractation tel que prévu à l'article L221-18 du Code de la consommation, lequel ne s'applique pas aux transactions entre professionnels.
 
-**Résumé :** Si vous payez l'offre Premium mais changez d'avis avant la publication de votre première fiche, nous vous remboursons intégralement dans les 14 jours suivant le paiement. Une fois votre fiche publiée, aucun remboursement n'est possible.
+**Résumé :** Si vous payez l'offre Premium mais changez d'avis avant l'enregistrement de votre paiement et le début de la période Premium, nous vous remboursons intégralement dans les 14 jours suivant le paiement. Une fois la période Premium commencée, aucun remboursement n'est possible.
 
 ## 12. Suspension et résiliation de compte
 
@@ -351,7 +367,7 @@ Lors de la résiliation de votre compte (quelle qu'en soit la raison) :
 - toutes vos fiches seront supprimées de la Plateforme ;
 - votre accès à l'espace client sera révoqué ;
 - toute licence accordée à Spiżarnia REGIO sur votre contenu prendra fin, sous réserve des dispositions de la section 9.3 ; et
-- les clauses des présentes CGU qui, par leur nature, survivent à la résiliation (notamment les sections 9, 13, 14 et 18) resteront en vigueur.
+- les clauses des présentes CGU qui, par leur nature, survivent à la résiliation (notamment les sections 9, 14, 15 et 19) resteront en vigueur.
 
 **Résumé :** Vous pouvez fermer votre compte à tout moment depuis l'espace client. Nous pouvons suspendre ou fermer les comptes qui enfreignent nos règles. Le non-renouvellement de l'offre Premium vous fait simplement passer à l'offre gratuite — cela ne ferme pas votre compte.
 
@@ -377,7 +393,7 @@ Spiżarnia REGIO ne pourra être tenue responsable de toute perte ou de tout dom
 
 Aucune disposition des présentes CGU n'exclut ni ne limite la responsabilité en cas de décès ou de dommages corporels causés par négligence, de fraude ou de déclaration frauduleuse, ou pour toute autre responsabilité qui ne peut être exclue ou limitée par le droit français.
 
-**Résumé :** Nous ne sommes pas responsables si votre fiche ne génère pas les résultats commerciaux que vous espériez. En cas de problème de notre côté, notre responsabilité est plafonnée à ce que vous nous avez versé au cours de l'année écoulée, et nous ne sommes jamais responsables des pertes de bénéfices ou des préjudices indirects.
+**Résumé :** Nous ne sommes pas responsables si votre fiche ne génère pas les résultats commerciaux que vous espériez. En cas de problème de notre côté, notre responsabilité est plafonnée à ce que vous nous avez versé au cours de l'année écoulée, et nous ne sommes jamais responsables des pertes de bénéfices ou des préjudices indirects (art. 1231-3 Code civil).
 
 ## 14. Indemnisation
 
@@ -438,13 +454,13 @@ La version anglaise est disponible à l'adresse [vinagallica.com/terms-of-servic
 
 Les procédures judiciaires engagées en vertu des présentes CGU seront conduites en **français**, devant les tribunaux identifiés à la section 18. Une traduction anglaise de tout document procédural peut être demandée aux frais de la partie requérante.
 
-**Résumé :** Les présentes CGU existent en français et en anglais — les deux versions ont la même valeur. En cas de conflit entre les deux versions, le tribunal tranche. Les procédures se dérouleraient en français.
+**Résumé :** Les présentes CGU existent en français et en anglais — les deux versions ont la même valeur juridique. En cas de conflit entre les deux versions, le tribunal tranche. Les procédures se dérouleraient en français devant les tribunaux français.
 
 ## 18. Droit applicable et règlement des litiges
 
 ### 18.1 Droit applicable
 
-Les présentes CGU et tout litige ou réclamation en découlant ou s'y rapportant — y compris les litiges non contractuels — sont régis et interprétés conformément au droit **français**, notamment le Code civil français et les dispositions applicables du Code de commerce.
+Les présentes CGU et tout litige ou réclamation en découlant ou s'y rapportant — y compris les litiges non contractuels — sont régis et interprétés conformément au droit **français**, notamment le Code civil et les dispositions applicables du Code de commerce.
 
 ### 18.2 Résolution amiable
 
@@ -452,7 +468,7 @@ Avant d'engager toute procédure judiciaire, les deux parties s'engagent à fair
 
 ### 18.3 Compétence juridictionnelle
 
-Si le litige ne peut être résolu par la voie amiable, les parties se soumettent à la **compétence exclusive des juridictions commerciales compétentes de Paris, France** (_Tribunal de commerce de Paris_).
+Si le litige ne peut être résolu par la voie amiable, les parties se soumettent à la **compétence exclusive du Tribunal de commerce de Paris**.
 
 ### 18.4 Contexte professionnel
 
