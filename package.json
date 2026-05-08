@@ -11,21 +11,21 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.3.1",
+    "@astrojs/cloudflare": "^13.5.0",
     "@astrojs/react": "^5.0.4",
     "@directus/sdk": "^21.3.0",
     "@mapbox/mapbox-gl-geocoder": "^5.1.2",
     "@types/mapbox__mapbox-gl-geocoder": "^5.1.1",
-    "astro": "^6.2.2",
+    "astro": "^6.3.1",
     "mapbox-gl": "^3.23.1",
     "marked": "^17.0.6",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.6.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "wrangler": "^4.88.0"
+    "wrangler": "^4.90.0"
   }
 }

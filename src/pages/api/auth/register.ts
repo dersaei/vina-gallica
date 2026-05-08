@@ -33,8 +33,8 @@ export const POST: APIRoute = async ({ request }) => {
   if (password !== passwordConfirm) {
     return json({ error: "Passwords do not match." }, 400);
   }
-  if (password.length < 8) {
-    return json({ error: "Password must be at least 8 characters." }, 400);
+  if (password.length < 16) {
+    return json({ error: "Password must be at least 16 characters." }, 400);
   }
 
   const turnstileToken = data.get("cf-turnstile-response") as string | null;

@@ -157,42 +157,6 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
         novalidate
       >
         <input type="hidden" name="lang" value="fr" />
-        <div class="join-form-row">
-          <div class="join-field">
-            <label for="first_name" class="join-label">Prénom <span aria-hidden="true">*</span></label>
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              class="join-input"
-              autocomplete="given-name"
-              required
-            />
-          </div>
-          <div class="join-field">
-            <label for="last_name" class="join-label">Nom <span aria-hidden="true">*</span></label>
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              class="join-input"
-              autocomplete="family-name"
-              required
-            />
-          </div>
-        </div>
-
-        <div class="join-field">
-          <label for="company_name" class="join-label">Nom de l'entreprise <span aria-hidden="true">*</span></label>
-          <input
-            type="text"
-            id="company_name"
-            name="company_name"
-            class="join-input"
-            autocomplete="organization"
-            required
-          />
-        </div>
 
         <div class="join-field">
           <label for="tax_id" class="join-label">SIREN <span aria-hidden="true">*</span></label>
@@ -215,21 +179,63 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
         </div>
 
         <div class="join-field">
+          <label for="company_name" class="join-label">Nom de l'entreprise <span aria-hidden="true">*</span></label>
+          <span class="join-label-note">Rempli automatiquement après la saisie d'un SIREN valide. Vous pourrez le modifier ensuite si besoin.</span>
+          <input
+            type="text"
+            id="company_name"
+            name="company_name"
+            class="join-input"
+            autocomplete="organization"
+            disabled
+            required
+          />
+        </div>
+
+        <div class="join-field">
           <label for="company_address" class="join-label">Adresse de l'entreprise <span aria-hidden="true">*</span></label>
-          <span class="join-label-note">(rue, numéro, code postal, commune, département, région)</span>
+          <span class="join-label-note">Rempli automatiquement après la saisie d'un SIREN valide. Vous pourrez la modifier ensuite si besoin.</span>
           <input
             type="text"
             id="company_address"
             name="company_address"
             class="join-input"
             autocomplete="street-address"
-            placeholder="Votre adresse principale"
+            disabled
             required
           />
         </div>
 
+        <div class="join-form-row">
+          <div class="join-field">
+            <label for="first_name" class="join-label">Prénom <span aria-hidden="true">*</span></label>
+            <span class="join-label-note">Votre prénom en tant que représentant de l'entreprise.</span>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              class="join-input"
+              autocomplete="given-name"
+              required
+            />
+          </div>
+          <div class="join-field">
+            <label for="last_name" class="join-label">Nom <span aria-hidden="true">*</span></label>
+            <span class="join-label-note">Votre nom en tant que représentant de l'entreprise.</span>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              class="join-input"
+              autocomplete="family-name"
+              required
+            />
+          </div>
+        </div>
+
         <div class="join-field">
           <label for="email" class="join-label">Adresse e-mail <span aria-hidden="true">*</span></label>
+          <span class="join-label-note">Utilisée comme identifiant de connexion et pour toute communication de Vina Gallica.</span>
           <input
             type="email"
             id="email"
@@ -243,19 +249,20 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
         <div class="join-form-row">
           <div class="join-field">
             <label for="password" class="join-label">Mot de passe <span aria-hidden="true">*</span></label>
+            <span class="join-label-note">Doit contenir au moins 16 caractères, dont des majuscules, des minuscules, un chiffre et un caractère spécial (ex. !@#$%).</span>
             <input
               type="password"
               id="password"
               name="password"
               class="join-input"
               autocomplete="new-password"
-              minlength="8"
+              minlength="16"
               required
             />
-            <span class="join-field-hint">Minimum 8 caractères</span>
           </div>
           <div class="join-field">
             <label for="password_confirm" class="join-label">Confirmer le mot de passe <span aria-hidden="true">*</span></label>
+            <span class="join-label-note">Saisissez à nouveau votre mot de passe. Nous vous recommandons d'utiliser <a href="https://www.dashlane.com/fr/cs/SkV1ovFZtb4H" target="_blank" rel="noopener noreferrer">Dashlane</a> — il vous aidera à générer un mot de passe solide et à le mémoriser. Cliquez sur le lien pour obtenir 6 mois de Premium offerts.</span>
             <input
               type="password"
               id="password_confirm"
@@ -886,6 +893,7 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
   .join-field {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 0.35rem;
   }
 
@@ -912,6 +920,17 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
     opacity: 0.65;
     display: block;
     margin-top: 2px;
+  }
+
+  .join-label-note a {
+    color: var(--color-elegant-black);
+    text-decoration: underline;
+    text-transform: uppercase;
+    text-underline-offset: 2px;
+  }
+
+  .join-label-note a:hover {
+    opacity: 0.7;
   }
 
   .join-input {
@@ -1009,13 +1028,21 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
     pointer-events: none;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 700px) {
     .join-form-row {
       grid-template-columns: 1fr;
     }
     .pricing-subtitle, .join-subtitle {
       font-size: 1rem;
     }
+  }
+
+  .join-input:disabled {
+    background-color: #f0f0f0;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #bbb;
+    box-shadow: none;
   }
 
   .siren-input-wrap {
@@ -1109,8 +1136,28 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
 
       const nameField = document.getElementById("company_name") as HTMLInputElement | null;
       const addressField = document.getElementById("company_address") as HTMLInputElement | null;
-      if (nameField && !nameField.value && name) nameField.value = name;
-      if (addressField && !addressField.value && address) addressField.value = address;
+
+      if (nameField) {
+        nameField.disabled = false;
+        if (!nameField.value) {
+          nameField.value = name ?? "";
+          if (!name) nameField.placeholder = "Données introuvables — veuillez remplir manuellement";
+        }
+      }
+      if (addressField) {
+        addressField.disabled = false;
+        if (!addressField.value) {
+          addressField.value = address ?? "";
+          if (!address) addressField.placeholder = "Données introuvables — veuillez remplir manuellement";
+        }
+      }
+    }
+
+    function lockCompanyFields() {
+      const nameField = document.getElementById("company_name") as HTMLInputElement | null;
+      const addressField = document.getElementById("company_address") as HTMLInputElement | null;
+      if (nameField) { nameField.disabled = true; nameField.value = ""; nameField.placeholder = ""; }
+      if (addressField) { addressField.disabled = true; addressField.value = ""; addressField.placeholder = ""; }
     }
 
     function setInvalid(msg: string) {
@@ -1119,6 +1166,7 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
       feedbackEl!.textContent = msg;
       feedbackEl!.className = "siren-feedback is-invalid";
       input!.setCustomValidity(msg);
+      lockCompanyFields();
     }
 
     function clear() {
@@ -1127,6 +1175,7 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
       feedbackEl!.textContent = "";
       feedbackEl!.className = "siren-feedback";
       input!.setCustomValidity("");
+      lockCompanyFields();
     }
 
     input.addEventListener("input", () => {

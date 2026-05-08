@@ -157,43 +157,6 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
         id="register-form"
         novalidate
       >
-        <div class="join-form-row">
-          <div class="join-field">
-            <label for="first_name" class="join-label">First name <span aria-hidden="true">*</span></label>
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              class="join-input"
-              autocomplete="given-name"
-              required
-            />
-          </div>
-          <div class="join-field">
-            <label for="last_name" class="join-label">Last name <span aria-hidden="true">*</span></label>
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              class="join-input"
-              autocomplete="family-name"
-              required
-            />
-          </div>
-        </div>
-
-        <div class="join-field">
-          <label for="company_name" class="join-label">Company name <span aria-hidden="true">*</span></label>
-          <input
-            type="text"
-            id="company_name"
-            name="company_name"
-            class="join-input"
-            autocomplete="organization"
-            required
-          />
-        </div>
-
         <div class="join-field">
           <label for="tax_id" class="join-label">SIREN <span aria-hidden="true">*</span></label>
           <span class="join-label-note">Your SIREN will be verified against the official French business registry.</span>
@@ -215,21 +178,63 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
         </div>
 
         <div class="join-field">
+          <label for="company_name" class="join-label">Company name <span aria-hidden="true">*</span></label>
+          <span class="join-label-note">Filled in automatically after a valid SIREN is entered. You can edit it afterwards if needed.</span>
+          <input
+            type="text"
+            id="company_name"
+            name="company_name"
+            class="join-input"
+            autocomplete="organization"
+            disabled
+            required
+          />
+        </div>
+
+        <div class="join-field">
           <label for="company_address" class="join-label">Company address <span aria-hidden="true">*</span></label>
-          <span class="join-label-note">(street, number, postal code, place, department, region)</span>
+          <span class="join-label-note">Filled in automatically after a valid SIREN is entered. You can edit it afterwards if needed.</span>
           <input
             type="text"
             id="company_address"
             name="company_address"
             class="join-input"
             autocomplete="street-address"
-            placeholder="Your main location"
+            disabled
             required
           />
         </div>
 
+        <div class="join-form-row">
+          <div class="join-field">
+            <label for="first_name" class="join-label">First name <span aria-hidden="true">*</span></label>
+            <span class="join-label-note">Your name as the company representative.</span>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              class="join-input"
+              autocomplete="given-name"
+              required
+            />
+          </div>
+          <div class="join-field">
+            <label for="last_name" class="join-label">Last name <span aria-hidden="true">*</span></label>
+            <span class="join-label-note">Your name as the company representative.</span>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              class="join-input"
+              autocomplete="family-name"
+              required
+            />
+          </div>
+        </div>
+
         <div class="join-field">
           <label for="email" class="join-label">Email address <span aria-hidden="true">*</span></label>
+          <span class="join-label-note">Used as your login and for all communication from Vina Gallica.</span>
           <input
             type="email"
             id="email"
@@ -243,19 +248,20 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
         <div class="join-form-row">
           <div class="join-field">
             <label for="password" class="join-label">Password <span aria-hidden="true">*</span></label>
+            <span class="join-label-note">Must contain at least 16 characters, including uppercase and lowercase letters, a number, and a special character (e.g. !@#$%).</span>
             <input
               type="password"
               id="password"
               name="password"
               class="join-input"
               autocomplete="new-password"
-              minlength="8"
+              minlength="16"
               required
             />
-            <span class="join-field-hint">Minimum 8 characters</span>
           </div>
           <div class="join-field">
             <label for="password_confirm" class="join-label">Confirm password <span aria-hidden="true">*</span></label>
+            <span class="join-label-note">Re-enter your password. We recommend using <a href="https://www.dashlane.com/cs/SkV1ovFZtb4H" target="_blank" rel="noopener noreferrer">Dashlane</a> — it will help you generate a strong password and remember it. Click the link to get 6 months of Premium for free.</span>
             <input
               type="password"
               id="password_confirm"
@@ -424,7 +430,7 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
   }
   .join-title {
     font-family: var(--font-heading);
-    font-size: 9rem;
+    font-size: 10rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -440,7 +446,7 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
         font-size: 18vw;
       }
       .join-title {
-        font-size: 30vw;
+        font-size: 25vw;
       }
   }
 
@@ -881,6 +887,7 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
   .join-field {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 0.35rem;
   }
 
@@ -907,6 +914,17 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
     opacity: 0.65;
     display: block;
     margin-top: 2px;
+  }
+
+  .join-label-note a {
+    color: var(--color-elegant-black);
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .join-label-note a:hover {
+    opacity: 0.7;
   }
 
   .join-input {
@@ -1004,13 +1022,21 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
     pointer-events: none;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 700px) {
     .join-form-row {
       grid-template-columns: 1fr;
     }
     .pricing-subtitle, .join-subtitle {
       font-size: 1rem;
     }
+  }
+
+  .join-input:disabled {
+    background-color: #f0f0f0;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #bbb;
+    box-shadow: none;
   }
 
   .siren-input-wrap {
@@ -1105,8 +1131,28 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
 
       const nameField = document.getElementById("company_name") as HTMLInputElement | null;
       const addressField = document.getElementById("company_address") as HTMLInputElement | null;
-      if (nameField && !nameField.value && name) nameField.value = name;
-      if (addressField && !addressField.value && address) addressField.value = address;
+
+      if (nameField) {
+        nameField.disabled = false;
+        if (!nameField.value) {
+          nameField.value = name ?? "";
+          if (!name) nameField.placeholder = "Not found in registry — please fill in manually";
+        }
+      }
+      if (addressField) {
+        addressField.disabled = false;
+        if (!addressField.value) {
+          addressField.value = address ?? "";
+          if (!address) addressField.placeholder = "Not found in registry — please fill in manually";
+        }
+      }
+    }
+
+    function lockCompanyFields() {
+      const nameField = document.getElementById("company_name") as HTMLInputElement | null;
+      const addressField = document.getElementById("company_address") as HTMLInputElement | null;
+      if (nameField) { nameField.disabled = true; nameField.value = ""; nameField.placeholder = ""; }
+      if (addressField) { addressField.disabled = true; addressField.value = ""; addressField.placeholder = ""; }
     }
 
     function setInvalid(msg: string) {
@@ -1115,6 +1161,7 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
       feedbackEl!.textContent = msg;
       feedbackEl!.className = "siren-feedback is-invalid";
       input!.setCustomValidity(msg);
+      lockCompanyFields();
     }
 
     function clear() {
@@ -1123,6 +1170,7 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
       feedbackEl!.textContent = "";
       feedbackEl!.className = "siren-feedback";
       input!.setCustomValidity("");
+      lockCompanyFields();
     }
 
     input.addEventListener("input", () => {
