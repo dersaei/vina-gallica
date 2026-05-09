@@ -20,6 +20,7 @@ interface Props {
   wineRegions: WineRegion[];
   categories: Category[];
   mapboxToken: string;
+  directusUrl: string;
 }
 
 const STATUS_LABEL: Record<string, Record<string, string>> = {
@@ -42,7 +43,7 @@ const T = {
     title: "Submit a listing",
     newListing: "+ New listing",
     intro:
-      "You can add multiple listings to Vina Gallica. You can also create drafts and save them to come back to later. All your listings — both drafts and those already submitted — appear below in this section. You will be able to edit and delete them. A Premium account gives access to more form fields, letting you create profiles that stand out and appear higher in our directory.",
+      "You can add multiple listings to Vina Gallica. You can also create drafts and save them for later. All your listings — including drafts, archived, and submitted entries (whether pending review or published) — appear below in this section. From here, you can edit or delete them. A Premium account provides access to additional form fields, letting you create profiles that stand out and appear higher in our directory.",
     upgradeNote:
       "Upgrade to Premium to publish instantly and unlock descriptions, gallery, certificates and video",
     loading: "Loading…",
@@ -63,7 +64,7 @@ const T = {
     title: "Soumettre une fiche",
     newListing: "+ Nouvelle fiche",
     intro:
-      "Vous pouvez ajouter plusieurs fiches à Vina Gallica. Vous pouvez également créer des brouillons et les enregistrer pour y revenir plus tard. Toutes vos fiches — brouillons et fiches déjà soumises — apparaissent ci-dessous dans cette section. Vous pourrez les modifier et les supprimer. Un compte Premium donne accès à davantage de champs dans le formulaire, vous permettant de créer des profils qui se démarquent et apparaissent en tête de notre répertoire.",
+      "Vous pouvez ajouter plusieurs fiches sur Vina Gallica. Vous pouvez également créer des brouillons et les enregistrer pour plus tard. Toutes vos fiches — qu'il s'agisse de brouillons, d'éléments archivés ou soumis (en attente de validation ou publiés) — s'affichent ci-dessous dans cette section. Depuis cet espace, vous pouvez les modifier ou les supprimer. Un compte Premium donne accès à des champs supplémentaires, vous permettant de créer des profils qui se démarquent et apparaissent en priorité dans notre annuaire.",
     upgradeNote:
       "Passez à Premium pour publier instantanément et débloquer les descriptions, la galerie, les certificats et la vidéo",
     loading: "Chargement…",
@@ -91,6 +92,7 @@ export default function ListingsManager({
   wineRegions,
   categories,
   mapboxToken,
+  directusUrl,
 }: Props) {
   const tx = T[lang];
   const [view, setView] = useState<View>("list");
@@ -141,13 +143,20 @@ export default function ListingsManager({
         wineRegions={wineRegions}
         categories={categories}
         listing={listing}
+        directusUrl={directusUrl}
         onSaved={(id, newStatus, updatedListing) => {
           if (typeof view === "object" && "edit" in view) {
-            setListings(prev => prev.map(l =>
-              l.id === id
-                ? (updatedListing ?? { ...l, status: newStatus, date_updated: new Date().toISOString() })
-                : l
-            ));
+            setListings((prev) =>
+              prev.map((l) =>
+                l.id === id
+                  ? (updatedListing ?? {
+                      ...l,
+                      status: newStatus,
+                      date_updated: new Date().toISOString(),
+                    })
+                  : l,
+              ),
+            );
             setView("list");
           } else {
             setView("list");
@@ -167,7 +176,7 @@ export default function ListingsManager({
       body: JSON.stringify({
         Name: l.Name,
         category: l.category?.id ?? null,
-        terroir: l.terroir.map(t => t.wine_regions_id.id),
+        terroir: l.terroir.map((t) => t.wine_regions_id.id),
         address: l.address,
         postal_code: l.postal_code,
         place: l.place,
@@ -175,16 +184,32 @@ export default function ListingsManager({
         website: l.website,
         location: l.location,
         logo: l.logo,
+        description_en: l.description_en,
+        description_fr: l.description_fr,
+        translate_to_en: l.translate_to_en,
+        translate_to_fr: l.translate_to_fr,
+        gallery: l.gallery ?? [],
+        certificates: l.certificates ?? [],
+        video: l.video ?? [],
+        opening_hours: l.opening_hours,
+        event_date_start: l.event_date_start,
+        event_date_end: l.event_date_end,
+        nearest_bus_station_name: l.nearest_bus_station_name,
+        nearest_bus_station_distance_m: l.nearest_bus_station_distance_m,
+        nearest_train_station_name: l.nearest_train_station_name,
+        nearest_train_station_distance_m: l.nearest_train_station_distance_m,
         archive: true,
         submit: false,
       }),
     });
     if (res.ok) {
-      setListings(prev => prev.map(item =>
-        item.id === l.id ? { ...item, status: "archived" } : item
-      ));
+      setListings((prev) =>
+        prev.map((item) =>
+          item.id === l.id ? { ...item, status: "archived" } : item,
+        ),
+      );
     } else {
-      const body = await res.json().catch(() => ({})) as { error?: string };
+      const body = (await res.json().catch(() => ({}))) as { error?: string };
       alert(body.error ?? "Failed to archive.");
     }
     setArchiving(false);
@@ -193,12 +218,14 @@ export default function ListingsManager({
   async function confirmDelete() {
     if (!deleteTarget) return;
     setDeleting(true);
-    const res = await fetch(`/api/listings/${deleteTarget.id}`, { method: "DELETE" });
+    const res = await fetch(`/api/listings/${deleteTarget.id}`, {
+      method: "DELETE",
+    });
     if (res.ok) {
-      setListings(prev => prev.filter(l => l.id !== deleteTarget.id));
+      setListings((prev) => prev.filter((l) => l.id !== deleteTarget.id));
       setDeleteTarget(null);
     } else {
-      const body = await res.json().catch(() => ({})) as { error?: string };
+      const body = (await res.json().catch(() => ({}))) as { error?: string };
       setDeleteTarget(null);
       alert(body.error ?? "Failed to delete.");
     }
@@ -217,9 +244,7 @@ export default function ListingsManager({
         >
           {tx.newListing}
         </button>
-        <p className="lm-hero-intro">
-          {tx.intro}
-        </p>
+        <p className="lm-hero-intro">{tx.intro}</p>
       </div>
 
       {plan === "free" && (
@@ -249,7 +274,9 @@ export default function ListingsManager({
                 l.date_updated && l.date_updated !== l.date_created
                   ? `${tx.updated} ${formatDate(l.date_updated)}`
                   : null,
-              ].filter(Boolean).join(" · ");
+              ]
+                .filter(Boolean)
+                .join(" · ");
 
               return (
                 <li key={l.id} className={`lm-card lm-card--${l.status}`}>
@@ -262,7 +289,9 @@ export default function ListingsManager({
                         </span>
                       </div>
                       <div className="lm-card-bottom">
-                        {catLabel && <span className="lm-card-cat">{catLabel}</span>}
+                        {catLabel && (
+                          <span className="lm-card-cat">{catLabel}</span>
+                        )}
                         <span className="lm-card-meta">{meta}</span>
                       </div>
                     </div>
@@ -303,8 +332,11 @@ export default function ListingsManager({
 
       {/* ── Delete modal ── */}
       {deleteTarget && (
-        <div className="lm-modal-backdrop" onClick={() => setDeleteTarget(null)}>
-          <div className="lm-modal" onClick={e => e.stopPropagation()}>
+        <div
+          className="lm-modal-backdrop"
+          onClick={() => setDeleteTarget(null)}
+        >
+          <div className="lm-modal" onClick={(e) => e.stopPropagation()}>
             <div className="lm-modal-header">
               <div className="lm-modal-icon">🗑</div>
               <h3 className="lm-modal-heading">{tx.delete}</h3>

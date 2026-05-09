@@ -29,6 +29,10 @@ export const GET: APIRoute = async ({ cookies }) => {
     "address", "postal_code", "place", "location", "website", "phone",
     "logo", "description_en", "description_fr",
     "translate_to_en", "translate_to_fr",
+    "gallery", "certificates", "video",
+    "opening_hours", "event_date_start", "event_date_end",
+    "nearest_bus_station_name", "nearest_bus_station_distance_m",
+    "nearest_train_station_name", "nearest_train_station_distance_m",
   ].join(",");
 
   const res = await fetch(

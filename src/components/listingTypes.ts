@@ -1,3 +1,12 @@
+export type DayOfWeek = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
+
+export interface OpeningHour {
+  day: DayOfWeek;
+  open: string;   // "HH:MM"
+  close: string;  // "HH:MM"
+  closed: boolean;
+}
+
 export interface Listing {
   id: string;
   Name: string;
@@ -20,4 +29,11 @@ export interface Listing {
   gallery: string[] | null;
   certificates: string[] | null;
   video: string[] | null;
+  opening_hours: OpeningHour[] | null;
+  event_date_start: string | null;
+  event_date_end: string | null;
+  nearest_bus_station_name: string | null;
+  nearest_bus_station_distance_m: number | null;
+  nearest_train_station_name: string | null;
+  nearest_train_station_distance_m: number | null;
 }

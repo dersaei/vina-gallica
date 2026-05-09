@@ -14,13 +14,19 @@
     "@astrojs/cloudflare": "^13.5.0",
     "@astrojs/react": "^5.0.4",
     "@directus/sdk": "^21.3.0",
+    "@internationalized/date": "^3.12.1",
     "@mapbox/mapbox-gl-geocoder": "^5.1.2",
+    "@react-aria/datepicker": "^3.17.0",
+    "@react-aria/i18n": "^3.13.0",
+    "@react-stately/datepicker": "^3.17.0",
     "@types/mapbox__mapbox-gl-geocoder": "^5.1.1",
     "astro": "^6.3.1",
     "mapbox-gl": "^3.23.1",
     "marked": "^17.0.6",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-aria": "^3.48.0",
+    "react-dom": "^19.2.6",
+    "react-stately": "^3.46.0"
   },
   "devDependencies": {
     "@types/node": "^25.6.2",

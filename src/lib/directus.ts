@@ -30,13 +30,6 @@ interface Department {
   administrative_region: string | AdministrativeRegion;
 }
 
-interface Town {
-  id: string;
-  name: string;
-  slug: string;
-  department: string | Department;
-}
-
 interface PlaceTranslation {
   id: number;
   places_vg_id: string;
@@ -143,7 +136,6 @@ interface Schema {
   categories_vg: Category[];
   administrative_regions: AdministrativeRegion[];
   departments: Department[];
-  towns: Town[];
   places_vg: PlaceListing[];
   places_vg_wine_regions: TerroirJunction[];
   places_vg_translations: PlaceTranslation[];
@@ -162,4 +154,4 @@ const directus = createDirectus<Schema>(DIRECTUS_URL)
 
 export default directus;
 export { readItems, registerUser, createItem, updateItem, readItem };
-export type { WineRegion, Category, AdministrativeRegion, Department, Town, Place, PlaceListing, PlaceTranslation, TerroirJunction, ArticleCard, Article, FAQ, FAQTranslation };
+export type { WineRegion, Category, AdministrativeRegion, Department, Place, PlaceListing, PlaceTranslation, TerroirJunction, ArticleCard, Article, FAQ, FAQTranslation };

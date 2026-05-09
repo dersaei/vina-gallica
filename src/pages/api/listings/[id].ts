@@ -64,6 +64,15 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
     website: (data.website as string)?.trim() || null,
     location: data.location ?? null,
     department: departmentId,
+    opening_hours: Array.isArray(data.opening_hours) ? data.opening_hours : null,
+    event_date_start: (data.event_date_start as string) || null,
+    event_date_end: (data.event_date_end as string) || null,
+    nearest_bus_station_name: (data.nearest_bus_station_name as string)?.trim() || null,
+    nearest_bus_station_distance_m: typeof data.nearest_bus_station_distance_m === "number"
+      ? data.nearest_bus_station_distance_m : null,
+    nearest_train_station_name: (data.nearest_train_station_name as string)?.trim() || null,
+    nearest_train_station_distance_m: typeof data.nearest_train_station_distance_m === "number"
+      ? data.nearest_train_station_distance_m : null,
   };
 
   if (Array.isArray(data.terroir)) {
@@ -89,6 +98,9 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
     "logo", "description_en", "description_fr",
     "translate_to_en", "translate_to_fr",
     "gallery", "certificates", "video",
+    "opening_hours", "event_date_start", "event_date_end",
+    "nearest_bus_station_name", "nearest_bus_station_distance_m",
+    "nearest_train_station_name", "nearest_train_station_distance_m",
   ].join(",");
 
   const res = await fetch(`${DIRECTUS_URL}/items/places_vg/${listingId}?fields=${fields}`, {

@@ -1,5 +1,112 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import type { Listing } from "./listingTypes";
+import type { Listing, OpeningHour, DayOfWeek } from "./listingTypes";
+
+const DAYS: DayOfWeek[] = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+
+const DAY_LABELS = {
+  en: { mon: "Monday", tue: "Tuesday", wed: "Wednesday", thu: "Thursday", fri: "Friday", sat: "Saturday", sun: "Sunday" },
+  fr: { mon: "Lundi", tue: "Mardi", wed: "Mercredi", thu: "Jeudi", fri: "Vendredi", sat: "Samedi", sun: "Dimanche" },
+} as const;
+
+function defaultOpeningHours(): OpeningHour[] {
+  return DAYS.map(day => ({ day, open: "09:00", close: "18:00", closed: false }));
+}
+
+function mergeOpeningHours(saved: OpeningHour[] | null | undefined): OpeningHour[] {
+  const base = defaultOpeningHours();
+  if (!saved || !Array.isArray(saved)) return base;
+  return base.map(entry => saved.find(s => s.day === entry.day) ?? entry);
+}
+
+// ── TimeInput — masked text field HH:MM ─────────────────────────────────────
+
+function TimeInput({
+  value,
+  onChange,
+  disabled,
+  ariaLabel,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  disabled?: boolean;
+  ariaLabel?: string;
+}) {
+  // Display raw digits while typing, store as "HH:MM"
+  const [raw, setRaw] = useState(value.replace(":", ""));
+
+  // Sync if parent resets value (e.g. closed → open again)
+  useEffect(() => {
+    setRaw(value.replace(":", ""));
+  }, [value]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const digits = e.target.value.replace(/\D/g, "").slice(0, 4);
+    setRaw(digits);
+    if (digits.length === 4) {
+      const h = parseInt(digits.slice(0, 2), 10);
+      const m = parseInt(digits.slice(2, 4), 10);
+      if (h <= 23 && m <= 59) {
+        onChange(`${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`);
+      }
+    }
+  }
+
+  function handleBlur() {
+    // On blur: normalize whatever was typed into HH:MM
+    const digits = raw.padEnd(4, "0");
+    const h = Math.min(parseInt(digits.slice(0, 2), 10), 23);
+    const m = Math.min(parseInt(digits.slice(2, 4), 10), 59);
+    const normalized = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+    setRaw(normalized.replace(":", ""));
+    onChange(normalized);
+  }
+
+  // Format for display: insert colon after 2 digits
+  const display = raw.length > 2 ? `${raw.slice(0, 2)}:${raw.slice(2)}` : raw;
+
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      className="lf-input lf-input--time"
+      value={display}
+      disabled={disabled}
+      aria-label={ariaLabel}
+      placeholder="09:00"
+      maxLength={5}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      onFocus={e => e.target.select()}
+    />
+  );
+}
+
+// ── DateTimeInput — datetime-local ───────────────────────────────────────────
+
+function DateTimeInput({
+  value,
+  onChange,
+  disabled,
+  ariaLabel,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  disabled?: boolean;
+  ariaLabel?: string;
+}) {
+  return (
+    <input
+      type="datetime-local"
+      className="lf-input lf-input--datetime"
+      value={value}
+      disabled={disabled}
+      aria-label={ariaLabel}
+      min="2000-01-01T00:00"
+      max="2099-12-31T23:59"
+      onChange={e => onChange(e.target.value)}
+    />
+  );
+}
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -11,7 +118,8 @@ interface Props {
   plan: "free" | "premium";
   wineRegions: WineRegion[];
   categories: Category[];
-  listing?: Listing;       // jeśli podane → tryb edycji
+  listing?: Listing;
+  directusUrl: string;
   onSaved?: (id: string, newStatus: string, updatedListing?: Listing) => void;
   onCancel?: () => void;
 }
@@ -68,6 +176,17 @@ const t = {
     remove:         "Remove",
     required:       "This field is required.",
     backToListings: "← Back to listings",
+    openingHours:    "Opening hours",
+    closed:          "Closed",
+    eventDates:      "Event dates",
+    eventDatesHint:  "Visible because the selected category is a festival.",
+    eventStart:      "Start",
+    eventEnd:        "End",
+    transport:       "Public transport",
+    busStop:         "Nearest bus stop",
+    trainStation:    "Nearest train station",
+    stopName:        "Name",
+    stopDistance:    "Distance (m)",
   },
   fr: {
     newListing:     "Nouvelle fiche",
@@ -118,6 +237,17 @@ const t = {
     remove:         "Supprimer",
     required:       "Ce champ est obligatoire.",
     backToListings: "← Retour aux fiches",
+    openingHours:    "Horaires d'ouverture",
+    closed:          "Fermé",
+    eventDates:      "Dates de l'événement",
+    eventDatesHint:  "Visible car la catégorie sélectionnée est un festival.",
+    eventStart:      "Début",
+    eventEnd:        "Fin",
+    transport:       "Transports en commun",
+    busStop:         "Arrêt de bus le plus proche",
+    trainStation:    "Gare la plus proche",
+    stopName:        "Nom",
+    stopDistance:    "Distance (m)",
   },
 } as const;
 
@@ -172,7 +302,6 @@ function parseGeocoderResult(result: GeocoderResult) {
                 ?? ctx.find(c => c.id.startsWith("locality"))?.text
                 ?? result.text;
 
-  // Kod INSEE gminy: Mapbox zwraca go w short_code kontekstu "place" (np. "fr-69123")
   const placeCtx = ctx.find(c => c.id.startsWith("place"));
   const shortCode = placeCtx?.short_code ?? "";
   const insee = shortCode.startsWith("fr-") ? shortCode.slice(3) : "";
@@ -204,12 +333,17 @@ async function uploadFile(file: File, field: string): Promise<string> {
 
 // ── FileUploadField ──────────────────────────────────────────────────────────
 
+function assetUrl(directusUrl: string, id: string, params?: string) {
+  return `${directusUrl}/assets/${id}${params ? `?${params}` : ""}`;
+}
+
 function FileUploadField({
-  label, hint, field, multiple, fileIds, onChange, disabled, tx,
+  label, hint, field, multiple, fileIds, onChange, disabled, tx, directusUrl, accept, isImage, isVideo,
 }: {
   label: string; hint: string; field: string; multiple: boolean;
   fileIds: string[]; onChange: (ids: string[]) => void;
   disabled: boolean; tx: typeof t.en | typeof t.fr;
+  directusUrl: string; accept: string; isImage: boolean; isVideo: boolean;
 }) {
   const [uploading, setUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -233,14 +367,27 @@ function FileUploadField({
       {fileIds.length > 0 && (
         <ul className="lf-file-list">
           {fileIds.map((id, i) => (
-            <li key={id} className="lf-file-item">
-              <span className="lf-file-id">{id.slice(0, 8)}…</span>
+            <li key={id} className={`lf-file-item${!isImage ? " lf-file-item--icon" : ""}`}>
+              {isImage && (
+                <img
+                  src={assetUrl(directusUrl, id)}
+                  alt=""
+                  className="lf-file-thumb"
+                />
+              )}
+              {isVideo && (
+                <span className="lf-file-icon">🎬</span>
+              )}
+              {!isImage && !isVideo && (
+                <span className="lf-file-icon">📄</span>
+              )}
               {!disabled && (
                 <button
                   type="button"
                   className="lf-file-remove"
+                  aria-label={tx.remove}
                   onClick={() => onChange(fileIds.filter((_, j) => j !== i))}
-                >{tx.remove}</button>
+                >×</button>
               )}
             </li>
           ))}
@@ -257,6 +404,7 @@ function FileUploadField({
           <input
             ref={inputRef}
             type="file"
+            accept={accept}
             multiple={multiple}
             aria-label={label}
             className="lf-hidden"
@@ -270,7 +418,7 @@ function FileUploadField({
 
 // ── Main component ───────────────────────────────────────────────────────────
 
-export default function ListingForm({ lang, plan, wineRegions, categories, listing, onSaved, onCancel }: Props) {
+export default function ListingForm({ lang, plan, wineRegions, categories, listing, directusUrl, onSaved, onCancel }: Props) {
   const tx = t[lang];
   const isPremium = plan === "premium";
   const isEdit = !!listing;
@@ -293,7 +441,6 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
   const [logoUploading, setLogoUploading] = useState(false);
   const logoInputRef = useRef<HTMLInputElement>(null);
 
-  // Premium fields
   const [descEn, setDescEn]       = useState(listing?.description_en ?? "");
   const [descFr, setDescFr]       = useState(listing?.description_fr ?? "");
   const [transEn, setTransEn]     = useState(listing?.translate_to_en ?? false);
@@ -301,6 +448,47 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
   const [gallery, setGallery]     = useState<string[]>(listing?.gallery ?? []);
   const [certs, setCerts]         = useState<string[]>(listing?.certificates ?? []);
   const [video, setVideo]         = useState<string[]>(listing?.video ?? []);
+
+  const [openingHours, setOpeningHours] = useState<OpeningHour[]>(
+    mergeOpeningHours(listing?.opening_hours)
+  );
+  const [eventStart, setEventStart] = useState(listing?.event_date_start ?? "");
+  const [eventEnd, setEventEnd]     = useState(listing?.event_date_end ?? "");
+  const [busStopName, setBusStopName] = useState(listing?.nearest_bus_station_name ?? "");
+  const [busStopDist, setBusStopDist] = useState<string>(
+    listing?.nearest_bus_station_distance_m != null ? String(listing.nearest_bus_station_distance_m) : ""
+  );
+  const [trainName, setTrainName] = useState(listing?.nearest_train_station_name ?? "");
+  const [trainDist, setTrainDist] = useState<string>(
+    listing?.nearest_train_station_distance_m != null ? String(listing.nearest_train_station_distance_m) : ""
+  );
+
+  const isFestival = (() => {
+    if (!category) return false;
+    const cat = categories.find(c => c.id === category);
+    if (!cat) return false;
+    const haystack = `${cat.name} ${cat.name_fr ?? ""}`.toLowerCase();
+    return haystack.includes("festival");
+  })();
+
+  function updateHour(day: DayOfWeek, patch: Partial<OpeningHour>) {
+    setOpeningHours(prev => prev.map(h => {
+      if (h.day !== day) return h;
+      const next = { ...h, ...patch };
+      // clear time values when marking as closed
+      if (patch.closed === true) return { ...next, open: "", close: "" };
+      // restore defaults when unchecking closed
+      if (patch.closed === false) return { ...next, open: "09:00", close: "18:00" };
+      return next;
+    }));
+  }
+
+  function toIntOrNull(v: string): number | null {
+    const trimmed = v.trim();
+    if (!trimmed) return null;
+    const n = parseInt(trimmed, 10);
+    return Number.isFinite(n) ? n : null;
+  }
 
   const [status, setStatus]       = useState<"idle" | "saving" | "submitting" | "archiving">("idle");
   const [feedback, setFeedback]   = useState<{ msg: string; ok: boolean } | null>(null);
@@ -339,6 +527,13 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
       gallery:         isPremium ? gallery : undefined,
       certificates:    isPremium ? certs   : undefined,
       video:           isPremium ? video   : undefined,
+      opening_hours: isFestival ? null : openingHours,
+      event_date_start: isFestival ? (eventStart || null) : null,
+      event_date_end:   isFestival ? (eventEnd   || null) : null,
+      nearest_bus_station_name: busStopName.trim() || null,
+      nearest_bus_station_distance_m: toIntOrNull(busStopDist),
+      nearest_train_station_name: trainName.trim() || null,
+      nearest_train_station_distance_m: toIntOrNull(trainDist),
       submit,
       archive,
     };
@@ -464,7 +659,7 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
         </div>
       </fieldset>
 
-      {/* LOCATION (Geocoder) */}
+      {/* LOCATION */}
       <div className="lf-field">
         <label className="lf-label">{tx.location}</label>
         <div className="lf-hint">{tx.locationHint}</div>
@@ -483,7 +678,7 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
           onChange={e => setAddress(e.target.value)} />
       </div>
 
-      {/* POSTAL CODE + PLACE (row) */}
+      {/* POSTAL CODE + PLACE */}
       <div className="lf-row">
         <div className="lf-field">
           <label className="lf-label" htmlFor="lf-postal">{tx.postalCode}</label>
@@ -518,11 +713,16 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
         <label className="lf-label">{tx.logo}</label>
         <div className="lf-hint">{tx.logoHint}</div>
         {logoId && (
-          <div className="lf-file-item">
-            <span className="lf-file-id">{logoId.slice(0, 8)}…</span>
-            <button type="button" className="lf-file-remove" onClick={() => setLogoId(null)}>
-              {tx.remove}
-            </button>
+          <div className="lf-file-list">
+            <div className="lf-file-item">
+              <img
+                src={assetUrl(directusUrl, logoId)}
+                alt="Logo preview"
+                className="lf-file-thumb lf-file-thumb--logo"
+              />
+              <button type="button" className="lf-file-remove" aria-label={tx.remove}
+                onClick={() => setLogoId(null)}>×</button>
+            </div>
           </div>
         )}
         {!logoId && (
@@ -538,14 +738,109 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
         )}
       </div>
 
-      {/* ── PREMIUM SECTION ── */}
+      {/* OPENING HOURS */}
+      {!isFestival && (
+        <fieldset className="lf-fieldset">
+          <legend className="lf-label">{tx.openingHours}</legend>
+          <div className="lf-hours">
+            {openingHours.map(h => (
+              <div key={h.day} className={`lf-hours-row${h.closed ? " lf-hours-row--closed" : ""}`}>
+                <span className="lf-hours-day">{DAY_LABELS[lang][h.day]}</span>
+                <TimeInput
+                  value={h.open}
+                  disabled={h.closed}
+                  ariaLabel={`${DAY_LABELS[lang][h.day]} – ${tx.eventStart}`}
+                  onChange={v => updateHour(h.day, { open: v })}
+                />
+                <span className="lf-hours-sep">–</span>
+                <TimeInput
+                  value={h.close}
+                  disabled={h.closed}
+                  ariaLabel={`${DAY_LABELS[lang][h.day]} – ${tx.eventEnd}`}
+                  onChange={v => updateHour(h.day, { close: v })}
+                />
+                <label className="lf-checkbox lf-hours-closed">
+                  <input
+                    type="checkbox"
+                    checked={h.closed}
+                    onChange={e => updateHour(h.day, { closed: e.target.checked })}
+                  />
+                  <span>{tx.closed}</span>
+                </label>
+              </div>
+            ))}
+          </div>
+        </fieldset>
+      )}
+
+      {/* PUBLIC TRANSPORT */}
+      <fieldset className="lf-fieldset">
+        <legend className="lf-label">{tx.transport}</legend>
+        <div className="lf-field">
+          <div className="lf-sublabel">🚌 {tx.busStop}</div>
+          <div className="lf-row">
+            <div className="lf-field lf-field--grow">
+              <label className="lf-label" htmlFor="lf-bus-name">{tx.stopName}</label>
+              <input id="lf-bus-name" className="lf-input" type="text"
+                value={busStopName} onChange={e => setBusStopName(e.target.value)} />
+            </div>
+            <div className="lf-field">
+              <label className="lf-label" htmlFor="lf-bus-dist">{tx.stopDistance}</label>
+              <input id="lf-bus-dist" className="lf-input" type="number" min="0" step="1"
+                value={busStopDist} onChange={e => setBusStopDist(e.target.value)} />
+            </div>
+          </div>
+        </div>
+        <div className="lf-field">
+          <div className="lf-sublabel">🚆 {tx.trainStation}</div>
+          <div className="lf-row">
+            <div className="lf-field lf-field--grow">
+              <label className="lf-label" htmlFor="lf-train-name">{tx.stopName}</label>
+              <input id="lf-train-name" className="lf-input" type="text"
+                value={trainName} onChange={e => setTrainName(e.target.value)} />
+            </div>
+            <div className="lf-field">
+              <label className="lf-label" htmlFor="lf-train-dist">{tx.stopDistance}</label>
+              <input id="lf-train-dist" className="lf-input" type="number" min="0" step="1"
+                value={trainDist} onChange={e => setTrainDist(e.target.value)} />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      {/* EVENT DATES */}
+      {isFestival && (
+        <fieldset className="lf-fieldset">
+          <legend className="lf-label">{tx.eventDates}</legend>
+          <div className="lf-hint">{tx.eventDatesHint}</div>
+          <div className="lf-row">
+            <div className="lf-field lf-field--grow">
+              <span className="lf-label">{tx.eventStart}</span>
+              <DateTimeInput
+                value={eventStart}
+                ariaLabel={tx.eventStart}
+                onChange={setEventStart}
+              />
+            </div>
+            <div className="lf-field lf-field--grow">
+              <span className="lf-label">{tx.eventEnd}</span>
+              <DateTimeInput
+                value={eventEnd}
+                ariaLabel={tx.eventEnd}
+                onChange={setEventEnd}
+              />
+            </div>
+          </div>
+        </fieldset>
+      )}
+
+      {/* PREMIUM */}
       <div className={`lf-premium-section${!isPremium ? " lf-premium-section--locked" : ""}`}>
         <div className="lf-premium-header">
           <span className="lf-premium-label">{tx.premiumSection}</span>
           {!isPremium && <span className="lf-premium-lock">{tx.premiumLocked}</span>}
         </div>
 
-        {/* DESCRIPTION EN */}
         <div className="lf-field">
           <label className="lf-label" htmlFor="lf-desc-en">{tx.descEn}</label>
           <textarea id="lf-desc-en" className="lf-textarea" rows={5}
@@ -558,7 +853,6 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
           </label>
         </div>
 
-        {/* DESCRIPTION FR */}
         <div className="lf-field">
           <label className="lf-label" htmlFor="lf-desc-fr">{tx.descFr}</label>
           <textarea id="lf-desc-fr" className="lf-textarea" rows={5}
@@ -571,17 +865,15 @@ export default function ListingForm({ lang, plan, wineRegions, categories, listi
           </label>
         </div>
 
-        {/* GALLERY */}
         <FileUploadField label={tx.gallery} hint={tx.galleryHint} field="gallery"
-          multiple disabled={!isPremium} fileIds={gallery} onChange={setGallery} tx={tx} />
-
-        {/* CERTIFICATES */}
+          multiple disabled={!isPremium} fileIds={gallery} onChange={setGallery} tx={tx}
+          directusUrl={directusUrl} accept="image/jpeg,image/png,image/webp" isImage isVideo={false} />
         <FileUploadField label={tx.certificates} hint={tx.certHint} field="certificates"
-          multiple disabled={!isPremium} fileIds={certs} onChange={setCerts} tx={tx} />
-
-        {/* VIDEO */}
+          multiple disabled={!isPremium} fileIds={certs} onChange={setCerts} tx={tx}
+          directusUrl={directusUrl} accept="image/jpeg,image/png,image/webp,application/pdf" isImage={false} isVideo={false} />
         <FileUploadField label={tx.video} hint={tx.videoHint} field="video"
-          multiple={false} disabled={!isPremium} fileIds={video} onChange={setVideo} tx={tx} />
+          multiple={false} disabled={!isPremium} fileIds={video} onChange={setVideo} tx={tx}
+          directusUrl={directusUrl} accept="video/mp4,video/webm" isImage={false} isVideo />
       </div>
 
       {/* ACTIONS */}

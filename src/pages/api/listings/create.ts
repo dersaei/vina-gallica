@@ -61,6 +61,15 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     website: (data.website as string)?.trim() || null,
     location: data.location ?? null,
     department: departmentId,
+    opening_hours: Array.isArray(data.opening_hours) ? data.opening_hours : null,
+    event_date_start: (data.event_date_start as string) || null,
+    event_date_end: (data.event_date_end as string) || null,
+    nearest_bus_station_name: (data.nearest_bus_station_name as string)?.trim() || null,
+    nearest_bus_station_distance_m: typeof data.nearest_bus_station_distance_m === "number"
+      ? data.nearest_bus_station_distance_m : null,
+    nearest_train_station_name: (data.nearest_train_station_name as string)?.trim() || null,
+    nearest_train_station_distance_m: typeof data.nearest_train_station_distance_m === "number"
+      ? data.nearest_train_station_distance_m : null,
   };
 
   // Terroir (M2M) — Directus wymaga tablicy obiektów { wine_regions_id: uuid }
