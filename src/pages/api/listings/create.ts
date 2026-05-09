@@ -61,15 +61,6 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     website: (data.website as string)?.trim() || null,
     location: data.location ?? null,
     department: departmentId,
-    opening_hours: Array.isArray(data.opening_hours) ? data.opening_hours : null,
-    event_date_start: (data.event_date_start as string) || null,
-    event_date_end: (data.event_date_end as string) || null,
-    nearest_bus_station_name: (data.nearest_bus_station_name as string)?.trim() || null,
-    nearest_bus_station_distance_m: typeof data.nearest_bus_station_distance_m === "number"
-      ? data.nearest_bus_station_distance_m : null,
-    nearest_train_station_name: (data.nearest_train_station_name as string)?.trim() || null,
-    nearest_train_station_distance_m: typeof data.nearest_train_station_distance_m === "number"
-      ? data.nearest_train_station_distance_m : null,
   };
 
   // Terroir (M2M) — Directus wymaga tablicy obiektów { wine_regions_id: uuid }
@@ -82,6 +73,15 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
   // Pola premium
   if (isPremium) {
+    payload.opening_hours = Array.isArray(data.opening_hours) ? data.opening_hours : null;
+    payload.event_date_start = (data.event_date_start as string) || null;
+    payload.event_date_end = (data.event_date_end as string) || null;
+    payload.nearest_bus_station_name = (data.nearest_bus_station_name as string)?.trim() || null;
+    payload.nearest_bus_station_distance_m = typeof data.nearest_bus_station_distance_m === "number"
+      ? data.nearest_bus_station_distance_m : null;
+    payload.nearest_train_station_name = (data.nearest_train_station_name as string)?.trim() || null;
+    payload.nearest_train_station_distance_m = typeof data.nearest_train_station_distance_m === "number"
+      ? data.nearest_train_station_distance_m : null;
     payload.description_en = (data.description_en as string)?.trim() || null;
     payload.description_fr = (data.description_fr as string)?.trim() || null;
     payload.translate_to_en = data.translate_to_en === true;

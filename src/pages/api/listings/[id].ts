@@ -64,15 +64,6 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
     website: (data.website as string)?.trim() || null,
     location: data.location ?? null,
     department: departmentId,
-    opening_hours: Array.isArray(data.opening_hours) ? data.opening_hours : null,
-    event_date_start: (data.event_date_start as string) || null,
-    event_date_end: (data.event_date_end as string) || null,
-    nearest_bus_station_name: (data.nearest_bus_station_name as string)?.trim() || null,
-    nearest_bus_station_distance_m: typeof data.nearest_bus_station_distance_m === "number"
-      ? data.nearest_bus_station_distance_m : null,
-    nearest_train_station_name: (data.nearest_train_station_name as string)?.trim() || null,
-    nearest_train_station_distance_m: typeof data.nearest_train_station_distance_m === "number"
-      ? data.nearest_train_station_distance_m : null,
   };
 
   if (Array.isArray(data.terroir)) {
@@ -81,6 +72,15 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
   if (data.logo !== undefined) payload.logo = data.logo;
 
   if (isPremium) {
+    payload.opening_hours = Array.isArray(data.opening_hours) ? data.opening_hours : null;
+    payload.event_date_start = (data.event_date_start as string) || null;
+    payload.event_date_end = (data.event_date_end as string) || null;
+    payload.nearest_bus_station_name = (data.nearest_bus_station_name as string)?.trim() || null;
+    payload.nearest_bus_station_distance_m = typeof data.nearest_bus_station_distance_m === "number"
+      ? data.nearest_bus_station_distance_m : null;
+    payload.nearest_train_station_name = (data.nearest_train_station_name as string)?.trim() || null;
+    payload.nearest_train_station_distance_m = typeof data.nearest_train_station_distance_m === "number"
+      ? data.nearest_train_station_distance_m : null;
     payload.description_en = (data.description_en as string)?.trim() || null;
     payload.description_fr = (data.description_fr as string)?.trim() || null;
     payload.translate_to_en = data.translate_to_en === true;
