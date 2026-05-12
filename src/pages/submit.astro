@@ -1230,6 +1230,13 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
         return;
       }
 
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{16,}$/;
+      if (!passwordRegex.test(password)) {
+        errorBox.textContent = "Password must be at least 16 characters and include uppercase, lowercase, number, and special character.";
+        errorBox.hidden = false;
+        return;
+      }
+
       errorBox.hidden = true;
       submitBtn.disabled = true;
       submitBtn.textContent = "Creating account…";

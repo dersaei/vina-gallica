@@ -1235,6 +1235,13 @@ const faqItems = (faqRaw as { translations?: FaqTranslation[] }[])
         return;
       }
 
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{16,}$/;
+      if (!passwordRegex.test(password)) {
+        errorBox.textContent = "Le mot de passe doit contenir au moins 16 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.";
+        errorBox.hidden = false;
+        return;
+      }
+
       errorBox.hidden = true;
       submitBtn.disabled = true;
       submitBtn.textContent = "Création du compte…";

@@ -92,8 +92,9 @@ const tokenParam = Astro.url.searchParams.get("token");
       return;
     }
 
-    if (pw.length < 8) {
-      errorBox.textContent = "Le mot de passe doit contenir au moins 8 caractères.";
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{16,}$/;
+    if (!passwordRegex.test(pw)) {
+      errorBox.textContent = "Le mot de passe doit contenir au moins 16 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.";
       errorBox.hidden = false;
       return;
     }

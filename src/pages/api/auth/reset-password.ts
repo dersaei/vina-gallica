@@ -18,7 +18,11 @@ export const POST: APIRoute = async ({ request }) => {
   if (!token) return json({ error: "Token is missing." }, 400);
   if (!password || !passwordConfirm) return json({ error: "Both fields are required." }, 400);
   if (password !== passwordConfirm) return json({ error: "Passwords do not match." }, 400);
-  if (password.length < 8) return json({ error: "Password must be at least 8 characters." }, 400);
+  
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{16,}$/;
+  if (!passwordRegex.test(password)) {
+    return json({ error: "Password must be at least 16 characters and include uppercase, lowercase, number, and special character." }, 400);
+  }
 
   const res = await fetch(`${DIRECTUS_URL}/auth/password/reset`, {
     method: "POST",

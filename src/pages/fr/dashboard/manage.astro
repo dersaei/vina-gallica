@@ -169,7 +169,7 @@ const u = user;
       const msgMap: Record<string, string> = {
         "Both fields are required.": "Les deux champs sont obligatoires.",
         "Passwords do not match.": "Les mots de passe ne correspondent pas.",
-        "Password must be at least 8 characters.": "Le mot de passe doit contenir au moins 8 caractères.",
+        "Password must be at least 16 characters and include uppercase, lowercase, number, and special character.": "Le mot de passe doit contenir au moins 16 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.",
       };
       showFeedback(msgMap[json.error ?? ""] ?? (json.error ?? "Erreur."), false);
     }
