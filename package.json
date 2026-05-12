@@ -29,7 +29,7 @@
     "react-stately": "^3.46.0"
   },
   "devDependencies": {
-    "@types/node": "^25.6.2",
+    "@types/node": "^25.7.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "wrangler": "^4.90.0"

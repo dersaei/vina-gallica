@@ -5,6 +5,12 @@ import type { APIRoute } from "astro";
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 
 export const POST: APIRoute = async ({ request, cookies }) => {
+  const json = (body: object, status = 200) =>
+    new Response(JSON.stringify(body), {
+      status,
+      headers: { "Content-Type": "application/json" },
+    });
+
   const accessToken = cookies.get("directus_access_token")?.value;
   if (!accessToken) {
     return json({ error: "Not authenticated." }, 401);
@@ -13,12 +19,6 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   const data = await request.formData();
   const password = data.get("password") as string;
   const passwordConfirm = data.get("password_confirm") as string;
-
-  const json = (body: object, status = 200) =>
-    new Response(JSON.stringify(body), {
-      status,
-      headers: { "Content-Type": "application/json" },
-    });
 
   if (!password || !passwordConfirm) {
     return json({ error: "Both fields are required." }, 400);
