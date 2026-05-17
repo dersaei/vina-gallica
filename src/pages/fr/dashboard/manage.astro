@@ -249,20 +249,17 @@ const u = user;
 
   .manage-input {
     font-family: var(--font-extra);
-    font-size: 1.05rem;
-    color: var(--color-elegant-black);
-    background-color: beige;
-    padding: 0.35rem 0.75rem;
-    border: 1px solid #000000;
-    border-radius: 4px;
-    width:100%;
-    flex: 1;
-    outline: none;
-    transition: border-color 150ms ease;
-    box-shadow:
-    rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
-    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    font-weight: 400;
+    font-size: 1rem;
+    width: 100%;
+  padding: 0.75rem;
+  border: 2px solid goldenrod;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+  background-color: var(--color-sand);
   }
 
   .manage-input:focus {
