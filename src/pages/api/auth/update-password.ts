@@ -1,6 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
+import { getValidAccessToken } from "../../../lib/auth";
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 
@@ -11,7 +12,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       headers: { "Content-Type": "application/json" },
     });
 
-  const accessToken = cookies.get("directus_access_token")?.value;
+  const accessToken = await getValidAccessToken(cookies);
   if (!accessToken) {
     return json({ error: "Not authenticated." }, 401);
   }

@@ -1,11 +1,18 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
+import { getValidAccessToken } from "../../../lib/auth";
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 
+const json = (body: object, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+
 export const POST: APIRoute = async ({ request, cookies }) => {
-  const accessToken = cookies.get("directus_access_token")?.value;
+  const accessToken = await getValidAccessToken(cookies);
   if (!accessToken) {
     return json({ error: "Not authenticated." }, 401);
   }
@@ -13,12 +20,6 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   const data = await request.formData();
   const field = data.get("field") as string;
   const value = (data.get("value") as string)?.trim();
-
-  const json = (body: object, status = 200) =>
-    new Response(JSON.stringify(body), {
-      status,
-      headers: { "Content-Type": "application/json" },
-    });
 
   const allowed = ["first_name", "last_name", "email", "company_name", "tax_id", "company_address"];
   if (!field || !allowed.includes(field)) {

@@ -2,6 +2,7 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { departmentIdFromPostalCode } from "../../../lib/departmentFromPostalCode";
+import { getValidAccessToken } from "../../../lib/auth";
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 const DIRECTUS_SERVICE_TOKEN = import.meta.env.DIRECTUS_SERVICE_TOKEN;
@@ -13,7 +14,7 @@ const json = (body: object, status = 200) =>
   });
 
 export const PATCH: APIRoute = async ({ request, cookies, params }) => {
-  const accessToken = cookies.get("directus_access_token")?.value;
+  const accessToken = await getValidAccessToken(cookies);
   if (!accessToken) return json({ error: "Not authenticated." }, 401);
 
   const listingId = params.id;
@@ -125,7 +126,7 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
 };
 
 export const DELETE: APIRoute = async ({ cookies, params }) => {
-  const accessToken = cookies.get("directus_access_token")?.value;
+  const accessToken = await getValidAccessToken(cookies);
   if (!accessToken) return json({ error: "Not authenticated." }, 401);
 
   const listingId = params.id;

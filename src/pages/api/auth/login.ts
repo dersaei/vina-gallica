@@ -1,6 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
+import { setAuthCookies } from "../../../lib/auth";
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 
@@ -39,24 +40,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     };
     const { access_token, refresh_token } = body.data;
 
-    // Przechowuj tokeny w httpOnly cookies
-    const isProd = import.meta.env.PROD;
-
-    cookies.set("directus_access_token", access_token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 15, // 15 minut
-    });
-
-    cookies.set("directus_refresh_token", refresh_token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 dni
-    });
+    setAuthCookies(cookies, access_token, refresh_token);
 
     return json({ ok: true });
   } catch (err) {

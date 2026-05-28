@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import type { Listing, OpeningHour, DayOfWeek } from "./listingTypes";
 import DatePicker from "./DatePicker";
+import { useToast, ToastContainer } from "./Toast";
 
 const DAYS: DayOfWeek[] = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
@@ -373,6 +374,7 @@ function FileUploadField({
   accept,
   isImage,
   isVideo,
+  onError,
 }: {
   label: string;
   hint: string;
@@ -386,6 +388,7 @@ function FileUploadField({
   accept: string;
   isImage: boolean;
   isVideo: boolean;
+  onError: (msg: string) => void;
 }) {
   const [uploading, setUploading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -398,7 +401,7 @@ function FileUploadField({
       );
       onChange(multiple ? [...fileIds, ...ids] : ids);
     } catch (e) {
-      alert((e as Error).message);
+      onError((e as Error).message);
     } finally {
       setUploading(false);
     }
@@ -476,6 +479,7 @@ export default function ListingForm({
   onCancel,
 }: Props) {
   const tx = t[lang];
+  const { toasts, showToast, dismissToast } = useToast();
   const isPremium = plan === "premium";
   const isEdit = !!listing;
 
@@ -684,7 +688,7 @@ export default function ListingForm({
       const id = await uploadFile(files[0], "logo");
       setLogoId(id);
     } catch (e) {
-      alert((e as Error).message);
+      showToast((e as Error).message, "err");
     } finally {
       setLogoUploading(false);
     }
@@ -1006,6 +1010,7 @@ export default function ListingForm({
           accept="image/jpeg,image/png,image/webp"
           isImage
           isVideo={false}
+          onError={(msg) => showToast(msg, "err")}
         />
         <FileUploadField
           label={tx.certificates}
@@ -1020,6 +1025,7 @@ export default function ListingForm({
           accept="image/jpeg,image/png,image/webp,application/pdf"
           isImage={false}
           isVideo={false}
+          onError={(msg) => showToast(msg, "err")}
         />
         <FileUploadField
           label={tx.video}
@@ -1034,6 +1040,7 @@ export default function ListingForm({
           accept="video/mp4,video/webm"
           isImage={false}
           isVideo
+          onError={(msg) => showToast(msg, "err")}
         />
 
         {/* OPENING HOURS */}
@@ -1217,6 +1224,8 @@ export default function ListingForm({
           )}
         </div>
       </div>
+
+      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
     </div>
   );
 }

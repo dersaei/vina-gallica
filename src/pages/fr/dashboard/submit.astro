@@ -2,7 +2,8 @@
 export const prerender = false;
 import LayoutDashboard from "../../../layouts/LayoutDashboard.astro";
 import ListingsManager from "../../../components/ListingsManager";
-const accessToken = Astro.cookies.get("directus_access_token")?.value;
+import { getValidAccessToken } from "../../../lib/auth";
+const accessToken = await getValidAccessToken(Astro.cookies);
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 const DIRECTUS_SERVICE_TOKEN = import.meta.env.DIRECTUS_SERVICE_TOKEN ?? import.meta.env.DIRECTUS_STATIC_TOKEN;
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ListingForm from "./ListingForm";
 import type { Listing } from "./listingTypes";
+import { useToast, ToastContainer } from "./Toast";
 import "./ListingForm.css";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
@@ -59,6 +60,11 @@ const T = {
     created: "Created",
     updated: "Updated",
     never: "never",
+    failedArchive: "Failed to archive.",
+    failedDelete: "Failed to delete.",
+    sessionExpired: "Your session has expired. Please log in again.",
+    logIn: "Log in",
+    loginHref: "/login?next=/dashboard/submit",
   },
   fr: {
     title: "Soumettre une fiche",
@@ -81,6 +87,11 @@ const T = {
     created: "Créée",
     updated: "Modifiée",
     never: "jamais",
+    failedArchive: "Échec de l'archivage.",
+    failedDelete: "Échec de la suppression.",
+    sessionExpired: "Votre session a expiré. Veuillez vous reconnecter.",
+    logIn: "Se connecter",
+    loginHref: "/fr/connexion?next=/fr/dashboard/submit",
   },
 } as const;
 
@@ -95,6 +106,7 @@ export default function ListingsManager({
   directusUrl,
 }: Props) {
   const tx = T[lang];
+  const { toasts, showToast, dismissToast } = useToast();
   const [view, setView] = useState<View>("list");
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
@@ -106,6 +118,19 @@ export default function ListingsManager({
     (window as unknown as Record<string, string>).__MAPBOX_TOKEN__ =
       mapboxToken;
   }, [mapboxToken]);
+
+  // Surface a failed API response as a toast. 401 means the session is truly
+  // over (refresh token expired too) — offer a login link instead of a raw error.
+  function reportError(status: number, fallback: string) {
+    if (status === 401) {
+      showToast(tx.sessionExpired, "err", {
+        label: tx.logIn,
+        href: tx.loginHref,
+      });
+    } else {
+      showToast(fallback, "err");
+    }
+  }
 
   async function loadListings() {
     setLoading(true);
@@ -210,7 +235,7 @@ export default function ListingsManager({
       );
     } else {
       const body = (await res.json().catch(() => ({}))) as { error?: string };
-      alert(body.error ?? "Failed to archive.");
+      reportError(res.status, body.error ?? tx.failedArchive);
     }
     setArchiving(false);
   }
@@ -227,7 +252,7 @@ export default function ListingsManager({
     } else {
       const body = (await res.json().catch(() => ({}))) as { error?: string };
       setDeleteTarget(null);
-      alert(body.error ?? "Failed to delete.");
+      reportError(res.status, body.error ?? tx.failedDelete);
     }
     setDeleting(false);
   }
@@ -366,6 +391,8 @@ export default function ListingsManager({
           </div>
         </div>
       )}
+
+      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
     </div>
   );
 }

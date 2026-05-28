@@ -1,6 +1,7 @@
 ---
 export const prerender = false;
 import LayoutDashboard from "../../layouts/LayoutDashboard.astro";
+import { getValidAccessToken } from "../../lib/auth";
 
 type User = {
   id: string;
@@ -12,7 +13,7 @@ type User = {
   company_address?: string;
 };
 
-const accessToken = Astro.cookies.get("directus_access_token")?.value;
+const accessToken = await getValidAccessToken(Astro.cookies);
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 
 let user: User | null = null;
