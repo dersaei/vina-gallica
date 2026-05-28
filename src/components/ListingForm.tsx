@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import type { Listing, OpeningHour, DayOfWeek } from "./listingTypes";
+import DatePicker from "./DatePicker";
 
 const DAYS: DayOfWeek[] = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
@@ -100,33 +101,6 @@ function TimeInput({
       onChange={handleChange}
       onBlur={handleBlur}
       onFocus={(e) => e.target.select()}
-    />
-  );
-}
-
-// ── DateTimeInput — datetime-local ───────────────────────────────────────────
-
-function DateTimeInput({
-  value,
-  onChange,
-  disabled,
-  ariaLabel,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  disabled?: boolean;
-  ariaLabel?: string;
-}) {
-  return (
-    <input
-      type="datetime-local"
-      className="lf-input lf-input--datetime"
-      value={value}
-      disabled={disabled}
-      aria-label={ariaLabel}
-      min="2000-01-01T00:00"
-      max="2099-12-31T23:59"
-      onChange={(e) => onChange(e.target.value)}
     />
   );
 }
@@ -535,8 +509,12 @@ export default function ListingForm({
   const [openingHours, setOpeningHours] = useState<OpeningHour[]>(
     mergeOpeningHours(listing?.opening_hours),
   );
-  const [eventStart, setEventStart] = useState(listing?.event_date_start ?? "");
-  const [eventEnd, setEventEnd] = useState(listing?.event_date_end ?? "");
+  const [eventStart, setEventStart] = useState(
+    (listing?.event_date_start ?? "").slice(0, 10),
+  );
+  const [eventEnd, setEventEnd] = useState(
+    (listing?.event_date_end ?? "").slice(0, 10),
+  );
   const [busStopName, setBusStopName] = useState(
     listing?.nearest_bus_station_name ?? "",
   );
@@ -929,17 +907,24 @@ export default function ListingForm({
           <div className="lf-row">
             <div className="lf-field lf-field--grow">
               <span className="lf-label">{tx.eventStart}</span>
-              <DateTimeInput
+              <DatePicker
                 value={eventStart}
                 ariaLabel={tx.eventStart}
-                onChange={setEventStart}
+                lang={lang}
+                onChange={(v) => {
+                  setEventStart(v);
+                  // keep end ≥ start
+                  if (v && eventEnd && eventEnd < v) setEventEnd(v);
+                }}
               />
             </div>
             <div className="lf-field lf-field--grow">
               <span className="lf-label">{tx.eventEnd}</span>
-              <DateTimeInput
+              <DatePicker
                 value={eventEnd}
                 ariaLabel={tx.eventEnd}
+                lang={lang}
+                min={eventStart || undefined}
                 onChange={setEventEnd}
               />
             </div>

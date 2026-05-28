@@ -36,6 +36,31 @@
   padding: 0.6em 1.2em 0;
 }
 
+/* ── Daty festiwalu ──────────────────────────────────── */
+.panel-event-dates {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  width: fit-content;
+  margin: 0.8em auto 0;
+  padding: 0.45em 0.9em;
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #fffaf3;
+  background-color: var(--color-elegant-black);
+  border: 1px solid #000;
+  border-radius: 3px;
+  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.3);
+}
+
+.panel-event-dates svg {
+  flex-shrink: 0;
+  color: var(--color-gold);
+}
+
 /* ── Lokalizacja ─────────────────────────────────────── */
 .panel-location {
   display: flex;

@@ -88,6 +88,8 @@ interface Place {
   terroir: TerroirJunction[];
   department: string | Department | null;
   translations?: PlaceTranslation[];
+  event_date_start: string | null;
+  event_date_end: string | null;
 }
 
 interface Article {
@@ -146,6 +148,31 @@ interface Schema {
   languages: { code: string; name: string; direction: string }[];
 }
 
+const EVENT_MONTHS = {
+  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  fr: ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'],
+} as const;
+
+function formatEventDay(iso: string, lang: 'en' | 'fr'): string | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!m) return null;
+  const day = parseInt(m[3], 10);
+  const month = EVENT_MONTHS[lang][parseInt(m[2], 10) - 1];
+  return `${day} ${month} ${m[1]}`;
+}
+
+// Renders "15 Jun 2026 – 18 Jun 2026", or a single date, or null when no dates set.
+function formatEventDateRange(
+  start: string | null | undefined,
+  end: string | null | undefined,
+  lang: 'en' | 'fr' = 'en',
+): string | null {
+  const s = start ? formatEventDay(start, lang) : null;
+  const e = end ? formatEventDay(end, lang) : null;
+  if (s && e) return s === e ? s : `${s} – ${e}`;
+  return s ?? e ?? null;
+}
+
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 
 const directus = createDirectus<Schema>(DIRECTUS_URL)
@@ -153,5 +180,5 @@ const directus = createDirectus<Schema>(DIRECTUS_URL)
   .with(rest());
 
 export default directus;
-export { readItems, registerUser, createItem, updateItem, readItem };
+export { readItems, registerUser, createItem, updateItem, readItem, formatEventDateRange };
 export type { WineRegion, Category, AdministrativeRegion, Department, Place, PlaceListing, PlaceTranslation, TerroirJunction, ArticleCard, Article, FAQ, FAQTranslation };

@@ -3,7 +3,7 @@ export const prerender = false;
 // map.astro stays SSR — Mapbox requires window (client:only)
 import Layout from '../layouts/Layout.astro';
 import MapWithPanel from '../components/MapWithPanel.tsx';
-import directus, { readItems } from '../lib/directus.ts';
+import directus, { readItems, formatEventDateRange } from '../lib/directus.ts';
 import type { Category, Place, WineRegion, Department, AdministrativeRegion } from '../lib/directus.ts';
 
 Astro.response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
@@ -19,6 +19,7 @@ const [categories, places] = await Promise.all([
     readItems('places_vg', {
       fields: [
         'id', 'Name', 'slug', 'location', 'address', 'postal_code', 'place', 'phone', 'website', 'logo',
+        'event_date_start', 'event_date_end',
         { category: ['id', 'name', 'slug', 'color'] },
         { terroir: [{ wine_regions_id: ['id', 'region', 'color'] }] },
         { department: ['id', 'name', 'color', { administrative_region: ['id', 'name', 'color'] }] },
@@ -60,6 +61,7 @@ const geojson = {
           categoryId: cat?.id ?? '',
           categoryColor: cat?.color ?? '#888888',
           categoryName: cat?.name ?? '',
+          eventDates: formatEventDateRange(p.event_date_start, p.event_date_end, 'en') ?? '',
           wineRegionName: wr?.region ?? '',
           wineRegionColor: wr?.color ?? '',
           deptName: dept?.name ?? '',

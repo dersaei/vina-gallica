@@ -49,7 +49,9 @@ export default function PlacePanel({ place, onClose, lang = "en" }: Props) {
     }
   }, [place]);
 
-  const cityLine = [place?.postalCode, place?.townName].filter(Boolean).join(" ");
+  const cityLine = [place?.postalCode, place?.townName]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div
@@ -58,10 +60,11 @@ export default function PlacePanel({ place, onClose, lang = "en" }: Props) {
       inert={!place || undefined}
     >
       <div className="place-panel__inner" ref={panelRef} tabIndex={-1}>
-
         {/* ── Nagłówek z regionem winiarskim ── */}
         <div className="panel-region-bar">
-          <span className="panel-region-bar__label">{lang === "fr" ? "Région viticole" : "Wine Region"}</span>
+          <span className="panel-region-bar__label">
+            {lang === "fr" ? "Région viticole" : "Wine Region"}
+          </span>
           <button
             className="place-panel__close"
             type="button"
@@ -85,7 +88,11 @@ export default function PlacePanel({ place, onClose, lang = "en" }: Props) {
           <div className="panel-category">
             <span
               className="map-popup__category"
-              style={{ backgroundColor: place.categoryColor || "#888" } as CSSProperties}
+              style={
+                {
+                  backgroundColor: place.categoryColor || "#888",
+                } as CSSProperties
+              }
             >
               {place.categoryName}
             </span>
@@ -110,33 +117,50 @@ export default function PlacePanel({ place, onClose, lang = "en" }: Props) {
               {place.address && (
                 <p className="place-label__row">{place.address}</p>
               )}
-              {cityLine && (
-                <p className="place-label__row">{cityLine}</p>
-              )}
+              {cityLine && <p className="place-label__row">{cityLine}</p>}
               {(place.deptName || place.adminRegionName) && (
                 <div className="panel-location">
                   {place.deptName && (
                     <div
                       className="panel-location__block"
-                      style={{ "--loc-color": place.deptColor || "#888" } as CSSProperties}
+                      style={
+                        {
+                          "--loc-color": place.deptColor || "#888",
+                        } as CSSProperties
+                      }
                     >
-                      <span className="panel-location__label">{lang === "fr" ? "Département" : "Department"}</span>
-                      <span className="panel-location__name">{place.deptName}</span>
+                      <span className="panel-location__label">
+                        {lang === "fr" ? "Département" : "Department"}
+                      </span>
+                      <span className="panel-location__name">
+                        {place.deptName}
+                      </span>
                     </div>
                   )}
                   {place.adminRegionName && (
                     <div
                       className="panel-location__block"
-                      style={{ "--loc-color": place.adminRegionColor || "#888" } as CSSProperties}
+                      style={
+                        {
+                          "--loc-color": place.adminRegionColor || "#888",
+                        } as CSSProperties
+                      }
                     >
-                      <span className="panel-location__label panel-location__label--region">{lang === "fr" ? "Région" : "Region"}</span>
-                      <span className="panel-location__name">{place.adminRegionName}</span>
+                      <span className="panel-location__label panel-location__label--region">
+                        {lang === "fr" ? "Région" : "Region"}
+                      </span>
+                      <span className="panel-location__name">
+                        {place.adminRegionName}
+                      </span>
                     </div>
                   )}
                 </div>
               )}
               {place.phone && (
-                <a className="place-label__row place-label__link" href={`tel:${place.phone}`}>
+                <a
+                  className="place-label__row place-label__link"
+                  href={`tel:${place.phone}`}
+                >
                   {place.phone}
                 </a>
               )}
@@ -149,6 +173,35 @@ export default function PlacePanel({ place, onClose, lang = "en" }: Props) {
                 >
                   {place.website.replace(/^https?:\/\//, "")}
                 </a>
+              )}
+              {/* ── Daty festiwalu ── */}
+              {place?.eventDates && (
+                <div className="panel-event-dates">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                    width="15"
+                    height="15"
+                  >
+                    <rect
+                      x="3"
+                      y="4.5"
+                      width="18"
+                      height="16"
+                      rx="2"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M3 9h18M8 2.5v4M16 2.5v4"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <span>{place.eventDates}</span>
+                </div>
               )}
             </div>
           </div>

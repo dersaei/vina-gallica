@@ -26,6 +26,7 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
       fields: [
         'id', 'Name', 'slug', 'status',
         'address', 'postal_code', 'place', 'website', 'phone', 'logo',
+        'event_date_start', 'event_date_end',
         { category: ['id', 'name', 'name_fr', 'slug', 'color'] },
         { terroir: [{ wine_regions_id: ['id', 'region', 'slug', 'color'] }] },
         { department: ['id', 'name', 'slug', 'color', { administrative_region: ['id', 'name', 'slug', 'color'] }] },

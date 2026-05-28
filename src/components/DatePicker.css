@@ -1,0 +1,222 @@
+/* ── DatePicker — themed calendar for ListingForm ── */
+.dp {
+  position: relative;
+  width: 100%;
+}
+
+.dp-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-extra);
+  font-size: 0.95rem;
+  color: var(--color-elegant-black);
+  background-color: #f5f5f5;
+  border: 2px solid var(--color-elegant-black);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 150ms ease;
+}
+
+.dp-trigger:focus-visible {
+  outline: none;
+  border-color: firebrick;
+}
+
+.dp-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dp-trigger__text {
+  color: var(--color-elegant-black);
+  opacity: 0.55;
+}
+
+.dp-trigger--filled .dp-trigger__text {
+  opacity: 1;
+}
+
+.dp-trigger__icon {
+  flex-shrink: 0;
+  color: var(--color-elegant-black);
+}
+
+/* ── Popover ── */
+.dp-popover {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 6px);
+  left: 0;
+  width: min(320px, 92vw);
+  background-color: var(--color-sand);
+  border: 2px solid var(--color-elegant-black);
+  box-shadow: 4px 6px 0 rgba(12, 14, 11, 0.85);
+  padding: 0.75rem;
+  box-sizing: border-box;
+  animation: dp-pop 120ms ease-out;
+}
+
+@keyframes dp-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(12, 14, 11, 0.2);
+}
+
+.dp-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-elegant-black);
+}
+
+.dp-nav {
+  width: 1.9rem;
+  height: 1.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 5px;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--color-elegant-black);
+  background-color: beige;
+  border: 1.5px solid var(--color-elegant-black);
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.dp-nav:hover {
+  background-color: var(--color-elegant-black);
+  color: var(--color-gold);
+}
+
+.dp-weekdays,
+.dp-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.dp-weekday {
+  text-align: center;
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: firebrick;
+  padding: 0.25rem 0;
+}
+
+.dp-grid {
+  margin-top: 2px;
+}
+
+.dp-cell {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-extra);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--color-elegant-black);
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.dp-cell--empty {
+  cursor: default;
+}
+
+.dp-cell:not(.dp-cell--empty):not(:disabled):hover {
+  border-color: firebrick;
+  background-color: rgba(12, 14, 11, 0.06);
+}
+
+.dp-cell--today:not(.dp-cell--selected) {
+  border-color: rgba(12, 14, 11, 0.4);
+  font-weight: 500;
+  background-color: goldenrod;
+}
+
+.dp-cell--selected {
+  background-color: var(--color-elegant-black);
+  color: var(--color-gold);
+  border-color: var(--color-elegant-black);
+  font-weight: 700;
+}
+
+.dp-cell:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.dp-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(12, 14, 11, 0.2);
+}
+
+.dp-foot-btn {
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-elegant-black);
+  background-color: transparent;
+  border: 1.5px solid var(--color-elegant-black);
+  padding: 0.35rem 0.7rem 0;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.dp-foot-btn:hover {
+  background-color: var(--color-elegant-black);
+  color: var(--color-gold);
+}
+
+.dp-foot-btn--clear {
+  border-color: firebrick;
+  color: firebrick;
+}
+
+.dp-foot-btn--clear:hover {
+  background-color: firebrick;
+  color: #fff;
+}

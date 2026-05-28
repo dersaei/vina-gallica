@@ -874,19 +874,13 @@
   color: var(--color-elegant-black);
 }
 
-/* ── Native time / datetime-local inputs ── */
+/* ── Native time inputs ── */
 .lf-input--time {
   width: 6.5rem;
   padding: 0.45rem 0.5rem;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.04em;
   text-align: center;
-}
-.lf-input--datetime {
-  cursor: text;
-}
-.lf-input--datetime::-webkit-calendar-picker-indicator {
-  display: none;
 }
 
 /* ── Opening hours closed state ── */

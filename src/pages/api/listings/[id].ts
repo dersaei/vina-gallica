@@ -71,10 +71,12 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
   }
   if (data.logo !== undefined) payload.logo = data.logo;
 
+  // Daty festiwalu — dostępne dla każdego planu (sekcja nie jest premium)
+  payload.event_date_start = (data.event_date_start as string) || null;
+  payload.event_date_end = (data.event_date_end as string) || null;
+
   if (isPremium) {
     payload.opening_hours = Array.isArray(data.opening_hours) ? data.opening_hours : null;
-    payload.event_date_start = (data.event_date_start as string) || null;
-    payload.event_date_end = (data.event_date_end as string) || null;
     payload.nearest_bus_station_name = (data.nearest_bus_station_name as string)?.trim() || null;
     payload.nearest_bus_station_distance_m = typeof data.nearest_bus_station_distance_m === "number"
       ? data.nearest_bus_station_distance_m : null;
