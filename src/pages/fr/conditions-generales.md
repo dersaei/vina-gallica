@@ -7,7 +7,7 @@ headlineStyle: "dark"
 lang: "fr"
 ---
 
-**Dernière mise à jour :** 5 mai 2026
+**Dernière mise à jour :** 29 mai 2026
 
 Les présentes Conditions Générales d'Utilisation (« CGU ») régissent votre utilisation de **[vinagallica.com](https://vinagallica.com)** (« Vina Gallica », « la Plateforme ») ainsi que les services qui y sont proposés. La Plateforme est exploitée par **Bogusław Siemiątkowski « Spiżarnia REGIO »**, dont le siège social est situé **Napoleońska 49, 06-500 Mława, Pologne, TVA-UE : PL5691729538**.
 
@@ -128,7 +128,7 @@ Aucune obligation de passer à une offre payante n'existe à quelque moment que 
 
 ### 5.2 Offre Premium
 
-L'**offre Premium** est disponible au tarif de **120 € par an, hors TVA**, facturée annuellement. Elle comprend tout ce qui est inclus dans l'offre gratuite, avec en plus :
+L'**offre Premium** est disponible au tarif de **50 € par an, hors TVA**, facturée annuellement. Elle comprend tout ce qui est inclus dans l'offre gratuite, avec en plus :
 
 - une page de profil complète accessible depuis la fiche de l'annuaire (« en savoir plus ») ;
 - une galerie d'images ;
@@ -169,7 +169,7 @@ Une facture pro forma sera jointe à ces rappels. Cette facture pro forma est **
 
 À l'expiration de votre période Premium, vos fiches resteront au niveau Premium pendant un **délai de grâce de 7 jours**. Si vous n'avez pas renouvelé à l'issue de ce délai, toutes vos fiches reviendront définitivement à l'offre gratuite. Vous pouvez repasser à l'offre Premium à tout moment depuis votre espace client.
 
-**Résumé :** L'offre gratuite est à votre disposition pour toujours et sans frais. L'offre Premium coûte 120 € HT par an et ajoute une page de profil complète, des images, des vidéos et bien plus encore. Elle ne se renouvelle pas automatiquement, mais vous recevrez des rappels. Si vous ne renouvelez pas dans le délai de grâce de 7 jours, vos fiches repassent au niveau gratuit.
+**Résumé :** L'offre gratuite est à votre disposition pour toujours et sans frais. L'offre Premium coûte 50 € HT par an et ajoute une page de profil complète, des images, des vidéos et bien plus encore. Elle ne se renouvelle pas automatiquement, mais vous recevrez des rappels. Si vous ne renouvelez pas dans le délai de grâce de 7 jours, vos fiches repassent au niveau gratuit.
 
 ## 6. Paiement et TVA
 
