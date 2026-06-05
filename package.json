@@ -11,8 +11,8 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.6.0",
-    "@astrojs/react": "^5.0.6",
+    "@astrojs/cloudflare": "^13.6.1",
+    "@astrojs/react": "^5.0.7",
     "@directus/sdk": "^21.3.0",
     "@internationalized/date": "^3.12.1",
     "@mapbox/mapbox-gl-geocoder": "^5.1.2",
@@ -20,18 +20,17 @@
     "@react-aria/i18n": "^3.13.1",
     "@react-stately/datepicker": "^3.17.1",
     "@types/mapbox__mapbox-gl-geocoder": "^5.1.1",
-    "astro": "^6.4.2",
+    "astro": "^6.4.4",
     "mapbox-gl": "^3.24.0",
-    "marked": "^17.0.6",
-    "react": "^19.2.6",
+    "react": "^19.2.7",
     "react-aria": "^3.49.0",
-    "react-dom": "^19.2.6",
+    "react-dom": "^19.2.7",
     "react-stately": "^3.47.0"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
-    "@types/react": "^19.2.15",
+    "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
-    "wrangler": "^4.95.0"
+    "wrangler": "^4.98.0"
   }
 }
