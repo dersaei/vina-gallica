@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { ListingState, Tx, ViewModel, Lang } from "./editorShared";
+import { mapOpenIcon } from "./mapOpenIcon";
 import "./MapPopupPreview.css";
 
 interface Props {
@@ -82,8 +83,8 @@ export default function MapPopupPreview({ lang, tx, s, vm }: Props) {
                   )}
                 </div>
               )}
-              {vm.categoryLabel && (
-                <div className="map-popup__footer">
+              <div className="map-popup__footer">
+                {vm.categoryLabel && (
                   <span
                     className="map-popup__category"
                     style={
@@ -94,8 +95,13 @@ export default function MapPopupPreview({ lang, tx, s, vm }: Props) {
                   >
                     {vm.categoryLabel}
                   </span>
-                </div>
-              )}
+                )}
+                <span
+                  className="map-popup__open-btn map-popup__open-btn--static"
+                  aria-hidden="true"
+                  dangerouslySetInnerHTML={{ __html: mapOpenIcon(lang) }}
+                />
+              </div>
             </div>
           </>
         )}

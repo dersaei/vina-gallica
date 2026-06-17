@@ -26,16 +26,6 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
-            - name: Verify Cloudflare credentials
-              run: |
-                  if ! npx wrangler whoami; then
-                    echo "::error::Cloudflare authentication failed. Check the CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID GitHub secrets — the token must be a valid (non-expired) API token with the 'Workers Scripts: Edit' scope."
-                    exit 1
-                  fi
-              env:
-                  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-                  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
             - name: Sync Doppler secrets to Cloudflare Workers
               run: |
                   doppler secrets --json \
