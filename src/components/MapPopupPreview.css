@@ -1,0 +1,118 @@
+/* MapPopupPreview — static, in-flow mirror of the map pin popup
+   (see .map-popup rules in Map.css). Same look, positioned as a normal tile. */
+
+.mpop {
+  width: 100%;
+}
+
+.mpop-inner {
+  min-width: 220px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  background-color: var(--color-sand);
+}
+
+.mpop .map-popup__region {
+  display: flex;
+  flex-direction: column;
+}
+
+.mpop .map-popup__region-line {
+  padding: 0.35em 0.9em 0em;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: #000000 3px 3px 15px;
+}
+
+.mpop .map-popup__body {
+  padding: 0.7em 0.9em 0.8em;
+  background-color: var(--color-sand);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.mpop .map-popup__name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-elegant-black);
+  line-height: 1.2;
+}
+
+.mpop .map-popup__address {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #555;
+  line-height: 1.4;
+}
+
+.mpop .map-popup__tags {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3em;
+  flex-wrap: wrap;
+  margin-top: 0.2em;
+}
+
+.mpop .map-popup__tag-location {
+  display: inline-block;
+  font-family: var(--font-extra);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: black;
+  padding: 0.2em 0.4em;
+  text-shadow: 0.3px 0.3px 0.5px white;
+  border-bottom: 4px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  background-color: color-mix(in srgb, var(--loc-color) 50%, transparent);
+}
+
+.mpop .map-popup__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 0.5em;
+  margin-top: 0.3em;
+}
+
+.mpop .map-popup__category {
+  align-self: flex-end;
+  padding: 0.4em 0.65em 0;
+  border-radius: 2px;
+  border: 2px ridge black;
+  font-family: var(--font-label);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px,
+    inset 0px 0px 2px #daa520;
+}
+
+.mpop .mpop-empty {
+  margin: 0;
+  font-family: var(--font-hero);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.5;
+  text-align: center;
+  color: #a89c88;
+}

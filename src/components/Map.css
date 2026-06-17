@@ -91,6 +91,11 @@
 }
 
 .map-popup__region {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-popup__region-line {
   padding: 0.35em 0.9em 0em;
   font-family: var(--font-heading);
   font-size: 0.7rem;
@@ -216,6 +221,12 @@
 
 .map-popup__multi-item:last-child {
   border-bottom: none;
+}
+
+.map-popup__multi-regions {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
 }
 
 .map-popup__multi-region {
@@ -390,7 +401,7 @@
     opacity: 1;
     pointer-events: auto;
   }
-  .map-popup__region {
+  .map-popup__region-line {
     font-size: 1rem;
   }
   .map-popup__name {

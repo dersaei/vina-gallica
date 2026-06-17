@@ -37,8 +37,11 @@ const geojson = {
     .filter(p => p.location !== null)
     .map(p => {
       const cat = typeof p.category === 'object' ? p.category as Category : null;
-      const firstTerroir = Array.isArray(p.terroir) && p.terroir.length > 0 ? p.terroir[0] : null;
-      const wr = firstTerroir && typeof firstTerroir.wine_regions_id === 'object' ? firstTerroir.wine_regions_id as WineRegion : null;
+      const allRegions = (Array.isArray(p.terroir) ? p.terroir : [])
+        .map(t => typeof t.wine_regions_id === 'object' ? t.wine_regions_id as WineRegion : null)
+        .filter((w): w is WineRegion => w !== null)
+        .map(w => ({ region: w.region, color: w.color ?? '' }));
+      const wr = allRegions[0] ?? null;
       const dept = typeof p.department === 'object' && p.department !== null ? p.department as Department : null;
       const adminRegion = dept && typeof dept.administrative_region === 'object' ? dept.administrative_region as AdministrativeRegion : null;
       return {
@@ -63,6 +66,7 @@ const geojson = {
           eventDates: formatEventDateRange(p.event_date_start, p.event_date_end, 'fr') ?? '',
           wineRegionName: wr?.region ?? '',
           wineRegionColor: wr?.color ?? '',
+          wineRegions: JSON.stringify(allRegions),
           deptName: dept?.name ?? '',
           deptColor: dept?.color ?? '',
           adminRegionName: adminRegion?.name ?? '',

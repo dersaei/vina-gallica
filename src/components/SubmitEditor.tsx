@@ -9,6 +9,7 @@ import { deptCodeFromPostalCode } from "../lib/departmentFromPostalCode";
 import { t, buildViewModel, type Lang, type DeptOption } from "./editorShared";
 import EditPanel from "./EditPanel";
 import EditableCard from "./EditableCard";
+import MapPopupPreview from "./MapPopupPreview";
 import MapPreviewPanel from "./MapPreviewPanel";
 import "./SubmitEditor.css";
 
@@ -82,6 +83,7 @@ export default function SubmitEditor({
           </div>
           <div className="se-tile se-tile--card">
             <EditableCard tx={tx} s={s} vm={vm} />
+            <MapPopupPreview lang={lang} tx={tx} s={s} vm={vm} />
           </div>
           <div className="se-tile se-tile--panel">
             <MapPreviewPanel lang={lang} tx={tx} s={s} vm={vm} />

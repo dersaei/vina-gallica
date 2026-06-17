@@ -54,6 +54,7 @@ export const t = {
       "You can create your listing by filling in the fields in the Editor container. Selecting any of them opens a modal window where you can make changes. Everything you do is reflected in the other containers, giving you a preview of how your listing could look live on the Vina Gallica pages. You can save your work as a draft, or submit it to us for review.",
     cardEmpty: "Your card preview will appear here as you fill in the fields.",
     panelEmpty: "Your panel preview will appear here as you fill in the fields.",
+    popupEmpty: "Your map popup preview will appear here.",
     // slot labels / placeholders
     category: "Category",
     selectCategory: "Select a category",
@@ -106,6 +107,7 @@ export const t = {
       "L'aperçu de votre carte apparaîtra ici au fur et à mesure que vous remplissez les champs.",
     panelEmpty:
       "L'aperçu de votre panneau apparaîtra ici au fur et à mesure que vous remplissez les champs.",
+    popupEmpty: "L'aperçu de votre infobulle de carte apparaîtra ici.",
     category: "Catégorie",
     selectCategory: "Sélectionner une catégorie",
     name: "Nom de la fiche",
