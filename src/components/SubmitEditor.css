@@ -1,0 +1,69 @@
+/* SubmitEditor — container for the edit panel + two synced preview tiles.
+   Wide screens: all three tiles sit centered in a row. Narrow screens: the row
+   becomes a horizontal, snap-scrolling strip.
+
+   Centering note: we must NOT use `justify-content: center` on a horizontally
+   scrollable flex row — when content overflows, it pushes the first child into
+   a negative offset that the scrollbar can't reach (the tile becomes stuck
+   off-screen). Instead the row is left-aligned and the inner track uses
+   `margin: auto` to center only while everything fits. */
+
+.se {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.se-intro {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: var(--font-hero);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-elegant-black);
+}
+
+.se-tiles {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--space-md);
+  padding-bottom: var(--space-sm);
+  scrollbar-width: thin;
+}
+
+/* Inner track holds the tiles in a row; margin:auto centers it when it fits. */
+.se-track {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.se-tile {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+}
+
+.se-tile--edit {
+  width: 320px;
+}
+
+.se-tile--card {
+  width: 420px;
+}
+
+.se-tile--panel {
+  width: 380px;
+}
+
+/* On narrow screens each tile takes most of the viewport so snapping reads as
+   a clear "swipe between cards" gesture. */
+@media (max-width: 960px) {
+  .se-track {
+    gap: var(--space-md);
+  }
+}

@@ -1,0 +1,73 @@
+/* EditPanel — left-column field buttons that open the shared edit modals. */
+
+.ep {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  background-color: #fffaf3;
+  border: 2px solid #42403c;
+  border-radius: 4px;
+  padding: var(--space-md);
+}
+
+.ep-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-elegant-black);
+}
+
+.ep-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.ep-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  text-align: left;
+  padding: 0.6em 0.7em;
+  background-color: #f7f0e4;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.ep-field:hover {
+  background-color: #efe6d4;
+  border-color: rgba(0, 0, 0, 0.4);
+}
+
+.ep-field--error {
+  border-color: #b00020;
+}
+
+.ep-field__label {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-elegant-black);
+}
+
+.ep-field__value {
+  font-family: var(--font-hero);
+  font-size: 0.9rem;
+  color: #444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ep-field__value--empty {
+  font-style: italic;
+  color: #a89c88;
+}

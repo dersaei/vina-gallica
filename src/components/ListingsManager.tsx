@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import ListingForm from "./ListingForm";
+import SubmitEditor, { type DeptOption } from "./SubmitEditor";
 import type { Listing } from "./listingTypes";
 import { useToast, ToastContainer } from "./Toast";
 import "./ListingForm.css";
@@ -8,11 +8,13 @@ import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 interface WineRegion {
   id: string;
   region: string;
+  color?: string | null;
 }
 interface Category {
   id: string;
   name: string;
   name_fr: string | null;
+  color?: string | null;
 }
 
 interface Props {
@@ -20,6 +22,7 @@ interface Props {
   plan: "free" | "premium";
   wineRegions: WineRegion[];
   categories: Category[];
+  departments: DeptOption[];
   mapboxToken: string;
   directusUrl: string;
 }
@@ -102,6 +105,7 @@ export default function ListingsManager({
   plan,
   wineRegions,
   categories,
+  departments,
   mapboxToken,
   directusUrl,
 }: Props) {
@@ -162,11 +166,12 @@ export default function ListingsManager({
     const listing =
       typeof view === "object" && "edit" in view ? view.edit : undefined;
     return (
-      <ListingForm
+      <SubmitEditor
         lang={lang}
         plan={plan}
         wineRegions={wineRegions}
         categories={categories}
+        departments={departments}
         listing={listing}
         directusUrl={directusUrl}
         onSaved={(id, newStatus, updatedListing) => {

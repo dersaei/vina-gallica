@@ -15,28 +15,37 @@ const METROPOLE_LYON_INSEE = new Set([
   "69293", "69296", "69297",
 ]);
 
-export async function departmentIdFromPostalCode(
+// Pure mapping postal code (+ INSEE) → department code. No secrets, no I/O —
+// safe to run on the client so the dashboard card can resolve dept/region in
+// the same way the server does on save.
+export function deptCodeFromPostalCode(
   postalCode: string,
   inseeCode?: string,
-): Promise<string | null> {
+): string | null {
   const code = postalCode.trim();
   if (!code) return null;
-
-  let deptCode: string;
 
   if (code.startsWith("20")) {
     // Korsyka: 2A (≤20190) / 2B (>20190)
     const n = parseInt(code.slice(0, 5), 10);
-    deptCode = n <= 20190 ? "2A" : "2B";
-  } else if (code.startsWith("69")) {
+    return n <= 20190 ? "2A" : "2B";
+  }
+  if (code.startsWith("69")) {
     // Rhône vs Métropole de Lyon — rozróżnienie tylko przez kod INSEE gminy
     // Lyon (69123) i jego arrondissements (69001–69009) należą do 69M
     const insee = inseeCode?.trim() ?? "";
     const isLyonArr = /^6900[1-9]$/.test(insee);
-    deptCode = (METROPOLE_LYON_INSEE.has(insee) || isLyonArr) ? "69M" : "69D";
-  } else {
-    deptCode = code.slice(0, 2);
+    return METROPOLE_LYON_INSEE.has(insee) || isLyonArr ? "69M" : "69D";
   }
+  return code.slice(0, 2);
+}
+
+export async function departmentIdFromPostalCode(
+  postalCode: string,
+  inseeCode?: string,
+): Promise<string | null> {
+  const deptCode = deptCodeFromPostalCode(postalCode, inseeCode);
+  if (!deptCode) return null;
 
   try {
     const res = await fetch(

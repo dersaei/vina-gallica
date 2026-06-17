@@ -1,0 +1,214 @@
+/* MapPreviewPanel — static, in-flow mirror of PlacePanel (the public map side
+   panel). Same inner styles, but positioned as a normal preview tile instead
+   of a fixed slide-in drawer. */
+
+.mpp {
+  width: 100%;
+}
+
+.mpp-inner {
+  background-color: #fffaf3;
+  border: 2px solid var(--color-elegant-black);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.18);
+}
+
+/* ── Category ── */
+.mpp .panel-category {
+  display: block;
+  position: relative;
+  margin: auto;
+  padding: 0.6em 1.2em 0;
+}
+
+.mpp .map-popup__category {
+  align-self: flex-end;
+  padding: 0.4em 0.65em 0;
+  border-radius: 2px;
+  border: 2px ridge black;
+  font-family: var(--font-label);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px,
+    inset 0px 0px 2px #daa520;
+}
+
+/* ── Festival dates ── */
+.mpp .panel-event-dates {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  width: fit-content;
+  margin: 0.8em auto 0;
+  font-family: var(--font-label);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  background-color: var(--color-sand);
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 1);
+  padding: 0.35em 0.5em 0;
+  color: var(--color-elegant-black);
+  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Location ── */
+.mpp .panel-location {
+  display: flex;
+  flex-direction: column;
+  margin: 0.6em 0;
+}
+
+.mpp .panel-location__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mpp .panel-location__label {
+  font-family: var(--font-extra);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #000;
+  line-height: 1;
+  margin-bottom: 0.2em;
+}
+
+.mpp .panel-location__label--region {
+  font-size: 0.65rem;
+}
+
+.mpp .panel-location__name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--loc-color);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+  line-height: 1.2;
+}
+
+/* ── Content ── */
+.mpp .place-panel__content {
+  flex: 1;
+  padding: 1.5em 1.2em;
+}
+
+/* ── Place label ── */
+.mpp .place-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fffaf3;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 3px solid var(--color-elegant-black);
+  padding: 1.4em 1.4em 1.6em;
+  box-shadow:
+    rgba(0, 0, 0, 0.06) 0px 2px 8px,
+    rgba(0, 0, 0, 0.04) 0px 0px 0px 1px inset;
+}
+
+.mpp .place-label__name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--color-elegant-black);
+  line-height: 1.2;
+}
+
+.mpp .place-label__divider {
+  width: 40%;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 0.9em auto 0.8em;
+}
+
+.mpp .place-label__row {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 300;
+  text-align: center;
+  color: #444;
+  line-height: 1.7;
+}
+
+.mpp .place-label__link {
+  display: block;
+  color: #444;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.mpp .place-label__link:hover {
+  color: var(--color-elegant-black);
+  text-decoration: underline;
+}
+
+/* ── Wine region bar ── */
+.mpp .panel-region-bar {
+  position: relative;
+  background-color: var(--color-elegant-black);
+  padding: 1.2em 1.2em 0.8em;
+  box-shadow: rgba(255, 255, 255, 0.4) 0px -3px 30px inset;
+}
+
+.mpp .panel-region-bar__label {
+  display: block;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fffaf3;
+  line-height: 1;
+}
+
+.mpp .panel-region-bar__tag {
+  display: flex;
+  justify-content: center;
+  padding: 0.3em 1.1em 0.1em;
+  background-color: var(--region-color, #888);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  width: 100%;
+  height: auto;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px -3px 30px inset;
+}
+
+.mpp .ec-placeholder {
+  font-family: var(--font-hero);
+  font-size: 1rem;
+  font-style: italic;
+  color: #a89c88;
+}
+
+.mpp .ec-empty {
+  font-family: var(--font-hero);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.5;
+  text-align: center;
+  color: #a89c88;
+  margin: 0;
+}

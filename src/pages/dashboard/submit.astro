@@ -22,17 +22,30 @@ if (accessToken) {
 
 const headers = { Authorization: `Bearer ${DIRECTUS_SERVICE_TOKEN}` };
 
-const [wrRes, catRes] = await Promise.all([
-  fetch(`${DIRECTUS_URL}/items/wine_regions?fields=id,region&sort[]=region`, { headers }),
-  fetch(`${DIRECTUS_URL}/items/categories_vg?fields=id,name,name_fr&sort[]=name`, { headers }),
+const [wrRes, catRes, deptRes] = await Promise.all([
+  fetch(`${DIRECTUS_URL}/items/wine_regions?fields=id,region,color&sort[]=region`, { headers }),
+  fetch(`${DIRECTUS_URL}/items/categories_vg?fields=id,name,name_fr,color&sort[]=name`, { headers }),
+  fetch(`${DIRECTUS_URL}/items/departments?fields=id,code,name,color,administrative_region.name,administrative_region.color&sort[]=name`, { headers }),
 ]);
 
-const wineRegions: { id: string; region: string }[] = wrRes.ok
-  ? ((await wrRes.json()) as { data: { id: string; region: string }[] }).data
+const wineRegions: { id: string; region: string; color: string | null }[] = wrRes.ok
+  ? ((await wrRes.json()) as { data: { id: string; region: string; color?: string | null }[] }).data
+    .map(r => ({ ...r, color: r.color ?? null }))
   : [];
-const categories: { id: string; name: string; name_fr: string | null }[] = catRes.ok
-  ? ((await catRes.json()) as { data: { id: string; name: string; name_fr?: string | null }[] }).data
-    .map(c => ({ ...c, name_fr: c.name_fr ?? null }))
+const categories: { id: string; name: string; name_fr: string | null; color: string | null }[] = catRes.ok
+  ? ((await catRes.json()) as { data: { id: string; name: string; name_fr?: string | null; color?: string | null }[] }).data
+    .map(c => ({ ...c, name_fr: c.name_fr ?? null, color: c.color ?? null }))
+  : [];
+type DeptRow = { id: string; code: string; name: string; color?: string | null; administrative_region?: { name?: string | null; color?: string | null } | null };
+const departments = deptRes.ok
+  ? ((await deptRes.json()) as { data: DeptRow[] }).data.map(d => ({
+      id: d.id,
+      code: d.code,
+      name: d.name,
+      color: d.color ?? null,
+      region_name: d.administrative_region?.name ?? null,
+      region_color: d.administrative_region?.color ?? null,
+    }))
   : [];
 
 const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
@@ -45,6 +58,7 @@ const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN;
     plan={plan}
     wineRegions={wineRegions}
     categories={categories}
+    departments={departments}
     mapboxToken={mapboxToken}
     directusUrl={DIRECTUS_URL}
   />

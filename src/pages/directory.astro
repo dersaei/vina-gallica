@@ -155,7 +155,7 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
     function applyFilters() {
       cards.forEach((card) => {
         const matchCat = activeCategory === 'all' || card.dataset.category === activeCategory;
-        const matchWine = !activeWineRegion || card.dataset.wineRegion === activeWineRegion;
+        const matchWine = !activeWineRegion || (card.dataset.wineRegion?.split(' ').includes(activeWineRegion) ?? false);
         const matchAdmin = !activeAdminRegion || card.dataset.adminRegion === activeAdminRegion;
         const matchDept = !activeDept || card.dataset.dept === activeDept;
         card.style.display = (matchCat && matchWine && matchAdmin && matchDept) ? '' : 'none';

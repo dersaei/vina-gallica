@@ -14,8 +14,9 @@ const eventDates = formatEventDateRange(place.event_date_start, place.event_date
 const category = typeof place.category === "object" ? place.category as Category : null;
 const dept = typeof place.department === "object" && place.department !== null ? place.department as Department : null;
 const region = dept && typeof dept.administrative_region === "object" ? dept.administrative_region as AdministrativeRegion : null;
-const firstTerroir = Array.isArray(place.terroir) && place.terroir.length > 0 ? place.terroir[0] as TerroirJunction : null;
-const wineRegion = firstTerroir && typeof firstTerroir.wine_regions_id === "object" ? firstTerroir.wine_regions_id as WineRegion : null;
+const wineRegions = (Array.isArray(place.terroir) ? place.terroir : [])
+  .map((t) => (t as TerroirJunction).wine_regions_id)
+  .filter((wr): wr is WineRegion => typeof wr === "object" && wr !== null);
 
 const regionName = region?.name ?? null;
 const regionColor = region?.color ?? null;
@@ -37,7 +38,7 @@ const websiteLabel = lang === "fr" ? "Visiter le site" : "Visit website";
 <article
   class="place-card"
   data-category={category?.slug}
-  data-wine-region={wineRegion?.slug ?? undefined}
+  data-wine-region={wineRegions.length > 0 ? wineRegions.map((wr) => wr.slug).join(" ") : undefined}
   data-dept={dept?.slug ?? undefined}
   data-admin-region={region?.slug ?? undefined}
 >
@@ -58,10 +59,14 @@ const websiteLabel = lang === "fr" ? "Visiter le site" : "Visit website";
 
   <h3 class="card-name">{place.Name}</h3>
 
-  {wineRegion && (
-    <span class="card-wine-region" style={`--wine-region-color: ${wineRegion.color}`}>
-      {wineRegion.region}
-    </span>
+  {wineRegions.length > 0 && (
+    <div class="card-wine-regions">
+      {wineRegions.map((wr) => (
+        <span class="card-wine-region" style={`--wine-region-color: ${wr.color}`}>
+          {wr.region}
+        </span>
+      ))}
+    </div>
   )}
 
   <address class="card-address">
@@ -169,13 +174,20 @@ const websiteLabel = lang === "fr" ? "Visiter le site" : "Visit website";
     margin: 1vh 0 0;
   }
 
+  .card-wine-regions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-sm);
+  }
+
   .card-wine-region {
     font-family: var(--font-extra);
     font-size: 0.8rem;
     font-weight: 400;
     color: var(--color-elegant-black);
     letter-spacing: 0.05em;
-    border-bottom-color: black;
+    border-bottom-color: var(--wine-region-color, black);
     border-bottom-width: 2px;
     border-bottom-style: solid;
     width: fit-content;
