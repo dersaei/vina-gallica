@@ -1,8 +1,49 @@
 ---
+export const prerender = false;
 import Layout from "../../layouts/Layout.astro";
 import Badges from "../../components/Badges.astro";
 import { Image } from "astro:assets";
 import aboutImg from "../../assets/about.jpg";
+import directus, { readSingleton, readItems } from "../../lib/directus.ts";
+
+const LANG = "fr-FR";
+
+const page = await directus.request(
+  readSingleton("about_page", {
+    fields: [
+      {
+        translations: [
+          "heading",
+          "cta_text",
+          "intro_1",
+          "intro_2",
+          "subheading",
+          "regions_heading",
+          "languages_code",
+        ],
+      },
+    ],
+    deep: { translations: { _filter: { languages_code: { _eq: LANG } } } },
+  }),
+);
+const t = page.translations?.[0];
+
+const regionsRaw = await directus.request(
+  readItems("about_regions", {
+    fields: ["id", { translations: ["name", "description", "languages_code"] }],
+    filter: { status: { _eq: "published" } },
+    sort: ["sort"],
+    deep: { translations: { _filter: { languages_code: { _eq: LANG } } } },
+  }),
+);
+const regions = regionsRaw
+  .map((r) => r.translations?.[0])
+  .filter((tr): tr is NonNullable<typeof tr> => Boolean(tr?.name));
+
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, s-maxage=300, stale-while-revalidate=3600",
+);
 ---
 
 <Layout
@@ -58,94 +99,26 @@ import aboutImg from "../../assets/about.jpg";
     <article class="terroir-article">
 
       <div class="article-body">
-        <h2>
-Vina Gallica est une collection grandissante d'expériences vitivinicoles françaises
-        </h2>
-<div class="about-cta">
-        <a href="/fr/rejoindre" class="join-btn">
-          Vous souhaitez référencer votre établissement ?<br /> Rejoignez-nous pour en savoir plus !
-          </a>
-      </div>
-        <p>La viticulture française ne traite pas le vin comme un simple produit agricole. Dans la philosophie du terroir — un concept si profondément ancré dans la culture française qu'il est intraduisible dans aucune autre langue au monde — l'objectif n'est pas de produire le meilleur vin de manière objective, mais celui qui exprime le plus fidèlement le caractère de son lieu de naissance : son empreinte.</p>
-
-        <p>Le vin français est ainsi la résultante de plusieurs éléments — sol, microclimat, ensoleillement et tradition locale — qui se combinent pour former son goût et son arôme définitifs, nous permettant d'éprouver le caractère unique de chaque terroir.</p>
-        <h3>Vina Gallica ambitionne de devenir la référence pour découvrir les expériences des terroirs français, et vous permettre de les vivre au mieux en personne</h3>
+        <h2 set:html={t?.heading} />
+        <div class="about-cta">
+          <a href="/fr/rejoindre" class="join-btn" set:html={t?.cta_text} />
+        </div>
+        <div class="intro-text" set:html={t?.intro_1} />
+        <div class="intro-text" set:html={t?.intro_2} />
+        <h3 set:html={t?.subheading} />
       </div>
 
       <Image src={aboutImg} alt="Vignoble français" layout='constrained' class="about-image" />
 
       <div class="regions-section">
-        <h3 class="regions-heading">14 Régions Viticoles Françaises</h3>
+        <h3 class="regions-heading" set:html={t?.regions_heading} />
 
-        <div class="region">
-          <h4>Alsace</h4>
-          <p>L'Alsace abrite l'un des systèmes géologiques les plus complexes et les plus mystérieux au monde. Au fil de millions d'années, de puissants séismes ont façonné ici une mosaïque de plus de 50 types de sols différents. Des vignes plantées à quelques mètres d'intervalle peuvent ainsi produire des vins aux profils aromatiques radicalement différents, faisant du terroir alsacien un gigantesque puzzle souterrain. Aujourd'hui, en visitant les vignerons alsaciens, il est possible de vivre quelque chose de fascinant : beaucoup servent le même vin du même millésime, mais issu de parcelles séparées de quelques dizaines de mètres. Ils prouvent qu'il est possible de distinguer dans son verre un goût de la terre absolument différent.</p>
-        </div>
-
-        <div class="region">
-          <h4>Beaujolais</h4>
-          <p>Bien que la région soit aujourd'hui associée à la célébration du vin nouveau, rares sont ceux qui savent que son cépage emblématique — le Gamay — fut jadis banni dans la honte. En 1395, le duc de Bourgogne qualifia ce cépage de « vil et déloyal », ordonnant son arrachage complet de ses domaines d'élite. Exilé vers les collines granitiques du Beaujolais au sud, le Gamay y trouva son refuge idéal, où il règne encore aujourd'hui. Ce cépage autrefois disgracié connaît désormais sa renaissance : les vins de Beaujolais Villages et des Crus rivalisent avec l'élégance — et les prix en hausse — de la Bourgogne, s'imposant comme une référence absolue dans les bars à vins les plus tendance du monde.</p>
-        </div>
-
-        <div class="region">
-          <h4>Bordeaux</h4>
-          <p>Les vignobles les plus prestigieux et les plus chers de l'appellation Médoc à Bordeaux… n'existaient même pas avant le XVIIe siècle. Ce territoire était alors un vaste marais inhospitalier et dangereux. C'est seulement lorsque des ingénieurs néerlandais, mandatés par des marchands, asséchèrent ces zones qu'un sol de graves fut mis au jour — un sol qui s'avéra parfait pour le royal Cabernet Sauvignon. Aujourd'hui, sur ces anciens marécages se dressent les châteaux les plus luxueux de la planète. Les sols de graves découverts alors produisent des vins iconiques pour lesquels les collectionneurs acceptent de payer des milliers d'euros la bouteille.</p>
-        </div>
-
-        <div class="region">
-          <h4>Bourgogne</h4>
-          <p>Le sol des vignobles bourguignons classés Grand Cru est considéré comme si précieux, presque sacré, que les employés doivent, dit-on, soigneusement nettoyer leurs bottes avant de quitter une parcelle, pour ne pas emporter avec eux le moindre gramme de cet inestimable terroir. Qui plus est, des moines cisterciens délimitèrent autrefois ces vignobles selon la légende en goûtant littéralement la terre. Aujourd'hui, cette obsession des différences microscopiques a atteint son paroxysme : un hectare de Grand Cru se négocie à plusieurs dizaines de millions d'euros, et les vignerons utilisent des drones de précision pour protéger chaque centimètre de ce sol historique.</p>
-        </div>
-
-        <div class="region">
-          <h4>Champagne</h4>
-          <p>Des millions de bouteilles du vin le plus luxueux au monde mûrissent dans l'obscurité totale d'anciennes carrières de craie — les crayères — creusées par les Romains il y a plus de 2 000 ans. Ces labyrinthes souterrains monumentaux, s'étendant sur des kilomètres sous des villes comme Reims, offrent le microclimat idéal pour le développement des bulles du champagne. Aujourd'hui classés au patrimoine mondial de l'UNESCO, ces dédales souterrains abritent des réserves de champagne en cours de vieillissement représentant des milliards d'euros, et une visite y constitue l'une des plus spectaculaires attractions touristiques de France.</p>
-        </div>
-
-        <div class="region">
-          <h4>Corse</h4>
-          <p>Les vignobles corses produisent des vins imprégnés d'un véritable esprit maritime. De nombreuses vignes sont plantées si près du littoral rocheux méditerranéen que les embruns salés portés par le vent se déposent directement sur les raisins. Lorsque l'humidité s'évapore, le sel se cristallise sur les peaux, conférant aux vins locaux une note saline unique, fascinante et palpable, introuvable ailleurs. Dans la révolution gastronomique actuelle, cette minéralité naturelle est très prisée par les grands sommeliers, qui considèrent les vins corses comme l'accord parfait pour des plats de fruits de mer sophistiqués et contemporains.</p>
-        </div>
-
-        <div class="region">
-          <h4>Jura</h4>
-          <p>C'est ici que naît l'une des boissons les plus énigmatiques au monde : le Vin Jaune. Il mûrit dans des fûts de chêne délibérément non ouillés, sur lesquels se forme mystérieusement un « voile » de levures mortes protégeant le liquide de toute altération. Après plus de six années, le vin est mis en bouteille dans l'exceptionnel clavelin — une bouteille de 62 cl — qui correspond précisément à ce qui reste d'un litre de vin après cette longue période d'élevage, compte tenu de la « part des anges » (l'évaporation). Aujourd'hui, le Jura est devenu la Mecque absolue et l'épicentre mondial de la révolution du vin naturel : ce style ancien, énigmatique et fortement oxydatif est désormais le « goût » le plus recherché par les amateurs de vin dans le monde entier.</p>
-        </div>
-
-        <div class="region">
-          <h4>Languedoc-Roussillon</h4>
-          <p>Le Champagne n'a pas été le premier vin effervescent de France. Cette couronne historique revient à l'appellation Limoux, nichée en Languedoc. Des archives attestent que ce sont les moines de l'abbaye Saint-Hilaire qui y découvrirent le secret des bulles emprisonnées dans le verre en 1531 — plus d'un siècle avant que le célèbre Dom Pérignon n'ait prétendument « bu des étoiles » en Champagne. Aujourd'hui, la Blanquette de Limoux n'est pas seulement une curiosité pour connaisseurs : c'est aussi une merveilleuse alternative abordable aux champagnes coûteux, qui prouve que des siècles de qualité n'ont pas à peser lourd sur le portefeuille.</p>
-        </div>
-
-        <div class="region">
-          <h4>Lorraine</h4>
-          <p>Autrefois grande puissance viticole approvisionnant empereurs romains et cours européennes, la Lorraine est aujourd'hui l'un des secrets vinicoles de France les mieux gardés et des plus méconnus. À travers le phylloxéra et les ténèbres des guerres mondiales, quelques rares vignobles ont survécu, produisant le Vin Gris — un vin rosé pâle, intrigant et historique, élaboré en partie à partir du Pinot Noir. Alors que la demande mondiale de rosés continue de croître, les amateurs en quête de nouveauté se détournent des succès commerciaux et redécouvrent avec fascination ce vin historique, le percevant comme un véritable joyau artisanal.</p>
-        </div>
-
-        <div class="region">
-          <h4>Provence</h4>
-          <p>Si le rosé est aujourd'hui associé à une tendance estivale et moderne, la Provence en produisait déjà… dans l'Antiquité. Lorsque les Grecs phocéens fondèrent l'actuelle Marseille vers 600 av. J.-C., les techniques de macération prolongée (laissant le jus en contact avec les peaux) étaient encore rares. Les premiers vins français de l'histoire étaient donc naturellement légers et ressemblaient de façon surprenante aux élégants rosés provençaux que nous connaissons aujourd'hui. Seule la Provence dicte désormais les tendances mondiales : la couleur saumon remarquablement pâle de ses vins est devenue un standard mondial du style de vie estival, repris de la Californie jusqu'en Nouvelle-Zélande.</p>
-        </div>
-
-        <div class="region">
-          <h4>Savoie-Bugey</h4>
-          <p>Cultiver la vigne dans cette région alpine est presque un sport extrême. Les pentes de montagne peuvent être si inclinées que travailler dans les vignes ressemble à de l'alpinisme. Pour vendanger les parcelles les plus inaccessibles, quasi verticales, des vignerons isolés ont longtemps dû — et doivent encore — recourir à des systèmes de poulies et de cordes ; dans des cas exceptionnels, les vendanges sont même acheminées par hélicoptère. Aujourd'hui, avec la montée des températures, ces parcelles en altitude plus fraîches gagnent en valeur, produisant des vins à plus faible teneur en alcool et d'une fraîcheur remarquable, de plus en plus recherchée par le marché.</p>
-        </div>
-
-        <div class="region">
-          <h4>Sud-Ouest</h4>
-          <p>Dans l'appellation Cahors naît le légendaire « Vin Noir ». Au Moyen Âge, cette cuvée à base de Malbec était si dense, d'une teinte noire d'encre et d'une puissance telle que les rois d'Angleterre la prisaient davantage que les vins de la Bordeaux voisine. En raison de sa couleur intense et profonde, elle acquit également un statut mystique : pendant des siècles, ce fut le vin sacramentel officiel de la puissante Église orthodoxe russe. Aujourd'hui, après des décennies de domination mondiale du Malbec argentin, le Cahors français vit un grand retour : des consommateurs avertis y reviennent pour « l'original », en quête d'une structure plus authentique et plus profonde.</p>
-        </div>
-
-        <div class="region">
-          <h4>Val de Loire et Centre</h4>
-          <p>La Loire est un paysage parsemé de châteaux de conte de fées construits en tuffeau, une pierre blanche calcaire. Pour les bâtir, les architectes ont creusé des centaines de kilomètres de caves souterraines dans les collines environnantes, créant un réseau complexe de tunnels troglodytiques. Lorsque les carriers partirent, les vignerons investirent ces espaces : ces caves fraîches et sombres servent encore aujourd'hui de chais idéaux pour les millésimes les plus anciens et les plus précieux de la Loire. Aujourd'hui, nombre de ces galeries souterraines magiques sont des salles de dégustation contemporaines, et certains domaines proposent même d'y séjourner, alliant histoire brute et tourisme de luxe.</p>
-        </div>
-
-        <div class="region">
-          <h4>Vallée du Rhône</h4>
-          <p>Dans la célèbre appellation Châteauneuf-du-Pape, les vignes poussent souvent là où il ne semble y avoir aucun sol. Le terrain est recouvert à perte de vue de grosses galets roulés, ces pierres rondes polies par les rivières. Ces galets préhistoriques fonctionnent comme des accumulateurs de chaleur naturels : le jour, ils absorbent le soleil brûlant du Midi comme un four, pour restituer leur chaleur la nuit et réchauffer les raisins jusqu'à l'aube. Aujourd'hui, avec les vagues de chaleur, cet atout ancestral est devenu un défi : les vignerons doivent adopter de nouvelles techniques pour protéger leurs vignes, illustrant parfaitement la façon dont un vieux terroir doit faire face au changement climatique actuel.</p>
-        </div>
+        {regions.map((region) => (
+          <div class="region">
+            <h4 set:html={region.name} />
+            <Fragment set:html={region.description} />
+          </div>
+        ))}
       </div>
     </article>
   </main>
@@ -198,7 +171,9 @@ Vina Gallica est une collection grandissante d'expériences vitivinicoles franç
     gap: var(--space-md);
   }
 
-  p {
+  p,
+  .intro-text :global(p),
+  .region :global(p) {
     font-size: 1rem;
     line-height: 1.75;
     color: var(--color-elegant-black);

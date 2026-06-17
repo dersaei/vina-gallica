@@ -1,4 +1,4 @@
-import { createDirectus, rest, authentication, readItems, registerUser, createItem, updateItem, readItem } from "@directus/sdk";
+import { createDirectus, rest, authentication, readItems, readSingleton, registerUser, createItem, updateItem, readItem } from "@directus/sdk";
 
 interface WineRegion {
   id: string;
@@ -133,6 +133,39 @@ interface FAQ {
   translations?: FAQTranslation[];
 }
 
+interface AboutPageTranslation {
+  id: number;
+  about_page_id: number;
+  languages_code: string;
+  heading: string | null;
+  cta_text: string | null;
+  intro_1: string | null;
+  intro_2: string | null;
+  subheading: string | null;
+  regions_heading: string | null;
+}
+
+interface AboutPage {
+  id: number;
+  status: 'published' | 'draft' | 'archived';
+  translations?: AboutPageTranslation[];
+}
+
+interface AboutRegionTranslation {
+  id: number;
+  about_regions_id: number;
+  languages_code: string;
+  name: string | null;
+  description: string | null;
+}
+
+interface AboutRegion {
+  id: number;
+  status: 'published' | 'draft' | 'archived';
+  sort: number | null;
+  translations?: AboutRegionTranslation[];
+}
+
 interface Schema {
   wine_regions: WineRegion[];
   categories_vg: Category[];
@@ -145,6 +178,10 @@ interface Schema {
   journal_vg: Article[];
   faq: FAQ[];
   faq_translations: FAQTranslation[];
+  about_page: AboutPage;
+  about_page_translations: AboutPageTranslation[];
+  about_regions: AboutRegion[];
+  about_regions_translations: AboutRegionTranslation[];
   languages: { code: string; name: string; direction: string }[];
 }
 
@@ -180,5 +217,5 @@ const directus = createDirectus<Schema>(DIRECTUS_URL)
   .with(rest());
 
 export default directus;
-export { readItems, registerUser, createItem, updateItem, readItem, formatEventDateRange };
-export type { WineRegion, Category, AdministrativeRegion, Department, Place, PlaceListing, PlaceTranslation, TerroirJunction, ArticleCard, Article, FAQ, FAQTranslation };
+export { readItems, readSingleton, registerUser, createItem, updateItem, readItem, formatEventDateRange };
+export type { WineRegion, Category, AdministrativeRegion, Department, Place, PlaceListing, PlaceTranslation, TerroirJunction, ArticleCard, Article, FAQ, FAQTranslation, AboutPage, AboutPageTranslation, AboutRegion, AboutRegionTranslation };
