@@ -4,16 +4,17 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  background-color: #fffaf3;
+  background-color: var(--color-sand);
   border: 2px solid #42403c;
   border-radius: 4px;
   padding: var(--space-md);
 }
 
 .ep-title {
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-family: var(--font-label);
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-elegant-black);
@@ -31,18 +32,24 @@
   gap: 0.15em;
   text-align: left;
   padding: 0.6em 0.7em;
-  background-color: #f7f0e4;
+  background-color: beige;
   border: 1px solid rgba(0, 0, 0, 0.18);
   border-radius: 3px;
   cursor: pointer;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   transition:
     background-color 0.15s ease,
+    box-shadow 0.45s ease,
     border-color 0.15s ease;
 }
 
 .ep-field:hover {
   background-color: #efe6d4;
-  border-color: rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 0, 0, 0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .ep-field--error {

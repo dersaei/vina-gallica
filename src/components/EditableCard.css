@@ -19,6 +19,7 @@
   color: var(--color-elegant-black);
   cursor: pointer;
   padding: 0;
+  position: absolute;
 }
 .ec-back:hover {
   text-decoration: underline;
@@ -30,6 +31,11 @@
   font-weight: 700;
   color: var(--color-elegant-black);
   text-align: center;
+  text-shadow:
+    2px 2px 0 goldenrod,
+    -1px 1px 0 gold,
+    1px -1px 0 goldenrod,
+    -1px -1px 0 #fff;
 }
 
 /* ── Card shell (mirrors PlaceCard.astro .place-card) ── */
@@ -278,7 +284,7 @@
 }
 
 .ec-modal {
-  background-color: #fffaf3;
+  background-color: beige;
   border: 2px solid #42403c;
   border-radius: 4px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
@@ -310,6 +316,8 @@
 .ec-modal-title {
   font-family: var(--font-heading);
   font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   font-weight: 700;
   color: var(--color-elegant-black);
 }
