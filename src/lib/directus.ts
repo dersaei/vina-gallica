@@ -72,6 +72,17 @@ interface PlaceListing {
   video: string[] | null;
 }
 
+interface OpeningHour {
+  day: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
+  open: string;
+  close: string;
+  closed: boolean;
+}
+
+interface Slogan {
+  text: string;
+}
+
 interface Place {
   id: string;
   Name: string;
@@ -90,6 +101,12 @@ interface Place {
   translations?: PlaceTranslation[];
   event_date_start: string | null;
   event_date_end: string | null;
+  // Premium fields (nullable — only filled on premium listings)
+  description_en?: string | null;
+  description_fr?: string | null;
+  opening_hours?: OpeningHour[] | null;
+  slogans_en?: Slogan[] | null;
+  slogans_fr?: Slogan[] | null;
 }
 
 interface Article {
@@ -218,4 +235,4 @@ const directus = createDirectus<Schema>(DIRECTUS_URL)
 
 export default directus;
 export { readItems, readSingleton, registerUser, createItem, updateItem, readItem, formatEventDateRange };
-export type { WineRegion, Category, AdministrativeRegion, Department, Place, PlaceListing, PlaceTranslation, TerroirJunction, ArticleCard, Article, FAQ, FAQTranslation, AboutPage, AboutPageTranslation, AboutRegion, AboutRegionTranslation };
+export type { WineRegion, Category, AdministrativeRegion, Department, Place, PlaceListing, PlaceTranslation, TerroirJunction, OpeningHour, Slogan, ArticleCard, Article, FAQ, FAQTranslation, AboutPage, AboutPageTranslation, AboutRegion, AboutRegionTranslation };

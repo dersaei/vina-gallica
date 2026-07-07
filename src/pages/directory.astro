@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import directus, { readItems } from '../lib/directus.ts';
 import type { Category, Place } from '../lib/directus.ts';
 import PlaceCard from '../components/PlaceCard.astro';
+import PlaceCardPremium from '../components/PlaceCardPremium.astro';
 import RegionFilter from '../components/RegionFilter.tsx';
 
 Astro.response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
@@ -27,6 +28,8 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
         'id', 'Name', 'slug', 'status',
         'address', 'postal_code', 'place', 'website', 'phone', 'logo',
         'event_date_start', 'event_date_end',
+        'description_en', 'opening_hours', 'slogans_en',
+        { user_id: ['plan'] },
         { category: ['id', 'name', 'slug', 'color'] },
         { terroir: [{ wine_regions_id: ['id', 'region', 'slug', 'color'] }] },
         { department: ['id', 'name', 'slug', 'color', { administrative_region: ['id', 'name', 'slug', 'color'] }] },
@@ -37,6 +40,16 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
     } as any)
   )) as unknown as Promise<Place[]>,
 ]);
+
+// Premium listings (owner on a premium plan) render as full-width cards;
+// free listings stay in the grid.
+function isPremium(p: Place): boolean {
+  const u = (p as unknown as { user_id?: { plan?: string } | null }).user_id;
+  return typeof u === 'object' && u !== null && u.plan === 'premium';
+}
+
+// Premium listings first, then the rest (stable within each group).
+const sortedPlaces = [...places].sort((a, b) => Number(isPremium(b)) - Number(isPremium(a)));
 ---
 
 
@@ -135,8 +148,10 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
 
 
     <div class="places-grid" id="places-grid">
-      {places.map((place) => (
-        <PlaceCard place={place} />
+      {sortedPlaces.map((place) => (
+        isPremium(place)
+          ? <div class="place-premium-row"><PlaceCardPremium place={place} /></div>
+          : <PlaceCard place={place} />
       ))}
     </div>
   </main>
@@ -145,7 +160,7 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
 <script>
   document.addEventListener('astro:page-load', () => {
     const catButtons = document.querySelectorAll<HTMLButtonElement>('#category-filters .filter-btn');
-    const cards = document.querySelectorAll<HTMLElement>('.place-card');
+    const cards = document.querySelectorAll<HTMLElement>('.place-card, .place-card-premium');
 
     let activeCategory = 'all';
     let activeWineRegion: string | null = null;
@@ -158,7 +173,9 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
         const matchWine = !activeWineRegion || (card.dataset.wineRegion?.split(' ').includes(activeWineRegion) ?? false);
         const matchAdmin = !activeAdminRegion || card.dataset.adminRegion === activeAdminRegion;
         const matchDept = !activeDept || card.dataset.dept === activeDept;
-        card.style.display = (matchCat && matchWine && matchAdmin && matchDept) ? '' : 'none';
+        // Premium cards live inside a full-width wrapper row — toggle that.
+        const target = (card.closest('.place-premium-row') as HTMLElement | null) ?? card;
+        target.style.display = (matchCat && matchWine && matchAdmin && matchDept) ? '' : 'none';
       });
     }
 
@@ -260,6 +277,9 @@ const [categories, wineRegions, adminRegions, departments, places] = await Promi
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: var(--space-md);
     padding: var(--space-lg);
+  }
+.place-premium-row {
+    grid-column: 1 / -1;
   }
 .filter-by-wrap {
     padding: 0 var(--space-lg);
