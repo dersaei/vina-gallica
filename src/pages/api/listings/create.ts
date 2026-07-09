@@ -87,6 +87,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       ? data.nearest_train_station_distance_m : null;
     payload.description_en = (data.description_en as string)?.trim() || null;
     payload.description_fr = (data.description_fr as string)?.trim() || null;
+    payload.slogans_en = Array.isArray(data.slogans_en) ? data.slogans_en : null;
+    payload.slogans_fr = Array.isArray(data.slogans_fr) ? data.slogans_fr : null;
     payload.translate_to_en = data.translate_to_en === true;
     payload.translate_to_fr = data.translate_to_fr === true;
     if (Array.isArray(data.gallery)) payload.gallery = data.gallery;

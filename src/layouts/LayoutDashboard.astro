@@ -3,6 +3,9 @@ import LayoutSubmit from "./LayoutSubmit.astro";
 import { Image } from "astro:assets";
 import logoMark from "../assets/logo-vina-gallica.png";
 import logoText from "../assets/vina-gallica-text.png";
+import { getValidAccessToken } from "../lib/auth";
+
+const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
 
 interface Props {
   title: string;
@@ -14,6 +17,48 @@ interface Props {
 const { title, active, lang = "en", plan = "free" } = Astro.props;
 
 const isFr = lang === "fr";
+
+// Bar state: prefer live user data (plan + trial countdown); fall back to the
+// plan passed by the page if the fetch is unavailable.
+let effectivePlan: "free" | "premium" = plan;
+let trialEndsAt: string | null = null;
+const accessToken = await getValidAccessToken(Astro.cookies);
+if (accessToken) {
+  try {
+    const res = await fetch(`${DIRECTUS_URL}/users/me?fields=plan,trial_ends_at`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (res.ok) {
+      const body = (await res.json()) as { data: { plan?: string; trial_ends_at?: string | null } };
+      effectivePlan = body.data.plan === "premium" ? "premium" : "free";
+      trialEndsAt = body.data.trial_ends_at ?? null;
+    }
+  } catch { /* token expired — middleware guards the route */ }
+}
+
+let trialDaysLeft: number | null = null;
+if (effectivePlan === "premium" && trialEndsAt) {
+  const days = Math.ceil((new Date(trialEndsAt).getTime() - Date.now()) / 86_400_000);
+  if (days > 0) trialDaysLeft = days;
+}
+
+let planLabel: string;
+let planClass: "free" | "premium";
+if (effectivePlan !== "premium") {
+  planLabel = isFr ? "Gratuit" : "Free";
+  planClass = "free";
+} else if (trialDaysLeft !== null) {
+  const word = isFr
+    ? trialDaysLeft === 1 ? "jour" : "jours"
+    : trialDaysLeft === 1 ? "day left" : "days left";
+  planLabel = isFr
+    ? `Essai Premium · ${trialDaysLeft} ${word}`
+    : `Premium Trial · ${trialDaysLeft} ${word}`;
+  planClass = "premium";
+} else {
+  planLabel = "Premium";
+  planClass = "premium";
+}
 
 const nav = isFr
   ? [
@@ -65,10 +110,8 @@ const langSwitch = isFr
     </nav>
 
     <div class="dash-bar">
-      <span class={`dash-bar-plan dash-bar-plan--${plan}`}>
-        {plan === "premium"
-          ? "Premium"
-          : (isFr ? "Gratuit" : "Free")}
+      <span class={`dash-bar-plan dash-bar-plan--${planClass}`}>
+        {planLabel}
       </span>
     </div>
 

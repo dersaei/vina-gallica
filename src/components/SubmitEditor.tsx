@@ -11,6 +11,8 @@ import EditPanel from "./EditPanel";
 import EditableCard from "./EditableCard";
 import MapPopupPreview from "./MapPopupPreview";
 import MapPreviewPanel from "./MapPreviewPanel";
+import PlaceCardPremiumPreview from "./PlaceCardPremiumPreview";
+import ResponsivePreview from "./ResponsivePreview";
 import "./SubmitEditor.css";
 
 export type { DeptOption };
@@ -34,6 +36,7 @@ export default function SubmitEditor({
   categories,
   departments,
   listing,
+  directusUrl,
   onSaved,
   onCancel,
 }: Props) {
@@ -77,12 +80,30 @@ export default function SubmitEditor({
               tx={tx}
               s={s}
               vm={vm}
+              plan={plan}
+              directusUrl={directusUrl}
               wineRegions={wineRegions}
               categories={categories}
             />
           </div>
-          <div className="se-tile se-tile--card">
-            <EditableCard tx={tx} s={s} vm={vm} />
+          <div
+            className={`se-tile se-tile--card${plan === "premium" ? " se-tile--premium-card" : ""}`}
+          >
+            {plan === "premium" ? (
+              <ResponsivePreview
+                labels={{ desktop: tx.previewDesktop, mobile: tx.previewMobile }}
+              >
+                <PlaceCardPremiumPreview
+                  lang={lang}
+                  tx={tx}
+                  s={s}
+                  vm={vm}
+                  directusUrl={directusUrl}
+                />
+              </ResponsivePreview>
+            ) : (
+              <EditableCard tx={tx} s={s} vm={vm} />
+            )}
             <MapPopupPreview lang={lang} tx={tx} s={s} vm={vm} />
           </div>
           <div className="se-tile se-tile--panel">

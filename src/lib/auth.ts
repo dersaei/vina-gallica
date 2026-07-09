@@ -32,6 +32,22 @@ function clearAuthCookies(cookies: AstroCookies) {
   cookies.delete("directus_refresh_token", { path: "/" });
 }
 
+// Refresh tokens rotate on use, so a single request must resolve the token
+// exactly once — middleware, page and layout all call this. Memoise per request
+// keyed by the (request-unique) cookies object; without this, a second refresh
+// would reuse an already-rotated token, fail, and log the user out.
+const inFlight = new WeakMap<AstroCookies, Promise<string | null>>();
+
+export function getValidAccessToken(
+  cookies: AstroCookies,
+): Promise<string | null> {
+  const cached = inFlight.get(cookies);
+  if (cached) return cached;
+  const pending = resolveAccessToken(cookies);
+  inFlight.set(cookies, pending);
+  return pending;
+}
+
 /**
  * Returns a usable Directus access token, transparently refreshing it when the
  * short-lived access cookie has expired but the 7-day refresh token is still
@@ -39,7 +55,7 @@ function clearAuthCookies(cookies: AstroCookies) {
  * session is genuinely over (no/expired refresh token) — callers should treat
  * null as "not authenticated".
  */
-export async function getValidAccessToken(
+async function resolveAccessToken(
   cookies: AstroCookies,
 ): Promise<string | null> {
   const accessToken = cookies.get("directus_access_token")?.value;

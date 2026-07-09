@@ -78,3 +78,82 @@
   font-style: italic;
   color: #a89c88;
 }
+
+/* ── Premium modals ── */
+
+.ep-logo-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.ep-logo-preview img {
+  max-width: 200px;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.ep-file {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  font-family: var(--font-hero);
+  font-size: 0.9rem;
+}
+
+.ep-time-input {
+  width: 4.5em;
+  font-family: var(--font-hero);
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 0.4em 0.3em;
+  border: 1px solid #42403c;
+  border-radius: 2px;
+  background-color: #fff;
+  color: var(--color-elegant-black);
+}
+
+.ep-hours {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.ep-hours-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  flex-wrap: wrap;
+}
+.ep-hours-day {
+  flex: 0 0 5.5em;
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-elegant-black);
+}
+.ep-hours-times {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.ep-hours-closed {
+  flex: 1;
+  font-family: var(--font-hero);
+  font-style: italic;
+  color: #a89c88;
+}
+.ep-hours-closed-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  margin-left: auto;
+  font-family: var(--font-hero);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.ep-slogans {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}

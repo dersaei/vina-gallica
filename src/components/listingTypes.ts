@@ -24,6 +24,8 @@ export interface Listing {
   logo: string | null;
   description_en: string | null;
   description_fr: string | null;
+  slogans_en: { text: string }[] | null;
+  slogans_fr: { text: string }[] | null;
   translate_to_en: boolean;
   translate_to_fr: boolean;
   gallery: string[] | null;

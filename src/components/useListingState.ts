@@ -226,6 +226,12 @@ export function useListingState({
 
   const [descEn, setDescEn] = useState(listing?.description_en ?? "");
   const [descFr, setDescFr] = useState(listing?.description_fr ?? "");
+  const [slogansEn, setSlogansEn] = useState<string[]>(
+    (listing?.slogans_en ?? []).map((s) => s.text),
+  );
+  const [slogansFr, setSlogansFr] = useState<string[]>(
+    (listing?.slogans_fr ?? []).map((s) => s.text),
+  );
   const [transEn, setTransEn] = useState(listing?.translate_to_en ?? false);
   const [transFr, setTransFr] = useState(listing?.translate_to_fr ?? false);
   const [gallery, setGallery] = useState<string[]>(listing?.gallery ?? []);
@@ -313,6 +319,12 @@ export function useListingState({
       logo: logoId,
       description_en: isPremium ? descEn : undefined,
       description_fr: isPremium ? descFr : undefined,
+      slogans_en: isPremium
+        ? slogansEn.map((t) => t.trim()).filter(Boolean).map((text) => ({ text }))
+        : undefined,
+      slogans_fr: isPremium
+        ? slogansFr.map((t) => t.trim()).filter(Boolean).map((text) => ({ text }))
+        : undefined,
       translate_to_en: isPremium ? transEn : undefined,
       translate_to_fr: isPremium ? transFr : undefined,
       gallery: isPremium ? gallery : undefined,
@@ -430,6 +442,10 @@ export function useListingState({
     setDescEn,
     descFr,
     setDescFr,
+    slogansEn,
+    setSlogansEn,
+    slogansFr,
+    setSlogansFr,
     transEn,
     setTransEn,
     transFr,

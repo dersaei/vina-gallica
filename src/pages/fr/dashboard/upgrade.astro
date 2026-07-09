@@ -1,11 +1,59 @@
 ---
 export const prerender = false;
 import LayoutDashboard from "../../../layouts/LayoutDashboard.astro";
+import UpgradeFlow, { type ServiceInfo } from "../../../components/UpgradeFlow";
+import { getValidAccessToken } from "../../../lib/auth";
+
+const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
+const DIRECTUS_SERVICE_TOKEN = import.meta.env.DIRECTUS_SERVICE_TOKEN ?? import.meta.env.DIRECTUS_STATIC_TOKEN;
+
+const accessToken = await getValidAccessToken(Astro.cookies);
+
+let email = "";
+let plan: "free" | "premium" = "free";
+if (accessToken) {
+  try {
+    const res = await fetch(`${DIRECTUS_URL}/users/me?fields=email,plan`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (res.ok) {
+      const body = (await res.json()) as { data: { email?: string; plan?: string } };
+      email = body.data.email ?? "";
+      if (body.data.plan === "premium") plan = "premium";
+    }
+  } catch { /* token expired — middleware guards the route */ }
+}
+
+let service: ServiceInfo | null = null;
+try {
+  const res = await fetch(
+    `${DIRECTUS_URL}/items/services?filter[code][_eq]=VG_ANNUAL_FR&filter[active][_eq]=true` +
+      `&fields=code,name_fr,description_fr&limit=1`,
+    { headers: { Authorization: `Bearer ${DIRECTUS_SERVICE_TOKEN}` } },
+  );
+  if (res.ok) {
+    const body = (await res.json()) as {
+      data: { code: string; name_fr: string | null; description_fr: string | null }[];
+    };
+    const s = body.data[0];
+    if (s) {
+      service = {
+        code: s.code,
+        name: s.name_fr ?? "Vina Gallica Premium",
+        description: s.description_fr ?? "",
+      };
+    }
+  }
+} catch { /* catalog fetch failed — component shows a graceful message */ }
 ---
 
-<LayoutDashboard title="Abonnement | Vina Gallica" active="upgrade" lang="fr">
-  <div style="max-width:860px;margin:auto;text-align:center;padding:var(--space-xl) 0;">
-    <h1 style="font-family:var(--font-heading);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--color-elegant-black);    text-shadow: 2px 2px 0 goldenrod, -1px 1px 0 gold, 1px -1px 0 goldenrod, -1px -1px 0 #fff;">Abonnement Premium</h1>
-    <p style="font-family:var(--font-extra);margin-top:var(--space-md);color:var(--color-elegant-black);">Bientôt disponible.</p>
-  </div>
+<LayoutDashboard title="Abonnement | Vina Gallica" active="upgrade" lang="fr" plan={plan}>
+  <UpgradeFlow
+    client:load
+    lang="fr"
+    service={service}
+    userEmail={email}
+    alreadyPremium={plan === "premium"}
+    privacyHref="/fr/politique-de-confidentialite"
+  />
 </LayoutDashboard>

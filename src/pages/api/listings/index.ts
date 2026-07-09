@@ -28,7 +28,7 @@ export const GET: APIRoute = async ({ cookies }) => {
     "category.id", "category.name", "category.name_fr",
     "terroir.wine_regions_id.id", "terroir.wine_regions_id.region",
     "address", "postal_code", "place", "location", "website", "phone",
-    "logo", "description_en", "description_fr",
+    "logo", "description_en", "description_fr", "slogans_en", "slogans_fr",
     "translate_to_en", "translate_to_fr",
     "gallery", "certificates", "video",
     "opening_hours", "event_date_start", "event_date_end",

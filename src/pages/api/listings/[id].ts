@@ -86,6 +86,8 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
       ? data.nearest_train_station_distance_m : null;
     payload.description_en = (data.description_en as string)?.trim() || null;
     payload.description_fr = (data.description_fr as string)?.trim() || null;
+    payload.slogans_en = Array.isArray(data.slogans_en) ? data.slogans_en : null;
+    payload.slogans_fr = Array.isArray(data.slogans_fr) ? data.slogans_fr : null;
     payload.translate_to_en = data.translate_to_en === true;
     payload.translate_to_fr = data.translate_to_fr === true;
     if (Array.isArray(data.gallery)) payload.gallery = data.gallery;
@@ -98,7 +100,7 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
     "category.id", "category.name", "category.name_fr",
     "terroir.wine_regions_id.id", "terroir.wine_regions_id.region",
     "address", "postal_code", "place", "location", "website", "phone",
-    "logo", "description_en", "description_fr",
+    "logo", "description_en", "description_fr", "slogans_en", "slogans_fr",
     "translate_to_en", "translate_to_fr",
     "gallery", "certificates", "video",
     "opening_hours", "event_date_start", "event_date_end",

@@ -59,6 +59,12 @@
   gap: var(--space-md);
 }
 
+/* Premium card preview needs room for the responsive (iframe) stage. */
+.se-tile--premium-card {
+  width: 680px;
+  max-width: 92vw;
+}
+
 .se-tile--panel {
   width: 380px;
 }

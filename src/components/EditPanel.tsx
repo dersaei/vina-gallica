@@ -1,6 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "./DatePicker";
-import { useGeocoder, type WineRegion, type Category } from "./useListingState";
+import {
+  useGeocoder,
+  uploadFile,
+  assetUrl,
+  DAYS,
+  DAY_LABELS,
+  type WineRegion,
+  type Category,
+} from "./useListingState";
 import {
   EditModal,
   type ListingState,
@@ -16,8 +24,62 @@ interface Props {
   tx: Tx;
   s: ListingState;
   vm: ViewModel;
+  plan: "free" | "premium";
+  directusUrl: string;
   wineRegions: WineRegion[];
   categories: Category[];
+}
+
+// ── TimeInput — masked HH:MM field (ported from ListingForm) ────────────────
+function TimeInput({
+  value,
+  onChange,
+  ariaLabel,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  ariaLabel?: string;
+}) {
+  const [raw, setRaw] = useState(value.replace(":", ""));
+  useEffect(() => {
+    setRaw(value.replace(":", ""));
+  }, [value]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const digits = e.target.value.replace(/\D/g, "").slice(0, 4);
+    setRaw(digits);
+    if (digits.length === 4) {
+      const h = parseInt(digits.slice(0, 2), 10);
+      const m = parseInt(digits.slice(2, 4), 10);
+      if (h <= 23 && m <= 59) {
+        onChange(`${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`);
+      }
+    }
+  }
+  function handleBlur() {
+    const digits = raw.padEnd(4, "0");
+    const h = Math.min(parseInt(digits.slice(0, 2), 10), 23);
+    const m = Math.min(parseInt(digits.slice(2, 4), 10), 59);
+    const normalized = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+    setRaw(normalized.replace(":", ""));
+    onChange(normalized);
+  }
+  const display = raw.length > 2 ? `${raw.slice(0, 2)}:${raw.slice(2)}` : raw;
+
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      className="ep-time-input"
+      value={display}
+      aria-label={ariaLabel}
+      placeholder="09:00"
+      maxLength={5}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      onFocus={(e) => e.target.select()}
+    />
+  );
 }
 
 // One row in the edit panel: field name + current status + opens its modal.
@@ -55,12 +117,18 @@ export default function EditPanel({
   tx,
   s,
   vm,
+  plan,
+  directusUrl,
   wineRegions,
   categories,
 }: Props) {
+  const isPremium = plan === "premium";
   const [modal, setModal] = useState<ModalKind>(null);
   const [nameDraft, setNameDraft] = useState(s.name);
   const [websiteDraft, setWebsiteDraft] = useState(s.website);
+  const [phoneDraft, setPhoneDraft] = useState(s.phone);
+  const [logoUploading, setLogoUploading] = useState(false);
+  const [logoError, setLogoError] = useState<string | null>(null);
 
   // Geocoder lives inside the location modal — only mount it while open.
   const geocoderRef = useGeocoder(s.onGeoResult, modal === "location");
@@ -69,6 +137,30 @@ export default function EditPanel({
     vm.selectedRegions.length > 0
       ? vm.selectedRegions.map((r) => r.region).join(", ")
       : null;
+
+  async function handleLogoFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setLogoError(null);
+    setLogoUploading(true);
+    try {
+      const id = await uploadFile(file, "logo");
+      s.setLogoId(id);
+    } catch (err) {
+      setLogoError(err instanceof Error ? err.message : "Upload failed.");
+    } finally {
+      setLogoUploading(false);
+    }
+  }
+
+  // Slogan helpers — edit up to 3 slots by index (blanks kept in place;
+  // buildPayload trims empties on save).
+  function setSloganAt(which: "en" | "fr", i: number, val: string) {
+    const cur = which === "en" ? s.slogansEn : s.slogansFr;
+    const next = [cur[0] ?? "", cur[1] ?? "", cur[2] ?? ""];
+    next[i] = val;
+    (which === "en" ? s.setSlogansEn : s.setSlogansFr)(next);
+  }
 
   return (
     <div className="ep">
@@ -119,6 +211,59 @@ export default function EditPanel({
             notSet={tx.notSet}
             onClick={() => setModal("dates")}
           />
+        )}
+
+        {isPremium && (
+          <>
+            <FieldButton
+              label={tx.logo}
+              value={s.logoId ? tx.logoSet : null}
+              notSet={tx.notSet}
+              onClick={() => setModal("logo")}
+            />
+            <FieldButton
+              label={tx.phone}
+              value={s.phone || null}
+              notSet={tx.notSet}
+              onClick={() => {
+                setPhoneDraft(s.phone);
+                setModal("phone");
+              }}
+            />
+            {!s.isFestival && (
+              <FieldButton
+                label={tx.hours}
+                value={
+                  s.openingHours.some((h) => !h.closed && h.open)
+                    ? s.openingHours.filter((h) => !h.closed && h.open).length +
+                      "/7"
+                    : null
+                }
+                notSet={tx.notSet}
+                onClick={() => setModal("hours")}
+              />
+            )}
+            <FieldButton
+              label={tx.slogansEn}
+              value={
+                s.slogansEn.filter((x) => x.trim()).length > 0
+                  ? tx.slogansCount(s.slogansEn.filter((x) => x.trim()).length)
+                  : null
+              }
+              notSet={tx.notSet}
+              onClick={() => setModal("slogansEn")}
+            />
+            <FieldButton
+              label={tx.slogansFr}
+              value={
+                s.slogansFr.filter((x) => x.trim()).length > 0
+                  ? tx.slogansCount(s.slogansFr.filter((x) => x.trim()).length)
+                  : null
+              }
+              notSet={tx.notSet}
+              onClick={() => setModal("slogansFr")}
+            />
+          </>
         )}
       </div>
 
@@ -279,6 +424,144 @@ export default function EditPanel({
                 onChange={s.setEventEnd}
               />
             </div>
+          </div>
+        </EditModal>
+      )}
+
+      {modal === "logo" && (
+        <EditModal
+          title={tx.logo}
+          hint={tx.logoHint}
+          onClose={() => setModal(null)}
+          doneLabel={tx.done}
+        >
+          {s.logoId && (
+            <div className="ep-logo-preview">
+              <img
+                src={assetUrl(directusUrl, s.logoId, "width=240&format=webp")}
+                alt="Logo"
+              />
+              <button
+                type="button"
+                className="lf-btn lf-btn--ghost"
+                onClick={() => s.setLogoId(null)}
+              >
+                {tx.logoRemove}
+              </button>
+            </div>
+          )}
+          {!s.logoId && (
+            <label className="ep-file">
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                onChange={handleLogoFile}
+                disabled={logoUploading}
+              />
+              {logoUploading && <span>{tx.logoUploading}</span>}
+            </label>
+          )}
+          {logoError && <div className="ec-error">{logoError}</div>}
+        </EditModal>
+      )}
+
+      {modal === "phone" && (
+        <EditModal
+          title={tx.phone}
+          onClose={() => {
+            s.setPhone(phoneDraft.trim());
+            setModal(null);
+          }}
+          doneLabel={tx.done}
+        >
+          <input
+            type="tel"
+            className="ec-modal-input"
+            autoFocus
+            value={phoneDraft}
+            placeholder={tx.phonePlaceholder}
+            aria-label={tx.phone}
+            onChange={(e) => setPhoneDraft(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                s.setPhone(phoneDraft.trim());
+                setModal(null);
+              }
+            }}
+          />
+        </EditModal>
+      )}
+
+      {modal === "hours" && (
+        <EditModal
+          title={tx.hours}
+          onClose={() => setModal(null)}
+          doneLabel={tx.done}
+        >
+          <div className="ep-hours">
+            {DAYS.map((day) => {
+              const h = s.openingHours.find((x) => x.day === day);
+              const closed = h?.closed ?? false;
+              return (
+                <div key={day} className="ep-hours-row">
+                  <span className="ep-hours-day">{DAY_LABELS[lang][day]}</span>
+                  {closed ? (
+                    <span className="ep-hours-closed">{tx.hoursClosed}</span>
+                  ) : (
+                    <span className="ep-hours-times">
+                      <TimeInput
+                        value={h?.open ?? ""}
+                        ariaLabel={`${DAY_LABELS[lang][day]} open`}
+                        onChange={(v) => s.updateHour(day, { open: v })}
+                      />
+                      <span>–</span>
+                      <TimeInput
+                        value={h?.close ?? ""}
+                        ariaLabel={`${DAY_LABELS[lang][day]} close`}
+                        onChange={(v) => s.updateHour(day, { close: v })}
+                      />
+                    </span>
+                  )}
+                  <label className="ep-hours-closed-toggle">
+                    <input
+                      type="checkbox"
+                      checked={closed}
+                      onChange={(e) =>
+                        s.updateHour(day, { closed: e.target.checked })
+                      }
+                    />
+                    <span>{tx.hoursClosed}</span>
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        </EditModal>
+      )}
+
+      {(modal === "slogansEn" || modal === "slogansFr") && (
+        <EditModal
+          title={modal === "slogansEn" ? tx.slogansEn : tx.slogansFr}
+          hint={tx.slogansHint}
+          onClose={() => setModal(null)}
+          doneLabel={tx.done}
+        >
+          <div className="ep-slogans">
+            {[0, 1, 2].map((i) => {
+              const which = modal === "slogansEn" ? "en" : "fr";
+              const arr = which === "en" ? s.slogansEn : s.slogansFr;
+              return (
+                <input
+                  key={i}
+                  type="text"
+                  className="ec-modal-input"
+                  value={arr[i] ?? ""}
+                  placeholder={`${tx.sloganPlaceholder} ${i + 1}`}
+                  aria-label={`${tx.sloganPlaceholder} ${i + 1}`}
+                  onChange={(e) => setSloganAt(which, i, e.target.value)}
+                />
+              );
+            })}
           </div>
         </EditModal>
       )}

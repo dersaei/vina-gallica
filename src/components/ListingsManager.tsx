@@ -216,6 +216,8 @@ export default function ListingsManager({
         logo: l.logo,
         description_en: l.description_en,
         description_fr: l.description_fr,
+        slogans_en: l.slogans_en,
+        slogans_fr: l.slogans_fr,
         translate_to_en: l.translate_to_en,
         translate_to_fr: l.translate_to_fr,
         gallery: l.gallery ?? [],

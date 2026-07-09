@@ -23,6 +23,11 @@ export type ModalKind =
   | "location"
   | "website"
   | "dates"
+  | "logo"
+  | "phone"
+  | "hours"
+  | "slogansEn"
+  | "slogansFr"
   | null;
 
 // ── Translations ─────────────────────────────────────────────────────────────
@@ -75,9 +80,27 @@ export const t = {
     eventEnd: "End",
     selectDates: "Set event dates",
     websiteLabel: "Visit website",
+    profileLabel: "Visit profile",
     wineRegionLabel: "Wine Region",
     department: "Department",
     region: "Region",
+    // premium fields
+    logo: "Logo",
+    logoHint: "Upload your logo (PNG, JPG, WebP or SVG, max 2 MB).",
+    logoUploading: "Uploading…",
+    logoRemove: "Remove logo",
+    logoSet: "Logo added",
+    phone: "Phone",
+    phonePlaceholder: "+33 5 57 88 83 83",
+    hours: "Opening hours",
+    hoursClosed: "Closed",
+    slogansEn: "Slogans (EN)",
+    slogansFr: "Slogans (FR)",
+    slogansHint: "Up to 3 short marketing taglines.",
+    sloganPlaceholder: "Marketing tagline",
+    slogansCount: (n: number) => `${n} slogan${n === 1 ? "" : "s"}`,
+    previewDesktop: "Desktop",
+    previewMobile: "Mobile",
   },
   fr: {
     newListing: "Créer une fiche gratuite",
@@ -127,9 +150,27 @@ export const t = {
     eventEnd: "Fin",
     selectDates: "Définir les dates",
     websiteLabel: "Visiter le site",
+    profileLabel: "Voir le profil",
     wineRegionLabel: "Région viticole",
     department: "Département",
     region: "Région",
+    // premium fields
+    logo: "Logo",
+    logoHint: "Téléchargez votre logo (PNG, JPG, WebP ou SVG, max 2 Mo).",
+    logoUploading: "Téléchargement…",
+    logoRemove: "Retirer le logo",
+    logoSet: "Logo ajouté",
+    phone: "Téléphone",
+    phonePlaceholder: "+33 5 57 88 83 83",
+    hours: "Horaires d'ouverture",
+    hoursClosed: "Fermé",
+    slogansEn: "Slogans (EN)",
+    slogansFr: "Slogans (FR)",
+    slogansHint: "Jusqu'à 3 courts slogans marketing.",
+    sloganPlaceholder: "Slogan marketing",
+    slogansCount: (n: number) => `${n} slogan${n === 1 ? "" : "s"}`,
+    previewDesktop: "Ordinateur",
+    previewMobile: "Mobile",
   },
 } as const;
 

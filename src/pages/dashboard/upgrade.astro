@@ -1,29 +1,59 @@
 ---
 export const prerender = false;
 import LayoutDashboard from "../../layouts/LayoutDashboard.astro";
+import UpgradeFlow, { type ServiceInfo } from "../../components/UpgradeFlow";
+import { getValidAccessToken } from "../../lib/auth";
+
+const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
+const DIRECTUS_SERVICE_TOKEN = import.meta.env.DIRECTUS_SERVICE_TOKEN ?? import.meta.env.DIRECTUS_STATIC_TOKEN;
+
+const accessToken = await getValidAccessToken(Astro.cookies);
+
+let email = "";
+let plan: "free" | "premium" = "free";
+if (accessToken) {
+  try {
+    const res = await fetch(`${DIRECTUS_URL}/users/me?fields=email,plan`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (res.ok) {
+      const body = (await res.json()) as { data: { email?: string; plan?: string } };
+      email = body.data.email ?? "";
+      if (body.data.plan === "premium") plan = "premium";
+    }
+  } catch { /* token expired — middleware guards the route */ }
+}
+
+let service: ServiceInfo | null = null;
+try {
+  const res = await fetch(
+    `${DIRECTUS_URL}/items/services?filter[code][_eq]=VG_ANNUAL_FR&filter[active][_eq]=true` +
+      `&fields=code,name_en,description_en&limit=1`,
+    { headers: { Authorization: `Bearer ${DIRECTUS_SERVICE_TOKEN}` } },
+  );
+  if (res.ok) {
+    const body = (await res.json()) as {
+      data: { code: string; name_en: string | null; description_en: string | null }[];
+    };
+    const s = body.data[0];
+    if (s) {
+      service = {
+        code: s.code,
+        name: s.name_en ?? "Vina Gallica Premium",
+        description: s.description_en ?? "",
+      };
+    }
+  }
+} catch { /* catalog fetch failed — component shows a graceful message */ }
 ---
 
-<LayoutDashboard title="Upgrade | Vina Gallica" active="upgrade">
-  <h1 class="dash-title">Upgrade to Premium</h1>
-  <p class="dash-placeholder-text">Stripe checkout is coming soon.</p>
+<LayoutDashboard title="Upgrade | Vina Gallica" active="upgrade" plan={plan}>
+  <UpgradeFlow
+    client:load
+    lang="en"
+    service={service}
+    userEmail={email}
+    alreadyPremium={plan === "premium"}
+    privacyHref="/privacy-policy"
+  />
 </LayoutDashboard>
-
-<style>
-  .dash-title {
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    text-shadow: 2px 2px 0 goldenrod, -1px 1px 0 gold, 1px -1px 0 goldenrod, -1px -1px 0 #fff;
-    color: var(--color-elegant-black);
-  }
-
-  .dash-placeholder-text {
-    font-family: var(--font-extra);
-    font-size: 0.92rem;
-    color: var(--color-elegant-black);
-    opacity: 0.55;
-    line-height: 1.6;
-  }
-</style>
