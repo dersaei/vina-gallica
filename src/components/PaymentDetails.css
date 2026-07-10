@@ -1,0 +1,140 @@
+.pay {
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  text-align: left;
+  background-color: white;
+  border: 2px solid var(--color-elegant-black);
+  padding: var(--space-md) var(--space-md) var(--space-sm);
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.pay--flat {
+  max-width: none;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  padding: 0;
+}
+
+.pay-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-elegant-black);
+  margin: 0 0 var(--space-sm);
+  text-align: center;
+}
+
+.pay-rows {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pay-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.pay-row:last-child {
+  border-bottom: none;
+}
+
+.pay-label {
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-elegant-black);
+  flex-shrink: 0;
+}
+
+.pay-value {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.pay-value-text {
+  font-family: var(--font-extra);
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--color-elegant-black);
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.pay-copy {
+  font-family: var(--font-label);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.5rem 0.1rem;
+  background-color: var(--color-sand);
+  color: var(--color-elegant-black);
+  border: 1px solid var(--color-elegant-black);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.pay-copy:hover {
+  background-color: firebrick;
+  color: var(--color-sand);
+}
+
+.pay-copy--done {
+  background-color: #1a6b1a;
+  color: var(--color-sand);
+}
+
+.pay-copyall {
+  display: block;
+  width: 100%;
+  margin-top: var(--space-sm);
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.6rem 1rem 0.3rem;
+  background-color: firebrick;
+  color: var(--color-sand);
+  border: 2px solid var(--color-elegant-black);
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.pay-copyall:hover {
+  background-color: var(--color-elegant-black);
+  color: var(--color-gold);
+}
+
+.pay-note {
+  font-family: var(--font-hero);
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-elegant-black);
+  opacity: 0.7;
+  margin: var(--space-sm) 0 0;
+  text-align: center;
+}

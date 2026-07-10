@@ -395,6 +395,60 @@
   }
 }
 
+/* ── SUCCESS SUMMARY ─────────────────────────────────────── */
+.upg-summary {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: left;
+  border: 1px dashed rgba(0, 0, 0, 0.3);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.upg-summary-title {
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-elegant-black);
+  opacity: 0.7;
+  margin: 0 0 0.5rem;
+}
+
+.upg-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.upg-summary-row:last-child {
+  border-bottom: none;
+}
+
+.upg-summary-row dt {
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-elegant-black);
+  opacity: 0.65;
+  flex-shrink: 0;
+}
+
+.upg-summary-row dd {
+  font-family: var(--font-extra);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-elegant-black);
+  margin: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 720px) {
   .upg-columns {

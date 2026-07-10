@@ -2,6 +2,8 @@
 export const prerender = false;
 import LayoutDashboard from "../../../layouts/LayoutDashboard.astro";
 import UpgradeFlow, { type ServiceInfo } from "../../../components/UpgradeFlow";
+import PremiumStatus from "../../../components/PremiumStatus";
+import type { PaymentInfo } from "../../../components/PaymentDetails";
 import { getValidAccessToken } from "../../../lib/auth";
 
 const DIRECTUS_URL = import.meta.env.DIRECTUS_URL;
@@ -9,31 +11,46 @@ const DIRECTUS_SERVICE_TOKEN = import.meta.env.DIRECTUS_SERVICE_TOKEN ?? import.
 
 const accessToken = await getValidAccessToken(Astro.cookies);
 
+let userId = "";
 let email = "";
 let plan: "free" | "premium" = "free";
+let trialEndsAt: string | null = null;
 if (accessToken) {
   try {
-    const res = await fetch(`${DIRECTUS_URL}/users/me?fields=email,plan`, {
+    const res = await fetch(`${DIRECTUS_URL}/users/me?fields=id,email,plan,trial_ends_at`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
     if (res.ok) {
-      const body = (await res.json()) as { data: { email?: string; plan?: string } };
+      const body = (await res.json()) as {
+        data: { id?: string; email?: string; plan?: string; trial_ends_at?: string | null };
+      };
+      userId = body.data.id ?? "";
       email = body.data.email ?? "";
       if (body.data.plan === "premium") plan = "premium";
+      trialEndsAt = body.data.trial_ends_at ?? null;
     }
   } catch { /* token expired — middleware guards the route */ }
 }
 
 let service: ServiceInfo | null = null;
+let payment: PaymentInfo = { payeeName: null, iban: null, bic: null, amountLabel: "50 €" };
 try {
   const res = await fetch(
     `${DIRECTUS_URL}/items/services?filter[code][_eq]=VG_ANNUAL_FR&filter[active][_eq]=true` +
-      `&fields=code,name_fr,description_fr&limit=1`,
+      `&fields=code,name_fr,description_fr,price_gross_eur,payee_name,iban,bic&limit=1`,
     { headers: { Authorization: `Bearer ${DIRECTUS_SERVICE_TOKEN}` } },
   );
   if (res.ok) {
     const body = (await res.json()) as {
-      data: { code: string; name_fr: string | null; description_fr: string | null }[];
+      data: {
+        code: string;
+        name_fr: string | null;
+        description_fr: string | null;
+        price_gross_eur: string | number | null;
+        payee_name: string | null;
+        iban: string | null;
+        bic: string | null;
+      }[];
     };
     const s = body.data[0];
     if (s) {
@@ -42,18 +59,77 @@ try {
         name: s.name_fr ?? "Vina Gallica Premium",
         description: s.description_fr ?? "",
       };
+      const amount =
+        s.price_gross_eur != null ? Number(s.price_gross_eur) : 50;
+      payment = {
+        payeeName: s.payee_name,
+        iban: s.iban,
+        bic: s.bic,
+        amountLabel: new Intl.NumberFormat("fr-FR", {
+          style: "currency",
+          currency: "EUR",
+        }).format(amount),
+      };
     }
   }
 } catch { /* catalog fetch failed — component shows a graceful message */ }
+
+// Pour la vue essai/premium, afficher le dernier numéro de facture émise.
+let reference: string | null = null;
+let benefits: string[] = [];
+if (plan === "premium" && userId) {
+  try {
+    const res = await fetch(
+      `${DIRECTUS_URL}/items/form_submissions?filter[user][_eq]=${userId}` +
+        `&filter[status][_eq]=issued&sort=-date_created&limit=1&fields=issued_invoice_number`,
+      { headers: { Authorization: `Bearer ${DIRECTUS_SERVICE_TOKEN}` } },
+    );
+    if (res.ok) {
+      const body = (await res.json()) as {
+        data: { issued_invoice_number: string | null }[];
+      };
+      reference = body.data[0]?.issued_invoice_number ?? null;
+    }
+  } catch { /* non-fatal — payment box just omits the reference */ }
+
+  try {
+    const res = await fetch(
+      `${DIRECTUS_URL}/items/premium_benefits?filter[brand][_eq]=VG` +
+        `&filter[status][_eq]=published&sort=sort` +
+        `&fields=translations.text&deep[translations][_filter][languages_code][_eq]=fr-FR`,
+      { headers: { Authorization: `Bearer ${DIRECTUS_SERVICE_TOKEN}` } },
+    );
+    if (res.ok) {
+      const body = (await res.json()) as {
+        data: { translations: { text: string | null }[] }[];
+      };
+      benefits = body.data
+        .map((b) => b.translations?.[0]?.text?.trim())
+        .filter((t): t is string => Boolean(t));
+    }
+  } catch { /* non-fatal — PremiumStatus se rabat sur le texte intégré */ }
+}
 ---
 
 <LayoutDashboard title="Abonnement | Vina Gallica" active="upgrade" lang="fr" plan={plan}>
-  <UpgradeFlow
-    client:load
-    lang="fr"
-    service={service}
-    userEmail={email}
-    alreadyPremium={plan === "premium"}
-    privacyHref="/fr/politique-de-confidentialite"
-  />
+  {plan === "premium" ? (
+    <PremiumStatus
+      client:load
+      lang="fr"
+      trialEndsAt={trialEndsAt}
+      payment={payment}
+      reference={reference}
+      benefits={benefits}
+    />
+  ) : (
+    <UpgradeFlow
+      client:load
+      lang="fr"
+      service={service}
+      userEmail={email}
+      alreadyPremium={false}
+      privacyHref="/fr/politique-de-confidentialite"
+      payment={payment}
+    />
+  )}
 </LayoutDashboard>

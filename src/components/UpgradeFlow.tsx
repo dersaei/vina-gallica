@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import PaymentDetails, { type PaymentInfo } from "./PaymentDetails";
 import "./UpgradeFlow.css";
 
 type Lang = "en" | "fr";
@@ -15,6 +16,7 @@ interface Props {
   userEmail: string;
   alreadyPremium: boolean;
   privacyHref: string;
+  payment: PaymentInfo;
 }
 
 type Step = "choose" | "form" | "processing" | "done";
@@ -108,6 +110,9 @@ const COPY = {
         `We have issued pro-forma invoice ${n} and emailed it to you. You have 30 days to pay it, and your Premium trial is active in the meantime.`,
       successNoNumber:
         "Your request was received and the invoice is being issued. Check your inbox in a few minutes.",
+      paymentHeading: "How to pay",
+      summaryHeading: "What you submitted",
+      summaryAddress: "Address",
       failTitle: "Something went wrong",
       failBody:
         "We could not issue your invoice automatically. Please try again later or contact us — no charge has been made.",
@@ -196,6 +201,9 @@ const COPY = {
         `Nous avons émis la facture proforma ${n} et vous l'avons envoyée par e-mail. Vous avez 30 jours pour la régler, et votre essai Premium est actif entre-temps.`,
       successNoNumber:
         "Votre demande a bien été reçue et la facture est en cours d'émission. Consultez votre boîte mail dans quelques minutes.",
+      paymentHeading: "Comment payer",
+      summaryHeading: "Ce que vous avez envoyé",
+      summaryAddress: "Adresse",
       failTitle: "Une erreur est survenue",
       failBody:
         "Nous n'avons pas pu émettre votre facture automatiquement. Réessayez plus tard ou contactez-nous — aucun montant n'a été prélevé.",
@@ -215,6 +223,7 @@ export default function UpgradeFlow({
   userEmail,
   alreadyPremium,
   privacyHref,
+  payment,
 }: Props) {
   const t = COPY[lang];
 
@@ -760,6 +769,33 @@ export default function UpgradeFlow({
                   ? t.result.successBody(invoiceNumber)
                   : t.result.successNoNumber}
               </p>
+              <dl className="upg-summary">
+                <p className="upg-summary-title">{t.result.summaryHeading}</p>
+                <div className="upg-summary-row">
+                  <dt>{t.form.nameLabel}</dt>
+                  <dd>{form.name}</dd>
+                </div>
+                <div className="upg-summary-row">
+                  <dt>{t.result.summaryAddress}</dt>
+                  <dd>
+                    {form.street}, {form.postalCode} {form.city}, {form.country}
+                  </dd>
+                </div>
+                <div className="upg-summary-row">
+                  <dt>{path === "vat" ? t.form.vatLabel : t.form.sirenLabel}</dt>
+                  <dd>{path === "vat" ? form.vatId : form.siren}</dd>
+                </div>
+                <div className="upg-summary-row">
+                  <dt>{t.form.emailLabel}</dt>
+                  <dd>{form.email}</dd>
+                </div>
+              </dl>
+              <PaymentDetails
+                lang={lang}
+                payment={payment}
+                reference={invoiceNumber}
+                title={t.result.paymentHeading}
+              />
             </>
           )}
           {result === "timeout" && (
@@ -768,6 +804,12 @@ export default function UpgradeFlow({
                 {t.result.successTitle}
               </h2>
               <p className="upg-status-text">{t.result.timeout}</p>
+              <PaymentDetails
+                lang={lang}
+                payment={payment}
+                reference={null}
+                title={t.result.paymentHeading}
+              />
             </>
           )}
           {result === "fail" && (

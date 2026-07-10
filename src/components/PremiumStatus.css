@@ -1,0 +1,207 @@
+.prem {
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.prem-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--color-elegant-black);
+  text-shadow:
+    2px 2px 0 goldenrod,
+    -1px 1px 0 gold,
+    1px -1px 0 goldenrod,
+    -1px -1px 0 #fff;
+}
+
+.prem-columns {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-lg);
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* ── STATUS CARD ─────────────────────────────────────────── */
+.prem-card {
+  background-color: antiquewhite;
+  min-width: 550px;
+  border: 2px solid var(--color-elegant-black);
+  border-top: 6px solid orangered;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.prem-card--active {
+  border-top-color: #1a6b1a;
+}
+
+.prem-tag {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: white;
+  background-color: orangered;
+  padding: 0.32rem 0.7rem 0.02rem;
+}
+
+.prem-card--active .prem-tag {
+  background-color: #1a6b1a;
+}
+
+.prem-countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  margin-top: 0.3rem;
+}
+
+.prem-day {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-elegant-black);
+}
+
+.prem-left {
+  font-family: var(--font-label);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: firebrick;
+}
+
+.prem-bar {
+  width: 100%;
+  max-width: 340px;
+  height: 0.6rem;
+  background-color: rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--color-elegant-black);
+  overflow: hidden;
+}
+
+.prem-bar-fill {
+  height: 100%;
+  background-color: orangered;
+  transition: width 400ms ease;
+}
+
+.prem-ends {
+  font-family: var(--font-extra);
+  font-size: 0.82rem;
+  color: var(--color-elegant-black);
+  opacity: 0.7;
+  margin: 0;
+}
+
+.prem-active-body {
+  font-family: var(--font-extra);
+  font-size: 1rem;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--color-elegant-black);
+  margin: 0.3rem 0 0;
+}
+
+/* ── BENEFITS ────────────────────────────────────────────── */
+.prem-benefits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.prem-benefits-title {
+  font-family: var(--font-extra);
+  font-size: clamp(1.5rem, 2.4vw, 2.4rem);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-sand);
+  text-align: center;
+  margin: 0 0 var(--space-sm);
+  background-color: var(--color-elegant-black);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  border: 5px solid goldenrod;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.prem-benefits-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.prem-benefits-list li {
+  position: relative;
+  padding-left: 1.7rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 2vw, 2rem);
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--color-elegant-black);
+}
+
+.prem-benefits-list li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: orangered;
+  font-size: 1.05rem;
+}
+
+/* ── PAYMENT (inside the status card) ────────────────────── */
+.prem-card-pay {
+  width: 100%;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.prem-pay-hint {
+  font-family: var(--font-extra);
+  font-weight: 400;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--color-elegant-black);
+  margin: 0.2rem auto 0;
+}
+@media screen and (max-width: 940px) {
+  .prem-columns {
+    flex-direction: column;
+    align-items: center;
+  }
+  .prem-card {
+    min-width: 250px;
+  }
+}
