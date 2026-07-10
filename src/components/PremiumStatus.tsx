@@ -33,8 +33,6 @@ const COPY = {
       "An expanded business panel on the interactive Map.",
       "A live preview of your listings on the Submit page.",
     ],
-    payHint:
-      "Your trial is active now. Pay the pro-forma invoice within the trial to keep Premium after it ends.",
   },
   fr: {
     title: "Votre Premium",
@@ -53,8 +51,6 @@ const COPY = {
       "Un panneau enrichi sur la Carte interactive.",
       "Un aperçu en direct de vos fiches sur la page Rejoindre.",
     ],
-    payHint:
-      "Votre essai est actif. Réglez la facture proforma pendant l'essai pour conserver le Premium ensuite.",
   },
 } as const;
 
@@ -121,7 +117,6 @@ export default function PremiumStatus({
                   dueLabel={endLabel}
                   flat
                 />
-                <p className="prem-pay-hint">{t.payHint}</p>
               </div>
             </>
           ) : (

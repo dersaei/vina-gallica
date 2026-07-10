@@ -39,7 +39,7 @@ const COPY = {
   en: {
     pageTitle: "Upgrade to Premium",
     intro:
-      "Start a no-obligation 30-day free trial. Pick the column that matches your situation and enter your tax number. Once it is verified, fill in the form. You will receive a pro-forma invoice and 30 days to pay it — and in the meantime you can use the full version of Vina Gallica to create and add your premium listings to our directory.",
+      "Start a no-obligation 30-day free trial. Pick the column that matches your situation and enter your tax number. Once it is verified, fill in the form. You will receive a pro-forma invoice and 30 days to pay it — and in the meantime you can use the full version of Vina Gallica to create and add your premium listings.",
     alreadyPremium:
       "Your account is already on Premium. There is nothing to upgrade — thank you for being with us.",
     vat: {
@@ -66,7 +66,8 @@ const COPY = {
       validating: "Checking the registry…",
       invalidFormat: "SIREN must be exactly 9 digits.",
       invalid: "This SIREN was not found in the French business registry.",
-      closed: "This company is closed (radiation). Registration is not possible.",
+      closed:
+        "This company is closed (radiation). Registration is not possible.",
       unavailable:
         "The business registry is temporarily unavailable. Please try again in a moment.",
       rateLimited: "Too many attempts. Please wait a minute and try again.",
@@ -127,7 +128,7 @@ const COPY = {
   fr: {
     pageTitle: "Passer au Premium",
     intro:
-      "Démarrez un essai gratuit et sans engagement de 30 jours. Choisissez la colonne qui correspond à votre situation et saisissez votre numéro fiscal. Une fois vérifié, remplissez le formulaire. Vous recevrez une facture proforma et 30 jours pour la régler — et vous pourrez entre-temps utiliser la version complète de Vina Gallica pour créer et ajouter vos fiches premium à notre annuaire.",
+      "Démarrez un essai gratuit et sans engagement de 30 jours. Choisissez la colonne qui correspond à votre situation et saisissez votre numéro fiscal. Une fois vérifié, remplissez le formulaire. Vous recevrez une facture proforma et 30 jours pour la régler — et vous pourrez entre-temps utiliser la version complète de Vina Gallica pour créer et ajouter vos fiches premium.",
     alreadyPremium:
       "Votre compte est déjà Premium. Il n'y a rien à mettre à niveau — merci de votre confiance.",
     vat: {
@@ -155,8 +156,10 @@ const COPY = {
       button: "Valider",
       validating: "Vérification auprès du registre…",
       invalidFormat: "Le SIREN doit comporter exactement 9 chiffres.",
-      invalid: "Ce SIREN est introuvable dans le registre des entreprises françaises.",
-      closed: "Cette entreprise est fermée (radiation). L'inscription n'est pas possible.",
+      invalid:
+        "Ce SIREN est introuvable dans le registre des entreprises françaises.",
+      closed:
+        "Cette entreprise est fermée (radiation). L'inscription n'est pas possible.",
       unavailable:
         "Le registre des entreprises est momentanément indisponible. Veuillez réessayer dans un instant.",
       rateLimited:
@@ -690,7 +693,10 @@ export default function UpgradeFlow({
                   inputMode="numeric"
                   maxLength={9}
                   onChange={(e) =>
-                    setForm({ ...form, siren: e.target.value.replace(/\D/g, "") })
+                    setForm({
+                      ...form,
+                      siren: e.target.value.replace(/\D/g, ""),
+                    })
                   }
                   required
                 />
@@ -716,7 +722,9 @@ export default function UpgradeFlow({
                 onChange={(e) => setConsentInvoice(e.target.checked)}
               />
               <span>
-                {path === "vat" ? t.form.consentInvoiceVat : t.form.consentInvoiceSiren}
+                {path === "vat"
+                  ? t.form.consentInvoiceVat
+                  : t.form.consentInvoiceSiren}
               </span>
             </label>
 
@@ -782,7 +790,9 @@ export default function UpgradeFlow({
                   </dd>
                 </div>
                 <div className="upg-summary-row">
-                  <dt>{path === "vat" ? t.form.vatLabel : t.form.sirenLabel}</dt>
+                  <dt>
+                    {path === "vat" ? t.form.vatLabel : t.form.sirenLabel}
+                  </dt>
                   <dd>{path === "vat" ? form.vatId : form.siren}</dd>
                 </div>
                 <div className="upg-summary-row">
