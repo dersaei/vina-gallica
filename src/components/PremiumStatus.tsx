@@ -118,6 +118,7 @@ export default function PremiumStatus({
                   payment={payment}
                   reference={reference}
                   title={t.payHeading}
+                  dueLabel={endLabel}
                   flat
                 />
                 <p className="prem-pay-hint">{t.payHint}</p>

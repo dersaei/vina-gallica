@@ -18,6 +18,9 @@ interface Props {
   title?: string;
   /** Drop the card chrome (border/shadow/bg) so it blends into a parent card. */
   flat?: boolean;
+  /** Concrete due date (already localized). When set, replaces the generic
+   *  "within your 30-day trial" phrasing with "please pay by <date>". */
+  dueLabel?: string;
 }
 
 const COPY = {
@@ -31,7 +34,10 @@ const COPY = {
     copy: "Copy",
     copied: "Copied",
     copyAll: "Copy all details",
-    note: "Bank transfer, payable within 30 days. Use the payment reference so we can match your payment.",
+    payBy: (d: string) => `Bank transfer — please pay by ${d}.`,
+    payWithin: "Bank transfer, payable within your 30-day trial.",
+    useReference:
+      "Use the payment reference (your invoice number) as the transfer title, so we can match your payment.",
     fallback:
       "Your full payment details are on the pro-forma invoice we emailed you.",
   },
@@ -45,7 +51,10 @@ const COPY = {
     copy: "Copier",
     copied: "Copié",
     copyAll: "Tout copier",
-    note: "Virement bancaire, à régler sous 30 jours. Indiquez la référence de paiement pour que nous puissions rapprocher votre versement.",
+    payBy: (d: string) => `Virement bancaire — à régler avant le ${d}.`,
+    payWithin: "Virement bancaire, à régler pendant votre essai de 30 jours.",
+    useReference:
+      "Indiquez la référence de paiement (votre numéro de facture) comme libellé du virement, pour que nous puissions le rapprocher.",
     fallback:
       "Vos coordonnées de paiement complètes figurent sur la facture proforma envoyée par e-mail.",
   },
@@ -62,6 +71,7 @@ export default function PaymentDetails({
   reference,
   title,
   flat = false,
+  dueLabel,
 }: Props) {
   const t = COPY[lang];
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -125,6 +135,9 @@ export default function PaymentDetails({
 
   const hasBank = Boolean(ibanCompact);
 
+  const dueSentence = dueLabel ? t.payBy(dueLabel) : t.payWithin;
+  const noteText = reference ? `${dueSentence} ${t.useReference}` : dueSentence;
+
   return (
     <div className={`pay${flat ? " pay--flat" : ""}`}>
       {title !== undefined ? (
@@ -155,7 +168,7 @@ export default function PaymentDetails({
           <button type="button" className="pay-copyall" onClick={copyAll}>
             {copiedKey === "all" ? t.copied : t.copyAll}
           </button>
-          <p className="pay-note">{t.note}</p>
+          <p className="pay-note">{noteText}</p>
         </>
       ) : (
         <p className="pay-note">{t.fallback}</p>
