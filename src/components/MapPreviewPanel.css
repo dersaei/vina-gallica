@@ -118,6 +118,23 @@
     rgba(0, 0, 0, 0.04) 0px 0px 0px 1px inset;
 }
 
+/* Premium logo — mirrors .place-label__logo* in PlacePanel.css, which is
+   scoped to that component and therefore not reachable from here. */
+.mpp .place-label__logo-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.2em;
+  max-height: 120px;
+}
+
+.mpp .place-label__logo {
+  max-height: 120px;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
 .mpp .place-label__name {
   margin: 0;
   font-family: var(--font-heading);

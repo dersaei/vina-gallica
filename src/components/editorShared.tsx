@@ -26,8 +26,7 @@ export type ModalKind =
   | "logo"
   | "phone"
   | "hours"
-  | "slogansEn"
-  | "slogansFr"
+  | "slogans"
   | null;
 
 // ── Translations ─────────────────────────────────────────────────────────────
@@ -54,6 +53,8 @@ export const t = {
     required: "This field is required.",
     edit: "Edit",
     done: "Done",
+    saveField: "Save",
+    cancelField: "Cancel",
     editFields: "Editor",
     notSet: "Not set",
     intro:
@@ -92,15 +93,22 @@ export const t = {
     logoUploading: "Uploading…",
     logoRemove: "Remove logo",
     logoSet: "Logo added",
+    logoChoose: "Choose a file",
+    logoReplace: "Replace logo",
+    logoDrop: "or drag it here",
+    logoFormats: "PNG · JPG · WebP · SVG — max 2 MB",
     phone: "Phone",
     phonePlaceholder: "+33 5 57 88 83 83",
     hours: "Opening hours",
     hoursClosed: "Closed",
-    slogansEn: "Slogans (EN)",
-    slogansFr: "Slogans (FR)",
-    slogansHint: "Up to 3 short marketing taglines.",
+    slogans: "Slogans",
+    slogansHint:
+      "Add up to 3 short marketing taglines that capture the spirit of your venture. Write each one in both English and French — English slogans appear on the English site, French ones on the French site.",
+    slogansLangEn: "English",
+    slogansLangFr: "French",
+    sloganPair: (n: number) => `Slogan ${n}`,
     sloganPlaceholder: "Marketing tagline",
-    slogansCount: (n: number) => `${n} slogan${n === 1 ? "" : "s"}`,
+    slogansCountPair: (en: number, fr: number) => `${en} EN · ${fr} FR`,
     previewDesktop: "Desktop",
     previewMobile: "Mobile",
     // section headings for the stacked preview layout
@@ -136,6 +144,8 @@ export const t = {
     required: "Ce champ est obligatoire.",
     edit: "Modifier",
     done: "Terminé",
+    saveField: "Enregistrer",
+    cancelField: "Annuler",
     editFields: "Éditeur",
     notSet: "Non renseigné",
     intro:
@@ -174,15 +184,22 @@ export const t = {
     logoUploading: "Téléchargement…",
     logoRemove: "Retirer le logo",
     logoSet: "Logo ajouté",
+    logoChoose: "Choisir un fichier",
+    logoReplace: "Remplacer le logo",
+    logoDrop: "ou glissez-le ici",
+    logoFormats: "PNG · JPG · WebP · SVG — max 2 Mo",
     phone: "Téléphone",
     phonePlaceholder: "+33 5 57 88 83 83",
     hours: "Horaires d'ouverture",
     hoursClosed: "Fermé",
-    slogansEn: "Slogans (EN)",
-    slogansFr: "Slogans (FR)",
-    slogansHint: "Jusqu'à 3 courts slogans marketing.",
+    slogans: "Slogans",
+    slogansHint:
+      "Ajoutez jusqu'à 3 courts slogans marketing qui traduisent l'esprit de votre établissement. Rédigez chacun en anglais et en français — les slogans anglais apparaissent sur le site anglais, les français sur le site français.",
+    slogansLangEn: "Anglais",
+    slogansLangFr: "Français",
+    sloganPair: (n: number) => `Slogan ${n}`,
     sloganPlaceholder: "Slogan marketing",
-    slogansCount: (n: number) => `${n} slogan${n === 1 ? "" : "s"}`,
+    slogansCountPair: (en: number, fr: number) => `${en} EN · ${fr} FR`,
     previewDesktop: "Ordinateur",
     previewMobile: "Mobile",
     // section headings for the stacked preview layout
@@ -272,27 +289,43 @@ export function EditModal({
   title,
   hint,
   onClose,
+  onCancel,
   doneLabel,
+  cancelLabel,
   children,
   variant,
 }: {
   title: string;
   hint?: string;
+  /** Confirms the edit and closes. */
   onClose: () => void;
+  /** Discards the edit and closes. When given, the modal becomes a commit /
+   *  discard dialog: the backdrop no longer closes it and Escape cancels. */
+  onCancel?: () => void;
   doneLabel: string;
+  cancelLabel?: string;
   children: ReactNode;
   variant?: string;
 }) {
+  // Escape discards when there is something to discard, otherwise it just
+  // closes (preview modals have no edits to lose).
+  const dismiss = onCancel ?? onClose;
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") dismiss();
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [dismiss]);
 
   return (
-    <div className="ec-modal-backdrop" onClick={onClose}>
+    <div
+      className="ec-modal-backdrop"
+      // Editing modals must not close on a stray backdrop click — that used to
+      // commit the changes with no way back. Read-only modals still do.
+      onClick={onCancel ? undefined : onClose}
+    >
       <div
         className={`ec-modal${variant ? ` ec-modal--${variant}` : ""}`}
         role="dialog"
@@ -305,8 +338,8 @@ export function EditModal({
           <button
             type="button"
             className="ec-modal-close"
-            aria-label="Close"
-            onClick={onClose}
+            aria-label={cancelLabel ?? "Close"}
+            onClick={dismiss}
           >
             ✕
           </button>
@@ -314,6 +347,15 @@ export function EditModal({
         {hint && <p className="ec-modal-hint">{hint}</p>}
         <div className="ec-modal-body">{children}</div>
         <div className="ec-modal-actions">
+          {onCancel && (
+            <button
+              type="button"
+              className="lf-btn lf-btn--secondary"
+              onClick={onCancel}
+            >
+              {cancelLabel}
+            </button>
+          )}
           <button
             type="button"
             className="lf-btn lf-btn--primary"

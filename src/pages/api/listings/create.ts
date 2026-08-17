@@ -58,7 +58,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     address: (data.address as string)?.trim() || null,
     postal_code: postalCode || null,
     place: (data.place as string)?.trim() || null,
-    phone: (data.phone as string)?.trim() || null,
+    // Telefon i logo są premium — na darmowym planie nie trafiają do bazy,
+    // bo mapa i karta i tak ich nie pokazują.
+    phone: isPremium ? (data.phone as string)?.trim() || null : null,
     website: (data.website as string)?.trim() || null,
     location: data.location ?? null,
     department: departmentId,
@@ -69,8 +71,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     payload.terroir = (data.terroir as string[]).map(id => ({ wine_regions_id: id }));
   }
 
-  // Logo (już jako file_id po uploadzie)
-  if (data.logo) payload.logo = data.logo;
+  // Logo (już jako file_id po uploadzie) — tylko premium
+  if (isPremium && data.logo) payload.logo = data.logo;
 
   // Daty festiwalu — dostępne dla każdego planu (sekcja nie jest premium)
   payload.event_date_start = (data.event_date_start as string) || null;

@@ -311,6 +311,11 @@
   overflow: visible;
 }
 
+/* Slogans modal: three EN/FR pairs need room for two columns side by side. */
+.ec-modal--slogans {
+  max-width: 620px;
+}
+
 /* Preview modal: the directory card renders at true desktop width (1440px) and
    is scaled to fit, so every pixel of modal width makes the preview larger and
    more readable. Take nearly the whole viewport in both directions. */
@@ -366,7 +371,9 @@
 
 .ec-modal-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
+  gap: var(--space-sm);
 }
 
 .ec-modal-input {

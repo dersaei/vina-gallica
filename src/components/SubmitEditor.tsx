@@ -155,7 +155,14 @@ export default function SubmitEditor({
           onClose={() => setPreview(null)}
         >
           <div className="se-modal-preview">
-            <MapPreviewPanel lang={lang} tx={tx} s={s} vm={vm} />
+            <MapPreviewPanel
+              lang={lang}
+              tx={tx}
+              s={s}
+              vm={vm}
+              plan={plan}
+              directusUrl={directusUrl}
+            />
           </div>
         </EditModal>
       )}

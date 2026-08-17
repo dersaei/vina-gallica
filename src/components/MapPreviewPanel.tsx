@@ -7,12 +7,26 @@ interface Props {
   tx: Tx;
   s: ListingState;
   vm: ViewModel;
+  plan: "free" | "premium";
+  directusUrl: string;
 }
 
 // Read-only preview that mirrors the public map side panel (PlacePanel).
-// Standard fields only — no logo / phone (those are premium). Renders the same
-// shared state as EditableCard, so both previews stay in sync automatically.
-export default function MapPreviewPanel({ lang, tx, s, vm }: Props) {
+// Premium listings additionally show the logo and phone, matching what
+// PlacePanel renders live. Renders the same shared state as EditableCard, so
+// both previews stay in sync automatically.
+export default function MapPreviewPanel({
+  lang,
+  tx,
+  s,
+  vm,
+  plan,
+  directusUrl,
+}: Props) {
+  const isPremium = plan === "premium";
+  // Mirrors the live map's asset URL (map.astro builds /assets/<id>).
+  const logoUrl =
+    isPremium && s.logoId ? `${directusUrl}/assets/${s.logoId}` : null;
   const firstRegion = vm.selectedRegions[0] ?? null;
   const isEmpty =
     !s.name &&
@@ -21,6 +35,8 @@ export default function MapPreviewPanel({ lang, tx, s, vm }: Props) {
     !s.address &&
     !vm.cityLine &&
     !s.website &&
+    !logoUrl &&
+    !(isPremium && s.phone) &&
     !(s.isFestival && vm.eventLabel);
 
   return (
@@ -58,6 +74,15 @@ export default function MapPreviewPanel({ lang, tx, s, vm }: Props) {
           {isEmpty && <p className="ec-empty">{tx.panelEmpty}</p>}
           {!isEmpty && (
           <div className="place-label">
+            {logoUrl && (
+              <div className="place-label__logo-wrap">
+                <img
+                  className="place-label__logo"
+                  src={logoUrl}
+                  alt={`${s.name} logo`}
+                />
+              </div>
+            )}
             <h2 className="place-label__name">
               {s.name || (
                 <span className="ec-placeholder">{tx.namePlaceholder}</span>
@@ -96,6 +121,15 @@ export default function MapPreviewPanel({ lang, tx, s, vm }: Props) {
                   </div>
                 )}
               </div>
+            )}
+
+            {isPremium && s.phone && (
+              <a
+                className="place-label__row place-label__link"
+                href={`tel:${s.phone.replace(/[^+\d]/g, "")}`}
+              >
+                {s.phone}
+              </a>
             )}
 
             {s.website && (

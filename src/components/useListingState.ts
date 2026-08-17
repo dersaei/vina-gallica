@@ -337,10 +337,10 @@ export function useListingState({
       postal_code: postalCode,
       place,
       insee,
-      phone,
+      phone: isPremium ? phone : undefined,
       website,
       location,
-      logo: logoId,
+      logo: isPremium ? logoId : undefined,
       description_en: isPremium ? descEn : undefined,
       description_fr: isPremium ? descFr : undefined,
       slogans_en: isPremium
@@ -482,6 +482,7 @@ export function useListingState({
     setVideo,
     // hours / event / transport
     openingHours,
+    setOpeningHours,
     updateHour,
     eventStart,
     setEventStart,

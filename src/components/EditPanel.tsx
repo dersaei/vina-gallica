@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DatePicker from "./DatePicker";
 import {
   useGeocoder,
@@ -137,18 +137,75 @@ export default function EditPanel({
   const [phoneDraft, setPhoneDraft] = useState(s.phone);
   const [logoUploading, setLogoUploading] = useState(false);
   const [logoError, setLogoError] = useState<string | null>(null);
+  const [logoDragging, setLogoDragging] = useState(false);
 
   // Geocoder lives inside the location modal — only mount it while open.
   const geocoderRef = useGeocoder(s.onGeoResult, modal === "location");
+
+  // ── Cancel support ──
+  // Several modals (terroir, dates, hours, slogans, logo, location) write
+  // straight to the shared state as the user edits, because the live previews
+  // read from it. So "cancel" cannot mean "don't apply" — it has to mean
+  // "put back what was there when the modal opened". We snapshot the fields a
+  // modal can touch on open, and restore them if the user backs out.
+  const snapshotRef = useRef<Record<string, unknown> | null>(null);
+
+  function openModal(kind: NonNullable<ModalKind>) {
+    snapshotRef.current = {
+      category: s.category,
+      terroir: s.terroir,
+      address: s.address,
+      postalCode: s.postalCode,
+      place: s.place,
+      insee: s.insee,
+      location: s.location,
+      logoId: s.logoId,
+      openingHours: s.openingHours,
+      eventStart: s.eventStart,
+      eventEnd: s.eventEnd,
+      slogansEn: s.slogansEn,
+      slogansFr: s.slogansFr,
+    };
+    // Text modals edit a local draft; seed it from the committed value.
+    setNameDraft(s.name);
+    setWebsiteDraft(s.website);
+    setPhoneDraft(s.phone);
+    setLogoError(null);
+    setModal(kind);
+  }
+
+  function cancelModal() {
+    const snap = snapshotRef.current;
+    if (snap) {
+      s.setCategory(snap.category as string);
+      s.setTerroir(snap.terroir as string[]);
+      s.setAddress(snap.address as string);
+      s.setPostal(snap.postalCode as string);
+      s.setPlace(snap.place as string);
+      s.setInsee(snap.insee as string);
+      s.setLocation(snap.location as typeof s.location);
+      s.setLogoId(snap.logoId as string | null);
+      s.setOpeningHours(snap.openingHours as typeof s.openingHours);
+      s.setEventStart(snap.eventStart as string);
+      s.setEventEnd(snap.eventEnd as string);
+      s.setSlogansEn(snap.slogansEn as string[]);
+      s.setSlogansFr(snap.slogansFr as string[]);
+    }
+    snapshotRef.current = null;
+    setModal(null);
+  }
+
+  function closeModal() {
+    snapshotRef.current = null;
+    setModal(null);
+  }
 
   const regionsValue =
     vm.selectedRegions.length > 0
       ? vm.selectedRegions.map((r) => r.region).join(", ")
       : null;
 
-  async function handleLogoFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  async function uploadLogo(file: File) {
     setLogoError(null);
     setLogoUploading(true);
     try {
@@ -159,6 +216,22 @@ export default function EditPanel({
     } finally {
       setLogoUploading(false);
     }
+  }
+
+  async function handleLogoFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    await uploadLogo(file);
+    // Clear the input so picking the same file again still fires onChange.
+    e.target.value = "";
+  }
+
+  function handleLogoDrop(e: React.DragEvent<HTMLElement>) {
+    e.preventDefault();
+    setLogoDragging(false);
+    if (logoUploading) return;
+    const file = e.dataTransfer.files?.[0];
+    if (file) void uploadLogo(file);
   }
 
   // Slogan helpers — edit up to 3 slots by index (blanks kept in place;
@@ -180,45 +253,39 @@ export default function EditPanel({
           label={tx.category}
           value={vm.categoryLabel}
           notSet={tx.notSet}
-          onClick={() => setModal("category")}
+          onClick={() => openModal("category")}
         />
         <FieldButton
           label={tx.name}
           value={s.name || null}
           notSet={tx.notSet}
           error={s.nameError}
-          onClick={() => {
-            setNameDraft(s.name);
-            setModal("name");
-          }}
+          onClick={() => openModal("name")}
         />
         <FieldButton
           label={tx.terroir}
           value={regionsValue}
           notSet={tx.notSet}
-          onClick={() => setModal("terroir")}
+          onClick={() => openModal("terroir")}
         />
         <FieldButton
           label={tx.location}
           value={s.address || null}
           notSet={tx.notSet}
-          onClick={() => setModal("location")}
+          onClick={() => openModal("location")}
         />
         <FieldButton
           label={tx.website}
           value={s.website ? s.website.replace(/^https?:\/\//, "") : null}
           notSet={tx.notSet}
-          onClick={() => {
-            setWebsiteDraft(s.website);
-            setModal("website");
-          }}
+          onClick={() => openModal("website")}
         />
         {s.isFestival && (
           <FieldButton
             label={tx.eventDates}
             value={vm.eventLabel || null}
             notSet={tx.notSet}
-            onClick={() => setModal("dates")}
+            onClick={() => openModal("dates")}
           />
         )}
 
@@ -228,16 +295,13 @@ export default function EditPanel({
               label={tx.logo}
               value={s.logoId ? tx.logoSet : null}
               notSet={tx.notSet}
-              onClick={() => setModal("logo")}
+              onClick={() => openModal("logo")}
             />
             <FieldButton
               label={tx.phone}
               value={s.phone || null}
               notSet={tx.notSet}
-              onClick={() => {
-                setPhoneDraft(s.phone);
-                setModal("phone");
-              }}
+              onClick={() => openModal("phone")}
             />
             {!s.isFestival && (
               <FieldButton
@@ -249,28 +313,18 @@ export default function EditPanel({
                     : null
                 }
                 notSet={tx.notSet}
-                onClick={() => setModal("hours")}
+                onClick={() => openModal("hours")}
               />
             )}
             <FieldButton
-              label={tx.slogansEn}
-              value={
-                s.slogansEn.filter((x) => x.trim()).length > 0
-                  ? tx.slogansCount(s.slogansEn.filter((x) => x.trim()).length)
-                  : null
-              }
+              label={tx.slogans}
+              value={(() => {
+                const en = s.slogansEn.filter((x) => x.trim()).length;
+                const fr = s.slogansFr.filter((x) => x.trim()).length;
+                return en || fr ? tx.slogansCountPair(en, fr) : null;
+              })()}
               notSet={tx.notSet}
-              onClick={() => setModal("slogansEn")}
-            />
-            <FieldButton
-              label={tx.slogansFr}
-              value={
-                s.slogansFr.filter((x) => x.trim()).length > 0
-                  ? tx.slogansCount(s.slogansFr.filter((x) => x.trim()).length)
-                  : null
-              }
-              notSet={tx.notSet}
-              onClick={() => setModal("slogansFr")}
+              onClick={() => openModal("slogans")}
             />
           </>
         )}
@@ -314,8 +368,10 @@ export default function EditPanel({
       {modal === "category" && (
         <EditModal
           title={tx.category}
-          onClose={() => setModal(null)}
-          doneLabel={tx.done}
+          onClose={closeModal}
+          onCancel={cancelModal}
+          doneLabel={tx.saveField}
+          cancelLabel={tx.cancelField}
         >
           <div className="ec-radio-list">
             {categories.map((c) => (
@@ -325,10 +381,7 @@ export default function EditPanel({
                   name="ec-category"
                   value={c.id}
                   checked={s.category === c.id}
-                  onChange={() => {
-                    s.setCategory(c.id);
-                    setModal(null);
-                  }}
+                  onChange={() => s.setCategory(c.id)}
                 />
                 <span>{lang === "fr" ? (c.name_fr ?? c.name) : c.name}</span>
               </label>
@@ -340,8 +393,14 @@ export default function EditPanel({
       {modal === "name" && (
         <EditModal
           title={tx.name}
-          onClose={() => setModal(null)}
-          doneLabel={tx.done}
+          // The draft is only committed here, so Cancel simply drops it.
+          onClose={() => {
+            s.setName(nameDraft.trim());
+            closeModal();
+          }}
+          onCancel={cancelModal}
+          doneLabel={tx.saveField}
+          cancelLabel={tx.cancelField}
         >
           <input
             type="text"
@@ -357,10 +416,9 @@ export default function EditPanel({
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 s.setName(nameDraft.trim());
-                setModal(null);
+                closeModal();
               }
             }}
-            onBlur={() => s.setName(nameDraft.trim())}
           />
         </EditModal>
       )}
@@ -370,9 +428,11 @@ export default function EditPanel({
           title={tx.website}
           onClose={() => {
             s.setWebsite(websiteDraft.trim());
-            setModal(null);
+            closeModal();
           }}
-          doneLabel={tx.done}
+          onCancel={cancelModal}
+          doneLabel={tx.saveField}
+          cancelLabel={tx.cancelField}
         >
           <input
             type="url"
@@ -385,7 +445,7 @@ export default function EditPanel({
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 s.setWebsite(websiteDraft.trim());
-                setModal(null);
+                closeModal();
               }
             }}
           />
@@ -395,8 +455,10 @@ export default function EditPanel({
       {modal === "terroir" && (
         <EditModal
           title={tx.terroir}
-          onClose={() => setModal(null)}
-          doneLabel={tx.done}
+          onClose={closeModal}
+          onCancel={cancelModal}
+          doneLabel={tx.saveField}
+          cancelLabel={tx.cancelField}
         >
           <div className="ec-check-list ec-check-list--two-col">
             {wineRegions.map((r) => (
@@ -423,8 +485,10 @@ export default function EditPanel({
         <EditModal
           title={tx.location}
           hint={tx.locationHint}
-          onClose={() => setModal(null)}
-          doneLabel={tx.done}
+          onClose={closeModal}
+          onCancel={cancelModal}
+          doneLabel={tx.saveField}
+          cancelLabel={tx.cancelField}
         >
           <div ref={geocoderRef} className="ec-geocoder" />
           {s.location && (
@@ -440,8 +504,10 @@ export default function EditPanel({
         <EditModal
           title={tx.eventDates}
           hint={tx.eventDatesHint}
-          onClose={() => setModal(null)}
-          doneLabel={tx.done}
+          onClose={closeModal}
+          onCancel={cancelModal}
+          doneLabel={tx.saveField}
+          cancelLabel={tx.cancelField}
           variant="dates"
         >
           <div className="ec-dates-row">
@@ -475,33 +541,73 @@ export default function EditPanel({
         <EditModal
           title={tx.logo}
           hint={tx.logoHint}
-          onClose={() => setModal(null)}
-          doneLabel={tx.done}
+          onClose={closeModal}
+          onCancel={cancelModal}
+          doneLabel={tx.saveField}
+          cancelLabel={tx.cancelField}
         >
-          {s.logoId && (
+          {s.logoId ? (
             <div className="ep-logo-preview">
-              <img
-                src={assetUrl(directusUrl, s.logoId, "width=240&format=webp")}
-                alt="Logo"
-              />
-              <button
-                type="button"
-                className="lf-btn lf-btn--ghost"
-                onClick={() => s.setLogoId(null)}
-              >
-                {tx.logoRemove}
-              </button>
+              <div className="ep-logo-frame">
+                <img
+                  src={assetUrl(directusUrl, s.logoId, "width=240&format=webp")}
+                  alt="Logo"
+                />
+              </div>
+              <div className="ep-logo-actions">
+                {/* The label *is* the button — the native input stays hidden
+                    but still handles the picker and keyboard activation. */}
+                <label className="ep-upload-btn ep-upload-btn--sm">
+                  <input
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                    onChange={handleLogoFile}
+                    disabled={logoUploading}
+                  />
+                  <span>
+                    {logoUploading ? tx.logoUploading : tx.logoReplace}
+                  </span>
+                </label>
+                <button
+                  type="button"
+                  className="lf-btn lf-btn--ghost"
+                  disabled={logoUploading}
+                  onClick={() => s.setLogoId(null)}
+                >
+                  {tx.logoRemove}
+                </button>
+              </div>
             </div>
-          )}
-          {!s.logoId && (
-            <label className="ep-file">
+          ) : (
+            <label
+              className={`ep-dropzone${logoDragging ? " ep-dropzone--over" : ""}${
+                logoUploading ? " ep-dropzone--busy" : ""
+              }`}
+              onDragOver={(e) => {
+                e.preventDefault();
+                if (!logoUploading) setLogoDragging(true);
+              }}
+              onDragLeave={() => setLogoDragging(false)}
+              onDrop={handleLogoDrop}
+            >
               <input
                 type="file"
                 accept="image/png,image/jpeg,image/webp,image/svg+xml"
                 onChange={handleLogoFile}
                 disabled={logoUploading}
               />
-              {logoUploading && <span>{tx.logoUploading}</span>}
+              <span className="ep-dropzone__icon" aria-hidden="true">
+                {logoUploading ? "◐" : "↥"}
+              </span>
+              <span className="ep-dropzone__cta">
+                {logoUploading ? tx.logoUploading : tx.logoChoose}
+              </span>
+              {!logoUploading && (
+                <>
+                  <span className="ep-dropzone__drop">{tx.logoDrop}</span>
+                  <span className="ep-dropzone__formats">{tx.logoFormats}</span>
+                </>
+              )}
             </label>
           )}
           {logoError && <div className="ec-error">{logoError}</div>}
@@ -513,9 +619,11 @@ export default function EditPanel({
           title={tx.phone}
           onClose={() => {
             s.setPhone(phoneDraft.trim());
-            setModal(null);
+            closeModal();
           }}
-          doneLabel={tx.done}
+          onCancel={cancelModal}
+          doneLabel={tx.saveField}
+          cancelLabel={tx.cancelField}
         >
           <input
             type="tel"
@@ -528,7 +636,7 @@ export default function EditPanel({
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 s.setPhone(phoneDraft.trim());
-                setModal(null);
+                closeModal();
               }
             }}
           />
@@ -538,8 +646,10 @@ export default function EditPanel({
       {modal === "hours" && (
         <EditModal
           title={tx.hours}
-          onClose={() => setModal(null)}
-          doneLabel={tx.done}
+          onClose={closeModal}
+          onCancel={cancelModal}
+          doneLabel={tx.saveField}
+          cancelLabel={tx.cancelField}
         >
           <div className="ep-hours">
             {DAYS.map((day) => {
@@ -582,29 +692,54 @@ export default function EditPanel({
         </EditModal>
       )}
 
-      {(modal === "slogansEn" || modal === "slogansFr") && (
+      {modal === "slogans" && (
         <EditModal
-          title={modal === "slogansEn" ? tx.slogansEn : tx.slogansFr}
+          title={tx.slogans}
           hint={tx.slogansHint}
-          onClose={() => setModal(null)}
-          doneLabel={tx.done}
+          onClose={closeModal}
+          onCancel={cancelModal}
+          doneLabel={tx.saveField}
+          cancelLabel={tx.cancelField}
+          variant="slogans"
         >
+          {/* Each row is one slogan in both languages. The two arrays stay
+              independent on save — the live card picks the whole list for the
+              current language — but pairing them here makes it obvious which
+              translation belongs to which line. */}
           <div className="ep-slogans">
-            {[0, 1, 2].map((i) => {
-              const which = modal === "slogansEn" ? "en" : "fr";
-              const arr = which === "en" ? s.slogansEn : s.slogansFr;
-              return (
-                <input
-                  key={i}
-                  type="text"
-                  className="ec-modal-input"
-                  value={arr[i] ?? ""}
-                  placeholder={`${tx.sloganPlaceholder} ${i + 1}`}
-                  aria-label={`${tx.sloganPlaceholder} ${i + 1}`}
-                  onChange={(e) => setSloganAt(which, i, e.target.value)}
-                />
-              );
-            })}
+            {[0, 1, 2].map((i) => (
+              <fieldset key={i} className="ep-slogan-pair">
+                <legend className="ep-slogan-pair__legend">
+                  {tx.sloganPair(i + 1)}
+                </legend>
+                <label className="ep-slogan-field">
+                  <span className="ep-slogan-field__lang">
+                    {tx.slogansLangEn}
+                  </span>
+                  <input
+                    type="text"
+                    className="ec-modal-input"
+                    value={s.slogansEn[i] ?? ""}
+                    placeholder={tx.sloganPlaceholder}
+                    aria-label={`${tx.sloganPair(i + 1)} — ${tx.slogansLangEn}`}
+                    onChange={(e) => setSloganAt("en", i, e.target.value)}
+                  />
+                </label>
+                <label className="ep-slogan-field">
+                  <span className="ep-slogan-field__lang">
+                    {tx.slogansLangFr}
+                  </span>
+                  <input
+                    type="text"
+                    className="ec-modal-input"
+                    value={s.slogansFr[i] ?? ""}
+                    placeholder={tx.sloganPlaceholder}
+                    aria-label={`${tx.sloganPair(i + 1)} — ${tx.slogansLangFr}`}
+                    onChange={(e) => setSloganAt("fr", i, e.target.value)}
+                  />
+                </label>
+              </fieldset>
+            ))}
           </div>
         </EditModal>
       )}

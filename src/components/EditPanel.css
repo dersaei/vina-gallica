@@ -143,10 +143,10 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.7em 1.2em 0.25em;
+  padding: 0.7em 1.2em 0.2em;
   border: 1px solid var(--color-elegant-black);
   border-radius: 3px;
-  background-color: transparent;
+  background-color: var(--color-sand);
   color: var(--color-elegant-black);
   cursor: pointer;
   transition:
@@ -167,18 +167,147 @@
   align-items: center;
   gap: var(--space-sm);
 }
+
+/* Neutral frame so a white or transparent logo stays visible against sand. */
+.ep-logo-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-md);
+  background-color: #fffaf3;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 4px;
+}
+
 .ep-logo-preview img {
   max-width: 200px;
   max-height: 100px;
   object-fit: contain;
 }
 
-.ep-file {
+.ep-logo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+/* ── Logo upload ──
+   The native file input is unstylable across browsers, so it is hidden inside
+   a <label> that carries the visuals. Clicking or keyboard-activating the
+   label still opens the picker, so no JS is needed to drive it. */
+
+.ep-dropzone,
+.ep-upload-btn {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Clipped rather than display:none so the input keeps its place in the focus
+   order — Tab lands on it and :focus-within lights up the label around it. */
+.ep-dropzone input[type="file"],
+.ep-upload-btn input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: inherit;
+}
+
+/* Dropzone — shown while no logo is set. */
+.ep-dropzone {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+  background-color: #fffaf3;
+  border: 2px dashed rgba(66, 64, 60, 0.45);
+  border-radius: 4px;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.ep-dropzone:hover,
+.ep-dropzone:focus-within {
+  background-color: #f6efe2;
+  border-color: var(--color-elegant-black);
+}
+
+.ep-dropzone--over {
+  background-color: #f0e6d2;
+  border-style: solid;
+  border-color: var(--color-elegant-black);
+}
+
+.ep-dropzone--busy {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.ep-dropzone__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-elegant-black);
+}
+
+.ep-dropzone__cta {
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-elegant-black);
+}
+
+.ep-dropzone__drop {
   font-family: var(--font-hero);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  color: #6f6a62;
+}
+
+.ep-dropzone__formats {
+  margin-top: 0.4em;
+  font-family: var(--font-hero);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: #a89c88;
+}
+
+/* Solid button — used to replace an already-uploaded logo. Mirrors .lf-btn. */
+.ep-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.4rem 0.35rem;
+  border: 2px solid var(--color-elegant-black);
+  background-color: transparent;
+  color: var(--color-elegant-black);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.ep-upload-btn:hover,
+.ep-upload-btn:focus-within {
+  background-color: var(--color-elegant-black);
+  color: #fffaf3;
+}
+
+.ep-upload-btn--sm {
+  font-size: 0.72rem;
+  padding: 0.6rem 1.1rem 0.3rem;
 }
 
 .ep-time-input {
@@ -235,5 +364,46 @@
 .ep-slogans {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-md);
+}
+
+/* One slogan = one EN/FR pair. The fieldset groups them for screen readers as
+   well as visually, so the translation relationship is not purely spatial. */
+.ep-slogan-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-sm);
+  margin: 0;
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 4px;
+  background-color: #fffaf3;
+}
+
+.ep-slogan-pair__legend {
+  padding: 0 0.5em;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-elegant-black);
+}
+
+.ep-slogan-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  /* Grid items default to min-content; without this a long value would widen
+     the column instead of the input scrolling its own text. */
+  min-width: 0;
+}
+
+.ep-slogan-field__lang {
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6f6a62;
 }

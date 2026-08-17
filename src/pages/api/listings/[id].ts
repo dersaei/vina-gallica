@@ -61,7 +61,6 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
     address: (data.address as string)?.trim() || null,
     postal_code: postalCode || null,
     place: (data.place as string)?.trim() || null,
-    phone: (data.phone as string)?.trim() || null,
     website: (data.website as string)?.trim() || null,
     location: data.location ?? null,
     department: departmentId,
@@ -70,7 +69,13 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
   if (Array.isArray(data.terroir)) {
     payload.terroir = (data.terroir as string[]).map(id => ({ wine_regions_id: id }));
   }
-  if (data.logo !== undefined) payload.logo = data.logo;
+  // Telefon i logo są premium. Na darmowym planie pomijamy je całkowicie
+  // (a nie zerujemy) — inaczej edycja po downgradzie skasowałaby dane, które
+  // wróciłyby po ponownym wykupieniu premium.
+  if (isPremium) {
+    payload.phone = (data.phone as string)?.trim() || null;
+    if (data.logo !== undefined) payload.logo = data.logo;
+  }
 
   // Daty festiwalu — dostępne dla każdego planu (sekcja nie jest premium)
   payload.event_date_start = (data.event_date_start as string) || null;

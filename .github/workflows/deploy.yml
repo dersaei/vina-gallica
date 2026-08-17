@@ -8,20 +8,38 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        timeout-minutes: 20
         permissions:
             contents: read
             deployments: write
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v5
               with:
                   node-version: "24"
+                  cache: npm
 
+            # Instalacja przez oficjalny skrypt zamiast dopplerhq/cli-action@v3 —
+            # akcja nie ma retry i pada na timeoutach sieci runnera przy pobieraniu klucza GPG.
+            # install.sh nadal weryfikuje podpis GPG.
             - name: Install Doppler CLI
-              uses: dopplerhq/cli-action@v3
+              run: |
+                  set -euo pipefail
+                  for i in 1 2 3; do
+                    if curl -Ls --tlsv1.2 --proto "=https" \
+                         --connect-timeout 20 --max-time 120 \
+                         --retry 3 --retry-delay 5 --retry-all-errors \
+                         https://cli.doppler.com/install.sh | sudo sh; then
+                      break
+                    fi
+                    echo "Doppler install attempt $i failed"
+                    if [ "$i" = 3 ]; then exit 1; fi
+                    sleep $((i * 15))
+                  done
+                  doppler --version
 
             - name: Install dependencies
               run: npm ci
@@ -42,8 +60,12 @@ jobs:
                   DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
 
             - name: Deploy
-              uses: cloudflare/wrangler-action@v3
+              uses: cloudflare/wrangler-action@v4
               with:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   command: deploy
+                  # Musi się zgadzać z wranglerem z package-lock.json — deploy ma lecieć
+                  # na tej samej wersji co `npx wrangler secret bulk` wyżej.
+                  # Przy podbiciu wranglera zaktualizuj też tę linię.
+                  wranglerVersion: "4.123.0"
