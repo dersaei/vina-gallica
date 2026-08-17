@@ -283,8 +283,13 @@
   padding: var(--space-md);
 }
 
+/* Preview modals want the full viewport; the default gutter would cap them. */
+.ec-modal-backdrop:has(.ec-modal--preview) {
+  padding: var(--space-sm);
+}
+
 .ec-modal {
-  background-color: beige;
+  background-color: var(--color-sand);
   border: 2px solid #42403c;
   border-radius: 4px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
@@ -304,6 +309,20 @@
 .ec-modal--dates {
   max-width: 480px;
   overflow: visible;
+}
+
+/* Preview modal: the directory card renders at true desktop width (1440px) and
+   is scaled to fit, so every pixel of modal width makes the preview larger and
+   more readable. Take nearly the whole viewport in both directions. */
+.ec-modal--preview {
+  max-width: min(1600px, 96vw);
+  max-height: 94vh;
+}
+
+/* Map popup / side panel keep their natural narrow width — a wide modal would
+   stretch them well past what the live site ever shows. */
+.ec-modal--preview-narrow {
+  max-width: 560px;
 }
 
 .ec-modal-header {

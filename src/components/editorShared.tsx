@@ -35,6 +35,7 @@ export type ModalKind =
 export const t = {
   en: {
     newListing: "Create a Free Listing",
+    newListingPremium: "Create a Premium Listing",
     editListing: "Edit listing",
     backToListings: "← Back to listings",
     cancel: "Back",
@@ -58,14 +59,15 @@ export const t = {
     intro:
       "You can create your listing by filling in the fields in the Editor container. Selecting any of them opens a modal window where you can make changes. Everything you do is reflected in the other containers, giving you a preview of how your listing could look live on the Vina Gallica pages. You can save your work as a draft, or submit it to us for review.",
     cardEmpty: "Your card preview will appear here as you fill in the fields.",
-    panelEmpty: "Your panel preview will appear here as you fill in the fields.",
+    panelEmpty:
+      "Your panel preview will appear here as you fill in the fields.",
     popupEmpty: "Your map popup preview will appear here.",
     // slot labels / placeholders
     category: "Category",
     selectCategory: "Select a category",
     name: "Listing name",
     namePlaceholder: "Listing name",
-    terroir: "Wine regions (terroir)",
+    terroir: "Wine regions",
     selectTerroir: "Select wine regions",
     location: "Location",
     locationHint:
@@ -101,9 +103,21 @@ export const t = {
     slogansCount: (n: number) => `${n} slogan${n === 1 ? "" : "s"}`,
     previewDesktop: "Desktop",
     previewMobile: "Mobile",
+    // section headings for the stacked preview layout
+    sectionCard: "Directory listing",
+    sectionCardHint:
+      "How your listing appears in the directory. Switch between desktop and mobile.",
+    sectionPopup: "Map popup",
+    sectionPopupHint: "What visitors see when they click your pin on the map.",
+    sectionPanel: "Map side panel",
+    sectionPanelHint: "The detail panel that opens beside the map.",
+    previewsTitle: "Live previews",
+    previewsHint: "Open any preview to see how your listing will look.",
+    close: "Close",
   },
   fr: {
     newListing: "Créer une fiche gratuite",
+    newListingPremium: "Créer une fiche Premium",
     editListing: "Modifier la fiche",
     backToListings: "← Retour aux fiches",
     cancel: "Retour",
@@ -135,7 +149,7 @@ export const t = {
     selectCategory: "Sélectionner une catégorie",
     name: "Nom de la fiche",
     namePlaceholder: "Nom de la fiche",
-    terroir: "Régions viticoles (terroir)",
+    terroir: "Régions viticoles",
     selectTerroir: "Sélectionner les régions viticoles",
     location: "Localisation",
     locationHint:
@@ -171,6 +185,18 @@ export const t = {
     slogansCount: (n: number) => `${n} slogan${n === 1 ? "" : "s"}`,
     previewDesktop: "Ordinateur",
     previewMobile: "Mobile",
+    // section headings for the stacked preview layout
+    sectionCard: "Fiche dans l'annuaire",
+    sectionCardHint:
+      "L'apparence de votre fiche dans l'annuaire. Basculez entre ordinateur et mobile.",
+    sectionPopup: "Infobulle de la carte",
+    sectionPopupHint:
+      "Ce que voient les visiteurs lorsqu'ils cliquent sur votre repère.",
+    sectionPanel: "Panneau latéral de la carte",
+    sectionPanelHint: "Le panneau de détail qui s'ouvre à côté de la carte.",
+    previewsTitle: "Aperçus en direct",
+    previewsHint: "Ouvrez un aperçu pour voir le rendu de votre fiche.",
+    close: "Fermer",
   },
 } as const;
 
@@ -191,7 +217,12 @@ export function buildViewModel(
   s: ListingState,
   lang: Lang,
   wineRegions: WineRegion[],
-  categories: { id: string; name: string; name_fr: string | null; color?: string | null }[],
+  categories: {
+    id: string;
+    name: string;
+    name_fr: string | null;
+    color?: string | null;
+  }[],
   departments: DeptOption[],
   deptCode: string | null,
 ): ViewModel {

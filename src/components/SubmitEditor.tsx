@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Listing } from "./listingTypes";
 import { useToast, ToastContainer } from "./Toast";
 import {
@@ -6,7 +7,13 @@ import {
   type Category,
 } from "./useListingState";
 import { deptCodeFromPostalCode } from "../lib/departmentFromPostalCode";
-import { t, buildViewModel, type Lang, type DeptOption } from "./editorShared";
+import {
+  t,
+  buildViewModel,
+  EditModal,
+  type Lang,
+  type DeptOption,
+} from "./editorShared";
 import EditPanel from "./EditPanel";
 import EditableCard from "./EditableCard";
 import MapPopupPreview from "./MapPopupPreview";
@@ -43,6 +50,9 @@ export default function SubmitEditor({
   const tx = t[lang];
   const { toasts, dismissToast } = useToast();
   const s = useListingState({ plan, categories, listing, onSaved });
+  const [preview, setPreview] = useState<"card" | "popup" | "panel" | null>(
+    null,
+  );
 
   const deptCode = deptCodeFromPostalCode(s.postalCode, s.insee);
   const vm = buildViewModel(
@@ -68,49 +78,87 @@ export default function SubmitEditor({
           {tx.backToListings}
         </button>
       )}
-      <h2 className="ec-title">{s.isEdit ? tx.editListing : tx.newListing}</h2>
-      <p className="se-intro">{tx.intro}</p>
+      <h2 className="ec-title">
+        {s.isEdit
+          ? tx.editListing
+          : plan === "premium"
+            ? tx.newListingPremium
+            : tx.newListing}
+      </h2>
 
-      {/* ── Tiles: edit panel + two synced previews ── */}
-      <div className="se-tiles">
-        <div className="se-track">
-          <div className="se-tile se-tile--edit">
-            <EditPanel
-              lang={lang}
-              tx={tx}
-              s={s}
-              vm={vm}
-              plan={plan}
-              directusUrl={directusUrl}
-              wineRegions={wineRegions}
-              categories={categories}
-            />
-          </div>
-          <div
-            className={`se-tile se-tile--card${plan === "premium" ? " se-tile--premium-card" : ""}`}
+      {/* ── The page is just the editor. Previews open on demand in a modal, so
+             nothing competes with the fields for vertical space. ── */}
+      <EditPanel
+        lang={lang}
+        tx={tx}
+        s={s}
+        vm={vm}
+        plan={plan}
+        directusUrl={directusUrl}
+        wineRegions={wineRegions}
+        categories={categories}
+        intro={tx.intro}
+        onOpenPreview={setPreview}
+      />
+
+      {/* ── Preview modals: opened from the buttons inside the editor ── */}
+      {preview === "card" && (
+        <EditModal
+          title={tx.sectionCard}
+          hint={tx.sectionCardHint}
+          doneLabel={tx.close}
+          variant="preview"
+          onClose={() => setPreview(null)}
+        >
+          <ResponsivePreview
+            labels={{ desktop: tx.previewDesktop, mobile: tx.previewMobile }}
           >
             {plan === "premium" ? (
-              <ResponsivePreview
-                labels={{ desktop: tx.previewDesktop, mobile: tx.previewMobile }}
-              >
-                <PlaceCardPremiumPreview
-                  lang={lang}
-                  tx={tx}
-                  s={s}
-                  vm={vm}
-                  directusUrl={directusUrl}
-                />
-              </ResponsivePreview>
+              <PlaceCardPremiumPreview
+                lang={lang}
+                tx={tx}
+                s={s}
+                vm={vm}
+                directusUrl={directusUrl}
+              />
             ) : (
-              <EditableCard tx={tx} s={s} vm={vm} />
+              /* Free cards sit in the directory's auto-fill grid, never at
+                 full width — reproduce that cell so the preview is honest. */
+              <div className="se-grid-context">
+                <EditableCard tx={tx} s={s} vm={vm} />
+              </div>
             )}
+          </ResponsivePreview>
+        </EditModal>
+      )}
+
+      {preview === "popup" && (
+        <EditModal
+          title={tx.sectionPopup}
+          hint={tx.sectionPopupHint}
+          doneLabel={tx.close}
+          variant="preview-narrow"
+          onClose={() => setPreview(null)}
+        >
+          <div className="se-modal-preview">
             <MapPopupPreview lang={lang} tx={tx} s={s} vm={vm} />
           </div>
-          <div className="se-tile se-tile--panel">
+        </EditModal>
+      )}
+
+      {preview === "panel" && (
+        <EditModal
+          title={tx.sectionPanel}
+          hint={tx.sectionPanelHint}
+          doneLabel={tx.close}
+          variant="preview-narrow"
+          onClose={() => setPreview(null)}
+        >
+          <div className="se-modal-preview">
             <MapPreviewPanel lang={lang} tx={tx} s={s} vm={vm} />
           </div>
-        </div>
-      </div>
+        </EditModal>
+      )}
 
       {/* ── Actions ── */}
       <div className="ec-actions">

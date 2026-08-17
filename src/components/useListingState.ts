@@ -132,27 +132,51 @@ export function useGeocoder(
 
     import("@mapbox/mapbox-gl-geocoder").then(({ default: MapboxGeocoder }) => {
       // Modal may have closed before the dynamic import resolved.
-      if (cancelled || !containerRef.current || geocoderRef.current) return;
-      const geocoder = new MapboxGeocoder({
-        accessToken: token,
-        types: "address,poi,place",
-        countries: "fr",
-        language: "fr",
-        placeholder: "",
-      });
-      geocoder.addTo(containerRef.current);
-      geocoder.on("result", ({ result }: { result: GeocoderResult }) =>
-        onResultRef.current(result),
-      );
-      geocoderRef.current = geocoder;
+      if (cancelled || geocoderRef.current) return;
+
+      // addTo() throws unless the target is already in the document. The
+      // container mounts with the modal, which can land after this import
+      // resolves, so wait for it instead of failing silently inside the
+      // promise (that left the location modal empty with no error shown).
+      const attach = (attempt = 0) => {
+        if (cancelled || geocoderRef.current) return;
+        const el = containerRef.current;
+        if (!el || !document.body.contains(el)) {
+          if (attempt > 20) return; // ~20 frames; the modal is never coming
+          requestAnimationFrame(() => attach(attempt + 1));
+          return;
+        }
+        const geocoder = new MapboxGeocoder({
+          accessToken: token,
+          types: "address,poi,place",
+          countries: "fr",
+          language: "fr",
+          placeholder: "",
+        });
+        geocoder.addTo(el);
+        geocoder.on("result", ({ result }: { result: GeocoderResult }) =>
+          onResultRef.current(result),
+        );
+        geocoderRef.current = geocoder;
+      };
+      attach();
     });
 
     return () => {
       cancelled = true;
+      // onRemove() throws when the geocoder was attached to a plain element
+      // rather than a map. Swallow it and always clear the ref — otherwise the
+      // stale ref blocks re-creation and the next open renders an empty modal.
       if (geocoderRef.current) {
-        (geocoderRef.current as { onRemove: () => void }).onRemove?.();
+        try {
+          (geocoderRef.current as { onRemove?: () => void }).onRemove?.();
+        } catch {
+          /* not attached to a map — nothing to tear down */
+        }
         geocoderRef.current = null;
       }
+      // Drop any DOM the geocoder left behind so a remount starts clean.
+      if (containerRef.current) containerRef.current.innerHTML = "";
     };
   }, [active]);
 

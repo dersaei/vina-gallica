@@ -1,4 +1,9 @@
-/* ResponsivePreview — device toolbar + resizable iframe stage. */
+/* ResponsivePreview — device toolbar + a true-width iframe scaled to fit.
+
+   The iframe keeps its real device width (1440 / 390) so the card's vw units
+   and @media queries resolve exactly as on the live site. A transform shrinks
+   the result to the available space; the stage height is set from the scaled
+   content height so no empty gap is left below a short card. */
 
 .rp {
   display: flex;
@@ -9,8 +14,15 @@
 
 .rp-toolbar {
   display: flex;
-  gap: var(--space-xs);
+  align-items: center;
   justify-content: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.rp-tabs {
+  display: flex;
+  gap: var(--space-xs);
 }
 
 .rp-tab {
@@ -19,7 +31,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.5em 1em 0.35em;
+  padding: 0.6em 1em 0.3em;
   border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: 3px;
   background-color: #f3ece0;
@@ -27,10 +39,12 @@
   cursor: pointer;
   transition:
     background-color 0.15s ease,
-    border-color 0.15s ease;
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 .rp-tab:hover {
-  background-color: #e7dcc8;
+  background-color: black;
+  color: antiquewhite;
 }
 .rp-tab--active {
   background-color: var(--color-elegant-black);
@@ -38,17 +52,37 @@
   border-color: var(--color-elegant-black);
 }
 
+/* Stage clips the scaled frame; its height is set by the component. Flex +
+   `transform-origin: top center` centres the frame at any scale — a scaled
+   element keeps its pre-transform layout box, so we cannot rely on margins. */
 .rp-stage {
+  position: relative;
   display: flex;
   justify-content: center;
-  overflow-x: auto;
-  padding-bottom: var(--space-xs);
+  width: 100%;
+  overflow: hidden;
+  transition: height 0.25s ease;
+}
+
+/* Occupies the scaled footprint so the stage lays out against real pixels. */
+.rp-scaler-box {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+/* The real-width element being shrunk. It is taken out of flow so its full
+   1440px width never widens the parent. */
+.rp-scaler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+  transition: transform 0.25s ease;
 }
 
 .rp-frame {
+  display: block;
   border: none;
-  height: 620px;
-  max-width: 100%;
   background: transparent;
-  transition: width 0.3s ease;
+  overflow: hidden;
 }

@@ -1,12 +1,11 @@
-/* SubmitEditor — container for the edit panel + two synced preview tiles.
-   Wide screens: all three tiles sit centered in a row. Narrow screens: the row
-   becomes a horizontal, snap-scrolling strip.
+/* SubmitEditor — the page is a single Editor container.
 
-   Centering note: we must NOT use `justify-content: center` on a horizontally
-   scrollable flex row — when content overflows, it pushes the first child into
-   a negative offset that the scrollbar can't reach (the tile becomes stuck
-   off-screen). Instead the row is left-aligned and the inner track uses
-   `margin: auto` to center only while everything fits. */
+   Earlier versions showed the previews alongside (horizontally scrolling) and
+   then below (a vertical stack) the fields. Both made the page tall and pushed
+   the controls out of view; a sticky panel could not fix that because a sticky
+   element taller than the viewport never actually sticks. Now the previews are
+   opened on demand from buttons inside the editor and render in a modal, so
+   the editor is the only thing competing for space. */
 
 .se {
   display: flex;
@@ -14,65 +13,29 @@
   gap: var(--space-md);
 }
 
-.se-intro {
-  max-width: 720px;
-  margin: 0 auto;
-  text-align: center;
-  font-family: var(--font-hero);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--color-elegant-black);
-}
-
-.se-tiles {
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--space-md);
-  padding-bottom: var(--space-sm);
-  scrollbar-width: thin;
-}
-
-/* Inner track holds the tiles in a row; margin:auto centers it when it fits. */
-.se-track {
-  display: flex;
-  gap: var(--space-lg);
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: max-content;
-  max-width: 100%;
-  margin-inline: auto;
-}
-
-.se-tile {
-  flex: 0 0 auto;
-  scroll-snap-align: center;
-}
-
-.se-tile--edit {
-  width: 320px;
-}
-
-.se-tile--card {
-  width: 420px;
-  display: flex;
-  flex-direction: column;
+/* Mirrors .places-grid on the directory so the free card is previewed at the
+   width it actually gets there (one cell of an auto-fill grid), not stretched
+   across the whole 1440px frame. */
+.se-grid-context {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: var(--space-md);
 }
 
-/* Premium card preview needs room for the responsive (iframe) stage. */
-.se-tile--premium-card {
-  width: 680px;
-  max-width: 92vw;
-}
-
-.se-tile--panel {
-  width: 380px;
-}
-
-/* On narrow screens each tile takes most of the viewport so snapping reads as
-   a clear "swipe between cards" gesture. */
-@media (max-width: 960px) {
-  .se-track {
-    gap: var(--space-md);
+@media (max-width: 450px) {
+  .se-grid-context {
+    grid-template-columns: 1fr;
   }
+}
+
+/* Map popup / side panel inside a preview modal: centre them and keep their
+   natural width rather than stretching to the modal edges. */
+.se-modal-preview {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.se-modal-preview > * {
+  width: 100%;
 }

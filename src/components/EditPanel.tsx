@@ -19,6 +19,8 @@ import {
 } from "./editorShared";
 import "./EditPanel.css";
 
+export type PreviewKind = "card" | "popup" | "panel";
+
 interface Props {
   lang: Lang;
   tx: Tx;
@@ -28,6 +30,10 @@ interface Props {
   directusUrl: string;
   wineRegions: WineRegion[];
   categories: Category[];
+  /** Shown under the panel title, above the fields. */
+  intro?: string;
+  /** Opens the matching live preview in a modal owned by the parent. */
+  onOpenPreview?: (kind: PreviewKind) => void;
 }
 
 // ── TimeInput — masked HH:MM field (ported from ListingForm) ────────────────
@@ -121,6 +127,8 @@ export default function EditPanel({
   directusUrl,
   wineRegions,
   categories,
+  intro,
+  onOpenPreview,
 }: Props) {
   const isPremium = plan === "premium";
   const [modal, setModal] = useState<ModalKind>(null);
@@ -165,6 +173,7 @@ export default function EditPanel({
   return (
     <div className="ep">
       <h3 className="ep-title">{tx.editFields}</h3>
+      {intro && <p className="ep-intro">{intro}</p>}
 
       <div className="ep-fields">
         <FieldButton
@@ -266,6 +275,40 @@ export default function EditPanel({
           </>
         )}
       </div>
+
+      {/* ── Live preview launchers — the previews themselves live in modals
+             so they never compete with the fields for space. ── */}
+      {onOpenPreview && (
+        <div className="ep-previews">
+          <div className="ep-previews-head">
+            <h4 className="ep-previews-title">{tx.previewsTitle}</h4>
+            <p className="ep-previews-hint">{tx.previewsHint}</p>
+          </div>
+          <div className="ep-previews-btns">
+            <button
+              type="button"
+              className="ep-preview-btn"
+              onClick={() => onOpenPreview("card")}
+            >
+              {tx.sectionCard}
+            </button>
+            <button
+              type="button"
+              className="ep-preview-btn"
+              onClick={() => onOpenPreview("popup")}
+            >
+              {tx.sectionPopup}
+            </button>
+            <button
+              type="button"
+              className="ep-preview-btn"
+              onClick={() => onOpenPreview("panel")}
+            >
+              {tx.sectionPanel}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── Modals ── */}
       {modal === "category" && (

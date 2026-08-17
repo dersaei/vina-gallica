@@ -4,52 +4,66 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  background-color: var(--color-sand);
-  border: 2px solid #42403c;
+  background-color: azure;
+  border: 1px solid #42403c;
   border-radius: 4px;
   padding: var(--space-md);
 }
 
 .ep-title {
   font-family: var(--font-label);
-  font-size: 1.2rem;
+  font-size: 2rem;
   text-align: center;
   font-weight: 600;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--color-elegant-black);
 }
 
+/* Intro sits between the title and the fields — it explains the whole flow, so
+   it belongs inside the one container the user actually sees. */
+.ep-intro {
+  max-width: 98ch;
+  margin: 0 auto 2vh;
+  text-align: center;
+  font-family: var(--font-hero);
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: var(--color-elegant-black);
+}
+
+/* Fields flow left-to-right and wrap. The panel is now a full-width bar at the
+   top of the editor rather than a narrow side column, so a single tall column
+   of buttons would waste the horizontal space and push the previews far down. */
 .ep-fields {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: var(--space-xs);
+  align-items: stretch;
 }
 
 .ep-field {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.15em;
-  text-align: left;
+  text-align: center;
+  /* Grid items default to min-content width; without this the value's
+     text-overflow: ellipsis never kicks in and long values widen the column. */
+  min-width: 0;
   padding: 0.6em 0.7em;
-  background-color: beige;
+  background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.18);
   border-radius: 3px;
   cursor: pointer;
-  box-shadow:
-    rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
-    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   transition:
     background-color 0.15s ease,
-    box-shadow 0.45s ease,
     border-color 0.15s ease;
 }
 
 .ep-field:hover {
-  background-color: #efe6d4;
+  background-color: var(--color-sand);
   border-color: rgba(0, 0, 0, 0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .ep-field--error {
@@ -76,7 +90,73 @@
 
 .ep-field__value--empty {
   font-style: italic;
-  color: #a89c88;
+  color: #6c6653;
+}
+
+/* ── Live preview launchers ── */
+
+.ep-previews {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+.ep-previews-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  text-align: center;
+}
+
+.ep-previews-title {
+  margin: 0;
+  font-family: var(--font-label);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-elegant-black);
+}
+
+.ep-previews-hint {
+  margin: 0;
+  font-family: var(--font-hero);
+  font-size: 0.82rem;
+  color: #6f6a62;
+}
+
+.ep-previews-btns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+/* Visually distinct from the field buttons — these open a read-only preview
+   rather than editing anything. */
+.ep-preview-btn {
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.7em 1.2em 0.25em;
+  border: 1px solid var(--color-elegant-black);
+  border-radius: 3px;
+  background-color: transparent;
+  color: var(--color-elegant-black);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.ep-preview-btn:hover {
+  background-color: var(--color-elegant-black);
+  color: var(--color-sand);
 }
 
 /* ── Premium modals ── */
